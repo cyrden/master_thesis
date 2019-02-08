@@ -13,6 +13,8 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x00, "printf", printf) == -1) return 0;
     if (ubpf_register(vm, 0x01, "strcmp_ext", strcmp) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
+    if (ubpf_register(vm, 0x03, "inc_hello_count", inc_hello_count) == -1) return 0;
+    if (ubpf_register(vm, 0x04, "send_data", send_data) == -1) return 0;
     return 1;
 }
 

@@ -57,7 +57,12 @@
 
 // Added by Cyril
 #include "ubpf/tools/ubpf_manager.h"
+#include "plugins/plugins.h"
 
+typedef struct test {
+    int a;
+    long b;
+}test;
 
 /* ospfd privileges */
 zebra_capabilities_t _caps_p[] = {ZCAP_NET_RAW, ZCAP_BIND, ZCAP_NET_ADMIN,
