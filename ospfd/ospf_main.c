@@ -55,6 +55,10 @@
 #include "ospfd/ospf_bfd.h"
 #include "ospfd/ospf_errors.h"
 
+// Added by Cyril
+#include "ubpf/tools/ubpf_manager.h"
+
+
 /* ospfd privileges */
 zebra_capabilities_t _caps_p[] = {ZCAP_NET_RAW, ZCAP_BIND, ZCAP_NET_ADMIN,
 				  ZCAP_SYS_ADMIN};

@@ -2053,6 +2053,10 @@ size_t ac_x; ac_x = malloc_size(NULL);
   ])
 ])
 
+INC_UBPF='-Iubpf/vm/inv'
+
+AC_SUBST(INC_UBPF)
+
 dnl ------
 dnl ZeroMQ
 dnl ------

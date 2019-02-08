@@ -126,6 +126,7 @@ include fpm/subdir.am
 include tools/subdir.am
 include debianpkg/subdir.am
 include solaris/subdir.am
+include ubpf/vm/subdir.am
 
 include bgpd/subdir.am
 include bgpd/rfp-example/librfp/subdir.am
@@ -220,6 +221,7 @@ EXTRA_DIST += \
 	vtysh/Makefile \
 	watchfrr/Makefile \
 	zebra/Makefile \
+	ubpf/vm/Makefile \
 	# end
 
 noinst_HEADERS += defaults.h

@@ -98,13 +98,13 @@ noinst_HEADERS += \
 	ospfd/ospf_zebra.h \
 	# end
 
-ospfd_ospfd_LDADD = ospfd/libfrrospf.a lib/libfrr.la $(LIBCAP) $(LIBM)
+ospfd_ospfd_LDADD = ospfd/libfrrospf.a lib/libfrr.la @LIBCAP@ @LIBM@ ubpf/vm/libubpf.a
 ospfd_ospfd_SOURCES = ospfd/ospf_main.c
 
 ospfd_ospfd_snmp_la_SOURCES = ospfd/ospf_snmp.c
-ospfd_ospfd_snmp_la_CFLAGS = $(WERROR) $(SNMP_CFLAGS) -std=gnu99
-ospfd_ospfd_snmp_la_LDFLAGS = -avoid-version -module -shared -export-dynamic
-ospfd_ospfd_snmp_la_LIBADD = lib/libfrrsnmp.la
+ospfd_ospfd_snmp_la_CFLAGS = $(WERROR) $(SNMP_CFLAGS) -std=gnu99 -I@top_srcdir@/ubpf/tools -I@top_srcdir@/ubpf/vm/inc
+ospfd_ospfd_snmp_la_LDFLAGS = -avoid-version -module -shared -export-dynamic -I@top_srcdir@/ubpf/tools -I@top_srcdir@/ubpf/vm/inc
+ospfd_ospfd_snmp_la_LIBADD = lib/libfrrsnmp.la ubpf/vm/libubpf.a
 
 EXTRA_DIST += \
 	ospfd/ChangeLog.opaque.txt \
