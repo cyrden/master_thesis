@@ -87,3 +87,10 @@ GPATH
 compile_commands.json
 .dirstamp
 refix
+
+# Added by Cyril
+.history_frr
+.idea/
+CMakeLists.txt
+cmake-build-debug/
+
