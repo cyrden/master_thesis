@@ -56,8 +56,11 @@
 #include "ospfd/ospf_errors.h"
 
 // Added by Cyril
+#include "lib/log.h"
+#include <pthread.h>
 #include "ubpf/tools/ubpf_manager.h"
 #include "plugins/plugins.h"
+#include "plugins_manager/plugins_manager.h"
 
 typedef struct test {
     int a;
@@ -145,9 +148,32 @@ FRR_DAEMON_INFO(ospfd, OSPF, .vty_port = OSPF_VTY_PORT,
 		.privs = &ospfd_privs, .yang_modules = ospfd_yang_modules,
 		.n_yang_modules = array_size(ospfd_yang_modules), )
 
-/* OSPFd main routine. */
+
+
+plugins_tab_t plugins_tab; // struct which is a tab that contains all the plugins, need to be accessed from all files
+
+		/* OSPFd main routine. */
 int main(int argc, char **argv)
 {
+    printf("test");
+    zlog_notice("TEST");
+    plugins_tab_init(&plugins_tab);
+    /*
+     * Launch a thread in charge of handling user messages to inject plugins dynamically
+     */
+    pthread_t th_user_msg;
+    pthread_create (&th_user_msg, NULL, plugins_manager, (void *) &plugins_tab);
+    pthread_join (th_user_msg, NULL); // Just to be sure it modified the structue before passing on the plugin creation ...
+    // TODO: delete join, because thread will run undefinitely (use sleep or other better solution)
+    //sleep(1); // Other solution, wait for one second
+
+    if(plugins_tab.plugins[TEST] != NULL) {
+        struct test *t = malloc(sizeof(struct test));
+        t->a = 8;
+        t->b = 101;
+        free(t);
+    }
+
 	unsigned short instance = 0;
 
 #ifdef SUPPORT_OSPF_API

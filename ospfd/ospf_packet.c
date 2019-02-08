@@ -52,6 +52,10 @@
 #include "ospfd/ospf_dump.h"
 #include "ospfd/ospf_errors.h"
 
+// Added by Cyril
+#include "lib/log.h"
+
+
 /*
  * OSPF Fragmentation / fragmented writes
  *
@@ -3590,6 +3594,7 @@ static int ospf_make_ls_ack(struct ospf_interface *oi, struct list *ack,
 
 static void ospf_hello_send_sub(struct ospf_interface *oi, in_addr_t addr)
 {
+	zlog_notice("TEST");
 	struct ospf_packet *op;
 	uint16_t length = OSPF_HEADER_SIZE;
 
