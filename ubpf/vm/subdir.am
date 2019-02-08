@@ -1,0 +1,20 @@
+noinst_LIBRARIES += ubpf/vm/libubpf.a
+
+ubpf_vm_libubpf_a_SOURCES = \
+	ubpf/vm/ubpf_vm.c \
+	ubpf/vm/ubpf_loader.c \
+	ubpf/vm/ubpf_jit_x86_64.c \
+	ubpf/tools/ubpf_manager.c \
+	ubpf/tools/ubpf_manager.h
+
+noinst_HEADERS += \
+	ubpf/vm/ebpf.h \
+	ubpf/vm/ubpf_int.h \
+	ubpf/vm/ubpf_jit_x86_64.h
+
+pkginclude_HEADERS += \
+	ubpf/tools/ubpf_manager.h
+
+ubpf_vm_libubpf_a_CFLAGS = \
+	-I@top_srcdir@/ubpf/vm/inc \
+	-fPIC
