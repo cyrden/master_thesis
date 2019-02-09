@@ -53,8 +53,11 @@
 #include "ospfd/ospf_errors.h"
 
 // Added by Cyril
+#include "ubpf/tools/ubpf_manager.h"
+#include "ospfd/plugins/plugins.h"
 #include "lib/log.h"
-
+#include <stdio.h>
+#include <string.h>
 
 /*
  * OSPF Fragmentation / fragmented writes
@@ -3138,7 +3141,13 @@ int ospf_read(struct thread *thread)
 				"-----------------------------------------------------");
 	}
 
-	stream_forward_getp(ibuf, OSPF_HEADER_SIZE);
+
+    if(plugins_tab.plugins[RCV_PACKET] != NULL) {
+        exec_loaded_code(plugins_tab.plugins[RCV_PACKET], (void *) ibuf, sizeof(struct stream));
+    }
+
+
+    stream_forward_getp(ibuf, OSPF_HEADER_SIZE);
 
 	/* Adjust size to message length. */
 	length = ntohs(ospfh->length) - OSPF_HEADER_SIZE;
@@ -3594,7 +3603,6 @@ static int ospf_make_ls_ack(struct ospf_interface *oi, struct list *ack,
 
 static void ospf_hello_send_sub(struct ospf_interface *oi, in_addr_t addr)
 {
-	zlog_notice("TEST");
 	struct ospf_packet *op;
 	uint16_t length = OSPF_HEADER_SIZE;
 

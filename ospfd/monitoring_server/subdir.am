@@ -1,0 +1,30 @@
+#
+# monitoring_server
+#
+
+sbin_PROGRAMS += ospfd/monitoring_server/monitoring_server
+
+ospfd_monitoring_server_monitoring_server_SOURCES = \
+    ospfd/monitoring_server/monitoring_server.c \
+    ospfd/monitoring_server/monitoring_server.h \
+    ospfd/monitoring_server/print_helpers.c \
+    ospfd/monitoring_server/print_helpers.h
+
+
+ospfd_monitoring_server_monitoring_server_CFLAGS = \
+    -I@top_srcdir \
+    -I@top_srcdir@/ospfd \
+    -I@top_srcdir@/ubpf/vm/inc \
+    -I@top_srcdir@/ubpf/tools \
+    -I@top_srcdir@/pimd \
+    -I@top_srcdir@/lib
+
+ospfd_monitoring_server_monitoring_server_LDFLAGS = \
+    -L@top_srcdir@/lib \
+    -L@top_srcdir@/ospfd \
+    -L@top_srcdir@/ubpf/vm \
+    -L@top_srcdir@/pimd \
+    -lpim \
+    -lubpf \
+    -lfrrospf \
+    -lfrr

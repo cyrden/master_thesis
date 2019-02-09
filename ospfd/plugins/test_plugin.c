@@ -5,6 +5,5 @@
  */
 
 uint64_t my_super_complicated_function(void *val) {
-    //return send_data(TEST, val); // TODO: it is just a test
-    return 1;
+    return send_data(TEST, val);
 }

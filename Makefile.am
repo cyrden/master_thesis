@@ -153,6 +153,8 @@ include vtysh/subdir.am
 include tests/subdir.am
 include tests/topotests/subdir.am
 
+include ospfd/monitoring_server/subdir.am
+
 if PKGSRC
 rcdir=@pkgsrcrcdir@
 rc_SCRIPTS = \

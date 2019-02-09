@@ -567,8 +567,8 @@ void ospf_packet_dump(struct stream *s)
 	ospfh = (struct ospf_header *)stream_pnt(s);
 
 	/* Until detail flag is set, return. */
-	if (!(term_debug_ospf_packet[ospfh->type - 1] & OSPF_DEBUG_DETAIL))
-		return;
+	/*if (!(term_debug_ospf_packet[ospfh->type - 1] & OSPF_DEBUG_DETAIL)) // TODO: commented to be able to print packets without being in debug mode
+		return;*/
 
 	/* Show OSPF header detail. */
 	ospf_header_dump(ospfh);

@@ -13,14 +13,14 @@
 
 
 /*
- * Plugins type (in fact it will probably be locations in the code where plugins can be injected)
+ * Possible locations to inject plugins
  */
 #define HELLO_COUNT 1
-#define TEST 2
+#define TEST 2 // TEST location (very beginning of the main)
 #define SEND_HELLO 4
 #define SPF_COUNT 5
 #define SEND_LSA 6
 #define RCV_LSA 7
-#define RCV_PACKET 8
+#define RCV_PACKET 8 // In
 
 #endif //PROJECT_PLUGINS_H

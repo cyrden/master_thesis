@@ -35,7 +35,7 @@ uint64_t send_data(int type, void *data) {
     key_t key;
     int msgid; // message queue identifier
     // ftok to generate unique key
-    key = ftok("/home/router/ubpf/tools/helpers.c", 65);
+    key = ftok("/home/router/ubpf/tools/helpers.h", 65);
     if (key == -1) {
         printf("sender key error t \n");
         return 0;
@@ -51,6 +51,8 @@ uint64_t send_data(int type, void *data) {
     message.mesg_type = type;
     memcpy((void *) message.mesg_text, data, 300*sizeof(char)); //copy the data to the message
     msgsnd(msgid, &message, sizeof(message), 0);
+
+    fprintf(stderr, "SENDED \n");
 
     return 0;
 }

@@ -2,6 +2,11 @@
 // Created by cyril on 15/01/19.
 //
 
+/*
+ * The plugin manager will receive messages from a user interface and react accordingly by injecting plugins at specific positions.
+ * For the moment the communication is not implemented and thus the plugin manager just loads plugins as wished by the programmer.
+ */
+
 #include "plugins_manager.h"
 
 #include "../plugins/plugins.h"
@@ -23,7 +28,7 @@ int plugins_tab_init(plugins_tab_t *tab) {
 }
 
 /*
- * Injects a plugin (file elfname) at a specific position (of ID id).
+ * Injects a plugin (file elfname) at a specific position (identified by the id)
  */
 static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname) {
     tab->plugins[id] = load_elf_file(elfname);
@@ -59,6 +64,7 @@ void *plugins_manager(void *tab) {
     }*/
     // TODO: This is temporary, plugins are injected "hardcoded"
     inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
+    inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/home/router/ospfd/plugins/rcv_packet.o");
 
     return NULL;
 }

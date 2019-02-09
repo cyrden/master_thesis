@@ -62,7 +62,7 @@
 #include "plugins/plugins.h"
 #include "plugins_manager/plugins_manager.h"
 
-typedef struct test {
+typedef struct test { // Simple structure used in the test plugin
     int a;
     long b;
 }test;
@@ -166,11 +166,11 @@ int main(int argc, char **argv)
     pthread_join (th_user_msg, NULL); // Just to be sure it modified the structue before passing on the plugin creation ...
     // TODO: delete join, because thread will run undefinitely (use sleep or other better solution)
     //sleep(1); // Other solution, wait for one second
-
     if(plugins_tab.plugins[TEST] != NULL) {
         struct test *t = malloc(sizeof(struct test));
         t->a = 8;
         t->b = 101;
+        exec_loaded_code(plugins_tab.plugins[TEST], (void *) t, sizeof(struct test));
         free(t);
     }
 
