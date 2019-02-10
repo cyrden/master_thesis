@@ -49,6 +49,11 @@
 #include "ospfd/ospf_sr.h"
 #include "ospfd/ospf_errors.h"
 
+// Added by Cyril
+#include "ubpf/tools/ubpf_manager.h"
+#include "ospfd/plugins/plugins.h"
+#include "lib/log.h"
+
 /* Variables to ensure a SPF scheduled log message is printed only once */
 
 static unsigned int spf_reason_flags = 0;
@@ -1162,6 +1167,10 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			       struct route_table *new_table,
 			       struct route_table *new_rtrs)
 {
+	// Added by Cyril
+	struct timeval t1, t2;
+	gettimeofday (&t1, NULL);
+
 	struct pqueue *candidate;
 	struct vertex *v;
 
@@ -1266,6 +1275,16 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 	if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("ospf_spf_calculate: Stop. %zd vertices",
 			   mtype_stats_alloc(MTYPE_OSPF_VERTEX));
+
+	// Added by Cyril
+	gettimeofday (&t2, NULL);
+	spf_mon_t *spf_mon = malloc(sizeof(spf_mon_t));
+	spf_mon->spf_count = area->spf_calculation;
+	spf_mon->time_spf = ((t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec) - t1.tv_usec;
+	spf_mon->area_id = area->area_id;
+	if(plugins_tab.plugins[SPF_TIME] != NULL) {
+		exec_loaded_code(plugins_tab.plugins[SPF_TIME], spf_mon, sizeof(spf_mon_t));
+	}
 
 	/* Free SPF vertices, but not the list. List has ospf_vertex_free
 	 * as deconstructor.

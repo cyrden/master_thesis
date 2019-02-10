@@ -66,6 +66,7 @@ void *plugins_manager(void *tab) {
     inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
     inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/home/router/ospfd/plugins/rcv_packet.o");
     inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/home/router/ospfd/plugins/hello_count.o");
+    inject_plugins((plugins_tab_t *) tab, SPF_TIME, "/home/router/ospfd/plugins/spf_time.o");
 
     return NULL;
 }

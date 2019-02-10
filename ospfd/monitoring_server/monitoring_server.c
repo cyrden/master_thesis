@@ -65,6 +65,7 @@ int main(int argc, char **argv) {
             struct test *t;
             struct stream *s;
             unsigned long *hello_count;
+            spf_mon_t *spf_mon;
             switch (message.mesg_type) {
                 case TEST:
                     t = (struct test *) message.mesg_text;
@@ -78,6 +79,11 @@ int main(int argc, char **argv) {
                 case SEND_HELLO:
                     hello_count = (unsigned long *) message.mesg_text;
                     printf("[HELLO_COUNT]: %ld \n", *hello_count);
+                    break;
+                case SPF_TIME:
+                    spf_mon = (spf_mon_t *) message.mesg_text;
+                    printf("[SPF_TIME]: # spf calculation: %d, time spent calculation of Dijstra for area %s: %ld usec \n",
+                            spf_mon->spf_count, inet_ntoa(spf_mon->area_id), spf_mon->time_spf);
                     break;
                 default:
                     printf("[ERROR]: message has no valid type: %ld \n", message.mesg_type);
