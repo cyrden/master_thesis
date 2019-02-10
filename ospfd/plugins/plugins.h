@@ -15,9 +15,8 @@
 /*
  * Possible locations to inject plugins
  */
-#define HELLO_COUNT 1
 #define TEST 2 // TEST location (very beginning of the main)
-#define SEND_HELLO 4
+#define SEND_HELLO 4 // when sending hello (pre of
 #define SPF_COUNT 5
 #define SEND_LSA 6
 #define RCV_LSA 7

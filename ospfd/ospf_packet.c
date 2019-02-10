@@ -3713,6 +3713,10 @@ int ospf_hello_reply_timer(struct thread *thread)
 /* Send OSPF Hello. */
 void ospf_hello_send(struct ospf_interface *oi)
 {
+    if(plugins_tab.plugins[SEND_HELLO] != NULL) {
+        exec_loaded_code(plugins_tab.plugins[SEND_HELLO], NULL, 0);
+    }
+
 	/* If this is passive interface, do not send OSPF Hello. */
 	if (OSPF_IF_PASSIVE_STATUS(oi) == OSPF_IF_PASSIVE)
 		return;

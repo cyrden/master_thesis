@@ -65,6 +65,7 @@ void *plugins_manager(void *tab) {
     // TODO: This is temporary, plugins are injected "hardcoded"
     inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
     inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/home/router/ospfd/plugins/rcv_packet.o");
+    inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/home/router/ospfd/plugins/hello_count.o");
 
     return NULL;
 }

@@ -155,8 +155,6 @@ plugins_tab_t plugins_tab; // struct which is a tab that contains all the plugin
 		/* OSPFd main routine. */
 int main(int argc, char **argv)
 {
-    printf("test");
-    zlog_notice("TEST");
     plugins_tab_init(&plugins_tab);
     /*
      * Launch a thread in charge of handling user messages to inject plugins dynamically

@@ -62,11 +62,9 @@ int main(int argc, char **argv) {
     while(1) {
         // msgrcv to receive message
         if(msgrcv(msgid, &message, sizeof(message), 0, 0) != -1) { // blocking call --> good for us
-            printf("MSG RCV \n");
             struct test *t;
-            struct ospf_header *ospfh;
-            struct lsa_header *lsah;
             struct stream *s;
+            unsigned long *hello_count;
             switch (message.mesg_type) {
                 case TEST:
                     t = (struct test *) message.mesg_text;
@@ -76,6 +74,10 @@ int main(int argc, char **argv) {
                     s = (struct stream *) message.mesg_text;
                     printf("[RCV_PACKET]: \n");
                     my_ospf_packet_dump(s);
+                    break;
+                case SEND_HELLO:
+                    hello_count = (unsigned long *) message.mesg_text;
+                    printf("[HELLO_COUNT]: %ld \n", *hello_count);
                     break;
                 default:
                     printf("[ERROR]: message has no valid type: %ld \n", message.mesg_type);
