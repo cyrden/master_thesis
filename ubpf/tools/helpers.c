@@ -7,13 +7,14 @@
  */
 
 #include "helpers.h"
+#include "../../ospfd/plugins_manager/plugins_manager.h"
 
 /*
  * Struct of the message buffer stored in kernel (used to comunicate with monitoring server)
  */
 struct mesg_buffer {
     long mesg_type;
-    char mesg_text[300];
+    char mesg_text[SIZE_MESG];
 } message;
 
 uint64_t hello_count = 0; // The counter is kept in the global variables area
@@ -49,7 +50,7 @@ uint64_t send_data(int type, void *data) {
     }
 
     message.mesg_type = type;
-    memcpy((void *) message.mesg_text, data, 300*sizeof(char)); //copy the data to the message
+    memcpy((void *) message.mesg_text, data, SIZE_MESG*sizeof(char)); //copy the data to the message
     msgsnd(msgid, &message, sizeof(message), 0);
 
     fprintf(stderr, "SENDED \n");
