@@ -1282,8 +1282,8 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 	spf_mon->spf_count = area->spf_calculation;
 	spf_mon->time_spf = ((t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec) - t1.tv_usec;
 	spf_mon->area_id = area->area_id;
-	if(plugins_tab.plugins[SPF_TIME] != NULL) {
-		exec_loaded_code(plugins_tab.plugins[SPF_TIME], spf_mon, sizeof(spf_mon_t));
+	if(plugins_tab.plugins[SPF_CALC] != NULL) {
+		exec_loaded_code(plugins_tab.plugins[SPF_CALC], spf_mon, sizeof(spf_mon_t));
 	}
 
 	/* Free SPF vertices, but not the list. List has ospf_vertex_free

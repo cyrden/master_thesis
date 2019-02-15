@@ -11,7 +11,7 @@
 
 struct mesg_buffer {
     long mesg_type;
-    char mesg_text[SIZE_BUFFER];
+    char mesg_text[SIZE_MESG];
 } message;
 
 /*

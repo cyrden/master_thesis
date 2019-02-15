@@ -38,7 +38,7 @@
 
 struct mesg_buffer {
     long mesg_type;
-    char mesg_text[MESG_TXT_SIZE];
+    char mesg_text[SIZE_MESG];
 } message;
 
 
@@ -66,6 +66,7 @@ int main(int argc, char **argv) {
             struct stream *s;
             unsigned long *hello_count;
             spf_mon_t *spf_mon;
+            struct ospf_packet *op;
             switch (message.mesg_type) {
                 case TEST:
                     t = (struct test *) message.mesg_text;
@@ -80,10 +81,16 @@ int main(int argc, char **argv) {
                     hello_count = (unsigned long *) message.mesg_text;
                     printf("[HELLO_COUNT]: %ld \n", *hello_count);
                     break;
-                case SPF_TIME:
+                case SPF_CALC:
                     spf_mon = (spf_mon_t *) message.mesg_text;
-                    printf("[SPF_TIME]: # spf calculation: %d, time spent calculation of Dijstra for area %s: %ld usec \n",
+                    printf("[SPF_CALC]: # spf calculation: %d, time spent calculation of Dijstra for area %s: %ld usec \n",
                             spf_mon->spf_count, inet_ntoa(spf_mon->area_id), spf_mon->time_spf);
+                    break;
+                case SEND_PACKET:
+                    //op = (struct ospf_packet *) message.mesg_text;
+                    s = (struct stream *) message.mesg_text;
+                    printf("[SEND_PACKET]: \n");
+                    my_ospf_packet_dump(s);
                     break;
                 default:
                     printf("[ERROR]: message has no valid type: %ld \n", message.mesg_type);

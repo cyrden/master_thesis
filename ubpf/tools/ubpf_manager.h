@@ -20,11 +20,6 @@ typedef struct plugin {
 } plugin_t;
 
 /*
- * Function used by load_elf_file
- */
-plugin_t *load_elf(void *code, size_t code_len);
-
-/*
  * Loads an elf file in a ubpf virtual machine. The elf file should but output of clang.
  */
 plugin_t *load_elf_file(const char *code_filename);

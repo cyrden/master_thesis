@@ -129,7 +129,7 @@ static void my_ospf_lsa_header_list_dump(struct stream *s, uint16_t length)
 {
     struct lsa_header *lsa;
 
-    printf("  # LSA Headers %d", length / OSPF_LSA_HEADER_SIZE);
+    printf("  # LSA Headers %d \n", length / OSPF_LSA_HEADER_SIZE);
 
     while (length > 0) {
         lsa = (struct lsa_header *)stream_pnt(s);
@@ -150,13 +150,13 @@ static void my_ospf_packet_db_desc_dump(struct stream *s, uint16_t length)
     gp = stream_get_getp(s);
     dd = (struct ospf_db_desc *)stream_pnt(s);
 
-    printf("Database Description");
-    printf("  Interface MTU %d", ntohs(dd->mtu));
-    printf("  Options %d (%s)", dd->options,
+    printf("Database Description \n");
+    printf("  Interface MTU %d \n", ntohs(dd->mtu));
+    printf("  Options %d (%s) \n", dd->options,
                ospf_options_dump(dd->options));
     /*printf("  Flags %d (%s)", dd->flags,
                ospf_dd_flags_dump(dd->flags, dd_flags, sizeof dd_flags));*/
-    printf("  Sequence Number 0x%08lx",
+    printf("  Sequence Number 0x%08lx \n",
                (unsigned long)ntohl(dd->dd_seqnum));
 
     length -= OSPF_HEADER_SIZE + OSPF_DB_DESC_MIN_SIZE;
@@ -179,17 +179,17 @@ static void my_ospf_packet_ls_req_dump(struct stream *s, uint16_t length)
 
     length -= OSPF_HEADER_SIZE;
 
-    printf("Link State Request");
-    printf("  # Requests %d", length / 12);
+    printf("Link State Request \n");
+    printf("  # Requests %d \n", length / 12);
 
     for (; length > 0; length -= 12) {
         ls_type = stream_getl(s);
         ls_id.s_addr = stream_get_ipv4(s);
         adv_router.s_addr = stream_get_ipv4(s);
 
-        printf("  LS type %d", ls_type);
-        printf("  Link State ID %s", inet_ntoa(ls_id));
-        printf("  Advertising Router %s", inet_ntoa(adv_router));
+        printf("  LS type %d \n", ls_type);
+        printf("  Link State ID %s \n", inet_ntoa(ls_id));
+        printf("  Advertising Router %s \n", inet_ntoa(adv_router));
     }
 
     stream_set_getp(s, sp);
@@ -264,13 +264,13 @@ static void my_ospf_packet_ls_ack_dump(struct stream *s, uint16_t length)
     length -= OSPF_HEADER_SIZE;
     sp = stream_get_getp(s);
 
-    printf("Link State Acknowledgment");
+    printf("Link State Acknowledgment \n");
     my_ospf_lsa_header_list_dump(s, length);
 
     stream_set_getp(s, sp);
 }
 
-static void my_ospf_header_dump(struct ospf_header *ospfh)
+void my_ospf_header_dump(struct ospf_header *ospfh)
 {
     printf("Header \n");
     printf("  Version %d \n", ospfh->version);

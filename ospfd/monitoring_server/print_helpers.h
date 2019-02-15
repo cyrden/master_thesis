@@ -25,4 +25,6 @@
 
 void my_ospf_packet_dump(struct stream *s);
 
+void my_ospf_header_dump(struct ospf_header *ospfh);
+
 #endif //FRR_THESIS_PRINT_HELPERS_H

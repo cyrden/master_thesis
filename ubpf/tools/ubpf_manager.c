@@ -16,6 +16,7 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x03, "inc_hello_count", inc_hello_count) == -1) return 0;
     if (ubpf_register(vm, 0x04, "send_data", send_data) == -1) return 0;
     if (ubpf_register(vm, 0x05, "memcpy", memcpy) == -1) return 0;
+    if (ubpf_register(vm, 0x06, "malloc", malloc) == -1) return 0;
     return 1;
 }
 
@@ -62,7 +63,7 @@ static void *readfile(const char *path, size_t maxlen, size_t *len)
     return data;
 }
 
-plugin_t *load_elf(void *code, size_t code_len) {
+static plugin_t *load_elf(void *code, size_t code_len) {
     plugin_t *plugin = (plugin_t *)malloc(sizeof(plugin_t));
     if (!plugin) {
         return NULL;

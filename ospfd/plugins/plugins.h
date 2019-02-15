@@ -12,14 +12,24 @@
 #include <netinet/in.h>
 #include "../../ubpf/tools/helpers.h"
 
+#include "defaults.h" // avoid autoconf error
+#include "prefix.h"
+#include "ospfd/ospfd.h"
+#include "ospfd/ospf_asbr.h"
+#include "ospfd/ospf_lsa.h"
+#include "ospfd/ospf_packet.h"
+#include "ospfd/ospf_lsdb.h"
+#include "ospfd/ospf_neighbor.h"
+#include "ospfd/ospf_dump.h"
+
 
 /*
  * Possible locations to inject plugins
  */
 #define TEST 2 // TEST location (very beginning of the main)
 #define SEND_HELLO 4 // when sending hello (pre of
-#define SPF_TIME 5
-#define SEND_LSA 6
+#define SPF_CALC 5
+#define SEND_PACKET 6
 #define RCV_LSA 7
 #define RCV_PACKET 8 // In
 

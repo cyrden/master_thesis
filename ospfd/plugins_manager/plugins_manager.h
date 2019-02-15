@@ -8,7 +8,7 @@
 #include "../../ubpf/tools/ubpf_manager.h"
 
 #define MAX_NBR_PLUGINS 30
-#define SIZE_BUFFER 300
+#define SIZE_MESG 300
 
 typedef struct plugins_tab {
     plugin_t *plugins[MAX_NBR_PLUGINS];

@@ -5,7 +5,7 @@
 #ifndef PROJECT_MONITORING_SERVER_H
 #define PROJECT_MONITORING_SERVER_H
 
-#define MESG_TXT_SIZE 300
+#include "../plugins_manager/plugins_manager.h"
 
 typedef struct test {
     int a;
