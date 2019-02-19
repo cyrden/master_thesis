@@ -30,16 +30,21 @@
 #define SEND_HELLO 4 // when sending hello (pre of
 #define SPF_CALC 5
 #define SEND_PACKET 6
-#define RCV_LSA 7
+#define LSA_FLOOD 7
 #define RCV_PACKET 8 // In
 
 /*
- * Structure with th context needed by plugin spf_time
+ * Structure with the context needed by plugin spf_time
  */
 typedef struct spf_mon {
     int spf_count;
     long time_spf;
     struct in_addr area_id;
 } spf_mon_t;
+
+typedef struct flood_ctxt {
+    struct lsa_header lsah;
+    struct router_lsa rlsa;
+} flood_ctxt_t;
 
 #endif //PROJECT_PLUGINS_H

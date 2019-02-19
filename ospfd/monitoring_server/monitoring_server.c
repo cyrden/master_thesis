@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
             struct stream *s;
             unsigned long *hello_count;
             spf_mon_t *spf_mon;
-            struct ospf_packet *op;
+            flood_ctxt_t *ctxt;
             switch (message.mesg_type) {
                 case TEST:
                     t = (struct test *) message.mesg_text;
@@ -87,10 +87,15 @@ int main(int argc, char **argv) {
                             spf_mon->spf_count, inet_ntoa(spf_mon->area_id), spf_mon->time_spf);
                     break;
                 case SEND_PACKET:
-                    //op = (struct ospf_packet *) message.mesg_text;
                     s = (struct stream *) message.mesg_text;
                     printf("[SEND_PACKET]: \n");
                     my_ospf_packet_dump(s);
+                    break;
+                case LSA_FLOOD:
+                    ctxt = (flood_ctxt_t *) message.mesg_text;
+                    printf("[LSA_FLOOD]: \n");
+                    my_ospf_lsa_header_dump(&ctxt->lsah);
+                    test_print_router_lsa(&ctxt->rlsa);
                     break;
                 default:
                     printf("[ERROR]: message has no valid type: %ld \n", message.mesg_type);

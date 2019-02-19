@@ -27,4 +27,9 @@ void my_ospf_packet_dump(struct stream *s);
 
 void my_ospf_header_dump(struct ospf_header *ospfh);
 
+void my_ospf_lsa_header_dump(struct lsa_header *lsah);
+
+void test_print_router_lsa(struct router_lsa *rl);
+
+
 #endif //FRR_THESIS_PRINT_HELPERS_H

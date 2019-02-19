@@ -48,6 +48,10 @@
 #include "ospfd/ospf_zebra.h"
 #include "ospfd/ospf_dump.h"
 
+// Added by Cyril
+#include "ubpf/tools/ubpf_manager.h"
+#include "ospfd/plugins/plugins.h"
+
 extern struct zclient *zclient;
 
 /* Do the LSA acking specified in table 19, Section 13.5, row 2
@@ -253,6 +257,18 @@ static void ospf_process_self_originated_lsa(struct ospf *ospf,
 int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 	       struct ospf_lsa *current, struct ospf_lsa *new)
 {
+    // Added by Cyril
+    if(plugins_tab.plugins[LSA_FLOOD] != NULL && new->data->type == OSPF_ROUTER_LSA) {
+        // TODO: try add memory in structure to store lsas. Then put don't free memory and reuse the same one each time in plugins. Just change current lsa and plugin will update the rest
+        flood_ctxt_t *ctxt = malloc(sizeof(flood_ctxt_t));
+        memcpy((void *) &ctxt->lsah, (void *) new->data, sizeof(struct lsa_header));
+        memcpy((void *) &ctxt->rlsa, (void *) new->data, sizeof(struct router_lsa));
+        exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) ctxt, sizeof(flood_ctxt_t));
+        free(ctxt);
+    }
+    // TODO: Here try to write a plugin that take a context as argument. This context is a structure with the received lsa and a tab that is updated by the plugin to check if
+    // TODO: lsa from two side received. There is also a time to say the delay between reception of the two LSAs
+
 	struct ospf_interface *oi;
 	int lsa_ack_flag;
 

@@ -1278,12 +1278,14 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 
 	// Added by Cyril
 	gettimeofday (&t2, NULL);
-	spf_mon_t *spf_mon = malloc(sizeof(spf_mon_t));
-	spf_mon->spf_count = area->spf_calculation;
-	spf_mon->time_spf = ((t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec) - t1.tv_usec;
-	spf_mon->area_id = area->area_id;
+
 	if(plugins_tab.plugins[SPF_CALC] != NULL) {
+		spf_mon_t *spf_mon = malloc(sizeof(spf_mon_t));
+		memcpy((void *) &spf_mon->spf_count, (void *) &area->spf_calculation, sizeof(int));
+		spf_mon->time_spf = ((t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec) - t1.tv_usec;
+		memcpy((void *) &spf_mon->area_id, (void *) &area->area_id, sizeof(struct in_addr));
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC], spf_mon, sizeof(spf_mon_t));
+		free(spf_mon);
 	}
 
 	/* Free SPF vertices, but not the list. List has ospf_vertex_free

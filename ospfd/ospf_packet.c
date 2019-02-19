@@ -58,7 +58,6 @@
 #include "lib/log.h"
 #include <stdio.h>
 #include <string.h>
-#include "ospfd/monitoring_server/print_helpers.h"
 
 /*
  * OSPF Fragmentation / fragmented writes
@@ -862,9 +861,6 @@ static int ospf_write(struct thread *thread)
 		if(plugins_tab.plugins[SEND_PACKET] != NULL) {
 			exec_loaded_code(plugins_tab.plugins[SEND_PACKET], (void *) op->s, sizeof(struct ospf_packet));
 		}
-
-		//zlog_notice("SEND_PACKET \n");
-		//ospf_packet_dump(op->s);
 
 		/* Now delete packet from queue. */
 		ospf_packet_delete(oi);

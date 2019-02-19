@@ -9,7 +9,7 @@
 #include "print_helpers.h"
 
 
-static void my_ospf_lsa_header_dump(struct lsa_header *lsah) {
+void my_ospf_lsa_header_dump(struct lsa_header *lsah) {
     const char *lsah_type = lookup_msg(ospf_lsa_type_msg, lsah->type, NULL);
 
     printf("  LSA Header \n");
@@ -64,6 +64,28 @@ static void my_ospf_router_lsa_dump(struct stream *s, uint16_t length)
                inet_ntoa(rl->link[i].link_data));
         printf("    Type %d \n", (uint8_t)rl->link[i].type);
         printf("    TOS %d \n", (uint8_t)rl->link[i].tos);
+        printf("    metric %d \n", ntohs(rl->link[i].metric));
+
+        len -= 12;
+    }
+}
+
+void test_print_router_lsa(struct router_lsa *rl) {
+    char buf[BUFSIZ];
+    int i, len;
+
+    printf("  Router-LSA \n");
+    printf("    flags %s \n",
+           my_ospf_router_lsa_flags_dump(rl->flags, buf, BUFSIZ));
+    printf("    # links %d \n", ntohs(rl->links));
+
+    len = ntohs(rl->header.length) - OSPF_LSA_HEADER_SIZE - 4;
+    for (i = 0; len > 0; i++) {
+        printf("    Link ID %s \n", inet_ntoa(rl->link[i].link_id));
+        printf("    Link Data %s \n",
+               inet_ntoa(rl->link[i].link_data));
+        printf("    Type %d \n", (uint8_t) rl->link[i].type);
+        printf("    TOS %d \n", (uint8_t) rl->link[i].tos);
         printf("    metric %d \n", ntohs(rl->link[i].metric));
 
         len -= 12;
