@@ -1279,6 +1279,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 	// Added by Cyril
 	gettimeofday (&t2, NULL);
 
+	// Added by Cyril
 	if(plugins_tab.plugins[SPF_CALC] != NULL) {
 		spf_mon_t *spf_mon = malloc(sizeof(spf_mon_t));
 		memcpy((void *) &spf_mon->spf_count, (void *) &area->spf_calculation, sizeof(int));

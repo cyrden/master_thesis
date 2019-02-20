@@ -27,7 +27,8 @@
  * Possible locations to inject plugins
  */
 #define TEST 2 // TEST location (very beginning of the main)
-#define SEND_HELLO 4 // when sending hello (pre of
+#define ISM_CHANGE_STATE 3 // Change state (adjacency formation) - Interface state machine
+#define SEND_HELLO 4 // when sending hello (pre of hello_send)
 #define SPF_CALC 5
 #define SEND_PACKET 6
 #define LSA_FLOOD 7
@@ -46,5 +47,11 @@ typedef struct flood_ctxt {
     struct lsa_header lsah;
     struct router_lsa rlsa;
 } flood_ctxt_t;
+
+typedef struct ism_change_state_ctxt {
+    int old_state;
+    int new_state;
+    char oi_name[50];
+} ism_change_state_ctxt_t;
 
 #endif //PROJECT_PLUGINS_H

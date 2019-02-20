@@ -43,6 +43,11 @@
 #include "ospfd/ospf_flood.h"
 #include "ospfd/ospf_abr.h"
 
+// Added by Cyril
+#include "ubpf/tools/ubpf_manager.h"
+#include "ospfd/plugins/plugins.h"
+#include "lib/log.h"
+
 DEFINE_HOOK(ospf_ism_change,
 	    (struct ospf_interface * oi, int state, int oldstate),
 	    (oi, state, oldstate))
@@ -521,6 +526,16 @@ static const char *ospf_ism_event_str[] = {
 
 static void ism_change_state(struct ospf_interface *oi, int state)
 {
+	// Added by Cyril
+	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL) {
+		ism_change_state_ctxt_t *ctxt = malloc(sizeof(ism_change_state_ctxt_t));
+		memcpy((void *) &ctxt->old_state, &oi->state, sizeof(int));
+		ctxt->new_state = state;
+		memcpy((void *) &ctxt->oi_name, IF_NAME(oi), 50*sizeof(char));
+		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE], (void *) ctxt, sizeof(ism_change_state_ctxt_t));
+		free(ctxt);
+	}
+
 	int old_state;
 	struct ospf_lsa *lsa;
 

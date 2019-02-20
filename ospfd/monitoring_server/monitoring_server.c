@@ -66,7 +66,8 @@ int main(int argc, char **argv) {
             struct stream *s;
             unsigned long *hello_count;
             spf_mon_t *spf_mon;
-            flood_ctxt_t *ctxt;
+            flood_ctxt_t *flood_ctxt;
+            ism_change_state_ctxt_t *ism_ctxt;
             switch (message.mesg_type) {
                 case TEST:
                     t = (struct test *) message.mesg_text;
@@ -92,10 +93,15 @@ int main(int argc, char **argv) {
                     my_ospf_packet_dump(s);
                     break;
                 case LSA_FLOOD:
-                    ctxt = (flood_ctxt_t *) message.mesg_text;
+                    flood_ctxt = (flood_ctxt_t *) message.mesg_text;
                     printf("[LSA_FLOOD]: \n");
-                    my_ospf_lsa_header_dump(&ctxt->lsah);
-                    test_print_router_lsa(&ctxt->rlsa);
+                    my_ospf_lsa_header_dump(&flood_ctxt->lsah);
+                    test_print_router_lsa(&flood_ctxt->rlsa);
+                    break;
+                case ISM_CHANGE_STATE:
+                    ism_ctxt = (ism_change_state_ctxt_t *) message.mesg_text;
+                    printf("[ISM_CHANGE_STATE] : Interface: %s old: %s, new: %s \n",
+                            ism_ctxt->oi_name, lookup_msg(ospf_ism_state_msg, ism_ctxt->old_state, NULL), lookup_msg(ospf_ism_state_msg, ism_ctxt->new_state, NULL));
                     break;
                 default:
                     printf("[ERROR]: message has no valid type: %ld \n", message.mesg_type);

@@ -80,6 +80,7 @@ void *plugins_manager(void *tab) {
     inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/home/router/ospfd/plugins/spf_time.o");
     inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/home/router/ospfd/plugins/send_packet.o");
     inject_plugins((plugins_tab_t *) tab, LSA_FLOOD, "/home/router/ospfd/plugins/lsa_flood.o");
+    inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/home/router/ospfd/plugins/ism_change_state.o");
 
     return NULL;
 }
