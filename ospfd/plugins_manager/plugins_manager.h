@@ -7,7 +7,7 @@
 
 #include "../../ubpf/tools/ubpf_manager.h"
 
-#define MAX_NBR_PLUGINS 30
+#define MAX_NBR_PLUGINS 30 // Defines the maximum number of plugins that can be loaded (=size of the tab)
 #define SIZE_MESG 300
 
 typedef struct plugins_tab {
@@ -17,5 +17,7 @@ typedef struct plugins_tab {
 int plugins_tab_init(plugins_tab_t *tab);
 
 void *plugins_manager(void *tab);
+
+void release_all_plugins();
 
 #endif //PROJECT_PLUGINS_MANAGER_H

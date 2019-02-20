@@ -107,6 +107,8 @@ static void sighup(void)
 static void sigint(void)
 {
 	zlog_notice("Terminating on signal");
+	// Added by Cyril
+	release_all_plugins(); // Release ressources allocated to all loaded plugins
 	ospf_terminate();
 }
 

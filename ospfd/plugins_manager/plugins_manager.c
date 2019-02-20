@@ -40,6 +40,17 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname) {
 }
 
 /*
+ * Releases ressources of all the loaded plugins
+ */
+void release_all_plugins() {
+    for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
+        if(plugins_tab.plugins[i] != NULL) {
+            release_elf(plugins_tab.plugins[i]);
+        }
+    }
+}
+
+/*
  * In charge of handling messages received from user and activating asked plugins
  */
 void *plugins_manager(void *tab) {
