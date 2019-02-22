@@ -18,6 +18,6 @@ int plugins_tab_init(plugins_tab_t *tab);
 
 void *plugins_manager(void *tab);
 
-void release_all_plugins();
+void release_all_plugins(void);
 
 #endif //PROJECT_PLUGINS_MANAGER_H

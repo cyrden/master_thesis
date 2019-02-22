@@ -153,6 +153,7 @@ FRR_DAEMON_INFO(ospfd, OSPF, .vty_port = OSPF_VTY_PORT,
 
 
 plugins_tab_t plugins_tab; // struct which is a tab that contains all the plugins, need to be accessed from all files
+pthread_t th_user_msg;
 
 		/* OSPFd main routine. */
 int main(int argc, char **argv)
@@ -162,10 +163,15 @@ int main(int argc, char **argv)
      * Launch a thread in charge of handling user messages to inject plugins dynamically
      */
     pthread_t th_user_msg;
-    pthread_create (&th_user_msg, NULL, plugins_manager, (void *) &plugins_tab);
-    //pthread_join (th_user_msg, NULL); // Just to be sure it modified the structue before passing on the plugin creation ...
-    // TODO: delete join, because thread will run undefinitely (use sleep or other better solution)
-    sleep(1); // Other solution, wait for one second
+    if(pthread_create (&th_user_msg, NULL, plugins_manager, (void *) &plugins_tab) != 0) {
+        fprintf(stderr, "Error when creating thread");
+        return EXIT_FAILURE;
+    }
+    if(pthread_detach(th_user_msg) != 0) { // Detach the thread so that it releases resources automatically (thread is infinite loop)
+        fprintf(stderr, "Error when detaching thread");
+        return EXIT_FAILURE;
+    }
+    sleep(1); // wait for one second (for test plugin, could be removed)
 
     if(plugins_tab.plugins[TEST] != NULL) {
         struct test *t = malloc(sizeof(struct test));

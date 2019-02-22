@@ -154,6 +154,7 @@ include tests/subdir.am
 include tests/topotests/subdir.am
 
 include ospfd/monitoring_server/subdir.am
+include ospfd/plugins_manager/subdir.am
 
 if PKGSRC
 rcdir=@pkgsrcrcdir@

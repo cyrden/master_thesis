@@ -858,9 +858,12 @@ static int ospf_write(struct thread *thread)
 			break;
 		}
 
+		// Added by Cyril
 		if(plugins_tab.plugins[SEND_PACKET] != NULL) {
 			exec_loaded_code(plugins_tab.plugins[SEND_PACKET], (void *) op->s, sizeof(struct ospf_packet));
-		}
+		} else {
+            zlog_notice("SEND PACKET Not Loaded %d", SEND_PACKET);
+        }
 
 		/* Now delete packet from queue. */
 		ospf_packet_delete(oi);

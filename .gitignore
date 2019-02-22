@@ -94,3 +94,4 @@ refix
 CMakeLists.txt
 cmake-build-debug/
 ospfd/monitoring_server/monitoring_server
+ospfd/plugins_manager/plugins_ui
