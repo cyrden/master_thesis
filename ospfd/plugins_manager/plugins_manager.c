@@ -81,17 +81,16 @@ void *plugins_manager(void *tab) {
         printf("receiver msgget error:  \n");
         return 0;
     }
-    inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
+    /*inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
     inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/home/router/ospfd/plugins/rcv_packet.o");
     inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/home/router/ospfd/plugins/hello_count.o");
     inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/home/router/ospfd/plugins/spf_time.o");
     inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/home/router/ospfd/plugins/send_packet.o");
     inject_plugins((plugins_tab_t *) tab, LSA_FLOOD, "/home/router/ospfd/plugins/lsa_flood.o");
-    inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/home/router/ospfd/plugins/ism_change_state.o");
-    /*while(1) {
+    inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/home/router/ospfd/plugins/ism_change_state.o");*/
+    while(1) {
         printf("Wait for message \n");
         if (msgrcv(msgid, &message, sizeof(message), 0, 0) != -1) { // blocking call
-            printf("msg_rcveid \n");
             // TODO: check that it is a valid location etc
             if(message.mesg_type == 100) { // Just to be able to inject everything in one time for testing
                 inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
@@ -103,21 +102,11 @@ void *plugins_manager(void *tab) {
                 inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/home/router/ospfd/plugins/ism_change_state.o");
             }
             else {
-                printf("compare: \n");
-                printf("%s : %d \n", message.mesg_text, (int) strlen(message.mesg_text));
-                printf("%s : %d \n", "/home/router/ospfd/plugins/send_packet.o", (int) strlen("/home/router/ospfd/plugins/send_packet.o"));
-                printf("strcmp: %d \n",strcmp(message.mesg_text, "/home/router/ospfd/plugins/send_packet.o"));
                 inject_plugins((plugins_tab_t *) tab, (int) message.mesg_type, (const char *) message.mesg_text);
-                if(plugins_tab.plugins[SEND_PACKET] == NULL) {
-                    printf("SEND PACKET NULL \n");
-                }
-                else {
-                    printf("SEND PACKET NOT NULL !!! \n");
-                }
             }
         }
         else {
-            if(errno == EINTR) {
+            if(errno == EINTR) { // Because FRR is sending signals that are making msgrcv to fail ...
                 perror("EINTR");
                 sleep(1);
                 continue;
@@ -126,6 +115,6 @@ void *plugins_manager(void *tab) {
             printf("Error while receiving message \n");
             return NULL;
         }
-    }*/
+    }
 }
 

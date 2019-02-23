@@ -2,10 +2,6 @@
 // Created by cyril on 19/01/19.
 //
 
-/*
- * FOR THE MOMENT THIS FILE IS USELESS, I DIDN'T IMPLEMENTED THE USER INTERFACE (IT SHOULD BE RELATIVELY EASY ...)
- */
-
 #include "../plugins/plugins.h"
 #include "plugins_manager.h"
 
