@@ -1,0 +1,27 @@
+#
+# plugins_ui
+#
+
+sbin_PROGRAMS += ospfd/plugins_manager/plugins_ui
+
+ospfd_plugins_manager_plugins_ui_SOURCES = \
+    ospfd/plugins_manager/plugins_ui.c
+
+
+ospfd_plugins_manager_plugins_ui_CFLAGS = \
+    -I@top_srcdir \
+    -I@top_srcdir@/ospfd \
+    -I@top_srcdir@/ubpf/vm/inc \
+    -I@top_srcdir@/ubpf/tools \
+    -I@top_srcdir@/pimd \
+    -I@top_srcdir@/lib
+
+ospfd_plugins_manager_plugins_ui_LDFLAGS = \
+    -L@top_srcdir@/lib \
+    -L@top_srcdir@/ospfd \
+    -L@top_srcdir@/ubpf/vm \
+    -L@top_srcdir@/pimd \
+    -lpim \
+    -lubpf \
+    -lfrrospf \
+    -lfrr

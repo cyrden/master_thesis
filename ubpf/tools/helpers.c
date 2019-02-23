@@ -53,7 +53,5 @@ uint64_t send_data(int type, void *data) {
     memcpy((void *) message.mesg_text, data, SIZE_MESG*sizeof(char)); //copy the data to the message
     msgsnd(msgid, &message, sizeof(message), 0);
 
-    fprintf(stderr, "SENDED \n");
-
     return 0;
 }
