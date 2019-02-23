@@ -258,12 +258,12 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 	       struct ospf_lsa *current, struct ospf_lsa *new)
 {
     // Added by Cyril
-    if(plugins_tab.plugins[LSA_FLOOD] != NULL && new->data->type == OSPF_ROUTER_LSA) {
+    if(plugins_tab.plugins[LSA_FLOOD_PRE] != NULL && new->data->type == OSPF_ROUTER_LSA) {
         // TODO: try add memory in structure to store lsas. Then put don't free memory and reuse the same one each time in plugins. Just change current lsa and plugin will update the rest
         flood_ctxt_t *ctxt = malloc(sizeof(flood_ctxt_t));
         memcpy((void *) &ctxt->lsah, (void *) new->data, sizeof(struct lsa_header));
         memcpy((void *) &ctxt->rlsa, (void *) new->data, sizeof(struct router_lsa));
-        exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) ctxt, sizeof(flood_ctxt_t));
+        exec_loaded_code(plugins_tab.plugins[LSA_FLOOD_PRE], (void *) ctxt, sizeof(flood_ctxt_t));
         free(ctxt);
     }
     // TODO: Here try to write a plugin that take a context as argument. This context is a structure with the received lsa and a tab that is updated by the plugin to check if
@@ -362,6 +362,16 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 	else
 		/* Update statistics value for OSPF-MIB. */
 		ospf->rx_lsa_count++;
+
+	// Added by Cyril
+	if(plugins_tab.plugins[LSA_FLOOD_POST] != NULL && new->data->type == OSPF_ROUTER_LSA) {
+		// TODO: try add memory in structure to store lsas. Then put don't free memory and reuse the same one each time in plugins. Just change current lsa and plugin will update the rest
+		flood_ctxt_t *ctxt = malloc(sizeof(flood_ctxt_t));
+		memcpy((void *) &ctxt->lsah, (void *) new->data, sizeof(struct lsa_header));
+		memcpy((void *) &ctxt->rlsa, (void *) new->data, sizeof(struct router_lsa));
+		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD_POST], (void *) ctxt, sizeof(flood_ctxt_t));
+		free(ctxt);
+	}
 
 	return 0;
 }

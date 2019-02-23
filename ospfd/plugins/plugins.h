@@ -26,13 +26,17 @@
 /*
  * Possible locations to inject plugins
  */
-#define TEST 2 // TEST location (very beginning of the main)
-#define ISM_CHANGE_STATE 3 // Change state (adjacency formation) - Interface state machine
-#define SEND_HELLO 4 // when sending hello (pre of hello_send)
-#define SPF_CALC 5
-#define SEND_PACKET 6
-#define LSA_FLOOD 7
-#define RCV_PACKET 8 // In
+#define TEST 1 // TEST location (very beginning of the main)
+#define ISM_CHANGE_STATE_PRE 2 // Change state (adjacency formation) - Interface state machine
+#define ISM_CHANGE_STATE_POST 3
+#define SEND_HELLO_PRE 4
+#define SEND_HELLO_POST 5
+#define SPF_CALC_PRE 6
+#define SPF_CALC_POST 7
+#define SEND_PACKET 8
+#define RCV_PACKET 9
+#define LSA_FLOOD_PRE 10
+#define LSA_FLOOD_POST 11
 
 /*
  * Structure with the context needed by plugin spf_time

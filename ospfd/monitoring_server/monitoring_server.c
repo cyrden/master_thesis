@@ -78,13 +78,13 @@ int main(int argc, char **argv) {
                     printf("[RCV_PACKET]: \n");
                     my_ospf_packet_dump(s);
                     break;
-                case SEND_HELLO:
+                case SEND_HELLO_PRE:
                     hello_count = (unsigned long *) message.mesg_text;
                     printf("[HELLO_COUNT]: %ld \n", *hello_count);
                     break;
-                case SPF_CALC:
+                case SPF_CALC_POST:
                     spf_mon = (spf_mon_t *) message.mesg_text;
-                    printf("[SPF_CALC]: # spf calculation: %d, time spent calculation of Dijstra for area %s: %ld usec \n",
+                    printf("[SPF_CALC_POST]: # spf calculation: %d, time spent calculation of Dijstra for area %s: %ld usec \n",
                             spf_mon->spf_count, inet_ntoa(spf_mon->area_id), spf_mon->time_spf);
                     break;
                 case SEND_PACKET:
@@ -92,15 +92,15 @@ int main(int argc, char **argv) {
                     printf("[SEND_PACKET]: \n");
                     my_ospf_packet_dump(s);
                     break;
-                case LSA_FLOOD:
+                case LSA_FLOOD_PRE:
                     flood_ctxt = (flood_ctxt_t *) message.mesg_text;
-                    printf("[LSA_FLOOD]: \n");
+                    printf("[LSA_FLOOD_PRE]: \n");
                     my_ospf_lsa_header_dump(&flood_ctxt->lsah);
                     test_print_router_lsa(&flood_ctxt->rlsa);
                     break;
-                case ISM_CHANGE_STATE:
+                case ISM_CHANGE_STATE_PRE:
                     ism_ctxt = (ism_change_state_ctxt_t *) message.mesg_text;
-                    printf("[ISM_CHANGE_STATE] : Interface: %s old: %s, new: %s \n",
+                    printf("[ISM_CHANGE_STATE_PRE] : Interface: %s old: %s, new: %s \n",
                             ism_ctxt->oi_name, lookup_msg(ospf_ism_state_msg, ism_ctxt->old_state, NULL), lookup_msg(ospf_ism_state_msg, ism_ctxt->new_state, NULL));
                     break;
                 default:

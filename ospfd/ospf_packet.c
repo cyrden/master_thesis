@@ -858,9 +858,9 @@ static int ospf_write(struct thread *thread)
 			break;
 		}
 
-		if(plugins_tab.plugins[SEND_PACKET] != NULL) {
-			exec_loaded_code(plugins_tab.plugins[SEND_PACKET], (void *) op->s, sizeof(struct ospf_packet));
-		}
+        if(plugins_tab.plugins[SEND_PACKET] != NULL) {
+            exec_loaded_code(plugins_tab.plugins[SEND_PACKET], (void *) op->s, sizeof(struct ospf_packet));
+        }
 
 		/* Now delete packet from queue. */
 		ospf_packet_delete(oi);
@@ -3717,8 +3717,9 @@ int ospf_hello_reply_timer(struct thread *thread)
 /* Send OSPF Hello. */
 void ospf_hello_send(struct ospf_interface *oi)
 {
-    if(plugins_tab.plugins[SEND_HELLO] != NULL) {
-        exec_loaded_code(plugins_tab.plugins[SEND_HELLO], NULL, 0);
+	// Added by Cyril
+    if(plugins_tab.plugins[SEND_HELLO_PRE] != NULL) {
+        exec_loaded_code(plugins_tab.plugins[SEND_HELLO_PRE], NULL, 0);
     }
 
 	/* If this is passive interface, do not send OSPF Hello. */
@@ -3783,6 +3784,11 @@ void ospf_hello_send(struct ospf_interface *oi)
 			ospf_hello_send_sub(oi, oi->vl_data->peer_addr.s_addr);
 		else
 			ospf_hello_send_sub(oi, htonl(OSPF_ALLSPFROUTERS));
+	}
+
+	// Added by Cyril
+	if(plugins_tab.plugins[SEND_HELLO_POST] != NULL) {
+		exec_loaded_code(plugins_tab.plugins[SEND_HELLO_POST], NULL, 0);
 	}
 }
 

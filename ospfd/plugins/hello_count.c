@@ -10,6 +10,6 @@
  */
 uint64_t hello_count(void) {
     unsigned long hello_count = inc_hello_count();
-    send_data(SEND_HELLO, (void *) &hello_count); // send the hello count on the message queue
+    send_data(SEND_HELLO_PRE, (void *) &hello_count); // send the hello count on the message queue
     return hello_count;
 }

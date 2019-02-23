@@ -5,5 +5,5 @@
 #include "plugins.h"
 
 uint64_t lsa_flood(void *data) {
-    return send_data(LSA_FLOOD, data);
+    return send_data(LSA_FLOOD_PRE, data);
 }

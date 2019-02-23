@@ -527,12 +527,12 @@ static const char *ospf_ism_event_str[] = {
 static void ism_change_state(struct ospf_interface *oi, int state)
 {
 	// Added by Cyril
-	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL) {
+	if(plugins_tab.plugins[ISM_CHANGE_STATE_PRE] != NULL) {
 		ism_change_state_ctxt_t *ctxt = malloc(sizeof(ism_change_state_ctxt_t));
 		memcpy((void *) &ctxt->old_state, &oi->state, sizeof(int));
 		ctxt->new_state = state;
 		memcpy((void *) &ctxt->oi_name, IF_NAME(oi), 50*sizeof(char));
-		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE], (void *) ctxt, sizeof(ism_change_state_ctxt_t));
+		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE_PRE], (void *) ctxt, sizeof(ism_change_state_ctxt_t));
 		free(ctxt);
 	}
 
@@ -584,6 +584,16 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 
 	/* Check area border status.  */
 	ospf_check_abr_status(oi->ospf);
+
+	// Added by Cyril
+	if(plugins_tab.plugins[ISM_CHANGE_STATE_POST] != NULL) {
+		ism_change_state_ctxt_t *ctxt = malloc(sizeof(ism_change_state_ctxt_t));
+		memcpy((void *) &ctxt->old_state, &oi->state, sizeof(int));
+		ctxt->new_state = state;
+		memcpy((void *) &ctxt->oi_name, IF_NAME(oi), 50*sizeof(char));
+		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE_POST], (void *) ctxt, sizeof(ism_change_state_ctxt_t));
+		free(ctxt);
+	}
 }
 
 /* Execute ISM event process. */

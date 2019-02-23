@@ -76,11 +76,11 @@ void *plugins_manager(void *tab) {
     // TODO: This is temporary, plugins are injected "hardcoded"
     inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
     inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/home/router/ospfd/plugins/rcv_packet.o");
-    inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/home/router/ospfd/plugins/hello_count.o");
-    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/home/router/ospfd/plugins/spf_time.o");
+    inject_plugins((plugins_tab_t *) tab, SEND_HELLO_PRE, "/home/router/ospfd/plugins/hello_count.o");
+    inject_plugins((plugins_tab_t *) tab, SPF_CALC_POST, "/home/router/ospfd/plugins/spf_time.o");
     inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/home/router/ospfd/plugins/send_packet.o");
-    inject_plugins((plugins_tab_t *) tab, LSA_FLOOD, "/home/router/ospfd/plugins/lsa_flood.o");
-    inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/home/router/ospfd/plugins/ism_change_state.o");
+    inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/home/router/ospfd/plugins/lsa_flood.o");
+    inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE_PRE, "/home/router/ospfd/plugins/ism_change_state.o");
 
     return NULL;
 }
