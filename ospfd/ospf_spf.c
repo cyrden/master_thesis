@@ -1272,7 +1272,12 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 	ospf_canonical_nexthops_free(area->spf);
 
 	/* Increment SPF Calculation Counter. */
-	area->spf_calculation++;
+	//area->spf_calculation++;
+
+	// Added by Cyril
+	if(plugins_tab.plugins[SPF_TEST] != NULL) {
+		exec_loaded_code(plugins_tab.plugins[SPF_TEST], &area->spf_calculation, sizeof(int));
+	}
 
 	monotime(&area->ospf->ts_spf);
 	area->ts_spf = area->ospf->ts_spf;

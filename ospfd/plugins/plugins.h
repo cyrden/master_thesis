@@ -38,6 +38,8 @@
 #define LSA_FLOOD_PRE 10
 #define LSA_FLOOD_POST 11
 
+#define SPF_TEST 13
+
 /*
  * Structure with the context needed by plugin spf_time
  */

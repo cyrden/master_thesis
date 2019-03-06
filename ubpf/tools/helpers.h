@@ -17,4 +17,8 @@ uint64_t inc_hello_count(void);
 
 uint64_t send_data(int type, void *txt);
 
+int read_int(void *pointer);
+
+void set_pointer_toInt(void *pointer, int value);
+
 #endif //PROJECT_HELPERS_H

@@ -17,6 +17,8 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x04, "send_data", send_data) == -1) return 0;
     if (ubpf_register(vm, 0x05, "memcpy", memcpy) == -1) return 0;
     if (ubpf_register(vm, 0x06, "malloc", malloc) == -1) return 0;
+    if (ubpf_register(vm, 0x07, "set_pointer_toInt", set_pointer_toInt) == -1) return 0;
+    if (ubpf_register(vm, 0x08, "read_int", read_int) == -1) return 0;
     return 1;
 }
 

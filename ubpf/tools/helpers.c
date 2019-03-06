@@ -55,3 +55,13 @@ uint64_t send_data(int type, void *data) {
 
     return 0;
 }
+
+int read_int(void *pointer) {
+    if(pointer == NULL) return -1;
+    int *read = (int *) pointer;
+    return *read;
+}
+
+void set_pointer_toInt(void *pointer, int value) {
+    *((int *) pointer) = value;
+}
