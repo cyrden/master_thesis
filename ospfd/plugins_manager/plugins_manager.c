@@ -80,31 +80,21 @@ void *plugins_manager(void *tab) {
         printf("receiver msgget error:  \n");
         return 0;
     }
-    inject_plugins((plugins_tab_t *) tab, SPF_TEST, "/home/router/ospfd/plugins/spf_test.o");
-    inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
+    // TODO: The following lines will be removed. Just used for debugging purposes
+    //inject_plugins((plugins_tab_t *) tab, SPF_TEST, "/home/router/ospfd/plugins/spf_test.o");
+    //inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
     //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/home/router/ospfd/plugins/rcv_packet.o");
     //inject_plugins((plugins_tab_t *) tab, SEND_HELLO_PRE, "/home/router/ospfd/plugins/hello_count.o");
-    inject_plugins((plugins_tab_t *) tab, SPF_CALC_POST, "/home/router/ospfd/plugins/spf_time.o");
+    //inject_plugins((plugins_tab_t *) tab, SPF_CALC_POST, "/home/router/ospfd/plugins/spf_time.o");
     //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/home/router/ospfd/plugins/send_packet.o");
     //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/home/router/ospfd/plugins/lsa_flood.o");
-    inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE_PRE, "/home/router/ospfd/plugins/ism_change_state.o");
+    //inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE_PRE, "/home/router/ospfd/plugins/ism_change_state.o");
 
-    /*while(1) {
+    while(1) { // In that loop receives messages from UI to inject plugins
         printf("Wait for message \n");
         if (msgrcv(msgid, &message, sizeof(message), 0, 0) != -1) { // blocking call
             // TODO: check that it is a valid location etc
-            if(message.mesg_type == 100) { // Just to be able to inject everything in one time for testing
-                inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
-                inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/home/router/ospfd/plugins/rcv_packet.o");
-                inject_plugins((plugins_tab_t *) tab, SEND_HELLO_PRE, "/home/router/ospfd/plugins/hello_count.o");
-                inject_plugins((plugins_tab_t *) tab, SPF_CALC_POST, "/home/router/ospfd/plugins/spf_time.o");
-                inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/home/router/ospfd/plugins/send_packet.o");
-                inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/home/router/ospfd/plugins/lsa_flood.o");
-                inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE_PRE, "/home/router/ospfd/plugins/ism_change_state.o");
-            }
-            else {
-                inject_plugins((plugins_tab_t *) tab, (int) message.mesg_type, (const char *) message.mesg_text);
-            }
+            inject_plugins((plugins_tab_t *) tab, (int) message.mesg_type, (const char *) message.mesg_text);
         }
         else {
             if(errno == EINTR) { // Because FRR is sending signals that are making msgrcv to fail ...
@@ -116,7 +106,7 @@ void *plugins_manager(void *tab) {
             printf("Error while receiving message \n");
             return NULL;
         }
-    }*/
-    return NULL;
+    }
+    //return NULL;
 }
 
