@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     key_t key;
     int msgid; // message queue identifier
     // ftok to generate unique key
-    key = ftok("/home/router/ospfd/plugins/plugins.h", 64);
+    key = ftok("/etc/frr/daemons", 64);
     if (key == -1) {
         printf("sender key error t \n");
         return 0;
@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
     char path[50];
     long location;
     char strloc[10];
-    while(1) { // Todo, check if valid values for inputs
+    while(1) { // Todo, check if valid values for inputs & deal with string inputs instead of IDs
         printf("Please enter the path to your BPF file \n");
         fgets(path, 50, stdin);
         printf("Please enter the location where you want to inject the plugin (as a int) \n");

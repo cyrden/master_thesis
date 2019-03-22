@@ -956,7 +956,7 @@ const char *optstring;
 
 #endif /* Not ELIDE_CODE.  */
 
-#ifdef TEST
+#ifdef MAIN_PRE
 
 /* Compile with -DTEST to make an executable for use in testing
    the above definition of `getopt'.  */
@@ -1022,4 +1022,4 @@ char **argv;
 	exit(0);
 }
 
-#endif /* TEST */
+#endif /* MAIN_PRE */

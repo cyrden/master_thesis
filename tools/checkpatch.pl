@@ -3549,25 +3549,25 @@ sub process {
 			}
 		}
 
-# TEST: allow direct testing of the type matcher.
+# MAIN_PRE: allow direct testing of the type matcher.
 		if ($dbg_type) {
 			if ($line =~ /^.\s*$Declare\s*$/) {
 				ERROR("TEST_TYPE",
-				      "TEST: is type\n" . $herecurr);
+				      "MAIN_PRE: is type\n" . $herecurr);
 			} elsif ($dbg_type > 1 && $line =~ /^.+($Declare)/) {
 				ERROR("TEST_NOT_TYPE",
-				      "TEST: is not type ($1 is)\n". $herecurr);
+				      "MAIN_PRE: is not type ($1 is)\n". $herecurr);
 			}
 			next;
 		}
-# TEST: allow direct testing of the attribute matcher.
+# MAIN_PRE: allow direct testing of the attribute matcher.
 		if ($dbg_attr) {
 			if ($line =~ /^.\s*$Modifier\s*$/) {
 				ERROR("TEST_ATTR",
-				      "TEST: is attr\n" . $herecurr);
+				      "MAIN_PRE: is attr\n" . $herecurr);
 			} elsif ($dbg_attr > 1 && $line =~ /^.+($Modifier)/) {
 				ERROR("TEST_NOT_ATTR",
-				      "TEST: is not attr ($1 is)\n". $herecurr);
+				      "MAIN_PRE: is not attr ($1 is)\n". $herecurr);
 			}
 			next;
 		}

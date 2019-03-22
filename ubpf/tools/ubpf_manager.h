@@ -10,7 +10,7 @@
 #include <elf.h>
 #include "ubpf/vm/inc/ubpf.h"
 #include "ubpf/vm/ubpf_int.h"
-#include "helpers.h"
+#include "ospf_plugins_api.h"
 
 /*
  * Definition of a plugin (for the moment just encapsulate an ubpf vm, but I will probably add some more fields when needed)

@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
     int msgid;
 
     // ftok to generate unique key
-    key = ftok("/home/router/ubpf/tools/helpers.h", 65);
+    key = ftok("/etc/frr/daemons", 65);
     if(key==-1) {
         printf("receiver key error: \n");
         return 0;
@@ -69,9 +69,9 @@ int main(int argc, char **argv) {
             flood_ctxt_t *flood_ctxt;
             ism_change_state_ctxt_t *ism_ctxt;
             switch (message.mesg_type) {
-                case TEST:
+                case MAIN_PRE:
                     t = (struct test *) message.mesg_text;
-                    printf("[TEST]: %d %ld \n", t->a, t->b);
+                    printf("[MAIN_PRE]: %d %ld \n", t->a, t->b);
                     break;
                 case RCV_PACKET:
                     s = (struct stream *) message.mesg_text;

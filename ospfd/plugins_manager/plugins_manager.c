@@ -35,16 +35,16 @@ int plugins_tab_init(plugins_tab_t *tab) {
 static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname) {
     if(id < 1 || id > MAX_NBR_PLUGINS-1) {
         fprintf(stderr, "Id not valid \n");
-        return -1;
+        return 0;
     }
     if(tab->plugins[id] != NULL) {
         fprintf(stderr, "There is already a loaded plugin at this position \n");
-        return -1;
+        return 0;
     }
     tab->plugins[id] = load_elf_file(elfname);
     if (tab->plugins[id] == NULL) {
         perror("Failed to load file\n");
-        return EXIT_FAILURE;
+        return 0;
     }
     return 1;
 }
@@ -68,7 +68,7 @@ void *plugins_manager(void *tab) {
     int msgid;
 
     // ftok to generate unique key
-    key = ftok("/home/router/ospfd/plugins/plugins.h", 64);
+    key = ftok("/etc/frr/daemons", 64);
     if(key==-1) {
         printf("receiver key error:  \n");
         return 0;
@@ -81,20 +81,22 @@ void *plugins_manager(void *tab) {
         return 0;
     }
     // TODO: The following lines will be removed. Just used for debugging purposes
-    //inject_plugins((plugins_tab_t *) tab, SPF_TEST, "/home/router/ospfd/plugins/spf_test.o");
-    //inject_plugins((plugins_tab_t *) tab, TEST, "/home/router/ospfd/plugins/test_plugin.o"); // Injects the plugin at position TEST (beginning of main)
-    //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/home/router/ospfd/plugins/rcv_packet.o");
-    //inject_plugins((plugins_tab_t *) tab, SEND_HELLO_PRE, "/home/router/ospfd/plugins/hello_count.o");
-    //inject_plugins((plugins_tab_t *) tab, SPF_CALC_POST, "/home/router/ospfd/plugins/spf_time.o");
-    //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/home/router/ospfd/plugins/send_packet.o");
-    //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/home/router/ospfd/plugins/lsa_flood.o");
-    //inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE_PRE, "/home/router/ospfd/plugins/ism_change_state.o");
+    //inject_plugins((plugins_tab_t *) tab, SPF_TEST, "/plugins/spf_test.o");
+    inject_plugins((plugins_tab_t *) tab, MAIN_PRE, "/plugins/test_plugin.o"); // Injects the plugin at position MAIN_PRE (beginning of main)
+    //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o");
+    //inject_plugins((plugins_tab_t *) tab, SEND_HELLO_PRE, "/plugins/hello_count.o");
+    //inject_plugins((plugins_tab_t *) tab, SPF_CALC_POST, "/plugins/spf_time.o");
+    //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o");
+    //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/plugins/lsa_flood.o");
+    //inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE_PRE, "/plugins/ism_change_state.o");
 
-    while(1) { // In that loop receives messages from UI to inject plugins
+    /*while(1) { // In that loop receives messages from UI to inject plugins
         printf("Wait for message \n");
         if (msgrcv(msgid, &message, sizeof(message), 0, 0) != -1) { // blocking call
             // TODO: check that it is a valid location etc
-            inject_plugins((plugins_tab_t *) tab, (int) message.mesg_type, (const char *) message.mesg_text);
+            if(!inject_plugins((plugins_tab_t *) tab, (int) message.mesg_type, (const char *) message.mesg_text)) {
+                printf("Failed to inject plugin \n");
+            }
         }
         else {
             if(errno == EINTR) { // Because FRR is sending signals that are making msgrcv to fail ...
@@ -106,7 +108,7 @@ void *plugins_manager(void *tab) {
             printf("Error while receiving message \n");
             return NULL;
         }
-    }
-    //return NULL;
+    }*/
+    return NULL;
 }
 

@@ -10,7 +10,7 @@
 typedef struct test {
     int a;
     long b;
-}test; // TODO: test structure. For the moment hardcoded on both side. Need to fix it by linking lib to have access to structure from the project
+}test;
 
 
 #endif //PROJECT_MONITORING_SERVER_H

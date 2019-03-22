@@ -200,8 +200,8 @@ static struct test_config cfg = {
 	.local_asn = 100,
 	.peer_asn = 200,
 	.peer_address = "1.1.1.1",
-	.peer_interface = "IP-TEST",
-	.peer_group = "PG-TEST",
+	.peer_interface = "IP-MAIN_PRE",
+	.peer_group = "PG-MAIN_PRE",
 };
 
 static struct test_peer_family test_default_families[] = {

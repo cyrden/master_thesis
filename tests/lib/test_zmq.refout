@@ -62,6 +62,6 @@ client recv (more: 0): msg# was 5
 ---
 client send: Done receiving
 server recv: Done receiving
-server send: TEST WRITE CALLBACK
-client recv: TEST WRITE CALLBACK
+server send: MAIN_PRE WRITE CALLBACK
+client recv: MAIN_PRE WRITE CALLBACK
 child exited.

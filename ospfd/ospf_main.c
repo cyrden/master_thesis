@@ -266,11 +266,11 @@ int main(int argc, char **argv)
     }
     sleep(1); // wait for one second (for test plugin, could be removed)
 
-    if(plugins_tab.plugins[TEST] != NULL) {
+    if(plugins_tab.plugins[MAIN_PRE] != NULL) {
         struct test *t = malloc(sizeof(struct test));
         t->a = 8;
         t->b = 101;
-        exec_loaded_code(plugins_tab.plugins[TEST], (void *) t, sizeof(struct test));
+        exec_loaded_code(plugins_tab.plugins[MAIN_PRE], (void *) t, sizeof(struct test));
         free(t);
     }
 

@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <netinet/in.h>
-#include "../../ubpf/tools/helpers.h"
+#include "../../ubpf/tools/ospf_plugins_api.h"
 
 #include "defaults.h" // avoid autoconf error
 #include "prefix.h"
@@ -24,9 +24,9 @@
 
 
 /*
- * Possible locations to inject plugins
+ * Possible insertion points for plugins
  */
-#define TEST 1 // TEST location (very beginning of the main)
+#define MAIN_PRE 1
 #define ISM_CHANGE_STATE_PRE 2 // Change state (adjacency formation) - Interface state machine
 #define ISM_CHANGE_STATE_POST 3
 #define SEND_HELLO_PRE 4

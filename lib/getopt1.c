@@ -90,7 +90,7 @@ int *opt_index;
 
 #endif /* Not ELIDE_CODE.  */
 
-#ifdef TEST
+#ifdef MAIN_PRE
 
 #include <stdio.h>
 
@@ -173,4 +173,4 @@ char **argv;
 	exit(0);
 }
 
-#endif /* TEST */
+#endif /* MAIN_PRE */
