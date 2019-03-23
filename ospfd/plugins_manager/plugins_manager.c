@@ -33,7 +33,7 @@ int plugins_tab_init(plugins_tab_t *tab) {
  * Injects a plugin (file elfname) at a specific position (identified by the id)
  */
 static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname) {
-    if(id < 1 || id > MAX_NBR_PLUGINS-1) {
+    if(id < 0 || id > MAX_NBR_PLUGINS-1) {
         fprintf(stderr, "Id not valid \n");
         return 0;
     }
@@ -50,7 +50,7 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname) {
 }
 
 /*
- * Releases ressources of all the loaded plugins
+ * Releases resources of all the loaded plugins
  */
 void release_all_plugins(void) {
     for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
@@ -82,9 +82,9 @@ void *plugins_manager(void *tab) {
     }
     // TODO: The following lines will be removed. Just used for debugging purposes
     //inject_plugins((plugins_tab_t *) tab, SPF_TEST, "/plugins/spf_test.o");
-    inject_plugins((plugins_tab_t *) tab, MAIN_PRE, "/plugins/test_plugin.o"); // Injects the plugin at position MAIN_PRE (beginning of main)
+    inject_plugins((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o"); // Injects the plugin at position MAIN (beginning of main)
     //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o");
-    //inject_plugins((plugins_tab_t *) tab, SEND_HELLO_PRE, "/plugins/hello_count.o");
+    inject_plugins((plugins_tab_t *) tab, SEND_HELLO_PRE, "/plugins/hello_count.o");
     //inject_plugins((plugins_tab_t *) tab, SPF_CALC_POST, "/plugins/spf_time.o");
     //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o");
     //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/plugins/lsa_flood.o");

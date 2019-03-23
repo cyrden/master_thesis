@@ -3,6 +3,8 @@
 */
 
 #include "ubpf/tools/ubpf_manager.h"
+#include "ospf_plugins_api.h"
+
 
 static void *readfile(const char *path, size_t maxlen, size_t *len);
 
@@ -10,8 +12,6 @@ static void *readfile(const char *path, size_t maxlen, size_t *len);
  * Register external function to the ubpf vm so that we can use them in the plugins
  */
 static int register_functions(struct ubpf_vm *vm) {
-    /* TODO: This function will be deleted */
-    if (ubpf_register(vm, 0x03, "inc_hello_count", inc_hello_count) == -1) return 0;
 
     /* Sends data to the monitoring server */
     if (ubpf_register(vm, 0x04, "send_data", send_data) == -1) return 0;
@@ -19,6 +19,9 @@ static int register_functions(struct ubpf_vm *vm) {
     /* Test functions to try manipulating OSPF var in plugins */
     if (ubpf_register(vm, 0x07, "set_pointer_toInt", set_pointer_toInt) == -1) return 0;
     if (ubpf_register(vm, 0x08, "read_int", read_int) == -1) return 0;
+
+    /* Getter functions */
+    if (ubpf_register(vm, 0x09, "interface_get_speed", interface_get_speed) == -1) return 0;
     return 1;
 }
 
@@ -116,6 +119,10 @@ plugin_t *load_elf_file(const char *code_filename) {
 }
 
 int release_elf(plugin_t *plugin) {
+    if (plugin->plugin_context != NULL) {
+        free(plugin->plugin_context);
+        plugin->plugin_context = NULL;
+    }
     if (plugin->vm != NULL) {
         ubpf_destroy(plugin->vm);
         plugin->vm = NULL;

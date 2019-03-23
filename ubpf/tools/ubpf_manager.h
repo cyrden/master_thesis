@@ -1,5 +1,6 @@
 #ifndef FRR_THESIS_UBPF_MANAGER_H
 #define FRR_THESIS_UBPF_MANAGER_H
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,14 +11,33 @@
 #include <elf.h>
 #include "ubpf/vm/inc/ubpf.h"
 #include "ubpf/vm/ubpf_int.h"
-#include "ospf_plugins_api.h"
+
 
 /*
- * Definition of a plugin (for the moment just encapsulate an ubpf vm, but I will probably add some more fields when needed)
+ * Context of a plugin. Contains a pointer to the original version of the arguments (keeps in invisible in plugin)
+ */
+typedef struct plugin_context {
+    void *original_arg; // pointer to the original version of the argument given to the plugin. Allow to modify the variables of OSPF using setters functions
+    int type_arg;
+    int insertion_point;
+} plugin_context_t;
+
+
+/*
+ * Definition of a plugin
  */
 typedef struct plugin {
     struct ubpf_vm *vm;
+    struct plugin_context *plugin_context;
 } plugin_t;
+
+/*
+ * Definition of the argument passed to an eBPF bytecode
+ */
+typedef struct plugin_arg {
+    void *argument;
+    struct plugin_context *plugin_context;
+} plugin_arg_t;
 
 /*
  * Loads an elf file in a ubpf virtual machine. The elf file should but output of clang.
@@ -25,7 +45,7 @@ typedef struct plugin {
 plugin_t *load_elf_file(const char *code_filename);
 
 /*
- * Release all the ressources
+ * Release all the resources
  */
 int release_elf(plugin_t *plugin);
 

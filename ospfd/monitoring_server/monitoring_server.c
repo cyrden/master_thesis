@@ -64,14 +64,14 @@ int main(int argc, char **argv) {
         if(msgrcv(msgid, &message, sizeof(message), 0, 0) != -1) { // blocking call --> good for us
             struct test *t;
             struct stream *s;
-            unsigned long *hello_count;
+            struct hello_struct *hello_struct;
             spf_mon_t *spf_mon;
             flood_ctxt_t *flood_ctxt;
             ism_change_state_ctxt_t *ism_ctxt;
             switch (message.mesg_type) {
-                case MAIN_PRE:
+                case MAIN:
                     t = (struct test *) message.mesg_text;
-                    printf("[MAIN_PRE]: %d %ld \n", t->a, t->b);
+                    printf("[MAIN]: %d %ld \n", t->a, t->b);
                     break;
                 case RCV_PACKET:
                     s = (struct stream *) message.mesg_text;
@@ -79,8 +79,8 @@ int main(int argc, char **argv) {
                     my_ospf_packet_dump(s);
                     break;
                 case SEND_HELLO_PRE:
-                    hello_count = (unsigned long *) message.mesg_text;
-                    printf("[HELLO_COUNT]: %ld \n", *hello_count);
+                    hello_struct = (struct hello_struct *) message.mesg_text;
+                    printf("[HELLO_COUNT]: %d, itf_speed: %d \n", hello_struct->hello_count, hello_struct->itf_speed);
                     break;
                 case SPF_CALC_POST:
                     spf_mon = (spf_mon_t *) message.mesg_text;

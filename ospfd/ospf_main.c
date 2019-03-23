@@ -62,11 +62,6 @@
 #include "plugins/plugins.h"
 #include "plugins_manager/plugins_manager.h"
 
-typedef struct test { // Simple structure used in the test plugin
-    int a;
-    long b;
-}test;
-
 /* ospfd privileges */
 zebra_capabilities_t _caps_p[] = {ZCAP_NET_RAW, ZCAP_BIND, ZCAP_NET_ADMIN,
                                   ZCAP_SYS_ADMIN};
@@ -266,11 +261,11 @@ int main(int argc, char **argv)
     }
     sleep(1); // wait for one second (for test plugin, could be removed)
 
-    if(plugins_tab.plugins[MAIN_PRE] != NULL) {
+    if(plugins_tab.plugins[MAIN] != NULL) {
         struct test *t = malloc(sizeof(struct test));
         t->a = 8;
         t->b = 101;
-        exec_loaded_code(plugins_tab.plugins[MAIN_PRE], (void *) t, sizeof(struct test));
+        exec_loaded_code(plugins_tab.plugins[MAIN], (void *) t, sizeof(struct test));
         free(t);
     }
 

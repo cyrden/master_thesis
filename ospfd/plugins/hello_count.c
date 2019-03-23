@@ -5,11 +5,15 @@
 #include "plugins.h"
 
 /*
- * Dummy plugin that increments the hello_count sends it to the message queue and returns the number of hello messages sent by this router
- * Takes no arguments
+ *
  */
-uint64_t hello_count(void) {
-    unsigned long hello_count = inc_hello_count();
-    send_data(SEND_HELLO_PRE, (void *) &hello_count); // send the hello count on the message queue
-    return hello_count;
+uint64_t hello_count(void *data) {
+    //struct plugin_arg *plugin_arg = (struct plugin_arg *) data;
+    struct hello_struct s;
+    //struct ospf_interface *arg = (struct ospf_interface *) plugin_arg->argument;
+    struct ospf_interface *arg = (struct ospf_interface *) data;
+    s.hello_count = arg->hello_out;
+    //interface_get_speed(plugin_arg->plugin_context, arg, &s.itf_speed);
+    interface_get_speed(arg, &s.itf_speed);
+    return send_data(SEND_HELLO_PRE, &s);
 }

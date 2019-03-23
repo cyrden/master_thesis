@@ -3720,7 +3720,25 @@ void ospf_hello_send(struct ospf_interface *oi)
 {
 	// Added by Cyril
     if(plugins_tab.plugins[SEND_HELLO_PRE] != NULL) {
-        exec_loaded_code(plugins_tab.plugins[SEND_HELLO_PRE], NULL, 0);
+        /* Definition of the context */
+        /*plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context = malloc(sizeof(struct plugin_context));
+        plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context->original_arg = (void *) oi; // context contains pointer to the OSPF structure
+        plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context->type_arg = OSPF_INTERFACE;
+		plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context->insertion_point = SEND_HELLO_PRE;*/
+
+        struct ospf_interface *arg = malloc(sizeof(struct ospf_interface));
+        memcpy((void *) arg, (void *) oi, sizeof(struct ospf_interface)); // arg contains a copy of the OSPF structure
+
+        /* Definition of the plugin argument */
+        struct plugin_arg *plugin_arg = malloc(sizeof(struct plugin_arg));
+        plugin_arg->argument = (void *) arg;
+        plugin_arg->plugin_context = NULL;
+        //plugin_arg->plugin_context = plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context;
+
+        exec_loaded_code(plugins_tab.plugins[SEND_HELLO_PRE], (void *) arg, sizeof(struct ospf_interface));
+        //free(plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context);
+        free(arg);
+        free(plugin_arg);
     }
 
 	/* If this is passive interface, do not send OSPF Hello. */
