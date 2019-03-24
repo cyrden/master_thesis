@@ -21,7 +21,7 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x08, "read_int", read_int) == -1) return 0;
 
     /* Getter functions */
-    if (ubpf_register(vm, 0x09, "interface_get_speed", interface_get_speed) == -1) return 0;
+    if (ubpf_register(vm, 0x09, "interface_get_count_speed", interface_get_count_speed) == -1) return 0;
     return 1;
 }
 

@@ -63,20 +63,21 @@ void set_pointer_toInt(void *pointer, int value) {
 }
 
 /*
- * Simple getter function that
+ * Simple getter function that sets the number of hello out and interface speed of the interface in the structure s.
  */
-//int interface_get_speed(struct plugin_context *plugin_context, struct ospf_interface *oi, int *speed) {
-int interface_get_speed(struct ospf_interface *oi, int *speed) {
-    //if(oi == NULL || plugin_context == NULL) { // check that plugin didn't send null pointer
-    if(oi == NULL) { // check that plugin didn't send null pointer
+int interface_get_count_speed(struct plugin_context *plugin_context, struct hello_struct *s) {
+    if(plugin_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
         return 0;
     }
-    // TODO: This doesn't work and moreover it is very dangerous. We still don't know if the context is ok and we already check in it insertion point value
-    /*if(plugin_context != plugins_tab.plugins[plugin_context->insertion_point]->plugin_context) {
+    // TODO: This check is hardcoded. What I need to do: store all context pointers somewhere and check here if the context pointer we received is ok.
+    if(plugin_context != plugins_tab.plugins[4]->plugin_context) {
         printf("The context is not valid \n");
         return 0;
-    }*/
-    memcpy((void *) &oi->ifp->speed, (void *) speed, sizeof(int)); // TODO: I guess here I should go in the context as well because it is trusted. The oi pointer has not been checked anywhere, it is just used by the plugins
+    }
+    struct arg_plugin_hello_send *arg = (struct arg_plugin_hello_send *) plugin_context->original_arg;
+    struct ospf_interface *oi = arg->oi;
+    memcpy((void *) &s->itf_speed, (void *) &oi->ifp->speed, sizeof(int)); // TODO: I guess here I should go in the context as well because it is trusted. The oi pointer has not been checked anywhere, it is just used by the plugins
+    memcpy((void *) &s->hello_count, (void *) &oi->hello_out, sizeof(int));
     return 1;
 }

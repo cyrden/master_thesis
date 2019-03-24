@@ -17,9 +17,8 @@
  * Context of a plugin. Contains a pointer to the original version of the arguments (keeps in invisible in plugin)
  */
 typedef struct plugin_context {
-    void *original_arg; // pointer to the original version of the argument given to the plugin. Allow to modify the variables of OSPF using setters functions
+    void *original_arg;
     int type_arg;
-    int insertion_point;
 } plugin_context_t;
 
 
@@ -30,14 +29,6 @@ typedef struct plugin {
     struct ubpf_vm *vm;
     struct plugin_context *plugin_context;
 } plugin_t;
-
-/*
- * Definition of the argument passed to an eBPF bytecode
- */
-typedef struct plugin_arg {
-    void *argument;
-    struct plugin_context *plugin_context;
-} plugin_arg_t;
 
 /*
  * Loads an elf file in a ubpf virtual machine. The elf file should but output of clang.

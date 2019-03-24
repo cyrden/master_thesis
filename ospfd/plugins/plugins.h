@@ -51,29 +51,6 @@
 
 
 /*
- * Possible insertion points for plugins TODO: It is probably a bad idea to list it here. Indeed, plugins.h is a user defined file and the insertion points must be defined in the implementation
- */
-#define MAIN 1
-#define ISM_CHANGE_STATE_PRE 2 // Change state (adjacency formation) - Interface state machine
-#define ISM_CHANGE_STATE_POST 3
-#define SEND_HELLO_PRE 4
-#define SEND_HELLO_POST 5
-#define SPF_CALC_PRE 6
-#define SPF_CALC_POST 7
-#define SEND_PACKET 8
-#define RCV_PACKET 9
-#define LSA_FLOOD_PRE 10
-#define LSA_FLOOD_POST 11
-
-#define SPF_TEST 13
-
-/*
- * Possible types of arguments
- */
-#define OSPF_INTERFACE 1
-
-
-/*
  * Structure with the context needed by plugin spf_time
  */
 typedef struct spf_mon {

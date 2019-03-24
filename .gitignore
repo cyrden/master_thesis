@@ -95,3 +95,9 @@ CMakeLists.txt
 cmake-build-debug/
 ospfd/monitoring_server/monitoring_server
 ospfd/plugins_manager/plugins_ui
+lib/getopt.c
+lib/getopt1.c
+tests/bgpd/test_peer_attr.c
+tests/lib/test_zmq.refout
+tools/checkpatch.pl
+

@@ -46,6 +46,7 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname) {
         perror("Failed to load file\n");
         return 0;
     }
+    tab->plugins[id]->plugin_context = malloc(sizeof(struct plugin_context));
     return 1;
 }
 
@@ -55,6 +56,7 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname) {
 void release_all_plugins(void) {
     for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
         if(plugins_tab.plugins[i] != NULL) {
+            free(plugins_tab.plugins[i]->plugin_context);
             release_elf(plugins_tab.plugins[i]);
         }
     }
