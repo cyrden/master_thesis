@@ -148,13 +148,19 @@ FRR_DAEMON_INFO(ospfd, OSPF, .vty_port = OSPF_VTY_PORT,
 
 
 plugins_tab_t plugins_tab; // struct which is a tab that contains all the plugins, need to be accessed from all files
+contexts_tab_t contexts_tab; // struct which is a tab that contains all the contexts of the plugins, need to be accessed from all files
 pthread_t th_user_msg;
 
 /* OSPFd main routine. */
 int main(int argc, char **argv)
 {
     // Added by Cyril
-    plugins_tab_init(&plugins_tab); // Initialization of the tab of plugins
+    if(plugins_tab_init(&plugins_tab) != 1) { // Initialization of the tab of plugins
+        fprintf(stderr, "Error while initiating the plugins tab");
+    }
+    if(contexts_tab_init(&contexts_tab) != 1) { // Initialization of the tab of contexts
+        fprintf(stderr, "Error while initiating the contexts tab");
+    }
 
     unsigned short instance = 0;
 

@@ -14,7 +14,7 @@
 
 
 /*
- * Context of a plugin. Contains a pointer to the original version of the arguments (keeps in invisible in plugin)
+ * Context of a plugin. Contains a pointer to the original version of the arguments (keeps it invisible in plugin)
  */
 typedef struct plugin_context {
     void *original_arg;
@@ -24,11 +24,21 @@ typedef struct plugin_context {
 
 /*
  * Definition of a plugin
+ * A plugin contains an ubpf vm, a pointer to his context and a pointer to his arguments
  */
 typedef struct plugin {
     struct ubpf_vm *vm;
     struct plugin_context *plugin_context;
+    void *arg;
 } plugin_t;
+
+/*
+ * All plugin_arg structures start with a pointer to the plugin_context (see ospf_plugins_api.h)
+ */
+typedef struct general_plugin_arg {
+    struct plugin_context *plugin_context;
+    void *rest;
+} general_plugin_arg_t;
 
 /*
  * Loads an elf file in a ubpf virtual machine. The elf file should but output of clang.

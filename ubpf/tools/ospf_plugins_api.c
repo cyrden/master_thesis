@@ -17,6 +17,17 @@ struct mesg_buffer {
     char mesg_text[SIZE_MESG];
 } message;
 
+static int check_context_validity(plugin_context_t *context) {
+    if(context == NULL) return 0;
+    for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
+        if(contexts_tab.contexts[i] != NULL && context == contexts_tab.contexts[i]) { // The pointer in argument corresponds to one of the context we allocated (user probably didn't cheat)
+            // TODO: I should think about testing what is inside as well maybe. --> There is more to do about security in the future (make a copy in the contexts tab to check that the pointer to original arg is valid ?)
+            return 1;
+        }
+    }
+    return 0;
+}
+
 /*
  * This function is used to put messages in the queue.
  * The arguments are the type of the plugin and a void* that contains the data the plugin wants to pass to the server (usually a structure specific to the plugin).
@@ -70,8 +81,7 @@ int interface_get_count_speed(struct plugin_context *plugin_context, struct hell
         printf("NULL pointer \n");
         return 0;
     }
-    // TODO: This check is hardcoded. What I need to do: store all context pointers somewhere and check here if the context pointer we received is ok.
-    if(plugin_context != plugins_tab.plugins[4]->plugin_context) {
+    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
         printf("The context is not valid \n");
         return 0;
     }

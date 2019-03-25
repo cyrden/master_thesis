@@ -57,8 +57,8 @@
 /* Structures to pass as argument to plugins */
 
 struct arg_plugin_hello_send {
+    struct plugin_context *plugin_context; // pointer to the context of the associated plugin // TODO: maybe use it as a int. But doesn't work, don't know why
     struct ospf_interface *oi;
-    struct plugin_context *plugin_context; // pointer to the context of the associated plugin
 };
 
 

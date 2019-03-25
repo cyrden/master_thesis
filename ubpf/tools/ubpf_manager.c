@@ -134,9 +134,17 @@ int release_elf(plugin_t *plugin) {
 
 uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len) {
     uint64_t ret;
+    if(plugin == NULL) return 0;
     if (plugin->vm == NULL) {
-        return EXIT_FAILURE;
+        return 0;
     }
-    ret = ubpf_exec(plugin->vm, mem, mem_len);
+    plugin->arg = malloc(mem_len); // because we will put a copy of the arg here
+    if(plugin->arg == NULL) {
+        fprintf(stderr, "Malloc of plugin -> arg failed");
+        return 0;
+    }
+    memcpy(plugin->arg, mem, mem_len); // Make a copy of mem to give it as argument field to plugin structure
+    plugin->plugin_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
+    ret = ubpf_exec(plugin->vm, plugin->arg, mem_len);
     return ret;
 }
