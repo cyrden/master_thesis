@@ -14,7 +14,7 @@ static void *readfile(const char *path, size_t maxlen, size_t *len);
 static int register_functions(struct ubpf_vm *vm) {
 
     /* Generic functions */
-    if (ubpf_register(vm, 0x01, "memcpy", memcpy) == -1) return 0;
+    if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
 
     /* Sends data to the monitoring server */
     if (ubpf_register(vm, 0x04, "send_data", send_data) == -1) return 0;
