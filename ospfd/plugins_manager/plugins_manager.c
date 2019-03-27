@@ -104,7 +104,7 @@ void *plugins_manager(void *tab) {
     inject_plugins((plugins_tab_t *) tab, SEND_HELLO_PRE, "/plugins/hello_count.o");
     //inject_plugins((plugins_tab_t *) tab, SPF_CALC_POST, "/plugins/spf_time.o");
     //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o");
-    //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/plugins/lsa_flood.o");
+    inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/plugins/lsa_flood.o");
     inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE_PRE, "/plugins/ism_change_state.o");
 
     /*while(1) { // In that loop receives messages from UI to inject plugins

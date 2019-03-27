@@ -258,16 +258,16 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 	       struct ospf_lsa *current, struct ospf_lsa *new)
 {
     // Added by Cyril
-    if(plugins_tab.plugins[LSA_FLOOD_PRE] != NULL && new->data->type == OSPF_ROUTER_LSA) {
-        // TODO: try add memory in structure to store lsas. Then put don't free memory and reuse the same one each time in plugins. Just change current lsa and plugin will update the rest
-        flood_ctxt_t *ctxt = malloc(sizeof(flood_ctxt_t));
-        memcpy((void *) &ctxt->lsah, (void *) new->data, sizeof(struct lsa_header));
-        memcpy((void *) &ctxt->rlsa, (void *) new->data, sizeof(struct router_lsa));
-        exec_loaded_code(plugins_tab.plugins[LSA_FLOOD_PRE], (void *) ctxt, sizeof(flood_ctxt_t));
-        free(ctxt);
+    if(plugins_tab.plugins[LSA_FLOOD_PRE] != NULL) {
+		/* Definition of the plugin argument */
+		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
+		plugin_arg->lsa = new;
+		plugin_arg->plugin_context = plugins_tab.plugins[LSA_FLOOD_PRE]->plugin_context; // Put a pointer to the context of the plugin
+		plugins_tab.plugins[LSA_FLOOD_PRE]->plugin_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
+
+		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD_PRE], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood));
+		free(plugin_arg);
     }
-    // TODO: Here try to write a plugin that take a context as argument. This context is a structure with the received lsa and a tab that is updated by the plugin to check if
-    // TODO: lsa from two side received. There is also a time to say the delay between reception of the two LSAs
 
 	struct ospf_interface *oi;
 	int lsa_ack_flag;
@@ -364,13 +364,15 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 		ospf->rx_lsa_count++;
 
 	// Added by Cyril
-	if(plugins_tab.plugins[LSA_FLOOD_POST] != NULL && new->data->type == OSPF_ROUTER_LSA) {
-		// TODO: try add memory in structure to store lsas. Then put don't free memory and reuse the same one each time in plugins. Just change current lsa and plugin will update the rest
-		flood_ctxt_t *ctxt = malloc(sizeof(flood_ctxt_t));
-		memcpy((void *) &ctxt->lsah, (void *) new->data, sizeof(struct lsa_header));
-		memcpy((void *) &ctxt->rlsa, (void *) new->data, sizeof(struct router_lsa));
-		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD_POST], (void *) ctxt, sizeof(flood_ctxt_t));
-		free(ctxt);
+	if(plugins_tab.plugins[LSA_FLOOD_POST] != NULL) {
+		/* Definition of the plugin argument */
+		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
+		plugin_arg->lsa = new;
+		plugin_arg->plugin_context = plugins_tab.plugins[LSA_FLOOD_PRE]->plugin_context; // Put a pointer to the context of the plugin
+		plugins_tab.plugins[LSA_FLOOD_PRE]->plugin_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
+
+		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD_PRE], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood));
+		free(plugin_arg);
 	}
 
 	return 0;

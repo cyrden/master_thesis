@@ -59,15 +59,4 @@ typedef struct spf_mon {
     struct in_addr area_id;
 } spf_mon_t;
 
-typedef struct flood_ctxt {
-    struct lsa_header lsah;
-    struct router_lsa rlsa;
-} flood_ctxt_t;
-
-/*typedef struct ism_change_state_ctxt {
-    int old_state;
-    int new_state;
-    char oi_name[50];
-} ism_change_state_ctxt_t;*/
-
 #endif //PROJECT_PLUGINS_H

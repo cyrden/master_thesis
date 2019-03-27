@@ -26,6 +26,8 @@ static int register_functions(struct ubpf_vm *vm) {
     /* Getter functions */
     if (ubpf_register(vm, 0x09, "get_ospf_interface", get_ospf_interface) == -1) return 0;
     if (ubpf_register(vm, 0x11, "get_interface", get_interface) == -1) return 0;
+    if (ubpf_register(vm, 0x12, "get_ospf_lsa", get_ospf_lsa) == -1) return 0;
+    if (ubpf_register(vm, 0x13, "get_lsa_header", get_lsa_header) == -1) return 0;
 
     /* Functions from OSPF */
     if (ubpf_register(vm, 0x10, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;

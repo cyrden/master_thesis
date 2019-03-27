@@ -63,6 +63,12 @@ struct arg_plugin_ism_change_state {
     int new_state;
 };
 
+#define ARG_PLUGIN_LSA_FLOOD 2
+struct arg_plugin_lsa_flood {
+    struct plugin_context *plugin_context;
+    struct ospf_lsa *lsa;
+};
+
 
 uint64_t send_data(int type, void *txt);
 
@@ -73,5 +79,9 @@ void set_pointer_toInt(void *pointer, int value);
 int get_ospf_interface(struct plugin_context *plugin_context, struct ospf_interface *oi);
 
 int get_interface(struct plugin_context *plugin_context, struct interface *ifp);
+
+int get_ospf_lsa(struct plugin_context *plugin_context, struct ospf_lsa *lsa);
+
+int get_lsa_header(struct plugin_context *plugin_context, struct lsa_header *lsah);
 
 #endif //OSPF_PLUGINS_API_H

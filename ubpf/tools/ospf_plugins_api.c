@@ -130,3 +130,51 @@ int get_interface(struct plugin_context *plugin_context, struct interface *ifp) 
     }
     return 1;
 }
+
+/*
+ * Getter function to get an ospf_lsa
+ */
+int get_ospf_lsa(struct plugin_context *plugin_context, struct ospf_lsa *lsa) {
+    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
+        printf("The context is not valid \n");
+        return 0;
+    }
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (plugin_context->type_arg) {
+        case ARG_PLUGIN_LSA_FLOOD:
+            memcpy(lsa, ((struct arg_plugin_lsa_flood *) plugin_context->original_arg)->lsa, sizeof(struct ospf_lsa));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
+/*
+ * Getter function to get an lsa_header
+ */
+int get_lsa_header(struct plugin_context *plugin_context, struct lsa_header *lsah) {
+    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
+        printf("The context is not valid \n");
+        return 0;
+    }
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (plugin_context->type_arg) {
+        case ARG_PLUGIN_LSA_FLOOD:
+            memcpy(lsah, ((struct arg_plugin_lsa_flood *) plugin_context->original_arg)->lsa->data, sizeof(struct lsa_header));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}

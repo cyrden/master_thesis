@@ -65,8 +65,8 @@ int main(int argc, char **argv) {
             struct test *t;
             struct stream *s;
             struct hello_struct *hello_struct;
+            struct lsa_header *lsah;
             spf_mon_t *spf_mon;
-            flood_ctxt_t *flood_ctxt;
             struct ism_change_state *ism;
             switch (message.mesg_type) {
                 case MAIN:
@@ -93,10 +93,9 @@ int main(int argc, char **argv) {
                     my_ospf_packet_dump(s);
                     break;
                 case LSA_FLOOD_PRE:
-                    flood_ctxt = (flood_ctxt_t *) message.mesg_text;
+                    lsah = (struct lsa_header *) message.mesg_text;
                     printf("[LSA_FLOOD_PRE]: \n");
-                    my_ospf_lsa_header_dump(&flood_ctxt->lsah);
-                    test_print_router_lsa(&flood_ctxt->rlsa);
+                    my_ospf_lsa_header_dump(lsah);
                     break;
                 case ISM_CHANGE_STATE_PRE:
                     ism = (struct ism_change_state *) message.mesg_text;
