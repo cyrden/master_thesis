@@ -47,18 +47,20 @@
 #define LSA_FLOOD_POST 11
 #define SPF_TEST 13
 
-/*
- * Possible types of arguments
- */
-#define OSPF_INTERFACE 1
-
-
 
 /* Structures to pass as argument to plugins */
 
+#define ARG_PLUGIN_HELLO_SEND 0
 struct arg_plugin_hello_send {
     struct plugin_context *plugin_context; // pointer to the context of the associated plugin // TODO: maybe use it as a int. But doesn't work, don't know why
     struct ospf_interface *oi;
+};
+
+#define ARG_PLUGIN_ISM_CHANGE_STATE 1
+struct arg_plugin_ism_change_state {
+    struct plugin_context *plugin_context;
+    struct ospf_interface *oi;
+    int new_state;
 };
 
 
@@ -68,6 +70,8 @@ int read_int(void *pointer);
 
 void set_pointer_toInt(void *pointer, int value);
 
-int interface_get_count_speed(struct plugin_context *plugin_context, struct hello_struct *s);
+int get_ospf_interface(struct plugin_context *plugin_context, struct ospf_interface *oi);
+
+int get_interface(struct plugin_context *plugin_context, struct interface *ifp);
 
 #endif //OSPF_PLUGINS_API_H

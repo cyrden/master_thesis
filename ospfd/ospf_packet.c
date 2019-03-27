@@ -3724,6 +3724,7 @@ void ospf_hello_send(struct ospf_interface *oi)
 		struct arg_plugin_hello_send *plugin_arg = malloc(sizeof(struct arg_plugin_hello_send));
 		plugin_arg->oi = oi;
 		plugin_arg->plugin_context = plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context; // Put a pointer to the context of the plugin
+        plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context->type_arg = ARG_PLUGIN_HELLO_SEND;
 
         exec_loaded_code(plugins_tab.plugins[SEND_HELLO_PRE], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send));
         free(plugin_arg);

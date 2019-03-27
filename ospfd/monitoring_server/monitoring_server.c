@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
             struct hello_struct *hello_struct;
             spf_mon_t *spf_mon;
             flood_ctxt_t *flood_ctxt;
-            ism_change_state_ctxt_t *ism_ctxt;
+            struct ism_change_state *ism;
             switch (message.mesg_type) {
                 case MAIN:
                     t = (struct test *) message.mesg_text;
@@ -99,9 +99,9 @@ int main(int argc, char **argv) {
                     test_print_router_lsa(&flood_ctxt->rlsa);
                     break;
                 case ISM_CHANGE_STATE_PRE:
-                    ism_ctxt = (ism_change_state_ctxt_t *) message.mesg_text;
+                    ism = (struct ism_change_state *) message.mesg_text;
                     printf("[ISM_CHANGE_STATE_PRE] : Interface: %s old: %s, new: %s \n",
-                            ism_ctxt->oi_name, lookup_msg(ospf_ism_state_msg, ism_ctxt->old_state, NULL), lookup_msg(ospf_ism_state_msg, ism_ctxt->new_state, NULL));
+                            ism->oi_name, lookup_msg(ospf_ism_state_msg, ism->old_state, NULL), lookup_msg(ospf_ism_state_msg, ism->new_state, NULL));
                     break;
                 default:
                     printf("[ERROR]: message has no valid type: %ld \n", message.mesg_type);

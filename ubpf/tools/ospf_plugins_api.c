@@ -20,8 +20,12 @@ struct mesg_buffer {
 static int check_context_validity(plugin_context_t *context) {
     if(context == NULL) return 0;
     for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
-        if(contexts_tab.contexts[i] != NULL && context == contexts_tab.contexts[i]) { // The pointer in argument corresponds to one of the context we allocated (user probably didn't cheat)
-            // TODO: I should think about testing what is inside as well maybe. --> There is more to do about security in the future (make a copy in the contexts tab to check that the pointer to original arg is valid ?)
+        if(contexts_tab.contexts[i] != NULL && context == contexts_tab.contexts[i]) {
+            /*
+             * The pointer in argument corresponds to one of the context we allocated (user probably didn't cheat)
+             * If we are here, we know the pointer to the context (trusted part) has not been dereferenced. We also know that a user could only dereference this pointer,
+             * he could not dereference pointers inside because it would make the eBPF VM crash (unallowed memory access)
+             */
             return 1;
         }
     }
@@ -74,9 +78,9 @@ void set_pointer_toInt(void *pointer, int value) {
 }
 
 /*
- * Simple getter function that sets the number of hello out and interface speed of the interface in the structure s.
+ * Getter function to get an ospf_interface.
  */
-int interface_get_count_speed(struct plugin_context *plugin_context, struct hello_struct *s) {
+int get_ospf_interface(struct plugin_context *plugin_context, struct ospf_interface *oi) {
     if(plugin_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
         return 0;
@@ -85,9 +89,44 @@ int interface_get_count_speed(struct plugin_context *plugin_context, struct hell
         printf("The context is not valid \n");
         return 0;
     }
-    struct arg_plugin_hello_send *arg = (struct arg_plugin_hello_send *) plugin_context->original_arg;
-    struct ospf_interface *oi = arg->oi;
-    memcpy((void *) &s->itf_speed, (void *) &oi->ifp->speed, sizeof(int)); // TODO: I guess here I should go in the context as well because it is trusted. The oi pointer has not been checked anywhere, it is just used by the plugins
-    memcpy((void *) &s->hello_count, (void *) &oi->hello_out, sizeof(int));
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (plugin_context->type_arg) {
+        case ARG_PLUGIN_HELLO_SEND:
+            memcpy(oi, ((struct arg_plugin_hello_send *) plugin_context->original_arg)->oi, sizeof(struct ospf_interface));
+            break;
+        case ARG_PLUGIN_ISM_CHANGE_STATE:
+            memcpy(oi, ((struct arg_plugin_ism_change_state *) plugin_context->original_arg)->oi, sizeof(struct ospf_interface));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
+/*
+ * Getter function to get an interface.
+ */
+int get_interface(struct plugin_context *plugin_context, struct interface *ifp) {
+    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
+        printf("The context is not valid \n");
+        return 0;
+    }
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (plugin_context->type_arg) {
+        case ARG_PLUGIN_HELLO_SEND:
+            memcpy(ifp, ((struct arg_plugin_hello_send *) plugin_context->original_arg)->oi->ifp, sizeof(struct interface));
+            break;
+        case ARG_PLUGIN_ISM_CHANGE_STATE:
+            memcpy(ifp, ((struct arg_plugin_ism_change_state *) plugin_context->original_arg)->oi->ifp, sizeof(struct interface));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
     return 1;
 }

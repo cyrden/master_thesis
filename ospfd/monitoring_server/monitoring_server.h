@@ -20,5 +20,11 @@ struct hello_struct{
     int itf_speed;
 };
 
+struct ism_change_state {
+    int old_state;
+    int new_state;
+    char oi_name[50];
+};
+
 
 #endif //PROJECT_MONITORING_SERVER_H

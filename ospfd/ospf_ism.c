@@ -528,12 +528,21 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 {
 	// Added by Cyril
 	if(plugins_tab.plugins[ISM_CHANGE_STATE_PRE] != NULL) {
-		ism_change_state_ctxt_t *ctxt = malloc(sizeof(ism_change_state_ctxt_t));
+		/* Definition of the plugin argument */
+		struct arg_plugin_ism_change_state *plugin_arg = malloc(sizeof(struct arg_plugin_ism_change_state));
+		plugin_arg->oi = oi;
+		plugin_arg->new_state = state;
+		plugin_arg->plugin_context = plugins_tab.plugins[ISM_CHANGE_STATE_PRE]->plugin_context; // Put a pointer to the context of the plugin
+
+		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE_PRE], (void *) plugin_arg, sizeof(struct arg_plugin_ism_change_state));
+		free(plugin_arg);
+
+		/*ism_change_state_ctxt_t *ctxt = malloc(sizeof(ism_change_state_ctxt_t));
 		memcpy((void *) &ctxt->old_state, &oi->state, sizeof(int));
 		ctxt->new_state = state;
 		memcpy((void *) &ctxt->oi_name, IF_NAME(oi), 50*sizeof(char));
 		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE_PRE], (void *) ctxt, sizeof(ism_change_state_ctxt_t));
-		free(ctxt);
+		free(ctxt);*/
 	}
 
 	int old_state;
@@ -587,12 +596,7 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 
 	// Added by Cyril
 	if(plugins_tab.plugins[ISM_CHANGE_STATE_POST] != NULL) {
-		ism_change_state_ctxt_t *ctxt = malloc(sizeof(ism_change_state_ctxt_t));
-		memcpy((void *) &ctxt->old_state, &oi->state, sizeof(int));
-		ctxt->new_state = state;
-		memcpy((void *) &ctxt->oi_name, IF_NAME(oi), 50*sizeof(char));
-		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE_POST], (void *) ctxt, sizeof(ism_change_state_ctxt_t));
-		free(ctxt);
+
 	}
 }
 
