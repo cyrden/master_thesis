@@ -271,7 +271,7 @@ int main(int argc, char **argv)
         struct test *t = malloc(sizeof(struct test));
         t->a = 8;
         t->b = 101;
-        exec_loaded_code(plugins_tab.plugins[MAIN], (void *) t, sizeof(struct test));
+        exec_loaded_code(plugins_tab.plugins[MAIN], (void *) t, sizeof(struct test), PRE);
         free(t);
     }
 

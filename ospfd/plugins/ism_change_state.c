@@ -12,5 +12,5 @@ uint64_t ism_change_state(void *data) {
     s.new_state = plugin_arg->new_state; // can be accessed directly
     s.old_state = oi.state;
     strcpy(s.oi_name, ospf_if_name_string(&oi));
-    return send_data(ISM_CHANGE_STATE_PRE, (void *) &s);
+    return send_data(ISM_CHANGE_STATE, (void *) &s);
 }

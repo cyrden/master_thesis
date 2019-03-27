@@ -860,7 +860,7 @@ static int ospf_write(struct thread *thread)
 
 		// Added by Cyril
         if(plugins_tab.plugins[SEND_PACKET] != NULL) {
-            exec_loaded_code(plugins_tab.plugins[SEND_PACKET], (void *) op->s, sizeof(struct ospf_packet));
+            exec_loaded_code(plugins_tab.plugins[SEND_PACKET], (void *) op->s, sizeof(struct ospf_packet), PRE);
         }
 
 		/* Now delete packet from queue. */
@@ -3147,8 +3147,8 @@ int ospf_read(struct thread *thread)
 	}
 
 
-    if(plugins_tab.plugins[RCV_PACKET] != NULL) {
-        exec_loaded_code(plugins_tab.plugins[RCV_PACKET], (void *) ibuf, sizeof(struct stream));
+    if(plugins_tab.plugins[RCV_PACKET] != NULL) {// TODO: this doesn't work anymore because we give a copy and not the original
+        exec_loaded_code(plugins_tab.plugins[RCV_PACKET], (void *) ibuf, sizeof(struct stream), PRE);
     }
 
 
@@ -3719,14 +3719,14 @@ int ospf_hello_reply_timer(struct thread *thread)
 void ospf_hello_send(struct ospf_interface *oi)
 {
 	// Added by Cyril
-    if(plugins_tab.plugins[SEND_HELLO_PRE] != NULL) {
+    if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->vm[PRE] != NULL) {
 		/* Definition of the plugin argument */
 		struct arg_plugin_hello_send *plugin_arg = malloc(sizeof(struct arg_plugin_hello_send));
 		plugin_arg->oi = oi;
-		plugin_arg->plugin_context = plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context; // Put a pointer to the context of the plugin
-        plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context->type_arg = ARG_PLUGIN_HELLO_SEND;
+		plugin_arg->plugin_context = plugins_tab.plugins[SEND_HELLO]->plugin_context; // Put a pointer to the context of the plugin
+        plugins_tab.plugins[SEND_HELLO]->plugin_context->type_arg = ARG_PLUGIN_HELLO_SEND;
 
-        exec_loaded_code(plugins_tab.plugins[SEND_HELLO_PRE], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send));
+        exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), PRE);
         free(plugin_arg);
     }
 
@@ -3795,14 +3795,14 @@ void ospf_hello_send(struct ospf_interface *oi)
 	}
 
 	// Added by Cyril
-	if(plugins_tab.plugins[SEND_HELLO_POST] != NULL) {
+	if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->vm[POST] != NULL) {
         /* Definition of the plugin argument */
         struct arg_plugin_hello_send *plugin_arg = malloc(sizeof(struct arg_plugin_hello_send));
         plugin_arg->oi = oi;
-        plugin_arg->plugin_context = plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context; // Put a pointer to the context of the plugin
-        plugins_tab.plugins[SEND_HELLO_PRE]->plugin_context->type_arg = ARG_PLUGIN_HELLO_SEND;
+        plugin_arg->plugin_context = plugins_tab.plugins[SEND_HELLO]->plugin_context; // Put a pointer to the context of the plugin
+        plugins_tab.plugins[SEND_HELLO]->plugin_context->type_arg = ARG_PLUGIN_HELLO_SEND;
 
-        exec_loaded_code(plugins_tab.plugins[SEND_HELLO_PRE], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send));
+        exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), POST);
         free(plugin_arg);
 	}
 }

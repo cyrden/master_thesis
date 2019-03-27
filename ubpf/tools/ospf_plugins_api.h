@@ -32,19 +32,22 @@
 #include "ospfd/monitoring_server/monitoring_server.h"
 
 /*
+ * PRE, POST, REPLACE
+ */
+#define PRE 0
+#define REP 1
+#define POST 2
+
+/*
  * Possible insertion points for plugins
  */
 #define MAIN 1
-#define ISM_CHANGE_STATE_PRE 2
-#define ISM_CHANGE_STATE_POST 3
-#define SEND_HELLO_PRE 4
-#define SEND_HELLO_POST 5
-#define SPF_CALC_PRE 6
-#define SPF_CALC_POST 7
+#define ISM_CHANGE_STATE 2
+#define SEND_HELLO 4
+#define SPF_CALC 6
 #define SEND_PACKET 8
 #define RCV_PACKET 9
-#define LSA_FLOOD_PRE 10
-#define LSA_FLOOD_POST 11
+#define LSA_FLOOD 10
 #define SPF_TEST 13
 
 

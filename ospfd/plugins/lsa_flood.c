@@ -11,5 +11,5 @@ uint64_t lsa_flood(void *data) {
     struct lsa_header lsah;
     if(get_lsa_header(plugin_arg->plugin_context, &lsah) != 1) return 0; // Error in external function
     // I could do something with de lsa here.
-    return send_data(LSA_FLOOD_PRE, (void *) &lsah);
+    return send_data(LSA_FLOOD, (void *) &lsah);
 }

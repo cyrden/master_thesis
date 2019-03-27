@@ -1168,11 +1168,11 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			       struct route_table *new_rtrs)
 {
 	// Added by Cyril
-	if(plugins_tab.plugins[SPF_CALC_PRE] != NULL) {
-		exec_loaded_code(plugins_tab.plugins[SPF_CALC_PRE], NULL, 0);
+	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[PRE] != NULL) {
+		exec_loaded_code(plugins_tab.plugins[SPF_CALC], NULL, 0, PRE);
 	}
 
-	// Added by Cyril
+	// Added by Cyril // TODO Delete this, this modifies the implem ...
 	struct timeval t1, t2;
 	gettimeofday (&t1, NULL);
 
@@ -1276,7 +1276,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 
 	// Added by Cyril
 	if(plugins_tab.plugins[SPF_TEST] != NULL) {
-		exec_loaded_code(plugins_tab.plugins[SPF_TEST], &area->spf_calculation, sizeof(int));
+		exec_loaded_code(plugins_tab.plugins[SPF_TEST], &area->spf_calculation, sizeof(int), PRE);
 	}
 
 	monotime(&area->ospf->ts_spf);
@@ -1295,12 +1295,12 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 	gettimeofday (&t2, NULL);
 
 	// Added by Cyril
-	if(plugins_tab.plugins[SPF_CALC_POST] != NULL) {
+	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[POST] != NULL) {
 		spf_mon_t *spf_mon = malloc(sizeof(spf_mon_t));
 		memcpy((void *) &spf_mon->spf_count, (void *) &area->spf_calculation, sizeof(int));
 		spf_mon->time_spf = ((t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec) - t1.tv_usec;
 		memcpy((void *) &spf_mon->area_id, (void *) &area->area_id, sizeof(struct in_addr));
-		exec_loaded_code(plugins_tab.plugins[SPF_CALC_POST], spf_mon, sizeof(spf_mon_t));
+		exec_loaded_code(plugins_tab.plugins[SPF_CALC], spf_mon, sizeof(spf_mon_t), POST);
 		free(spf_mon);
 	}
 }

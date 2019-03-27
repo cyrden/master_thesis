@@ -19,5 +19,5 @@ uint64_t hello_count(void *data) {
     if(ret2 != 1) return 0; // Error in the external function
     s.hello_count = oi_read.hello_out;
     s.itf_speed = ifp.speed;
-    return send_data(SEND_HELLO_PRE, &s);
+    return send_data(SEND_HELLO, &s);
 }

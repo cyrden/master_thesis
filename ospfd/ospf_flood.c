@@ -258,14 +258,14 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 	       struct ospf_lsa *current, struct ospf_lsa *new)
 {
     // Added by Cyril
-    if(plugins_tab.plugins[LSA_FLOOD_PRE] != NULL) {
+    if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->vm[PRE] != NULL) {
 		/* Definition of the plugin argument */
 		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
 		plugin_arg->lsa = new;
-		plugin_arg->plugin_context = plugins_tab.plugins[LSA_FLOOD_PRE]->plugin_context; // Put a pointer to the context of the plugin
-		plugins_tab.plugins[LSA_FLOOD_PRE]->plugin_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
+		plugin_arg->plugin_context = plugins_tab.plugins[LSA_FLOOD]->plugin_context; // Put a pointer to the context of the plugin
+		plugins_tab.plugins[LSA_FLOOD]->plugin_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
 
-		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD_PRE], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood));
+		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood), PRE);
 		free(plugin_arg);
     }
 
@@ -364,14 +364,14 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 		ospf->rx_lsa_count++;
 
 	// Added by Cyril
-	if(plugins_tab.plugins[LSA_FLOOD_POST] != NULL) {
+	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->vm[POST] != NULL) {
 		/* Definition of the plugin argument */
 		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
 		plugin_arg->lsa = new;
-		plugin_arg->plugin_context = plugins_tab.plugins[LSA_FLOOD_PRE]->plugin_context; // Put a pointer to the context of the plugin
-		plugins_tab.plugins[LSA_FLOOD_PRE]->plugin_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
+		plugin_arg->plugin_context = plugins_tab.plugins[LSA_FLOOD]->plugin_context; // Put a pointer to the context of the plugin
+		plugins_tab.plugins[LSA_FLOOD]->plugin_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
 
-		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD_PRE], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood));
+		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood), POST);
 		free(plugin_arg);
 	}
 

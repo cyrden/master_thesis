@@ -39,6 +39,9 @@ int plugins_tab_init(plugins_tab_t *tab) {
     if(tab == NULL) return 0;
     for (int i = 0; i < MAX_NBR_PLUGINS; i++) {
         tab->plugins[i] = NULL;
+        /*tab->plugins[i]->vm[PRE] = NULL;
+        tab->plugins[i]->vm[REP] = NULL;
+        tab->plugins[i]->vm[POST] = NULL;*/
     }
     return 1;
 }
@@ -46,16 +49,21 @@ int plugins_tab_init(plugins_tab_t *tab) {
 /*
  * Injects a plugin (file elfname) at a specific position (identified by the id)
  */
-static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname) {
+static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int pos) {
     if(id < 0 || id > MAX_NBR_PLUGINS-1) {
         fprintf(stderr, "Id not valid \n");
         return 0;
     }
-    if(tab->plugins[id] != NULL) {
-        fprintf(stderr, "There is already a loaded plugin at this position \n");
-        return 0;
+    if(tab->plugins[id] == NULL) { // First BPF code injected
+        tab->plugins[id] = (plugin_t *)malloc(sizeof(plugin_t));
+        if (!tab->plugins[id]) {
+            return 0;
+        }
+        tab->plugins[id]->vm[PRE] = NULL;
+        tab->plugins[id]->vm[REP] = NULL;
+        tab->plugins[id]->vm[POST] = NULL;
     }
-    tab->plugins[id] = load_elf_file(elfname);
+    if(load_elf_file(tab->plugins[id], elfname, pos) == NULL) return 0;
     if (tab->plugins[id] == NULL) {
         perror("Failed to load file\n");
         return 0;
@@ -72,7 +80,11 @@ void release_all_plugins(void) {
     for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
         if(plugins_tab.plugins[i] != NULL) {
             free(plugins_tab.plugins[i]->plugin_context);
-            release_elf(plugins_tab.plugins[i]);
+            release_elf(plugins_tab.plugins[i], PRE);
+            release_elf(plugins_tab.plugins[i], REP);
+            release_elf(plugins_tab.plugins[i], POST);
+            free(plugins_tab.plugins[i]);
+            plugins_tab.plugins[i] = NULL;
         }
     }
 }
@@ -99,13 +111,13 @@ void *plugins_manager(void *tab) {
     }
     // TODO: The following lines will be removed. Just used for debugging purposes
     //inject_plugins((plugins_tab_t *) tab, SPF_TEST, "/plugins/spf_test.o");
-    inject_plugins((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o"); // Injects the plugin at position MAIN (beginning of main)
-    //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o");
-    inject_plugins((plugins_tab_t *) tab, SEND_HELLO_PRE, "/plugins/hello_count.o");
-    //inject_plugins((plugins_tab_t *) tab, SPF_CALC_POST, "/plugins/spf_time.o");
-    //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o");
-    inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/plugins/lsa_flood.o");
-    inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE_PRE, "/plugins/ism_change_state.o");
+    inject_plugins((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o", PRE);
+    //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o"); //TODO: Broken
+    inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
+    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", POST);
+    //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o"); // TODO: Broken
+    //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/plugins/lsa_flood.o");
+    inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
 
     /*while(1) { // In that loop receives messages from UI to inject plugins
         printf("Wait for message \n");

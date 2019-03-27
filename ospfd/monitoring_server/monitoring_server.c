@@ -78,11 +78,11 @@ int main(int argc, char **argv) {
                     printf("[RCV_PACKET]: \n");
                     my_ospf_packet_dump(s);
                     break;
-                case SEND_HELLO_PRE:
+                case SEND_HELLO:
                     hello_struct = (struct hello_struct *) message.mesg_text;
                     printf("[HELLO_COUNT]: %d, itf_speed: %d \n", hello_struct->hello_count, hello_struct->itf_speed);
                     break;
-                case SPF_CALC_POST:
+                case SPF_CALC:
                     spf_mon = (spf_mon_t *) message.mesg_text;
                     printf("[SPF_CALC_POST]: # spf calculation: %d, time spent calculation of Dijstra for area %s: %ld usec \n",
                             spf_mon->spf_count, inet_ntoa(spf_mon->area_id), spf_mon->time_spf);
@@ -92,12 +92,12 @@ int main(int argc, char **argv) {
                     printf("[SEND_PACKET]: \n");
                     my_ospf_packet_dump(s);
                     break;
-                case LSA_FLOOD_PRE:
+                case LSA_FLOOD:
                     lsah = (struct lsa_header *) message.mesg_text;
                     printf("[LSA_FLOOD_PRE]: \n");
                     my_ospf_lsa_header_dump(lsah);
                     break;
-                case ISM_CHANGE_STATE_PRE:
+                case ISM_CHANGE_STATE:
                     ism = (struct ism_change_state *) message.mesg_text;
                     printf("[ISM_CHANGE_STATE_PRE] : Interface: %s old: %s, new: %s \n",
                             ism->oi_name, lookup_msg(ospf_ism_state_msg, ism->old_state, NULL), lookup_msg(ospf_ism_state_msg, ism->new_state, NULL));

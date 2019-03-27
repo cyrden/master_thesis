@@ -24,12 +24,14 @@ typedef struct plugin_context {
 
 /*
  * Definition of a plugin
- * A plugin contains an ubpf vm, a pointer to his context and a pointer to his arguments
+ * A plugin contains 3 ubpf vm (PRE, REP, POST), a pointer to his context and a pointer to his arguments
+ * There is also a heap shared by the 3 eBPF code to communicate together
  */
 typedef struct plugin {
-    struct ubpf_vm *vm;
+    struct ubpf_vm *vm[3];
     struct plugin_context *plugin_context;
     void *arg;
+    void *heap;
 } plugin_t;
 
 /*
@@ -43,16 +45,16 @@ typedef struct general_plugin_arg {
 /*
  * Loads an elf file in a ubpf virtual machine. The elf file should but output of clang.
  */
-plugin_t *load_elf_file(const char *code_filename);
+plugin_t *load_elf_file(plugin_t *plugin, const char *code_filename, int pos);
 
 /*
  * Release all the resources
  */
-int release_elf(plugin_t *plugin);
+int release_elf(plugin_t *plugin, int pos);
 
 /*
  * Executes the code loaded in the ubpf virtual machine
  */
-uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len);
+uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len, int pos);
 
 #endif //FRR_THESIS_UBPF_MANAGER_H
