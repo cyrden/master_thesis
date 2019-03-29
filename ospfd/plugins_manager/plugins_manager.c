@@ -122,7 +122,11 @@ void *plugins_manager(void *tab) {
         printf("Wait for message \n");
         if (msgrcv(msgid, &message, sizeof(message), 0, 0) != -1) { // blocking call
             // TODO: check that it is a valid location etc
-            if(!inject_plugins((plugins_tab_t *) tab, (int) message.mesg_type, (const char *) message.mesg_text)) {
+            int loc;
+            int pos;
+            pos = ((int) message.mesg_type) % 100;
+            loc = (((int) message.mesg_type) - pos) / 100;
+            if(!inject_plugins((plugins_tab_t *) tab, loc, (const char *) message.mesg_text, pos)) {
                 printf("Failed to inject plugin \n");
             }
         }
