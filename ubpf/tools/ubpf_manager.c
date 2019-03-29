@@ -39,6 +39,9 @@ static int register_functions(struct ubpf_vm *vm) {
 
     /* Functions from OSPF */
     if (ubpf_register(vm, 0x10, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
+
+
+    if (ubpf_register(vm, 0x30, "ospf_my_lsa_originate", ospf_my_lsa_originate) == -1) return 0;
     return 1;
 }
 

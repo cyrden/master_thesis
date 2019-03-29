@@ -26,7 +26,7 @@ typedef struct plugin_context {
 
 /*
  * Definition of a plugin
- * A plugin contains 3 ubpf vm (PRE, REP, POST), a pointer to his context and a pointer to his arguments
+ * A plugin contains 3 ubpf vm (PRE, REP, POST), a pointer to its context and a pointer to its arguments
  */
 typedef struct plugin {
     struct ubpf_vm *vm[3];

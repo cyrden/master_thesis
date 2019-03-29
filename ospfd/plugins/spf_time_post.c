@@ -16,5 +16,6 @@ uint64_t spf_count(void *data) {
     mon.area_id = area.area_id;
     mon.spf_count = area.spf_calculation;
     heap_free(plugin_arg->plugin_context);
+    ospf_my_lsa_originate(NULL, 10, &area);
     return send_data(SPF_CALC, (void *) &mon);
 }
