@@ -1169,7 +1169,14 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 {
 	// Added by Cyril
 	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[PRE] != NULL) {
-		exec_loaded_code(plugins_tab.plugins[SPF_CALC], NULL, 0, PRE);
+		/* Definition of the plugin argument */
+		struct arg_plugin_spf_calc *plugin_arg = malloc(sizeof(struct arg_plugin_spf_calc));
+		plugin_arg->area = area;
+		plugin_arg->plugin_context = plugins_tab.plugins[SPF_CALC]->plugin_context; // Put a pointer to the context of the plugin
+		plugins_tab.plugins[SPF_CALC]->plugin_context->type_arg = ARG_PLUGIN_SPF_CALC;
+
+		exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), PRE);
+		free(plugin_arg);
 	}
 
 	// Added by Cyril // TODO Delete this, this modifies the implem ...
@@ -1272,7 +1279,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 	ospf_canonical_nexthops_free(area->spf);
 
 	/* Increment SPF Calculation Counter. */
-	//area->spf_calculation++;
+	area->spf_calculation++;
 
 	// Added by Cyril
 	if(plugins_tab.plugins[SPF_TEST] != NULL) {
@@ -1296,12 +1303,20 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 
 	// Added by Cyril
 	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[POST] != NULL) {
-		spf_mon_t *spf_mon = malloc(sizeof(spf_mon_t));
+		/* Definition of the plugin argument */
+		struct arg_plugin_spf_calc *plugin_arg = malloc(sizeof(struct arg_plugin_spf_calc));
+		plugin_arg->area = area;
+		plugin_arg->plugin_context = plugins_tab.plugins[SPF_CALC]->plugin_context; // Put a pointer to the context of the plugin
+		plugins_tab.plugins[SPF_CALC]->plugin_context->type_arg = ARG_PLUGIN_SPF_CALC;
+
+		exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), POST);
+		free(plugin_arg);
+		/*spf_mon_t *spf_mon = malloc(sizeof(spf_mon_t));
 		memcpy((void *) &spf_mon->spf_count, (void *) &area->spf_calculation, sizeof(int));
 		spf_mon->time_spf = ((t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec) - t1.tv_usec;
 		memcpy((void *) &spf_mon->area_id, (void *) &area->area_id, sizeof(struct in_addr));
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC], spf_mon, sizeof(spf_mon_t), POST);
-		free(spf_mon);
+		free(spf_mon);*/
 	}
 }
 

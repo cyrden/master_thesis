@@ -39,9 +39,6 @@ int plugins_tab_init(plugins_tab_t *tab) {
     if(tab == NULL) return 0;
     for (int i = 0; i < MAX_NBR_PLUGINS; i++) {
         tab->plugins[i] = NULL;
-        /*tab->plugins[i]->vm[PRE] = NULL;
-        tab->plugins[i]->vm[REP] = NULL;
-        tab->plugins[i]->vm[POST] = NULL;*/
     }
     return 1;
 }
@@ -69,6 +66,7 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
         return 0;
     }
     tab->plugins[id]->plugin_context = malloc(sizeof(struct plugin_context));
+    tab->plugins[id]->plugin_context->heap = NULL;
     contexts_tab.contexts[id] = tab->plugins[id]->plugin_context; // Store the pointer to every context created
     return 1;
 }
@@ -114,7 +112,8 @@ void *plugins_manager(void *tab) {
     inject_plugins((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o", PRE);
     //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o"); //TODO: Broken
     inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
-    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", POST);
+    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
+    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
     //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o"); // TODO: Broken
     //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/plugins/lsa_flood.o");
     inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);

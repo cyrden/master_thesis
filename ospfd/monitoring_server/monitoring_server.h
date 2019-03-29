@@ -26,5 +26,11 @@ struct ism_change_state {
     char oi_name[50];
 };
 
+struct spf_mon {
+    int spf_count;
+    long time_spf;
+    struct in_addr area_id;
+};
+
 
 #endif //PROJECT_MONITORING_SERVER_H

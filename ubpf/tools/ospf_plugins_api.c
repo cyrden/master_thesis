@@ -32,6 +32,62 @@ static int check_context_validity(plugin_context_t *context) {
     return 0;
 }
 
+int heap_malloc(struct plugin_context *plugin_context, size_t size) {
+    if(plugin_context == NULL) {
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(check_context_validity(plugin_context) != 1) {
+        printf("The context is not valid \n");
+        return 0;
+    }
+    plugin_context->heap = malloc(size);
+    if(plugin_context->heap == NULL) return 0;
+    return 1;
+}
+
+int heap_free(struct plugin_context *plugin_context) {
+    if(plugin_context == NULL) {
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(check_context_validity(plugin_context) != 1) {
+        printf("The context is not valid \n");
+        return 0;
+    }
+    free(plugin_context->heap);
+    plugin_context->heap = NULL;
+    return 1;
+}
+
+int heap_get(struct plugin_context *plugin_context, void *heap_copy, size_t size) {
+    if(plugin_context == NULL) {
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(check_context_validity(plugin_context) != 1) {
+        printf("The context is not valid \n");
+        return 0;
+    }
+    memcpy(heap_copy, plugin_context->heap, size);
+    return 1;
+}
+
+int heap_set(struct plugin_context *plugin_context, void *val, size_t size) {
+    if(plugin_context == NULL) {
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(check_context_validity(plugin_context) != 1) {
+        printf("The context is not valid \n");
+        return 0;
+    }
+    memcpy(plugin_context->heap, val, size);
+    return 1;
+}
+
+
+
 /*
  * This function is used to put messages in the queue.
  * The arguments are the type of the plugin and a void* that contains the data the plugin wants to pass to the server (usually a structure specific to the plugin).
@@ -55,7 +111,9 @@ uint64_t send_data(int type, void *data) {
     }
 
     message.mesg_type = type;
-    memcpy((void *) message.mesg_text, data, SIZE_MESG*sizeof(char)); //copy the data to the message
+    if(data != NULL) {
+        memcpy((void *) message.mesg_text, data, SIZE_MESG * sizeof(char)); //copy the data to the message
+    }
     msgsnd(msgid, &message, sizeof(message), 0);
 
     return 0;
@@ -171,6 +229,30 @@ int get_lsa_header(struct plugin_context *plugin_context, struct lsa_header *lsa
     switch (plugin_context->type_arg) {
         case ARG_PLUGIN_LSA_FLOOD:
             memcpy(lsah, ((struct arg_plugin_lsa_flood *) plugin_context->original_arg)->lsa->data, sizeof(struct lsa_header));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
+/*
+ * Getter function to get an ospf area
+ */
+int get_ospf_area(struct plugin_context *plugin_context, struct ospf_area *area) {
+    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
+        printf("The context is not valid \n");
+        return 0;
+    }
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (plugin_context->type_arg) {
+        case ARG_PLUGIN_SPF_CALC:
+            memcpy(area, ((struct arg_plugin_spf_calc *) plugin_context->original_arg)->area, sizeof(struct ospf_area));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");

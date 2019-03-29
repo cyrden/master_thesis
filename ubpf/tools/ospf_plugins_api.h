@@ -72,6 +72,20 @@ struct arg_plugin_lsa_flood {
     struct ospf_lsa *lsa;
 };
 
+#define ARG_PLUGIN_SPF_CALC 3
+struct arg_plugin_spf_calc {
+    struct plugin_context *plugin_context;
+    struct ospf_area *area;
+};
+
+
+int heap_malloc(struct plugin_context *plugin_context, size_t size);
+
+int heap_free(struct plugin_context *plugin_context);
+
+int heap_get(struct plugin_context *plugin_context, void *heap_copy, size_t size);
+
+int heap_set(struct plugin_context *plugin_context, void *val, size_t size);
 
 uint64_t send_data(int type, void *txt);
 
@@ -86,5 +100,7 @@ int get_interface(struct plugin_context *plugin_context, struct interface *ifp);
 int get_ospf_lsa(struct plugin_context *plugin_context, struct ospf_lsa *lsa);
 
 int get_lsa_header(struct plugin_context *plugin_context, struct lsa_header *lsah);
+
+int get_ospf_area(struct plugin_context *plugin_context, struct ospf_area *area);
 
 #endif //OSPF_PLUGINS_API_H

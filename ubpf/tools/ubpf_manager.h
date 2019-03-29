@@ -14,24 +14,24 @@
 
 
 /*
- * Context of a plugin. Contains a pointer to the original version of the arguments (keeps it invisible in plugin)
+ * Context of a plugin. Contains a pointer to the original version of the arguments and the type of the argument (keeps it invisible in plugin)
+ * It also contains a heap shared between the 3 potential bytecodes of this plugin
  */
 typedef struct plugin_context {
     void *original_arg;
     int type_arg;
+    void *heap;
 } plugin_context_t;
 
 
 /*
  * Definition of a plugin
  * A plugin contains 3 ubpf vm (PRE, REP, POST), a pointer to his context and a pointer to his arguments
- * There is also a heap shared by the 3 eBPF code to communicate together
  */
 typedef struct plugin {
     struct ubpf_vm *vm[3];
     struct plugin_context *plugin_context;
     void *arg;
-    void *heap;
 } plugin_t;
 
 /*

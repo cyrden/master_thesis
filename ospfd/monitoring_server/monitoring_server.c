@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
             struct stream *s;
             struct hello_struct *hello_struct;
             struct lsa_header *lsah;
-            spf_mon_t *spf_mon;
+            struct spf_mon *spf_mon;
             struct ism_change_state *ism;
             switch (message.mesg_type) {
                 case MAIN:
@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
                     printf("[HELLO_COUNT]: %d, itf_speed: %d \n", hello_struct->hello_count, hello_struct->itf_speed);
                     break;
                 case SPF_CALC:
-                    spf_mon = (spf_mon_t *) message.mesg_text;
+                    spf_mon = (struct spf_mon *) message.mesg_text;
                     printf("[SPF_CALC_POST]: # spf calculation: %d, time spent calculation of Dijstra for area %s: %ld usec \n",
                             spf_mon->spf_count, inet_ntoa(spf_mon->area_id), spf_mon->time_spf);
                     break;

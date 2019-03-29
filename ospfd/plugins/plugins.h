@@ -49,14 +49,4 @@
 #include "../../ubpf/tools/ospf_plugins_api.h"
 #include "../monitoring_server/monitoring_server.h"
 
-
-/*
- * Structure with the context needed by plugin spf_time
- */
-typedef struct spf_mon {
-    int spf_count;
-    long time_spf;
-    struct in_addr area_id;
-} spf_mon_t;
-
 #endif //PROJECT_PLUGINS_H
