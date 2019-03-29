@@ -1179,10 +1179,6 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		free(plugin_arg);
 	}
 
-	// Added by Cyril // TODO Delete this, this modifies the implem ...
-	struct timeval t1, t2;
-	gettimeofday (&t1, NULL);
-
 	struct pqueue *candidate;
 	struct vertex *v;
 
@@ -1297,9 +1293,6 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 	 * as deconstructor.
 	 */
 	list_delete_all_node(&vertex_list);
-
-	// Added by Cyril
-	gettimeofday (&t2, NULL);
 
 	// Added by Cyril
 	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[POST] != NULL) {
