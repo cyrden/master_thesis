@@ -110,18 +110,18 @@ void ospf_lsdb_add(struct ospf_lsdb *lsdb, struct ospf_lsa *lsa)
 	struct route_node *rn;
 
 	table = lsdb->type[lsa->data->type].db;
-	ls_prefix_set(&lp, lsa);
-	rn = route_node_get(table, (struct prefix *)&lp);
+    ls_prefix_set(&lp, lsa);
+    rn = route_node_get(table, (struct prefix *) &lp);
 
-	/* nothing to do? */
-	if (rn->info && rn->info == lsa) {
-		route_unlock_node(rn);
-		return;
-	}
+    /* nothing to do? */
+    if (rn->info && rn->info == lsa) {
+        route_unlock_node(rn);
+        return;
+    }
 
-	/* purge old entry? */
-	if (rn->info)
-		ospf_lsdb_delete_entry(lsdb, rn);
+    /* purge old entry? */
+    if (rn->info)
+        ospf_lsdb_delete_entry(lsdb, rn);
 
 	if (IS_LSA_SELF(lsa))
 		lsdb->type[lsa->data->type].count_self++;

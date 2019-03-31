@@ -276,123 +276,69 @@ int get_ospf_area(struct plugin_context *plugin_context, struct ospf_area *area)
 
 /* TODO: Try add a LSA type */
 
-#define MY_OSPF_LSA 15
+#define OSPF_MY_LSA 15
 
-static void stream_put_ospf_metric(struct stream *s, uint32_t metric_value)
+/* Create new my-LSA. */
+static struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area)
 {
-    uint32_t metric;
-    char *mp;
-
-    /* Put 0 metric. TOS metric is not supported. */
-    metric = htonl(metric_value);
-    mp = (char *)&metric;
-    mp++;
-    stream_put(s, mp, 3);
-}
-
-/* summary-ASBR-LSA related functions. */
-static void ospf_my_lsa_body_set(struct stream *s, struct prefix *p,
-                                           uint32_t metric)
-{
-    /* Put Network Mask. */
-    stream_put_ipv4(s, (uint32_t)0);
-
-    /* Set # TOS. */
-    stream_putc(s, (uint8_t)0);
-
-    /* Set metric. */
-    stream_put_ospf_metric(s, metric);
-}
-
-static struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area,
-                                                  struct prefix *p,
-                                                  uint32_t metric,
-                                                  struct in_addr id)
-{
+    struct ospf *ospf = area->ospf;
     struct stream *s;
-    struct ospf_lsa *new;
     struct lsa_header *lsah;
+    struct ospf_lsa *new;
     int length;
 
-    if (id.s_addr == 0xffffffff) {
-        /* Maybe Link State ID not available. */
-        if (IS_DEBUG_OSPF(lsa, LSA_GENERATE))
-            zlog_debug(
-                    "LSA[Type%d]: Link ID not available, can't originate",
-                    MY_OSPF_LSA);
-        return NULL;
-    }
-
-    if (IS_DEBUG_OSPF(lsa, LSA_GENERATE))
-        zlog_debug("LSA[Type3]: Create summary-LSA instance");
-
-    /* Create new stream for LSA. */
+    /* Create a stream for LSA. */
     s = stream_new(OSPF_MAX_LSA_SIZE);
-    lsah = (struct lsa_header *)STREAM_DATA(s);
+    /* Set LSA common header fields. */
+    lsa_header_set(s, LSA_OPTIONS_GET(area) | LSA_OPTIONS_NSSA_GET(area),
+                   OSPF_MY_LSA, ospf->router_id, ospf->router_id);
 
-    lsa_header_set(s, LSA_OPTIONS_GET(area), MY_OSPF_LSA, id,
-                   area->ospf->router_id);
-
-    /* Set summary-LSA body fields. */
-    ospf_my_lsa_body_set(s, p, metric);
+    /* Set router-LSA body fields. */
+    //ospf_router_lsa_body_set(&s, area); //TODO: Do I need body for the moment ? Maybe header is enough
 
     /* Set length. */
     length = stream_get_endp(s);
+    lsah = (struct lsa_header *)STREAM_DATA(s);
     lsah->length = htons(length);
 
-    /* Create OSPF LSA instance. */
+    /* Now, create OSPF LSA instance. */
     new = ospf_lsa_new_and_data(length);
+
     new->area = area;
-    SET_FLAG(new->flags, OSPF_LSA_SELF | OSPF_LSA_SELF_CHECKED);
+    SET_FLAG(new->flags, OSPF_LSA_SELF | OSPF_LSA_SELF_CHECKED); //TODO: don't know what are these flags
     new->vrf_id = area->ospf->vrf_id;
 
-    /* Copy LSA to store. */
+    /* Copy LSA data to store, discard stream. */
     memcpy(new->data, lsah, length);
     stream_free(s);
 
     return new;
 }
 
-/* Originate summary-ASBR-LSA. */
-struct ospf_lsa *ospf_my_lsa_originate(struct prefix_ipv4 *p,
-                                                 uint32_t metric,
-                                                 struct ospf_area *area)
+struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area)
 {
     struct ospf_lsa *new;
-    struct in_addr id;
 
-    id = ospf_lsa_unique_id(area->ospf, area->lsdb, MY_OSPF_LSA,
-                            p);
-
-    if (id.s_addr == 0xffffffff) {
-        /* Maybe Link State ID not available. */
-        if (IS_DEBUG_OSPF(lsa, LSA_GENERATE))
-            zlog_debug(
-                    "LSA[Type%d]: Link ID not available, can't originate",
-                    MY_OSPF_LSA);
+    /* Create new my-LSA instance. */
+    if ((new = ospf_my_lsa_new(area)) == NULL) {
+        zlog_err("%s: ospf_my_lsa_new returned NULL", __func__);
         return NULL;
     }
 
-    /* Create new summary-LSA instance. */
-    new = ospf_my_lsa_new(area, (struct prefix *)p, metric, id);
-    if (!new)
+    /* Sanity check. */
+    if (new->data->adv_router.s_addr == 0) {
+        ospf_lsa_discard(new);
         return NULL;
+    }
 
     /* Install LSA to LSDB. */
-    new = ospf_lsa_install(area->ospf, NULL, new);
+    new = ospf_lsa_install(area->ospf, NULL, new); //TODO: Yes we need to install our new LSA. But for the moment the function don't know --> put a plugin to handle our LSA
 
     /* Update LSA origination count. */
     area->ospf->lsa_originate_count++;
 
     /* Flooding new LSA through area. */
-    ospf_flood_through_area(area, NULL, new);
-
-    if (IS_DEBUG_OSPF(lsa, LSA_GENERATE)) {
-        zlog_debug("LSA[Type%d:%s]: Originate summary-ASBR-LSA %p",
-                   new->data->type, inet_ntoa(new->data->id),
-                   (void *)new);
-        ospf_lsa_header_dump(new->data);
-    }
+    //ospf_flood_through_area(area, NULL, new); // TODO: for the moment no flood
 
     return new;
 }

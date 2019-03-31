@@ -52,6 +52,12 @@
 #include "ospfd/ospf_abr.h"
 #include "ospfd/ospf_errors.h"
 
+
+// Added by Cyril
+#include "ubpf/tools/ubpf_manager.h"
+#include "ubpf/tools/ospf_plugins_api.h"
+
+
 uint32_t get_metric(uint8_t *metric)
 {
 	uint32_t m;
@@ -2580,192 +2586,216 @@ void ospf_discard_from_db(struct ospf *ospf, struct ospf_lsdb *lsdb,
 }
 
 struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
-				  struct ospf_lsa *lsa)
-{
-	struct ospf_lsa *new = NULL;
-	struct ospf_lsa *old = NULL;
-	struct ospf_lsdb *lsdb = NULL;
-	int rt_recalc;
-
-	/* Set LSDB. */
-	switch (lsa->data->type) {
-	/* kevinm */
-	case OSPF_AS_NSSA_LSA:
-		if (lsa->area)
-			lsdb = lsa->area->lsdb;
-		else
-			lsdb = ospf->lsdb;
-		break;
-	case OSPF_AS_EXTERNAL_LSA:
-	case OSPF_OPAQUE_AS_LSA:
-		lsdb = ospf->lsdb;
-		break;
-	default:
-		if (lsa->area)
-			lsdb = lsa->area->lsdb;
-		break;
-	}
-
-	assert(lsdb);
-
-	/*  RFC 2328 13.2.  Installing LSAs in the database
-
-	      Installing a new LSA in the database, either as the result of
-	      flooding or a newly self-originated LSA, may cause the OSPF
-	      routing table structure to be recalculated.  The contents of the
-	      new LSA should be compared to the old instance, if present.  If
-	      there is no difference, there is no need to recalculate the
-	      routing table. When comparing an LSA to its previous instance,
-	      the following are all considered to be differences in contents:
-
-		  o   The LSA's Options field has changed.
-
-		  o   One of the LSA instances has LS age set to MaxAge, and
-		      the other does not.
-
-		  o   The length field in the LSA header has changed.
-
-		  o   The body of the LSA (i.e., anything outside the 20-byte
-		      LSA header) has changed. Note that this excludes changes
-		      in LS Sequence Number and LS Checksum.
-
-	*/
-	/* Look up old LSA and determine if any SPF calculation or incremental
-	   update is needed */
-	old = ospf_lsdb_lookup(lsdb, lsa);
-
-	/* Do comparision and record if recalc needed. */
-	rt_recalc = 0;
-	if (old == NULL || ospf_lsa_different(old, lsa))
-		rt_recalc = 1;
-
-	/*
-	   Sequence number check (Section 14.1 of rfc 2328)
-	   "Premature aging is used when it is time for a self-originated
-	    LSA's sequence number field to wrap.  At this point, the current
-	    LSA instance (having LS sequence number MaxSequenceNumber) must
-	    be prematurely aged and flushed from the routing domain before a
-	    new instance with sequence number equal to InitialSequenceNumber
-	    can be originated. "
-	 */
-
-	if (ntohl(lsa->data->ls_seqnum) - 1 == OSPF_MAX_SEQUENCE_NUMBER) {
-		if (ospf_lsa_is_self_originated(ospf, lsa)) {
-			lsa->data->ls_seqnum = htonl(OSPF_MAX_SEQUENCE_NUMBER);
-
-			if (!IS_LSA_MAXAGE(lsa))
-				lsa->flags |= OSPF_LSA_PREMATURE_AGE;
-			lsa->data->ls_age = htons(OSPF_LSA_MAXAGE);
-
-			if (IS_DEBUG_OSPF(lsa, LSA_REFRESH)) {
-				zlog_debug(
-					"ospf_lsa_install() Premature Aging "
-					"lsa 0x%p, seqnum 0x%x",
-					(void *)lsa,
-					ntohl(lsa->data->ls_seqnum));
-				ospf_lsa_header_dump(lsa->data);
-			}
-		} else {
-			if (IS_DEBUG_OSPF(lsa, LSA_GENERATE)) {
-				zlog_debug(
-					"ospf_lsa_install() got an lsa with seq 0x80000000 "
-					"that was not self originated. Ignoring\n");
-				ospf_lsa_header_dump(lsa->data);
-			}
-			return old;
+				  struct ospf_lsa *lsa) {
+	if(plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[REP] != NULL) { // TODO: This is not the best way to do ... Duplicate
+		// REP
+		if (plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[PRE] != NULL) {
+			// PRE
 		}
+		// REP
+		if (plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[POST] != NULL) {
+			// POST
+		}
+		return NULL; // TODO: Plugin can return something ?
 	}
+	else {
+		if (plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[PRE] != NULL) {
+			// PRE
+		}
+		struct ospf_lsa *new = NULL;
+		struct ospf_lsa *old = NULL;
+		struct ospf_lsdb *lsdb = NULL;
+		int rt_recalc;
 
-	/* discard old LSA from LSDB */
-	if (old != NULL)
-		ospf_discard_from_db(ospf, lsdb, lsa);
+		/* Set LSDB. */
+		switch (lsa->data->type) {
+			/* kevinm */
+			case OSPF_AS_NSSA_LSA:
+				if (lsa->area)
+					lsdb = lsa->area->lsdb;
+				else
+					lsdb = ospf->lsdb;
+				break;
+			case OSPF_AS_EXTERNAL_LSA:
+			case OSPF_OPAQUE_AS_LSA:
+				lsdb = ospf->lsdb;
+				break;
+			default:
+				if (lsa->area)
+					lsdb = lsa->area->lsdb;
+				break;
+		}
 
-	/* Calculate Checksum if self-originated?. */
-	if (IS_LSA_SELF(lsa))
-		ospf_lsa_checksum(lsa->data);
+		assert(lsdb);
 
-	/* Insert LSA to LSDB. */
-	ospf_lsdb_add(lsdb, lsa);
-	lsa->lsdb = lsdb;
+		/*  RFC 2328 13.2.  Installing LSAs in the database
 
-	/* Do LSA specific installation process. */
-	switch (lsa->data->type) {
-	case OSPF_ROUTER_LSA:
-		new = ospf_router_lsa_install(ospf, lsa, rt_recalc);
-		break;
-	case OSPF_NETWORK_LSA:
-		assert(oi);
-		new = ospf_network_lsa_install(ospf, oi, lsa, rt_recalc);
-		break;
-	case OSPF_SUMMARY_LSA:
-		new = ospf_summary_lsa_install(ospf, lsa, rt_recalc);
-		break;
-	case OSPF_ASBR_SUMMARY_LSA:
-		new = ospf_summary_asbr_lsa_install(ospf, lsa, rt_recalc);
-		break;
-	case OSPF_AS_EXTERNAL_LSA:
-		new = ospf_external_lsa_install(ospf, lsa, rt_recalc);
-		break;
-	case OSPF_OPAQUE_LINK_LSA:
+              Installing a new LSA in the database, either as the result of
+              flooding or a newly self-originated LSA, may cause the OSPF
+              routing table structure to be recalculated.  The contents of the
+              new LSA should be compared to the old instance, if present.  If
+              there is no difference, there is no need to recalculate the
+              routing table. When comparing an LSA to its previous instance,
+              the following are all considered to be differences in contents:
+
+              o   The LSA's Options field has changed.
+
+              o   One of the LSA instances has LS age set to MaxAge, and
+                  the other does not.
+
+              o   The length field in the LSA header has changed.
+
+              o   The body of the LSA (i.e., anything outside the 20-byte
+                  LSA header) has changed. Note that this excludes changes
+                  in LS Sequence Number and LS Checksum.
+
+        */
+		/* Look up old LSA and determine if any SPF calculation or incremental
+           update is needed */
+		zlog_notice("Before lsdb lookup \n");
+		ospf_lsa_header_dump(lsa->data);
+        old = ospf_lsdb_lookup(lsdb, lsa);
+        zlog_notice("After lsdb lookup \n");
+
+
+
+        /* Do comparision and record if recalc needed. */
+        rt_recalc = 0;
+        if (old == NULL || ospf_lsa_different(old, lsa))
+            rt_recalc = 1;
+        /*
+           Sequence number check (Section 14.1 of rfc 2328)
+           "Premature aging is used when it is time for a self-originated
+            LSA's sequence number field to wrap.  At this point, the current
+            LSA instance (having LS sequence number MaxSequenceNumber) must
+            be prematurely aged and flushed from the routing domain before a
+            new instance with sequence number equal to InitialSequenceNumber
+            can be originated. "
+         */
+
+		if (ntohl(lsa->data->ls_seqnum) - 1 == OSPF_MAX_SEQUENCE_NUMBER) {
+			if (ospf_lsa_is_self_originated(ospf, lsa)) {
+				lsa->data->ls_seqnum = htonl(OSPF_MAX_SEQUENCE_NUMBER);
+
+				if (!IS_LSA_MAXAGE(lsa))
+					lsa->flags |= OSPF_LSA_PREMATURE_AGE;
+				lsa->data->ls_age = htons(OSPF_LSA_MAXAGE);
+
+				if (IS_DEBUG_OSPF(lsa, LSA_REFRESH)) {
+					zlog_debug(
+							"ospf_lsa_install() Premature Aging "
+							"lsa 0x%p, seqnum 0x%x",
+							(void *) lsa,
+							ntohl(lsa->data->ls_seqnum));
+					ospf_lsa_header_dump(lsa->data);
+				}
+			} else {
+				if (IS_DEBUG_OSPF(lsa, LSA_GENERATE)) {
+					zlog_debug(
+							"ospf_lsa_install() got an lsa with seq 0x80000000 "
+							"that was not self originated. Ignoring\n");
+					ospf_lsa_header_dump(lsa->data);
+				}
+				return old;
+			}
+		}
+
+		/* discard old LSA from LSDB */
+		if (old != NULL)
+			ospf_discard_from_db(ospf, lsdb, lsa);
+
+		/* Calculate Checksum if self-originated?. */
 		if (IS_LSA_SELF(lsa))
-			lsa->oi = oi; /* Specify outgoing ospf-interface for
-					 this LSA. */
-		else {
-			/* Incoming "oi" for this LSA has set at LSUpd
-			 * reception. */
-		}
-	/* Fallthrough */
-	case OSPF_OPAQUE_AREA_LSA:
-	case OSPF_OPAQUE_AS_LSA:
-		new = ospf_opaque_lsa_install(lsa, rt_recalc);
-		break;
-	case OSPF_AS_NSSA_LSA:
-		new = ospf_external_lsa_install(ospf, lsa, rt_recalc);
-	default: /* type-6,8,9....nothing special */
-		break;
-	}
+			ospf_lsa_checksum(lsa->data);
 
-	if (new == NULL)
-		return new; /* Installation failed, cannot proceed further --
+		/* Insert LSA to LSDB. */
+		ospf_lsdb_add(lsdb, lsa); // TODO: fail because no lsdb table for my LSA type ...
+		lsa->lsdb = lsdb;
+
+		/* Do LSA specific installation process. */
+		switch (lsa->data->type) {
+			case OSPF_ROUTER_LSA:
+				new = ospf_router_lsa_install(ospf, lsa, rt_recalc);
+				break;
+			case OSPF_NETWORK_LSA:
+				assert(oi);
+				new = ospf_network_lsa_install(ospf, oi, lsa, rt_recalc);
+				break;
+			case OSPF_SUMMARY_LSA:
+				new = ospf_summary_lsa_install(ospf, lsa, rt_recalc);
+				break;
+			case OSPF_ASBR_SUMMARY_LSA:
+				new = ospf_summary_asbr_lsa_install(ospf, lsa, rt_recalc);
+				break;
+			case OSPF_AS_EXTERNAL_LSA:
+				new = ospf_external_lsa_install(ospf, lsa, rt_recalc);
+				break;
+			case OSPF_OPAQUE_LINK_LSA:
+				if (IS_LSA_SELF(lsa))
+					lsa->oi = oi; /* Specify outgoing ospf-interface for
+					 this LSA. */
+				else {
+					/* Incoming "oi" for this LSA has set at LSUpd
+                     * reception. */
+				}
+				/* Fallthrough */
+			case OSPF_OPAQUE_AREA_LSA:
+			case OSPF_OPAQUE_AS_LSA:
+				new = ospf_opaque_lsa_install(lsa, rt_recalc);
+				break;
+			case OSPF_AS_NSSA_LSA:
+				new = ospf_external_lsa_install(ospf, lsa, rt_recalc);
+			default: /* type-6,8,9....nothing special */
+				break;
+		}
+
+		if (new == NULL)
+			return new; /* Installation failed, cannot proceed further --
 			       endo. */
 
-	/* Debug logs. */
-	if (IS_DEBUG_OSPF(lsa, LSA_INSTALL)) {
-		char area_str[INET_ADDRSTRLEN];
+		/* Debug logs. */
+		if (IS_DEBUG_OSPF(lsa, LSA_INSTALL)) {
+			char area_str[INET_ADDRSTRLEN];
 
-		switch (lsa->data->type) {
-		case OSPF_AS_EXTERNAL_LSA:
-		case OSPF_OPAQUE_AS_LSA:
-		case OSPF_AS_NSSA_LSA:
-			zlog_debug("LSA[%s]: Install %s", dump_lsa_key(new),
-				   lookup_msg(ospf_lsa_type_msg,
-					      new->data->type, NULL));
-			break;
-		default:
-			strlcpy(area_str, inet_ntoa(new->area->area_id),
-				sizeof(area_str));
-			zlog_debug("LSA[%s]: Install %s to Area %s",
-				   dump_lsa_key(new),
-				   lookup_msg(ospf_lsa_type_msg,
-					      new->data->type, NULL),
-				   area_str);
-			break;
+			switch (lsa->data->type) {
+				case OSPF_AS_EXTERNAL_LSA:
+				case OSPF_OPAQUE_AS_LSA:
+				case OSPF_AS_NSSA_LSA:
+					zlog_debug("LSA[%s]: Install %s", dump_lsa_key(new),
+							   lookup_msg(ospf_lsa_type_msg,
+										  new->data->type, NULL));
+					break;
+				default:
+					strlcpy(area_str, inet_ntoa(new->area->area_id),
+							sizeof(area_str));
+					zlog_debug("LSA[%s]: Install %s to Area %s",
+							   dump_lsa_key(new),
+							   lookup_msg(ospf_lsa_type_msg,
+										  new->data->type, NULL),
+							   area_str);
+					break;
+			}
 		}
-	}
 
-	/*
-	   If received LSA' ls_age is MaxAge, or lsa is being prematurely aged
-	   (it's getting flushed out of the area), set LSA on MaxAge LSA list.
-	 */
-	if (IS_LSA_MAXAGE(new)) {
-		if (IS_DEBUG_OSPF(lsa, LSA_INSTALL))
-			zlog_debug("LSA[Type%d:%s]: Install LSA 0x%p, MaxAge",
-				   new->data->type, inet_ntoa(new->data->id),
-				   (void *)lsa);
-		ospf_lsa_maxage(ospf, lsa);
-	}
+		/*
+           If received LSA' ls_age is MaxAge, or lsa is being prematurely aged
+           (it's getting flushed out of the area), set LSA on MaxAge LSA list.
+         */
+		if (IS_LSA_MAXAGE(new)) {
+			if (IS_DEBUG_OSPF(lsa, LSA_INSTALL))
+				zlog_debug("LSA[Type%d:%s]: Install LSA 0x%p, MaxAge",
+						   new->data->type, inet_ntoa(new->data->id),
+						   (void *) lsa);
+			ospf_lsa_maxage(ospf, lsa);
+		}
 
-	return new;
+		// Added by Cyril
+		if (plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[POST] != NULL) {
+			// POST
+		}
+
+		return new;
+	}
 }
 
 
