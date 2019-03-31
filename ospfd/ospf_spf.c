@@ -51,7 +51,7 @@
 
 // Added by Cyril
 #include "ubpf/tools/ubpf_manager.h"
-#include "ospfd/plugins/plugins.h"
+#include "ubpf/tools/ospf_plugins_api.h"
 #include "lib/log.h"
 
 /* Variables to ensure a SPF scheduled log message is printed only once */
@@ -1178,6 +1178,8 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), PRE);
 		free(plugin_arg);
 	}
+
+	//ospf_my_lsa_originate(area);
 
 	struct pqueue *candidate;
 	struct vertex *v;
