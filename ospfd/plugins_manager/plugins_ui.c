@@ -36,22 +36,22 @@ int main(int argc, char **argv) {
     char strpos[10];
     long position;
     while(1) { // Todo, check if valid values for inputs & deal with string inputs instead of IDs
-        printf("Please enter the path to your BPF file \n");
+        printf("--> Please enter the path to your BPF file \n");
         fgets(path, 50, stdin);
         path[strlen(path) - 1] = '\0'; // Otherwise it is a \n and the path doesn't work ...
 
-        printf("Please enter the insertion point where you want to inject the plugin (as a int) \n");
+        printf("--> Please enter the insertion point where you want to inject the plugin (as a int) \n");
         fgets(strloc, 10, stdin);
         location = strtol(strloc, NULL, 10);
 
-        printf("Please enter the position where you want to inject the bytecode (as a int: 0 = PRE, 1 = REP, 2 = POST \n");
+        printf("--> Please enter the position where you want to inject the bytecode (as a int: 0 = PRE, 1 = REP, 2 = POST) \n");
         fgets(strpos, 10, stdin);
         position = strtol(strpos, NULL, 10);
 
         message.mesg_type = location*100+position;
         memcpy((void *) message.mesg_text, (void *) path, 50*sizeof(char));
         if(msgsnd(msgid, &message, sizeof(message), 0) != -1) {
-            printf("Plugin at location %s sent to plugins_manager at location %d, position %d \n", message.mesg_text, (int) location, (int) position);
+            printf("--> Plugin at location %s sent to plugins_manager at location %d, position %d \n", message.mesg_text, (int) location, (int) position);
         }
         else {
             printf("Error while sending message \n");
