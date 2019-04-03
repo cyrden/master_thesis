@@ -26,7 +26,10 @@
 
 /* OSPF LSA Range definition. */
 #define OSPF_MIN_LSA		1  /* begin range here */
-#define OSPF_MAX_LSA           12
+//#define OSPF_MAX_LSA           12
+
+/* This needs to be changed. Indeed, lsdb creates one db for each LSA type. So we need to add some if we want it to be flexible */
+#define OSPF_MAX_LSA 15 // Added by Cyril
 
 /* OSPF LSA Type definition. */
 #define OSPF_UNKNOWN_LSA	      0

@@ -55,6 +55,7 @@
 #define LSA_FLOOD 10
 #define SPF_TEST 13
 #define LSA_INSTALL 14
+#define SPF_LSA 15 //TODO: this is momentary
 
 /* Structure that represents a heap */
 typedef struct heap {
@@ -121,6 +122,8 @@ int get_lsa_header(struct plugin_context *plugin_context, struct lsa_header *lsa
 
 int get_ospf_area(struct plugin_context *plugin_context, struct ospf_area *area);
 
-struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area);
+int get_ospf(struct plugin_context *plugin_context, struct ospf *ospf);
+
+//struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area);
 
 #endif //OSPF_PLUGINS_API_H

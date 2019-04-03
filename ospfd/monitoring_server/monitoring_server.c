@@ -102,6 +102,11 @@ int main(int argc, char **argv) {
                     printf("[ISM_CHANGE_STATE_PRE] : Interface: %s old: %s, new: %s \n",
                             ism->oi_name, lookup_msg(ospf_ism_state_msg, ism->old_state, NULL), lookup_msg(ospf_ism_state_msg, ism->new_state, NULL));
                     break;
+                case SPF_LSA:
+                    lsah = (struct lsa_header *) message.mesg_text;
+                    printf("[MY_SUPER_LSA]: \n");
+                    my_ospf_lsa_header_dump(lsah);
+                    break;
                 default:
                     printf("[ERROR]: message has no valid type: %ld \n", message.mesg_type);
             }

@@ -10,6 +10,7 @@
 
 
 void my_ospf_lsa_header_dump(struct lsa_header *lsah) {
+    if(lsah == NULL) printf("NULL LSA \n");
     const char *lsah_type = lookup_msg(ospf_lsa_type_msg, lsah->type, NULL);
 
     printf("  LSA Header \n");

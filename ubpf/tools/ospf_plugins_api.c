@@ -274,71 +274,28 @@ int get_ospf_area(struct plugin_context *plugin_context, struct ospf_area *area)
     return 1;
 }
 
+/*
+ * Getter function to get an ospf area /!\ TODO: struct ospf is bigger than the size of the UBPF VM stack ...
+ */
+int get_ospf(struct plugin_context *plugin_context, struct ospf *ospf) {
+    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
+        printf("The context is not valid \n");
+        return 0;
+    }
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (plugin_context->type_arg) {
+        case ARG_PLUGIN_SPF_CALC:
+            memcpy(ospf, ((struct arg_plugin_spf_calc *) plugin_context->original_arg)->area->ospf, sizeof(struct ospf));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
 /* TODO: Try add a LSA type */
-
-#define OSPF_MY_LSA 15
-
-/* Create new my-LSA. */
-static struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area)
-{
-    struct ospf *ospf = area->ospf;
-    struct stream *s;
-    struct lsa_header *lsah;
-    struct ospf_lsa *new;
-    int length;
-
-    /* Create a stream for LSA. */
-    s = stream_new(OSPF_MAX_LSA_SIZE);
-    /* Set LSA common header fields. */
-    lsa_header_set(s, LSA_OPTIONS_GET(area) | LSA_OPTIONS_NSSA_GET(area),
-                   OSPF_MY_LSA, ospf->router_id, ospf->router_id);
-
-    /* Set router-LSA body fields. */
-    //ospf_router_lsa_body_set(&s, area); //TODO: Do I need body for the moment ? Maybe header is enough
-
-    /* Set length. */
-    length = stream_get_endp(s);
-    lsah = (struct lsa_header *)STREAM_DATA(s);
-    lsah->length = htons(length);
-
-    /* Now, create OSPF LSA instance. */
-    new = ospf_lsa_new_and_data(length);
-
-    new->area = area;
-    SET_FLAG(new->flags, OSPF_LSA_SELF | OSPF_LSA_SELF_CHECKED); //TODO: don't know what are these flags
-    new->vrf_id = area->ospf->vrf_id;
-
-    /* Copy LSA data to store, discard stream. */
-    memcpy(new->data, lsah, length);
-    stream_free(s);
-
-    return new;
-}
-
-struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area)
-{
-    struct ospf_lsa *new;
-
-    /* Create new my-LSA instance. */
-    if ((new = ospf_my_lsa_new(area)) == NULL) {
-        zlog_err("%s: ospf_my_lsa_new returned NULL", __func__);
-        return NULL;
-    }
-
-    /* Sanity check. */
-    if (new->data->adv_router.s_addr == 0) {
-        ospf_lsa_discard(new);
-        return NULL;
-    }
-
-    /* Install LSA to LSDB. */
-    new = ospf_lsa_install(area->ospf, NULL, new); //TODO: Yes we need to install our new LSA. But for the moment the function don't know --> put a plugin to handle our LSA
-
-    /* Update LSA origination count. */
-    area->ospf->lsa_originate_count++;
-
-    /* Flooding new LSA through area. */
-    //ospf_flood_through_area(area, NULL, new); // TODO: for the moment no flood
-
-    return new;
-}
