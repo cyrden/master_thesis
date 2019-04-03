@@ -32,7 +32,11 @@ static int check_context_validity(plugin_context_t *context) {
     return 0;
 }
 
-int heap_malloc(struct plugin_context *plugin_context, size_t size) {
+int shared_heap_malloc(struct plugin_context *plugin_context, size_t size) {
+    if(size > MAX_SIZE_SHARED_HEAP) {
+        printf("Size exceeds maximum allowed shared heap size \n");
+        return 0;
+    }
     if(plugin_context == NULL) {
         printf("NULL pointer \n");
         return 0;
@@ -41,12 +45,12 @@ int heap_malloc(struct plugin_context *plugin_context, size_t size) {
         printf("The context is not valid \n");
         return 0;
     }
-    plugin_context->heap = malloc(size);
-    if(plugin_context->heap == NULL) return 0;
+    plugin_context->shared_heap = malloc(size);
+    if(plugin_context->shared_heap == NULL) return 0;
     return 1;
 }
 
-int heap_free(struct plugin_context *plugin_context) {
+int shared_heap_free(struct plugin_context *plugin_context) {
     if(plugin_context == NULL) {
         printf("NULL pointer \n");
         return 0;
@@ -55,12 +59,16 @@ int heap_free(struct plugin_context *plugin_context) {
         printf("The context is not valid \n");
         return 0;
     }
-    free(plugin_context->heap);
-    plugin_context->heap = NULL;
+    free(plugin_context->shared_heap);
+    plugin_context->shared_heap = NULL;
     return 1;
 }
 
-int heap_get(struct plugin_context *plugin_context, void *heap_copy, size_t size) {
+int shared_heap_get(struct plugin_context *plugin_context, void *heap_copy, size_t size) {
+    if(size > MAX_SIZE_SHARED_HEAP) {
+        printf("Size exceeds maximum allowed shared heap size \n");
+        return 0;
+    }
     if(plugin_context == NULL) {
         printf("NULL pointer \n");
         return 0;
@@ -69,11 +77,15 @@ int heap_get(struct plugin_context *plugin_context, void *heap_copy, size_t size
         printf("The context is not valid \n");
         return 0;
     }
-    memcpy(heap_copy, plugin_context->heap, size);
+    memcpy(heap_copy, plugin_context->shared_heap, size);
     return 1;
 }
 
-int heap_set(struct plugin_context *plugin_context, void *val, size_t size) {
+int shared_heap_set(struct plugin_context *plugin_context, void *val, size_t size) {
+    if(size > MAX_SIZE_SHARED_HEAP) {
+        printf("Size exceeds maximum allowed shared heap size \n");
+        return 0;
+    }
     if(plugin_context == NULL) {
         printf("NULL pointer \n");
         return 0;
@@ -82,7 +94,7 @@ int heap_set(struct plugin_context *plugin_context, void *val, size_t size) {
         printf("The context is not valid \n");
         return 0;
     }
-    memcpy(plugin_context->heap, val, size);
+    memcpy(plugin_context->shared_heap, val, size);
     return 1;
 }
 

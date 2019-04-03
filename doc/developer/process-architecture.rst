@@ -77,7 +77,7 @@ are given by integer macros in :file:`thread.h` and are:
 
 ``THREAD_UNUSED``
    Type used internally for ``struct thread`` objects that aren't being used.
-   The event system pools ``struct thread`` to avoid heap allocations; this is
+   The event system pools ``struct thread`` to avoid shared_heap allocations; this is
    the type they have when they're in the pool.
 
 ``THREAD_EXECUTE``

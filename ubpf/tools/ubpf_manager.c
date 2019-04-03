@@ -4,6 +4,7 @@
 
 #include "ubpf/tools/ubpf_manager.h"
 #include "ospf_plugins_api.h"
+#include "heap_management.h"
 
 
 static void *readfile(const char *path, size_t maxlen, size_t *len);
@@ -17,11 +18,15 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
 
-    /* Plugins heap management functions */
-    if (ubpf_register(vm, 0x20, "heap_malloc", heap_malloc) == -1) return 0;
-    if (ubpf_register(vm, 0x21, "heap_free", heap_free) == -1) return 0;
-    if (ubpf_register(vm, 0x22, "heap_get", heap_get) == -1) return 0;
-    if (ubpf_register(vm, 0x23, "heap_set", heap_set) == -1) return 0;
+    /* Plugins shared_heap management functions */
+    if (ubpf_register(vm, 0x20, "shared_heap_malloc", shared_heap_malloc) == -1) return 0;
+    if (ubpf_register(vm, 0x21, "shared_heap_free", shared_heap_free) == -1) return 0;
+    if (ubpf_register(vm, 0x22, "shared_heap_get", shared_heap_get) == -1) return 0;
+    if (ubpf_register(vm, 0x23, "shared_heap_set", shared_heap_set) == -1) return 0;
+    if (ubpf_register(vm, 0x24, "my_malloc", my_malloc) == -1) return 0;
+    if (ubpf_register(vm, 0x25, "my_free", my_free) == -1) return 0;
+    if (ubpf_register(vm, 0x26, "my_realloc", my_realloc) == -1) return 0;
+
 
     /* Sends data to the monitoring server */
     if (ubpf_register(vm, 0x04, "send_data", send_data) == -1) return 0;

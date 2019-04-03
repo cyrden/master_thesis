@@ -26,10 +26,10 @@
 DEFINE_MTYPE_STATIC(LIB, PQUEUE, "Priority queue")
 DEFINE_MTYPE_STATIC(LIB, PQUEUE_DATA, "Priority queue data")
 
-/* priority queue using heap sort */
+/* priority queue using shared_heap sort */
 
 /* pqueue->cmp() controls the order of sorting (i.e, ascending or
-   descending). If you want the left node to move upper of the heap
+   descending). If you want the left node to move upper of the shared_heap
    binary tree, make cmp() to return less than 0.  for example, if cmp
    (10, 20) returns -1, the sorting is ascending order. if cmp (10,
    20) returns 1, the sorting is descending order. if cmp (10, 20)

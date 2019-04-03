@@ -5,7 +5,9 @@ ubpf_vm_libubpf_a_SOURCES = \
 	ubpf/vm/ubpf_loader.c \
 	ubpf/vm/ubpf_jit_x86_64.c \
 	ubpf/tools/ubpf_manager.c \
-	ubpf/tools/ospf_plugins_api.c
+	ubpf/tools/ospf_plugins_api.c \
+	ubpf/tools/heap_management.c
+
 
 noinst_HEADERS += \
 	ubpf/vm/ebpf.h \
@@ -14,9 +16,11 @@ noinst_HEADERS += \
 
 pkginclude_HEADERS += \
 	ubpf/tools/ubpf_manager.h \
-	ubpf/tools/ospf_plugins_api.h
+	ubpf/tools/ospf_plugins_api.h \
+	ubpf/tools/heap_management.h
 
 ubpf_vm_libubpf_a_CFLAGS = \
 	-I@top_srcdir@/ubpf/vm/inc \
+	-I@top_srcdir@/ubpf/tools \
 	-I@top_srcdir@ \
 	-fPIC

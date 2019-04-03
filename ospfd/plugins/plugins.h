@@ -47,6 +47,8 @@
 #include "libfrr.h"
 
 #include "../../ubpf/tools/ospf_plugins_api.h"
+#include "../../ubpf/tools/heap_management.h"
 #include "../monitoring_server/monitoring_server.h"
+
 
 #endif //PROJECT_PLUGINS_H

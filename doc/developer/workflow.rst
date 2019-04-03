@@ -778,7 +778,7 @@ ThreadSanitizer
 
 MemorySanitizer
    Similar to AddressSanitizer, this tool provides runtime instrumentation for
-   detecting use of uninitialized heap memory. Testing your own code with this
+   detecting use of uninitialized shared_heap memory. Testing your own code with this
    tool before submission is encouraged. You can enable it by passing::
 
       --enable-memory-sanitizer

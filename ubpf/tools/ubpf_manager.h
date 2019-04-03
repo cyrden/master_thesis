@@ -15,12 +15,12 @@
 
 /*
  * Context of a plugin. Contains a pointer to the original version of the arguments and the type of the argument (keeps it invisible in plugin)
- * It also contains a heap shared between the 3 potential bytecodes of this plugin
+ * It also contains a shared_heap shared between the 3 potential bytecodes of this plugin
  */
 typedef struct plugin_context {
     void *original_arg;
     int type_arg;
-    void *heap;
+    void *shared_heap;
 } plugin_context_t;
 
 

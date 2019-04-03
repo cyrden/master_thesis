@@ -331,7 +331,7 @@ Terminal Mode Commands
 
       frr# show memory
       System allocator statistics:
-        Total heap allocated:  1584 KiB
+        Total shared_heap allocated:  1584 KiB
         Holding block headers: 0 bytes
         Used small blocks:     0 bytes
         Used ordinary blocks:  1484 KiB

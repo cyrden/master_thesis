@@ -100,4 +100,9 @@ lib/getopt1.c
 tests/bgpd/test_peer_attr.c
 tests/lib/test_zmq.refout
 tools/checkpatch.pl
-
+doc/developer/process-architecture.rst
+doc/developer/workflow.rst
+doc/user/basic.rst
+lib/pqueue.c
+lib/sbuf.h
+ospf6d/ospf6_intra.c
