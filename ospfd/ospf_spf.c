@@ -1193,9 +1193,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
         free(plugin_arg);
     }
 
-	//ospf_my_lsa_originate(area);
 	//ospf_route_table_dump(area->lsdb->type[13].db);
-
 
 	struct pqueue *candidate;
 	struct vertex *v;

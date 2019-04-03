@@ -2587,8 +2587,6 @@ void ospf_discard_from_db(struct ospf *ospf, struct ospf_lsdb *lsdb,
 
 struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 				  struct ospf_lsa *lsa) {
-	zlog_notice("ospf_lsa_install \n");
-	ospf_lsa_header_dump(lsa->data);
 	if(plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[REP] != NULL) { // TODO: This is not the best way to do ... Duplicate
 		// REP
 		if (plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[PRE] != NULL) {

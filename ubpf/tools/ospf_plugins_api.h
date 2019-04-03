@@ -124,6 +124,4 @@ int get_ospf_area(struct plugin_context *plugin_context, struct ospf_area *area)
 
 int get_ospf(struct plugin_context *plugin_context, struct ospf *ospf);
 
-//struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area);
-
 #endif //OSPF_PLUGINS_API_H

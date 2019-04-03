@@ -17,8 +17,8 @@ static int register_functions(struct ubpf_vm *vm) {
     /* Generic functions */
     if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
-    if (ubpf_register(vm, 0x03, "malloc", malloc) == -1) return 0;
-    if (ubpf_register(vm, 0x04, "free", free) == -1) return 0;
+    //if (ubpf_register(vm, 0x03, "malloc", malloc) == -1) return 0;
+    //if (ubpf_register(vm, 0x04, "free", free) == -1) return 0;
     if (ubpf_register(vm, 0x05, "htons", htons) == -1) return 0;
     if (ubpf_register(vm, 0x06, "htonl", htonl) == -1) return 0;
     if (ubpf_register(vm, 0x07, "memcpy", memcpy) == -1) return 0;
@@ -49,12 +49,8 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x15, "get_ospf", get_ospf) == -1) return 0;
 
     /* Functions from OSPF */
-    if (ubpf_register(vm, 0x16, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
+    if (ubpf_register(vm, 0x19, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
 
-
-    //if (ubpf_register(vm, 0x30, "ospf_my_lsa_originate", ospf_my_lsa_originate) == -1) return 0;
-    //if (ubpf_register(vm, 0x31, "stream_new", stream_new) == -1) return 0;
-    //if (ubpf_register(vm, 0x32, "lsa_header_set", lsa_header_set) == -1) return 0;
     return 1;
 }
 
