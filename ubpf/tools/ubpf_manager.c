@@ -17,6 +17,11 @@ static int register_functions(struct ubpf_vm *vm) {
     /* Generic functions */
     if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
+    if (ubpf_register(vm, 0x03, "malloc", malloc) == -1) return 0;
+    if (ubpf_register(vm, 0x04, "free", free) == -1) return 0;
+    if (ubpf_register(vm, 0x05, "htons", htons) == -1) return 0;
+    if (ubpf_register(vm, 0x06, "htonl", htonl) == -1) return 0;
+    if (ubpf_register(vm, 0x07, "memcpy", memcpy) == -1) return 0;
 
     /* Plugins shared_heap management functions */
     if (ubpf_register(vm, 0x20, "shared_heap_malloc", shared_heap_malloc) == -1) return 0;
@@ -29,24 +34,27 @@ static int register_functions(struct ubpf_vm *vm) {
 
 
     /* Sends data to the monitoring server */
-    if (ubpf_register(vm, 0x04, "send_data", send_data) == -1) return 0;
+    if (ubpf_register(vm, 0x33, "send_data", send_data) == -1) return 0;
 
     /* Test functions to try manipulating OSPF var in plugins */
-    if (ubpf_register(vm, 0x07, "set_pointer_toInt", set_pointer_toInt) == -1) return 0;
-    if (ubpf_register(vm, 0x08, "read_int", read_int) == -1) return 0;
+    if (ubpf_register(vm, 0x31, "set_pointer_toInt", set_pointer_toInt) == -1) return 0;
+    if (ubpf_register(vm, 0x32, "read_int", read_int) == -1) return 0;
 
     /* Getter functions */
-    if (ubpf_register(vm, 0x09, "get_ospf_interface", get_ospf_interface) == -1) return 0;
+    if (ubpf_register(vm, 0x10, "get_ospf_interface", get_ospf_interface) == -1) return 0;
     if (ubpf_register(vm, 0x11, "get_interface", get_interface) == -1) return 0;
     if (ubpf_register(vm, 0x12, "get_ospf_lsa", get_ospf_lsa) == -1) return 0;
     if (ubpf_register(vm, 0x13, "get_lsa_header", get_lsa_header) == -1) return 0;
     if (ubpf_register(vm, 0x14, "get_ospf_area", get_ospf_area) == -1) return 0;
+    if (ubpf_register(vm, 0x15, "get_ospf", get_ospf) == -1) return 0;
 
     /* Functions from OSPF */
-    if (ubpf_register(vm, 0x10, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
+    if (ubpf_register(vm, 0x16, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
 
 
-    if (ubpf_register(vm, 0x30, "ospf_my_lsa_originate", ospf_my_lsa_originate) == -1) return 0;
+    //if (ubpf_register(vm, 0x30, "ospf_my_lsa_originate", ospf_my_lsa_originate) == -1) return 0;
+    //if (ubpf_register(vm, 0x31, "stream_new", stream_new) == -1) return 0;
+    //if (ubpf_register(vm, 0x32, "lsa_header_set", lsa_header_set) == -1) return 0;
     return 1;
 }
 

@@ -327,7 +327,7 @@ void lsa_header_set(struct stream *s, uint8_t options, uint8_t type,
 
 	lsah = (struct lsa_header *)STREAM_DATA(s);
 
-	lsah->ls_age = htons(OSPF_LSA_INITIAL_AGE);
+    lsah->ls_age = htons(OSPF_LSA_INITIAL_AGE);
 	lsah->options = options;
 	lsah->type = type;
 	lsah->id = id;
@@ -2587,6 +2587,8 @@ void ospf_discard_from_db(struct ospf *ospf, struct ospf_lsdb *lsdb,
 
 struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 				  struct ospf_lsa *lsa) {
+	zlog_notice("ospf_lsa_install \n");
+	ospf_lsa_header_dump(lsa->data);
 	if(plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[REP] != NULL) { // TODO: This is not the best way to do ... Duplicate
 		// REP
 		if (plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[PRE] != NULL) {
@@ -2652,10 +2654,7 @@ struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
         */
 		/* Look up old LSA and determine if any SPF calculation or incremental
            update is needed */
-		zlog_notice("Before lsdb lookup \n");
-		ospf_lsa_header_dump(lsa->data);
         old = ospf_lsdb_lookup(lsdb, lsa);
-        zlog_notice("After lsdb lookup \n");
 
 
 

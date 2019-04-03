@@ -53,6 +53,7 @@
 #include "ubpf/tools/ubpf_manager.h"
 #include "ubpf/tools/ospf_plugins_api.h"
 #include "lib/log.h"
+#include "ospf_lsdb.h"
 
 /* Variables to ensure a SPF scheduled log message is printed only once */
 
@@ -1179,7 +1180,22 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		free(plugin_arg);
 	}
 
+    //ospf_route_table_dump(area->lsdb->type[13].db);
+    // Added by Cyril
+    if(plugins_tab.plugins[SPF_LSA] != NULL && plugins_tab.plugins[SPF_LSA]->vm[PRE] != NULL) { // TODO: this is just a test !!
+        /* Definition of the plugin argument */
+        struct arg_plugin_spf_calc *plugin_arg = malloc(sizeof(struct arg_plugin_spf_calc));
+        plugin_arg->area = area;
+        plugin_arg->plugin_context = plugins_tab.plugins[SPF_LSA]->plugin_context; // Put a pointer to the context of the plugin
+        plugins_tab.plugins[SPF_LSA]->plugin_context->type_arg = ARG_PLUGIN_SPF_CALC;
+
+        exec_loaded_code(plugins_tab.plugins[SPF_LSA], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), PRE);
+        free(plugin_arg);
+    }
+
 	//ospf_my_lsa_originate(area);
+	//ospf_route_table_dump(area->lsdb->type[13].db);
+
 
 	struct pqueue *candidate;
 	struct vertex *v;
