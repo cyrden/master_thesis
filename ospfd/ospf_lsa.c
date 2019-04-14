@@ -2602,6 +2602,10 @@ struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 		if (plugins_tab.plugins[LSA_INSTALL] != NULL && plugins_tab.plugins[LSA_INSTALL]->vm[PRE] != NULL) {
 			// PRE
 		}
+
+		zlog_notice("ospf_lsa_install: LSA to install: \n");
+		ospf_lsa_header_dump(lsa->data);
+
 		struct ospf_lsa *new = NULL;
 		struct ospf_lsa *old = NULL;
 		struct ospf_lsdb *lsdb = NULL;
@@ -2706,7 +2710,7 @@ struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 			ospf_lsa_checksum(lsa->data);
 
 		/* Insert LSA to LSDB. */
-		ospf_lsdb_add(lsdb, lsa); // TODO: fail because no lsdb table for my LSA type ...
+		ospf_lsdb_add(lsdb, lsa);
 		lsa->lsdb = lsdb;
 
 		/* Do LSA specific installation process. */

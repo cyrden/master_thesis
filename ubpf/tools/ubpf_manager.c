@@ -5,6 +5,7 @@
 #include "ubpf/tools/ubpf_manager.h"
 #include "ospf_plugins_api.h"
 #include "heap_management.h"
+#include "my_memcpy.h"
 
 
 static void *readfile(const char *path, size_t maxlen, size_t *len);
@@ -21,7 +22,10 @@ static int register_functions(struct ubpf_vm *vm) {
     //if (ubpf_register(vm, 0x04, "free", free) == -1) return 0;
     if (ubpf_register(vm, 0x05, "htons", htons) == -1) return 0;
     if (ubpf_register(vm, 0x06, "htonl", htonl) == -1) return 0;
-    if (ubpf_register(vm, 0x07, "memcpy", memcpy) == -1) return 0;
+    //if (ubpf_register(vm, 0x07, "memcpy", memcpy) == -1) return 0;
+    if (ubpf_register(vm, 0x08, "my_memcpy", my_memcpy) == -1) return 0;
+    if (ubpf_register(vm, 0x09, "printf", printf) == -1) return 0;
+
 
     /* Plugins shared_heap management functions */
     if (ubpf_register(vm, 0x20, "shared_heap_malloc", shared_heap_malloc) == -1) return 0;
@@ -50,6 +54,7 @@ static int register_functions(struct ubpf_vm *vm) {
 
     /* Functions from OSPF */
     if (ubpf_register(vm, 0x19, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
+    if (ubpf_register(vm, 0x18, "ospf_lsa_install", ospf_lsa_install) == -1) return 0;
 
     return 1;
 }

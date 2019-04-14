@@ -271,6 +271,7 @@ int get_ospf_area(struct plugin_context *plugin_context, struct ospf_area *area)
             fprintf(stderr, "Argument type not recognized by helper function");
             return 0;
     }
+    printf("TEST: get_ospf_area \n");
     return 1;
 }
 
@@ -297,5 +298,3 @@ int get_ospf(struct plugin_context *plugin_context, struct ospf *ospf) {
     }
     return 1;
 }
-
-/* TODO: Try add a LSA type */
