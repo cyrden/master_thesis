@@ -50,7 +50,7 @@
 
 // Added by Cyril
 #include "ubpf/tools/ubpf_manager.h"
-#include "ospfd/plugins/plugins.h"
+#include "ubpf/tools/ospf_plugins_api.h"
 
 extern struct zclient *zclient;
 

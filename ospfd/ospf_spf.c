@@ -51,7 +51,7 @@
 
 // Added by Cyril
 #include "ubpf/tools/ubpf_manager.h"
-#include "ospfd/plugins/plugins.h"
+#include "ubpf/tools/ospf_plugins_api.h"
 #include "lib/log.h"
 
 /* Variables to ensure a SPF scheduled log message is printed only once */
