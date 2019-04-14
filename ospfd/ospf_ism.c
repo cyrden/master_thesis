@@ -539,54 +539,60 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 		free(plugin_arg);
 	}
 
-	int old_state;
-	struct ospf_lsa *lsa;
-
-	/* Logging change of state. */
-	if (IS_DEBUG_OSPF(ism, ISM_STATUS))
-		zlog_debug("ISM[%s]: State change %s -> %s", IF_NAME(oi),
-			   lookup_msg(ospf_ism_state_msg, oi->state, NULL),
-			   lookup_msg(ospf_ism_state_msg, state, NULL));
-
-	old_state = oi->state;
-	oi->state = state;
-	oi->state_change++;
-
-	hook_call(ospf_ism_change, oi, state, old_state);
-
-	/* Set multicast memberships appropriately for new state. */
-	ospf_if_set_multicast(oi);
-
-	if (old_state == ISM_Down || state == ISM_Down)
-		ospf_check_abr_status(oi->ospf);
-
-	/* Originate router-LSA. */
-	if (state == ISM_Down) {
-		if (oi->area->act_ints > 0)
-			oi->area->act_ints--;
-	} else if (old_state == ISM_Down)
-		oi->area->act_ints++;
-
-	/* schedule router-LSA originate. */
-	ospf_router_lsa_update_area(oi->area);
-
-	/* Originate network-LSA. */
-	if (old_state != ISM_DR && state == ISM_DR)
-		ospf_network_lsa_update(oi);
-	else if (old_state == ISM_DR && state != ISM_DR) {
-		/* Free self originated network LSA. */
-		lsa = oi->network_lsa_self;
-		if (lsa)
-			ospf_lsa_flush_area(lsa, oi->area);
-
-		ospf_lsa_unlock(&oi->network_lsa_self);
-		oi->network_lsa_self = NULL;
+	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->vm[REP] != NULL) {
+		// REP
 	}
+	else {
 
-	ospf_opaque_ism_change(oi, old_state);
+		int old_state;
+		struct ospf_lsa *lsa;
 
-	/* Check area border status.  */
-	ospf_check_abr_status(oi->ospf);
+		/* Logging change of state. */
+		if (IS_DEBUG_OSPF(ism, ISM_STATUS))
+			zlog_debug("ISM[%s]: State change %s -> %s", IF_NAME(oi),
+					   lookup_msg(ospf_ism_state_msg, oi->state, NULL),
+					   lookup_msg(ospf_ism_state_msg, state, NULL));
+
+		old_state = oi->state;
+		oi->state = state;
+		oi->state_change++;
+
+		hook_call(ospf_ism_change, oi, state, old_state);
+
+		/* Set multicast memberships appropriately for new state. */
+		ospf_if_set_multicast(oi);
+
+		if (old_state == ISM_Down || state == ISM_Down)
+			ospf_check_abr_status(oi->ospf);
+
+		/* Originate router-LSA. */
+		if (state == ISM_Down) {
+			if (oi->area->act_ints > 0)
+				oi->area->act_ints--;
+		} else if (old_state == ISM_Down)
+			oi->area->act_ints++;
+
+		/* schedule router-LSA originate. */
+		ospf_router_lsa_update_area(oi->area);
+
+		/* Originate network-LSA. */
+		if (old_state != ISM_DR && state == ISM_DR)
+			ospf_network_lsa_update(oi);
+		else if (old_state == ISM_DR && state != ISM_DR) {
+			/* Free self originated network LSA. */
+			lsa = oi->network_lsa_self;
+			if (lsa)
+				ospf_lsa_flush_area(lsa, oi->area);
+
+			ospf_lsa_unlock(&oi->network_lsa_self);
+			oi->network_lsa_self = NULL;
+		}
+
+		ospf_opaque_ism_change(oi, old_state);
+
+		/* Check area border status.  */
+		ospf_check_abr_status(oi->ospf);
+	}
 
 	// Added by Cyril
 	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->vm[POST] != NULL) {

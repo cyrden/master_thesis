@@ -1179,127 +1179,126 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		free(plugin_arg);
 	}
 
-	// Added by Cyril // TODO Delete this, this modifies the implem ...
-	struct timeval t1, t2;
-	gettimeofday (&t1, NULL);
+    if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[REP] != NULL) {
+        // REP
+    }
+    else {
 
-	struct pqueue *candidate;
-	struct vertex *v;
+        struct pqueue *candidate;
+        struct vertex *v;
 
-	if (IS_DEBUG_OSPF_EVENT) {
-		zlog_debug("ospf_spf_calculate: Start");
-		zlog_debug("ospf_spf_calculate: running Dijkstra for area %s",
-			   inet_ntoa(area->area_id));
-	}
+        if (IS_DEBUG_OSPF_EVENT) {
+            zlog_debug("ospf_spf_calculate: Start");
+            zlog_debug("ospf_spf_calculate: running Dijkstra for area %s",
+                       inet_ntoa(area->area_id));
+        }
 
-	/* Check router-lsa-self.  If self-router-lsa is not yet allocated,
-	   return this area's calculation. */
-	if (!area->router_lsa_self) {
-		if (IS_DEBUG_OSPF_EVENT)
-			zlog_debug(
-				"ospf_spf_calculate: "
-				"Skip area %s's calculation due to empty router_lsa_self",
-				inet_ntoa(area->area_id));
-		return;
-	}
+        /* Check router-lsa-self.  If self-router-lsa is not yet allocated,
+           return this area's calculation. */
+        if (!area->router_lsa_self) {
+            if (IS_DEBUG_OSPF_EVENT)
+                zlog_debug(
+                        "ospf_spf_calculate: "
+                        "Skip area %s's calculation due to empty router_lsa_self",
+                        inet_ntoa(area->area_id));
+            return;
+        }
 
-	/* RFC2328 16.1. (1). */
-	/* Initialize the algorithm's data structures. */
+        /* RFC2328 16.1. (1). */
+        /* Initialize the algorithm's data structures. */
 
-	/* This function scans all the LSA database and set the stat field to
-	 * LSA_SPF_NOT_EXPLORED. */
-	ospf_lsdb_clean_stat(area->lsdb);
-	/* Create a new heap for the candidates. */
-	candidate = pqueue_create();
-	candidate->cmp = cmp;
-	candidate->update = update_stat;
+        /* This function scans all the LSA database and set the stat field to
+         * LSA_SPF_NOT_EXPLORED. */
+        ospf_lsdb_clean_stat(area->lsdb);
+        /* Create a new heap for the candidates. */
+        candidate = pqueue_create();
+        candidate->cmp = cmp;
+        candidate->update = update_stat;
 
-	/* Initialize the shortest-path tree to only the root (which is the
-	   router doing the calculation). */
-	ospf_spf_init(area);
-	v = area->spf;
-	/* Set LSA position to LSA_SPF_IN_SPFTREE. This vertex is the root of
-	 * the
-	 * spanning tree. */
-	*(v->stat) = LSA_SPF_IN_SPFTREE;
+        /* Initialize the shortest-path tree to only the root (which is the
+           router doing the calculation). */
+        ospf_spf_init(area);
+        v = area->spf;
+        /* Set LSA position to LSA_SPF_IN_SPFTREE. This vertex is the root of
+         * the
+         * spanning tree. */
+        *(v->stat) = LSA_SPF_IN_SPFTREE;
 
-	/* Set Area A's TransitCapability to FALSE. */
-	area->transit = OSPF_TRANSIT_FALSE;
-	area->shortcut_capability = 1;
+        /* Set Area A's TransitCapability to FALSE. */
+        area->transit = OSPF_TRANSIT_FALSE;
+        area->shortcut_capability = 1;
 
-	for (;;) {
-		/* RFC2328 16.1. (2). */
-		ospf_spf_next(v, ospf, area, candidate);
+        for (;;) {
+            /* RFC2328 16.1. (2). */
+            ospf_spf_next(v, ospf, area, candidate);
 
-		/* RFC2328 16.1. (3). */
-		/* If at this step the candidate list is empty, the shortest-
-		   path tree (of transit vertices) has been completely built and
-		   this stage of the procedure terminates. */
-		if (candidate->size == 0)
-			break;
+            /* RFC2328 16.1. (3). */
+            /* If at this step the candidate list is empty, the shortest-
+               path tree (of transit vertices) has been completely built and
+               this stage of the procedure terminates. */
+            if (candidate->size == 0)
+                break;
 
-		/* Otherwise, choose the vertex belonging to the candidate list
-		   that is closest to the root, and add it to the shortest-path
-		   tree (removing it from the candidate list in the
-		   process). */
-		/* Extract from the candidates the node with the lower key. */
-		v = (struct vertex *)pqueue_dequeue(candidate);
-		/* Update stat field in vertex. */
-		*(v->stat) = LSA_SPF_IN_SPFTREE;
+            /* Otherwise, choose the vertex belonging to the candidate list
+               that is closest to the root, and add it to the shortest-path
+               tree (removing it from the candidate list in the
+               process). */
+            /* Extract from the candidates the node with the lower key. */
+            v = (struct vertex *) pqueue_dequeue(candidate);
+            /* Update stat field in vertex. */
+            *(v->stat) = LSA_SPF_IN_SPFTREE;
 
-		ospf_vertex_add_parent(v);
+            ospf_vertex_add_parent(v);
 
-		/* RFC2328 16.1. (4). */
-		if (v->type == OSPF_VERTEX_ROUTER)
-			ospf_intra_add_router(new_rtrs, v, area);
-		else
-			ospf_intra_add_transit(new_table, v, area);
+            /* RFC2328 16.1. (4). */
+            if (v->type == OSPF_VERTEX_ROUTER)
+                ospf_intra_add_router(new_rtrs, v, area);
+            else
+                ospf_intra_add_transit(new_table, v, area);
 
-		/* RFC2328 16.1. (5). */
-		/* Iterate the algorithm by returning to Step 2. */
+            /* RFC2328 16.1. (5). */
+            /* Iterate the algorithm by returning to Step 2. */
 
-	} /* end loop until no more candidate vertices */
+        } /* end loop until no more candidate vertices */
 
-	if (IS_DEBUG_OSPF_EVENT) {
-		ospf_spf_dump(area->spf, 0);
-		ospf_route_table_dump(new_table);
-	}
+        if (IS_DEBUG_OSPF_EVENT) {
+            ospf_spf_dump(area->spf, 0);
+            ospf_route_table_dump(new_table);
+        }
 
-	/* Second stage of SPF calculation procedure's  */
-	ospf_spf_process_stubs(area, area->spf, new_table, 0);
+        /* Second stage of SPF calculation procedure's  */
+        ospf_spf_process_stubs(area, area->spf, new_table, 0);
 
-	/* Free candidate queue. */
-	pqueue_delete(candidate);
+        /* Free candidate queue. */
+        pqueue_delete(candidate);
 
-	ospf_vertex_dump(__func__, area->spf, 0, 1);
-	/* Free nexthop information, canonical versions of which are attached
-	 * the first level of router vertices attached to the root vertex, see
-	 * ospf_nexthop_calculation.
-	 */
-	ospf_canonical_nexthops_free(area->spf);
+        ospf_vertex_dump(__func__, area->spf, 0, 1);
+        /* Free nexthop information, canonical versions of which are attached
+         * the first level of router vertices attached to the root vertex, see
+         * ospf_nexthop_calculation.
+         */
+        ospf_canonical_nexthops_free(area->spf);
 
-	/* Increment SPF Calculation Counter. */
-	area->spf_calculation++;
+        /* Increment SPF Calculation Counter. */
+        area->spf_calculation++;
 
-	// Added by Cyril
-	if(plugins_tab.plugins[SPF_TEST] != NULL) {
-		exec_loaded_code(plugins_tab.plugins[SPF_TEST], &area->spf_calculation, sizeof(int), PRE);
-	}
+        // Added by Cyril
+        if (plugins_tab.plugins[SPF_TEST] != NULL) {
+            exec_loaded_code(plugins_tab.plugins[SPF_TEST], &area->spf_calculation, sizeof(int), PRE);
+        }
 
-	monotime(&area->ospf->ts_spf);
-	area->ts_spf = area->ospf->ts_spf;
+        monotime(&area->ospf->ts_spf);
+        area->ts_spf = area->ospf->ts_spf;
 
-	if (IS_DEBUG_OSPF_EVENT)
-		zlog_debug("ospf_spf_calculate: Stop. %zd vertices",
-			   mtype_stats_alloc(MTYPE_OSPF_VERTEX));
+        if (IS_DEBUG_OSPF_EVENT)
+            zlog_debug("ospf_spf_calculate: Stop. %zd vertices",
+                       mtype_stats_alloc(MTYPE_OSPF_VERTEX));
 
-	/* Free SPF vertices, but not the list. List has ospf_vertex_free
-	 * as deconstructor.
-	 */
-	list_delete_all_node(&vertex_list);
-
-	// Added by Cyril
-	gettimeofday (&t2, NULL);
+        /* Free SPF vertices, but not the list. List has ospf_vertex_free
+         * as deconstructor.
+         */
+        list_delete_all_node(&vertex_list);
+    }
 
 	// Added by Cyril
 	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[POST] != NULL) {

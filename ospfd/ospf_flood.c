@@ -269,99 +269,103 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 		free(plugin_arg);
     }
 
-	struct ospf_interface *oi;
-	int lsa_ack_flag;
+	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->vm[REP] != NULL) {
+		// REP
+	}
+	else {
+		struct ospf_interface *oi;
+		int lsa_ack_flag;
 
-	/* Type-7 LSA's will be flooded throughout their native NSSA area,
-	   but will also be flooded as Type-5's into ABR capable links.  */
+		/* Type-7 LSA's will be flooded throughout their native NSSA area,
+           but will also be flooded as Type-5's into ABR capable links.  */
 
-	if (IS_DEBUG_OSPF_EVENT)
-		zlog_debug(
-			"LSA[Flooding]: start, NBR %s (%s), cur(%p), New-LSA[%s]",
-			inet_ntoa(nbr->router_id),
-			lookup_msg(ospf_nsm_state_msg, nbr->state, NULL),
-			(void *)current, dump_lsa_key(new));
+		if (IS_DEBUG_OSPF_EVENT)
+			zlog_debug(
+					"LSA[Flooding]: start, NBR %s (%s), cur(%p), New-LSA[%s]",
+					inet_ntoa(nbr->router_id),
+					lookup_msg(ospf_nsm_state_msg, nbr->state, NULL),
+					(void *) current, dump_lsa_key(new));
 
-	oi = nbr->oi;
+		oi = nbr->oi;
 
-	/* If there is already a database copy, and if the
-	   database copy was received via flooding and installed less
-	   than MinLSArrival seconds ago, discard the new LSA
-	   (without acknowledging it). */
-	if (current != NULL) /* -- endo. */
-	{
-		if (IS_LSA_SELF(current)
-		    && (ntohs(current->data->ls_age) == 0
-			&& ntohl(current->data->ls_seqnum)
-				   == OSPF_INITIAL_SEQUENCE_NUMBER)) {
-			if (IS_DEBUG_OSPF_EVENT)
-				zlog_debug(
-					"LSA[Flooding]: Got a self-originated LSA, "
-					"while local one is initial instance.");
-			; /* Accept this LSA for quick LSDB resynchronization.
+		/* If there is already a database copy, and if the
+           database copy was received via flooding and installed less
+           than MinLSArrival seconds ago, discard the new LSA
+           (without acknowledging it). */
+		if (current != NULL) /* -- endo. */
+		{
+			if (IS_LSA_SELF(current)
+				&& (ntohs(current->data->ls_age) == 0
+					&& ntohl(current->data->ls_seqnum)
+					   == OSPF_INITIAL_SEQUENCE_NUMBER)) {
+				if (IS_DEBUG_OSPF_EVENT)
+					zlog_debug(
+							"LSA[Flooding]: Got a self-originated LSA, "
+							"while local one is initial instance.");; /* Accept this LSA for quick LSDB resynchronization.
 			     */
-		} else if (monotime_since(&current->tv_recv, NULL)
-			   < ospf->min_ls_arrival * 1000LL) {
-			if (IS_DEBUG_OSPF_EVENT)
-				zlog_debug(
-					"LSA[Flooding]: LSA is received recently.");
-			return -1;
+			} else if (monotime_since(&current->tv_recv, NULL)
+					   < ospf->min_ls_arrival * 1000LL) {
+				if (IS_DEBUG_OSPF_EVENT)
+					zlog_debug(
+							"LSA[Flooding]: LSA is received recently.");
+				return -1;
+			}
 		}
-	}
 
-	/* Flood the new LSA out some subset of the router's interfaces.
-	   In some cases (e.g., the state of the receiving interface is
-	   DR and the LSA was received from a router other than the
-	   Backup DR) the LSA will be flooded back out the receiving
-	   interface. */
-	lsa_ack_flag = ospf_flood_through(ospf, nbr, new);
+		/* Flood the new LSA out some subset of the router's interfaces.
+           In some cases (e.g., the state of the receiving interface is
+           DR and the LSA was received from a router other than the
+           Backup DR) the LSA will be flooded back out the receiving
+           interface. */
+		lsa_ack_flag = ospf_flood_through(ospf, nbr, new);
 
-	/* Remove the current database copy from all neighbors' Link state
-	   retransmission lists.  AS_EXTERNAL and AS_EXTERNAL_OPAQUE does
-					      ^^^^^^^^^^^^^^^^^^^^^^^
-	   not have area ID.
-	   All other (even NSSA's) do have area ID.  */
-	if (current) {
-		switch (current->data->type) {
-		case OSPF_AS_EXTERNAL_LSA:
-		case OSPF_OPAQUE_AS_LSA:
-			ospf_ls_retransmit_delete_nbr_as(ospf, current);
-			break;
-		default:
-			ospf_ls_retransmit_delete_nbr_area(nbr->oi->area,
-							   current);
-			break;
+		/* Remove the current database copy from all neighbors' Link state
+           retransmission lists.  AS_EXTERNAL and AS_EXTERNAL_OPAQUE does
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+           not have area ID.
+           All other (even NSSA's) do have area ID.  */
+		if (current) {
+			switch (current->data->type) {
+				case OSPF_AS_EXTERNAL_LSA:
+				case OSPF_OPAQUE_AS_LSA:
+					ospf_ls_retransmit_delete_nbr_as(ospf, current);
+					break;
+				default:
+					ospf_ls_retransmit_delete_nbr_area(nbr->oi->area,
+													   current);
+					break;
+			}
 		}
+
+		/* Do some internal house keeping that is needed here */
+		SET_FLAG(new->flags, OSPF_LSA_RECEIVED);
+		(void) ospf_lsa_is_self_originated(ospf, new); /* Let it set the flag */
+
+		/* Install the new LSA in the link state database
+           (replacing the current database copy).  This may cause the
+           routing table calculation to be scheduled.  In addition,
+           timestamp the new LSA with the current time.  The flooding
+           procedure cannot overwrite the newly installed LSA until
+           MinLSArrival seconds have elapsed. */
+
+		if (!(new = ospf_lsa_install(ospf, nbr->oi, new)))
+			return -1; /* unknown LSA type or any other error condition */
+
+		/* Acknowledge the receipt of the LSA by sending a Link State
+           Acknowledgment packet back out the receiving interface. */
+		if (lsa_ack_flag)
+			ospf_flood_delayed_lsa_ack(nbr, new);
+
+		/* If this new LSA indicates that it was originated by the
+           receiving router itself, the router must take special action,
+           either updating the LSA or in some cases flushing it from
+           the routing domain. */
+		if (ospf_lsa_is_self_originated(ospf, new))
+			ospf_process_self_originated_lsa(ospf, new, oi->area);
+		else
+			/* Update statistics value for OSPF-MIB. */
+			ospf->rx_lsa_count++;
 	}
-
-	/* Do some internal house keeping that is needed here */
-	SET_FLAG(new->flags, OSPF_LSA_RECEIVED);
-	(void)ospf_lsa_is_self_originated(ospf, new); /* Let it set the flag */
-
-	/* Install the new LSA in the link state database
-	   (replacing the current database copy).  This may cause the
-	   routing table calculation to be scheduled.  In addition,
-	   timestamp the new LSA with the current time.  The flooding
-	   procedure cannot overwrite the newly installed LSA until
-	   MinLSArrival seconds have elapsed. */
-
-	if (!(new = ospf_lsa_install(ospf, nbr->oi, new)))
-		return -1; /* unknown LSA type or any other error condition */
-
-	/* Acknowledge the receipt of the LSA by sending a Link State
-	   Acknowledgment packet back out the receiving interface. */
-	if (lsa_ack_flag)
-		ospf_flood_delayed_lsa_ack(nbr, new);
-
-	/* If this new LSA indicates that it was originated by the
-	   receiving router itself, the router must take special action,
-	   either updating the LSA or in some cases flushing it from
-	   the routing domain. */
-	if (ospf_lsa_is_self_originated(ospf, new))
-		ospf_process_self_originated_lsa(ospf, new, oi->area);
-	else
-		/* Update statistics value for OSPF-MIB. */
-		ospf->rx_lsa_count++;
 
 	// Added by Cyril
 	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->vm[POST] != NULL) {
