@@ -33,7 +33,7 @@
 
 #include "ospfd/monitoring_server/monitoring_server.h"
 
-#define SIZE_EBPF_VM_HEAP 16000
+#define SIZE_EBPF_VM_HEAP 12000
 #define MAX_SIZE_SHARED_HEAP 1000 // Stack is ~2000 and this has to be copied on it
 
 /*

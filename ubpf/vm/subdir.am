@@ -6,7 +6,8 @@ ubpf_vm_libubpf_a_SOURCES = \
 	ubpf/vm/ubpf_jit_x86_64.c \
 	ubpf/tools/ubpf_manager.c \
 	ubpf/tools/ospf_plugins_api.c \
-	ubpf/tools/heap_management.c
+	ubpf/tools/heap_management.c \
+	ubpf/tools/my_memcpy.c
 
 
 noinst_HEADERS += \
@@ -17,7 +18,8 @@ noinst_HEADERS += \
 pkginclude_HEADERS += \
 	ubpf/tools/ubpf_manager.h \
 	ubpf/tools/ospf_plugins_api.h \
-	ubpf/tools/heap_management.h
+	ubpf/tools/heap_management.h \
+	ubpf/tools/my_memcpy.h
 
 ubpf_vm_libubpf_a_CFLAGS = \
 	-I@top_srcdir@/ubpf/vm/inc \

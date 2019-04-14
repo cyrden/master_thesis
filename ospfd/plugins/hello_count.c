@@ -18,13 +18,15 @@ uint64_t hello_count(void *data) {
     // TODO: check what makes it fail
     struct hello_struct s;
     struct ospf_interface *oi = plugin_arg->oi; // argument, it is a copy
-    struct ospf_interface oi_read;
-    int ret = get_ospf_interface(plugin_arg->plugin_context, &oi_read);
+    struct ospf_interface *oi_read = my_malloc(&plugin_arg->heap, sizeof(struct ospf_interface));
+    int ret = get_ospf_interface(plugin_arg->plugin_context, oi_read);
     if(ret != 1) return 0; // Error in the external function
-    struct interface ifp;
-    int ret2 = get_interface(plugin_arg->plugin_context, &ifp);
+    struct interface *ifp = my_malloc(&plugin_arg->heap, sizeof(struct interface));
+    int ret2 = get_interface(plugin_arg->plugin_context, ifp);
     if(ret2 != 1) return 0; // Error in the external function
-    s1->hello_count = oi_read.hello_out;
-    s1->itf_speed = ifp.speed;
+    s1->hello_count = oi_read->hello_out;
+    s1->itf_speed = ifp->speed;
+    my_free(&plugin_arg->heap, oi_read);
+    my_free(&plugin_arg->heap, ifp);
     return send_data(SEND_HELLO, s1);
 }
