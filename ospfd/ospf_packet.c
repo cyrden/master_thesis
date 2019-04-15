@@ -3727,9 +3727,10 @@ void ospf_hello_send(struct ospf_interface *oi)
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
         plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
         plugin_arg->heap.heap_last_block = NULL;
-        plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
 
+        plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
         plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_HELLO_SEND;
+
         exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), PRE);
         free(plugin_arg);
     }
@@ -3813,9 +3814,10 @@ void ospf_hello_send(struct ospf_interface *oi)
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_last_block = NULL;
-		plugins_tab.plugins[SEND_HELLO]->pluglets[POST]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
 
+		plugins_tab.plugins[SEND_HELLO]->pluglets[POST]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
 		plugins_tab.plugins[SEND_HELLO]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_HELLO_SEND;
+
 		exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), POST);
 		free(plugin_arg);
 	}

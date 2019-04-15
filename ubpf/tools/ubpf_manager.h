@@ -17,7 +17,6 @@
 
 struct plugin;
 
-
 /* Structure that represents a heap */
 typedef struct heap {
     char mem[SIZE_EBPF_VM_HEAP];
@@ -27,16 +26,19 @@ typedef struct heap {
 } heap_t;
 
 /*
- * Context of a pluglet (i.e and eBPF bytecode that is part of a plugin). Contains a pointer to the original version of the arguments and the type of the argument
+ * Context of a pluglet. Contains a pointer to the original version of the arguments, the type of the argument given to the pluglet,
+ * a pointer to its heap (given as argument so that eBPF code can access it) , and a pointer to the parent plugin (useful for the shared heap).
  */
 typedef struct pluglet_context {
     void *original_arg;
     int type_arg;
     heap_t *heap;
-    void *shared_heap; // pluglet context has a reference to the shared heap. Otherwise, helpers cannot manage it
     struct plugin *parent_plugin; // This is useful because we need to share the shared_heap among pluglets that belong to the same plugin
 } pluglet_context_t;
 
+/*
+ * Represents a pluglet. A pluglet is an ubpf vm (running eBPF bytecode) and its context.
+ */
 typedef struct pluglet {
     struct ubpf_vm *vm;
     pluglet_context_t *pluglet_context;

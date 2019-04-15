@@ -265,6 +265,7 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_last_block = NULL;
+
 		plugins_tab.plugins[LSA_FLOOD]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
 		plugins_tab.plugins[LSA_FLOOD]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
 
@@ -378,6 +379,7 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_last_block = NULL;
+		
 		plugins_tab.plugins[LSA_FLOOD]->pluglets[POST]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
 		plugins_tab.plugins[LSA_FLOOD]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
 

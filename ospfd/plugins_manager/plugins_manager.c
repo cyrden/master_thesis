@@ -59,7 +59,6 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
         tab->plugins[id]->pluglets[pos]->pluglet_context = malloc(sizeof(pluglet_context_t));
         tab->plugins[id]->pluglets[pos]->pluglet_context->original_arg = NULL;
         tab->plugins[id]->pluglets[pos]->pluglet_context->type_arg = -1;
-        tab->plugins[id]->pluglets[pos]->pluglet_context->shared_heap = NULL;
         tab->plugins[id]->pluglets[pos]->pluglet_context->heap = NULL;
         tab->plugins[id]->pluglets[pos]->pluglet_context->parent_plugin = tab->plugins[id];
     }

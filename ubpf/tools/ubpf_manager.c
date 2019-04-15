@@ -164,7 +164,7 @@ uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len, int pos) 
             current_context = plugin->pluglets[pos]->pluglet_context; // Set the current_context to the context of the pluglet we want to execute
             break;
         }
-        sleep(1);
+        sleep(1); // avoid using all CPU. There is probably a better way
     }
     ret = ubpf_exec(plugin->pluglets[pos]->vm, mem, mem_len);
     current_context = NULL; // release mutex
