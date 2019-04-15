@@ -18,13 +18,10 @@ static int register_functions(struct ubpf_vm *vm) {
     /* Generic functions */
     if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
-<<<<<<< HEAD
     if (ubpf_register(vm, 0x03, "malloc", malloc) == -1) return 0;
     if (ubpf_register(vm, 0x04, "free", free) == -1) return 0;
-=======
     //if (ubpf_register(vm, 0x03, "malloc", malloc) == -1) return 0;
     //if (ubpf_register(vm, 0x04, "free", free) == -1) return 0;
->>>>>>> 767c3766d659444ea6a062a18c2900fe31288d2e
     if (ubpf_register(vm, 0x05, "htons", htons) == -1) return 0;
     if (ubpf_register(vm, 0x06, "htonl", htonl) == -1) return 0;
     //if (ubpf_register(vm, 0x07, "memcpy", memcpy) == -1) return 0;
@@ -32,7 +29,7 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x09, "printf", printf) == -1) return 0;
 
 
-    /* Plugins shared_heap management functions */
+    /* Plugins heap management functions */
     if (ubpf_register(vm, 0x20, "shared_heap_malloc", shared_heap_malloc) == -1) return 0;
     if (ubpf_register(vm, 0x21, "shared_heap_free", shared_heap_free) == -1) return 0;
     if (ubpf_register(vm, 0x22, "shared_heap_get", shared_heap_get) == -1) return 0;
