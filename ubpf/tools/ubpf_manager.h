@@ -15,6 +15,8 @@
 #define SIZE_EBPF_VM_HEAP 16000
 #define MAX_SIZE_SHARED_HEAP 1000 // Stack is ~2000 and this has to be copied on it
 
+struct plugin;
+
 
 /* Structure that represents a heap */
 typedef struct heap {
@@ -32,17 +34,13 @@ typedef struct pluglet_context {
     int type_arg;
     heap_t *heap;
     void *shared_heap; // pluglet context has a reference to the shared heap. Otherwise, helpers cannot manage it
+    struct plugin *parent_plugin; // This is useful because we need to share the shared_heap among pluglets that belong to the same plugin
 } pluglet_context_t;
 
 typedef struct pluglet {
     struct ubpf_vm *vm;
     pluglet_context_t *pluglet_context;
 } pluglet_t;
-
-typedef struct general_argument {
-    heap_t heap;
-    void *arg;
-} general_argument_t;
 
 
 /*

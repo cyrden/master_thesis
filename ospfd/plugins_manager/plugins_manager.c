@@ -61,6 +61,7 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
         tab->plugins[id]->pluglets[pos]->pluglet_context->type_arg = -1;
         tab->plugins[id]->pluglets[pos]->pluglet_context->shared_heap = NULL;
         tab->plugins[id]->pluglets[pos]->pluglet_context->heap = NULL;
+        tab->plugins[id]->pluglets[pos]->pluglet_context->parent_plugin = tab->plugins[id];
     }
     return 1;
 }
@@ -106,10 +107,10 @@ void *plugins_manager(void *tab) {
     inject_plugins((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o", PRE);
     //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o"); //TODO: Broken
     inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
-    //inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
-    //inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
+    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
+    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
     //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o"); // TODO: Broken
-    //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/plugins/lsa_flood.o");
+    inject_plugins((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
     inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
 
     /*while(1) { // In that loop receives messages from UI to inject plugins

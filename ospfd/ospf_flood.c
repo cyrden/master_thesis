@@ -262,6 +262,10 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 		/* Definition of the plugin argument */
 		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
 		plugin_arg->lsa = new;
+		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+		plugin_arg->heap.heap_last_block = NULL;
+		plugins_tab.plugins[LSA_FLOOD]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
 		plugins_tab.plugins[LSA_FLOOD]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
 
 		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood), PRE);
@@ -371,6 +375,10 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 		/* Definition of the plugin argument */
 		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
 		plugin_arg->lsa = new;
+		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+		plugin_arg->heap.heap_last_block = NULL;
+		plugins_tab.plugins[LSA_FLOOD]->pluglets[POST]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
 		plugins_tab.plugins[LSA_FLOOD]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
 
 		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood), POST);

@@ -159,7 +159,6 @@ uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len, int pos) 
     }
 
     plugin->pluglets[pos]->pluglet_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
-    plugin->pluglets[pos]->pluglet_context->shared_heap = plugin->shared_heap; // TODO: I initialized it to NULL --> doesn't work need to fix
     while(1) {
         if (current_context == NULL) { // Sort of mutex ...
             current_context = plugin->pluglets[pos]->pluglet_context; // Set the current_context to the context of the pluglet we want to execute

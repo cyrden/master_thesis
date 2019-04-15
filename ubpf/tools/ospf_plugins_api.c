@@ -27,7 +27,10 @@ int shared_heap_malloc(size_t size) {
         printf("NULL pointer \n");
         return 0;
     }
+    pluglet_context->shared_heap = pluglet_context->parent_plugin->shared_heap;
+    if(pluglet_context->shared_heap != NULL) return 0;
     pluglet_context->shared_heap = malloc(size);
+    pluglet_context->parent_plugin->shared_heap = pluglet_context->shared_heap;
     if(pluglet_context->shared_heap == NULL) return 0;
     return 1;
 }
@@ -38,6 +41,8 @@ int shared_heap_free(void) {
         printf("NULL pointer \n");
         return 0;
     }
+    pluglet_context->shared_heap = pluglet_context->parent_plugin->shared_heap;
+    if(pluglet_context->shared_heap == NULL) return 0;
     free(pluglet_context->shared_heap);
     pluglet_context->shared_heap = NULL;
     return 1;
@@ -53,6 +58,8 @@ int shared_heap_get(void *heap_copy, size_t size) {
         printf("NULL pointer \n");
         return 0;
     }
+    pluglet_context->shared_heap = pluglet_context->parent_plugin->shared_heap;
+    if(pluglet_context->shared_heap == NULL) return 0;
     memcpy(heap_copy, pluglet_context->shared_heap, size);
     return 1;
 }
@@ -67,6 +74,8 @@ int shared_heap_set(void *val, size_t size) {
         printf("NULL pointer \n");
         return 0;
     }
+    pluglet_context->shared_heap = pluglet_context->parent_plugin->shared_heap;
+    if(pluglet_context->shared_heap == NULL) return 0;
     memcpy(pluglet_context->shared_heap, val, size);
     return 1;
 }
