@@ -1172,7 +1172,6 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		/* Definition of the plugin argument */
 		struct arg_plugin_spf_calc *plugin_arg = malloc(sizeof(struct arg_plugin_spf_calc));
 		plugin_arg->area = area;
-		plugin_arg->plugin_context = plugins_tab.plugins[SPF_CALC]->plugin_context; // Put a pointer to the context of the plugin
 		plugins_tab.plugins[SPF_CALC]->plugin_context->type_arg = ARG_PLUGIN_SPF_CALC;
 
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), PRE);
@@ -1305,7 +1304,6 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		/* Definition of the plugin argument */
 		struct arg_plugin_spf_calc *plugin_arg = malloc(sizeof(struct arg_plugin_spf_calc));
 		plugin_arg->area = area;
-		plugin_arg->plugin_context = plugins_tab.plugins[SPF_CALC]->plugin_context; // Put a pointer to the context of the plugin
 		plugins_tab.plugins[SPF_CALC]->plugin_context->type_arg = ARG_PLUGIN_SPF_CALC;
 
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), POST);

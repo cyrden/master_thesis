@@ -532,8 +532,6 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 		struct arg_plugin_ism_change_state *plugin_arg = malloc(sizeof(struct arg_plugin_ism_change_state));
 		plugin_arg->oi = oi;
 		plugin_arg->new_state = state;
-		plugin_arg->plugin_context = plugins_tab.plugins[ISM_CHANGE_STATE]->plugin_context; // Put a pointer to the context of the plugin
-		plugin_arg->plugin_context->type_arg = ARG_PLUGIN_ISM_CHANGE_STATE;
 
 		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE], (void *) plugin_arg, sizeof(struct arg_plugin_ism_change_state), PRE);
 		free(plugin_arg);
@@ -600,8 +598,7 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 		struct arg_plugin_ism_change_state *plugin_arg = malloc(sizeof(struct arg_plugin_ism_change_state));
 		plugin_arg->oi = oi;
 		plugin_arg->new_state = state;
-		plugin_arg->plugin_context = plugins_tab.plugins[ISM_CHANGE_STATE]->plugin_context; // Put a pointer to the context of the plugin
-		plugin_arg->plugin_context->type_arg = ARG_PLUGIN_ISM_CHANGE_STATE;
+		plugins_tab.plugins[ISM_CHANGE_STATE]->plugin_context->type_arg = ARG_PLUGIN_ISM_CHANGE_STATE;
 
 		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE], (void *) plugin_arg, sizeof(struct arg_plugin_ism_change_state), POST);
 		free(plugin_arg);

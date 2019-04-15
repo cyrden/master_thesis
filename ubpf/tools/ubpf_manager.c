@@ -161,6 +161,8 @@ uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len, int pos) 
     }
     memcpy(plugin->arg, mem, mem_len); // Make a copy of mem to give it as argument field to plugin structure
     plugin->plugin_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
+    current_context = plugin->plugin_context; // Set the current_context to the context of the plugin we want to execute
     ret = ubpf_exec(plugin->vm[pos], plugin->arg, mem_len);
+    current_context = NULL;
     return ret;
 }

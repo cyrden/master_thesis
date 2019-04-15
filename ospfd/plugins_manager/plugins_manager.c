@@ -20,18 +20,6 @@ struct mesg_buffer {
 
 
 /*
- * Initialization of the structure that contains all the contexts
- */
-int contexts_tab_init(contexts_tab_t *tab) {
-    tab = malloc(sizeof(contexts_tab_t));
-    if(tab == NULL) return 0;
-    for (int i = 0; i < MAX_NBR_PLUGINS; i++) {
-        tab->contexts[i] = NULL;
-    }
-    return 1;
-}
-
-/*
  * Initialization of the structure that contains all the plugins
  */
 int plugins_tab_init(plugins_tab_t *tab) {
@@ -67,7 +55,6 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
     }
     tab->plugins[id]->plugin_context = malloc(sizeof(struct plugin_context));
     tab->plugins[id]->plugin_context->shared_heap = NULL;
-    contexts_tab.contexts[id] = tab->plugins[id]->plugin_context; // Store the pointer to every context created
     return 1;
 }
 

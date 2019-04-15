@@ -577,7 +577,7 @@ int ospf_area_nssa_no_summary_set(struct ospf *, struct in_addr);
 
 // Added by Cyril
 extern plugins_tab_t plugins_tab; // Give access to the structure of all plugins in all files
-extern contexts_tab_t contexts_tab; // Give access to the structure of all contexts in all files
+extern plugin_context_t *current_context; // Give access to the current_context in all files
 
 
 #endif /* _ZEBRA_OSPFD_H */

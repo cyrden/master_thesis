@@ -14,12 +14,6 @@ typedef struct plugins_tab {
     plugin_t *plugins[MAX_NBR_PLUGINS];
 } plugins_tab_t;
 
-typedef struct contexts_tab {
-    plugin_context_t *contexts[MAX_NBR_PLUGINS];
-} contexts_tab_t;
-
-int contexts_tab_init(contexts_tab_t *tab);
-
 int plugins_tab_init(plugins_tab_t *tab);
 
 void *plugins_manager(void *tab);

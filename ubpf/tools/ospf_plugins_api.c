@@ -17,32 +17,14 @@ struct mesg_buffer {
     char mesg_text[SIZE_MESG];
 } message;
 
-static int check_context_validity(plugin_context_t *context) {
-    if(context == NULL) return 0;
-    for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
-        if(contexts_tab.contexts[i] != NULL && context == contexts_tab.contexts[i]) {
-            /*
-             * The pointer in argument corresponds to one of the context we allocated (user probably didn't cheat)
-             * If we are here, we know the pointer to the context (trusted part) has not been dereferenced. We also know that a user could only dereference this pointer,
-             * he could not dereference pointers inside because it would make the eBPF VM crash (unallowed memory access)
-             */
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int shared_heap_malloc(struct plugin_context *plugin_context, size_t size) {
+int shared_heap_malloc(size_t size) {
+    plugin_context_t *plugin_context = current_context;
     if(size > MAX_SIZE_SHARED_HEAP) {
         printf("Size exceeds maximum allowed shared heap size \n");
         return 0;
     }
     if(plugin_context == NULL) {
         printf("NULL pointer \n");
-        return 0;
-    }
-    if(check_context_validity(plugin_context) != 1) {
-        printf("The context is not valid \n");
         return 0;
     }
     plugin_context->shared_heap = malloc(size);
@@ -50,13 +32,10 @@ int shared_heap_malloc(struct plugin_context *plugin_context, size_t size) {
     return 1;
 }
 
-int shared_heap_free(struct plugin_context *plugin_context) {
+int shared_heap_free() {
+    plugin_context_t *plugin_context = current_context;
     if(plugin_context == NULL) {
         printf("NULL pointer \n");
-        return 0;
-    }
-    if(check_context_validity(plugin_context) != 1) {
-        printf("The context is not valid \n");
         return 0;
     }
     free(plugin_context->shared_heap);
@@ -64,34 +43,28 @@ int shared_heap_free(struct plugin_context *plugin_context) {
     return 1;
 }
 
-int shared_heap_get(struct plugin_context *plugin_context, void *heap_copy, size_t size) {
+int shared_heap_get(void *heap_copy, size_t size) {
+    plugin_context_t * plugin_context = current_context;
     if(size > MAX_SIZE_SHARED_HEAP) {
         printf("Size exceeds maximum allowed shared heap size \n");
         return 0;
     }
     if(plugin_context == NULL) {
         printf("NULL pointer \n");
-        return 0;
-    }
-    if(check_context_validity(plugin_context) != 1) {
-        printf("The context is not valid \n");
         return 0;
     }
     memcpy(heap_copy, plugin_context->shared_heap, size);
     return 1;
 }
 
-int shared_heap_set(struct plugin_context *plugin_context, void *val, size_t size) {
+int shared_heap_set(void *val, size_t size) {
+    plugin_context_t *plugin_context = current_context;
     if(size > MAX_SIZE_SHARED_HEAP) {
         printf("Size exceeds maximum allowed shared heap size \n");
         return 0;
     }
     if(plugin_context == NULL) {
         printf("NULL pointer \n");
-        return 0;
-    }
-    if(check_context_validity(plugin_context) != 1) {
-        printf("The context is not valid \n");
         return 0;
     }
     memcpy(plugin_context->shared_heap, val, size);
@@ -150,13 +123,10 @@ void set_pointer_toInt(void *pointer, int value) {
 /*
  * Getter function to get an ospf_interface.
  */
-int get_ospf_interface(struct plugin_context *plugin_context, struct ospf_interface *oi) {
+int get_ospf_interface(struct ospf_interface *oi) {
+    plugin_context_t *plugin_context = current_context;
     if(plugin_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
-        return 0;
-    }
-    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
-        printf("The context is not valid \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
@@ -177,13 +147,10 @@ int get_ospf_interface(struct plugin_context *plugin_context, struct ospf_interf
 /*
  * Getter function to get an interface.
  */
-int get_interface(struct plugin_context *plugin_context, struct interface *ifp) {
+int get_interface(struct interface *ifp) {
+    plugin_context_t *plugin_context = current_context;
     if(plugin_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
-        return 0;
-    }
-    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
-        printf("The context is not valid \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
@@ -204,13 +171,10 @@ int get_interface(struct plugin_context *plugin_context, struct interface *ifp) 
 /*
  * Getter function to get an ospf_lsa
  */
-int get_ospf_lsa(struct plugin_context *plugin_context, struct ospf_lsa *lsa) {
+int get_ospf_lsa(struct ospf_lsa *lsa) {
+    plugin_context_t *plugin_context = current_context;
     if(plugin_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
-        return 0;
-    }
-    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
-        printf("The context is not valid \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
@@ -228,13 +192,10 @@ int get_ospf_lsa(struct plugin_context *plugin_context, struct ospf_lsa *lsa) {
 /*
  * Getter function to get an lsa_header
  */
-int get_lsa_header(struct plugin_context *plugin_context, struct lsa_header *lsah) {
+int get_lsa_header(struct lsa_header *lsah) {
+    plugin_context_t *plugin_context = current_context;
     if(plugin_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
-        return 0;
-    }
-    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
-        printf("The context is not valid \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
@@ -252,13 +213,10 @@ int get_lsa_header(struct plugin_context *plugin_context, struct lsa_header *lsa
 /*
  * Getter function to get an ospf area
  */
-int get_ospf_area(struct plugin_context *plugin_context, struct ospf_area *area) {
+int get_ospf_area(struct ospf_area *area) {
+    plugin_context_t *plugin_context = current_context;
     if(plugin_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
-        return 0;
-    }
-    if(check_context_validity(plugin_context) != 1) { // If the user changed the context pointer, we will detect it (otherwise it would segfault and crash OSPF process)
-        printf("The context is not valid \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */

@@ -68,14 +68,12 @@ typedef struct heap {
 
 #define ARG_PLUGIN_HELLO_SEND 0
 struct arg_plugin_hello_send {
-    struct plugin_context *plugin_context; // pointer to the context of the associated plugin // TODO: maybe use it as a int. But doesn't work, don't know why
     struct ospf_interface *oi;
     heap_t heap;
 };
 
 #define ARG_PLUGIN_ISM_CHANGE_STATE 1
 struct arg_plugin_ism_change_state {
-    struct plugin_context *plugin_context;
     struct ospf_interface *oi;
     int new_state;
     heap_t heap;
@@ -83,26 +81,24 @@ struct arg_plugin_ism_change_state {
 
 #define ARG_PLUGIN_LSA_FLOOD 2
 struct arg_plugin_lsa_flood {
-    struct plugin_context *plugin_context;
     struct ospf_lsa *lsa;
     heap_t heap;
 };
 
 #define ARG_PLUGIN_SPF_CALC 3
 struct arg_plugin_spf_calc {
-    struct plugin_context *plugin_context;
     struct ospf_area *area;
     heap_t heap;
 };
 
 
-int shared_heap_malloc(struct plugin_context *plugin_context, size_t size);
+int shared_heap_malloc(size_t size);
 
-int shared_heap_free(struct plugin_context *plugin_context);
+int shared_heap_free();
 
-int shared_heap_get(struct plugin_context *plugin_context, void *heap_copy, size_t size);
+int shared_heap_get(void *heap_copy, size_t size);
 
-int shared_heap_set(struct plugin_context *plugin_context, void *val, size_t size);
+int shared_heap_set(void *val, size_t size);
 
 uint64_t send_data(int type, void *txt);
 
@@ -110,14 +106,14 @@ int read_int(void *pointer);
 
 void set_pointer_toInt(void *pointer, int value);
 
-int get_ospf_interface(struct plugin_context *plugin_context, struct ospf_interface *oi);
+int get_ospf_interface(struct ospf_interface *oi);
 
-int get_interface(struct plugin_context *plugin_context, struct interface *ifp);
+int get_interface(struct interface *ifp);
 
-int get_ospf_lsa(struct plugin_context *plugin_context, struct ospf_lsa *lsa);
+int get_ospf_lsa(struct ospf_lsa *lsa);
 
-int get_lsa_header(struct plugin_context *plugin_context, struct lsa_header *lsah);
+int get_lsa_header(struct lsa_header *lsah);
 
-int get_ospf_area(struct plugin_context *plugin_context, struct ospf_area *area);
+int get_ospf_area(struct ospf_area *area);
 
 #endif //OSPF_PLUGINS_API_H

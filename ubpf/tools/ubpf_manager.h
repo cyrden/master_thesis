@@ -35,14 +35,6 @@ typedef struct plugin {
 } plugin_t;
 
 /*
- * All plugin_arg structures start with a pointer to the plugin_context (see ospf_plugins_api.h)
- */
-typedef struct general_plugin_arg {
-    struct plugin_context *plugin_context;
-    void *rest;
-} general_plugin_arg_t;
-
-/*
  * Loads an elf file in a ubpf virtual machine. The elf file should but output of clang.
  */
 plugin_t *load_elf_file(plugin_t *plugin, const char *code_filename, int pos);
