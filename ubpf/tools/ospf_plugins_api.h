@@ -33,9 +33,6 @@
 
 #include "ospfd/monitoring_server/monitoring_server.h"
 
-#define SIZE_EBPF_VM_HEAP 16000
-#define MAX_SIZE_SHARED_HEAP 1000 // Stack is ~2000 and this has to be copied on it
-
 /*
  * PRE, POST, REPLACE
  */
@@ -55,46 +52,38 @@
 #define LSA_FLOOD 10
 #define SPF_TEST 13
 
-/* Structure that represents a heap */
-typedef struct heap {
-    char mem[SIZE_EBPF_VM_HEAP];
-    void *heap_start;
-    void *heap_end;
-    void *heap_last_block;
-} heap_t;
-
 
 /* Structures to pass as argument to plugins */
 
 #define ARG_PLUGIN_HELLO_SEND 0
 struct arg_plugin_hello_send {
-    struct ospf_interface *oi;
     heap_t heap;
+    struct ospf_interface *oi;
 };
 
 #define ARG_PLUGIN_ISM_CHANGE_STATE 1
 struct arg_plugin_ism_change_state {
+    heap_t heap;
     struct ospf_interface *oi;
     int new_state;
-    heap_t heap;
 };
 
 #define ARG_PLUGIN_LSA_FLOOD 2
 struct arg_plugin_lsa_flood {
-    struct ospf_lsa *lsa;
     heap_t heap;
+    struct ospf_lsa *lsa;
 };
 
 #define ARG_PLUGIN_SPF_CALC 3
 struct arg_plugin_spf_calc {
-    struct ospf_area *area;
     heap_t heap;
+    struct ospf_area *area;
 };
 
 
 int shared_heap_malloc(size_t size);
 
-int shared_heap_free();
+int shared_heap_free(void);
 
 int shared_heap_get(void *heap_copy, size_t size);
 

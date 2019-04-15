@@ -258,17 +258,17 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 	       struct ospf_lsa *current, struct ospf_lsa *new)
 {
     // Added by Cyril
-    if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->vm[PRE] != NULL) {
+    if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->pluglets[PRE] != NULL) {
 		/* Definition of the plugin argument */
 		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
 		plugin_arg->lsa = new;
-		plugins_tab.plugins[LSA_FLOOD]->plugin_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
+		plugins_tab.plugins[LSA_FLOOD]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
 
 		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood), PRE);
 		free(plugin_arg);
     }
 
-	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->vm[REP] != NULL) {
+	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->pluglets[REP] != NULL) {
 		// REP
 	}
 	else {
@@ -367,11 +367,11 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 	}
 
 	// Added by Cyril
-	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->vm[POST] != NULL) {
+	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->pluglets[POST] != NULL) {
 		/* Definition of the plugin argument */
 		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
 		plugin_arg->lsa = new;
-		plugins_tab.plugins[LSA_FLOOD]->plugin_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
+		plugins_tab.plugins[LSA_FLOOD]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
 
 		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood), POST);
 		free(plugin_arg);

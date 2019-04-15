@@ -39,22 +39,29 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
         fprintf(stderr, "Id not valid \n");
         return 0;
     }
-    if(tab->plugins[id] == NULL) { // First BPF code injected
-        tab->plugins[id] = (plugin_t *)malloc(sizeof(plugin_t));
+    if(tab->plugins[id] == NULL) { // First pluglet injected
+        tab->plugins[id] = (plugin_t *) malloc(sizeof(plugin_t));
         if (!tab->plugins[id]) {
             return 0;
         }
-        tab->plugins[id]->vm[PRE] = NULL;
-        tab->plugins[id]->vm[REP] = NULL;
-        tab->plugins[id]->vm[POST] = NULL;
+        tab->plugins[id]->pluglets[PRE] = NULL;
+        tab->plugins[id]->pluglets[REP] = NULL;
+        tab->plugins[id]->pluglets[POST] = NULL;
+        tab->plugins[id]->shared_heap = NULL;
     }
+
     if(load_elf_file(tab->plugins[id], elfname, pos) == NULL) return 0;
-    if (tab->plugins[id] == NULL) {
+    if (tab->plugins[id]->pluglets[pos] == NULL) {
         perror("Failed to load file\n");
         return 0;
     }
-    tab->plugins[id]->plugin_context = malloc(sizeof(struct plugin_context));
-    tab->plugins[id]->plugin_context->shared_heap = NULL;
+    if(tab->plugins[id]->pluglets[pos]->pluglet_context == NULL) {
+        tab->plugins[id]->pluglets[pos]->pluglet_context = malloc(sizeof(pluglet_context_t));
+        tab->plugins[id]->pluglets[pos]->pluglet_context->original_arg = NULL;
+        tab->plugins[id]->pluglets[pos]->pluglet_context->type_arg = -1;
+        tab->plugins[id]->pluglets[pos]->pluglet_context->shared_heap = NULL;
+        tab->plugins[id]->pluglets[pos]->pluglet_context->heap = NULL;
+    }
     return 1;
 }
 
@@ -64,10 +71,10 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
 void release_all_plugins(void) {
     for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
         if(plugins_tab.plugins[i] != NULL) {
-            free(plugins_tab.plugins[i]->plugin_context);
             release_elf(plugins_tab.plugins[i], PRE);
             release_elf(plugins_tab.plugins[i], REP);
             release_elf(plugins_tab.plugins[i], POST);
+            free(plugins_tab.plugins[i]->shared_heap);
             free(plugins_tab.plugins[i]);
             plugins_tab.plugins[i] = NULL;
         }
@@ -99,8 +106,8 @@ void *plugins_manager(void *tab) {
     inject_plugins((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o", PRE);
     //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o"); //TODO: Broken
     inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
-    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
-    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
+    //inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
+    //inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
     //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o"); // TODO: Broken
     //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD_PRE, "/plugins/lsa_flood.o");
     inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);

@@ -22,6 +22,7 @@
 #include <stdarg.h>
 #include <inttypes.h>
 #include <sys/mman.h>
+#include <lib/log.h>
 #include "ubpf_int.h"
 
 #define MAX_EXT_FUNCS 64
@@ -763,6 +764,7 @@ bounds_check(void *addr, int size, const char *type, uint16_t cur_pc, void *mem,
     } else {
         fprintf(stderr, "uBPF error: out of bounds memory %s at PC %u, addr %p, size %d\n", type, cur_pc, addr, size);
         fprintf(stderr, "mem %p/%zd stack %p/%d\n", mem, mem_len, stack, STACK_SIZE);
+        zlog_notice("OUT OF BOUND MEMORY ACCESS !!!!! \n");
         return false;
     }
 }

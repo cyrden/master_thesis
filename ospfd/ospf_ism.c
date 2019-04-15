@@ -527,17 +527,22 @@ static const char *ospf_ism_event_str[] = {
 static void ism_change_state(struct ospf_interface *oi, int state)
 {
 	// Added by Cyril
-	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->vm[PRE] != NULL) {
+	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets[PRE] != NULL) {
 		/* Definition of the plugin argument */
 		struct arg_plugin_ism_change_state *plugin_arg = malloc(sizeof(struct arg_plugin_ism_change_state));
 		plugin_arg->oi = oi;
 		plugin_arg->new_state = state;
+        plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+        plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+        plugin_arg->heap.heap_last_block = NULL;
+        plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
+        plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_ISM_CHANGE_STATE;
 
-		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE], (void *) plugin_arg, sizeof(struct arg_plugin_ism_change_state), PRE);
+        exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE], (void *) plugin_arg, sizeof(struct arg_plugin_ism_change_state), PRE);
 		free(plugin_arg);
 	}
 
-	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->vm[REP] != NULL) {
+	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets[REP] != NULL) {
 		// REP
 	}
 	else {
@@ -593,15 +598,19 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 	}
 
 	// Added by Cyril
-	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->vm[POST] != NULL) {
-		/* Definition of the plugin argument */
-		struct arg_plugin_ism_change_state *plugin_arg = malloc(sizeof(struct arg_plugin_ism_change_state));
-		plugin_arg->oi = oi;
-		plugin_arg->new_state = state;
-		plugins_tab.plugins[ISM_CHANGE_STATE]->plugin_context->type_arg = ARG_PLUGIN_ISM_CHANGE_STATE;
+	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets[POST] != NULL) {
+        /* Definition of the plugin argument */
+        struct arg_plugin_ism_change_state *plugin_arg = malloc(sizeof(struct arg_plugin_ism_change_state));
+        plugin_arg->oi = oi;
+        plugin_arg->new_state = state;
+        plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+        plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+        plugin_arg->heap.heap_last_block = NULL;
+        plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets[POST]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
+        plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_ISM_CHANGE_STATE;
 
-		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE], (void *) plugin_arg, sizeof(struct arg_plugin_ism_change_state), POST);
-		free(plugin_arg);
+        exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE], (void *) plugin_arg, sizeof(struct arg_plugin_ism_change_state), POST);
+        free(plugin_arg);
 	}
 }
 

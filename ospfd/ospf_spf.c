@@ -1168,17 +1168,17 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			       struct route_table *new_rtrs)
 {
 	// Added by Cyril
-	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[PRE] != NULL) {
+	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets[PRE] != NULL) {
 		/* Definition of the plugin argument */
 		struct arg_plugin_spf_calc *plugin_arg = malloc(sizeof(struct arg_plugin_spf_calc));
 		plugin_arg->area = area;
-		plugins_tab.plugins[SPF_CALC]->plugin_context->type_arg = ARG_PLUGIN_SPF_CALC;
+		plugins_tab.plugins[SPF_CALC]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_SPF_CALC;
 
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), PRE);
 		free(plugin_arg);
 	}
 
-    if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[REP] != NULL) {
+    if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets[REP] != NULL) {
         // REP
     }
     else {
@@ -1300,11 +1300,11 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
     }
 
 	// Added by Cyril
-	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->vm[POST] != NULL) {
+	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets[POST] != NULL) {
 		/* Definition of the plugin argument */
 		struct arg_plugin_spf_calc *plugin_arg = malloc(sizeof(struct arg_plugin_spf_calc));
 		plugin_arg->area = area;
-		plugins_tab.plugins[SPF_CALC]->plugin_context->type_arg = ARG_PLUGIN_SPF_CALC;
+		plugins_tab.plugins[SPF_CALC]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_SPF_CALC;
 
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), POST);
 		free(plugin_arg);

@@ -18,56 +18,56 @@ struct mesg_buffer {
 } message;
 
 int shared_heap_malloc(size_t size) {
-    plugin_context_t *plugin_context = current_context;
+    pluglet_context_t *pluglet_context = current_context;
     if(size > MAX_SIZE_SHARED_HEAP) {
         printf("Size exceeds maximum allowed shared heap size \n");
         return 0;
     }
-    if(plugin_context == NULL) {
+    if(pluglet_context == NULL) {
         printf("NULL pointer \n");
         return 0;
     }
-    plugin_context->shared_heap = malloc(size);
-    if(plugin_context->shared_heap == NULL) return 0;
+    pluglet_context->shared_heap = malloc(size);
+    if(pluglet_context->shared_heap == NULL) return 0;
     return 1;
 }
 
-int shared_heap_free() {
-    plugin_context_t *plugin_context = current_context;
-    if(plugin_context == NULL) {
+int shared_heap_free(void) {
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) {
         printf("NULL pointer \n");
         return 0;
     }
-    free(plugin_context->shared_heap);
-    plugin_context->shared_heap = NULL;
+    free(pluglet_context->shared_heap);
+    pluglet_context->shared_heap = NULL;
     return 1;
 }
 
 int shared_heap_get(void *heap_copy, size_t size) {
-    plugin_context_t * plugin_context = current_context;
+    pluglet_context_t * pluglet_context = current_context;
     if(size > MAX_SIZE_SHARED_HEAP) {
         printf("Size exceeds maximum allowed shared heap size \n");
         return 0;
     }
-    if(plugin_context == NULL) {
+    if(pluglet_context == NULL) {
         printf("NULL pointer \n");
         return 0;
     }
-    memcpy(heap_copy, plugin_context->shared_heap, size);
+    memcpy(heap_copy, pluglet_context->shared_heap, size);
     return 1;
 }
 
 int shared_heap_set(void *val, size_t size) {
-    plugin_context_t *plugin_context = current_context;
+    pluglet_context_t *pluglet_context = current_context;
     if(size > MAX_SIZE_SHARED_HEAP) {
         printf("Size exceeds maximum allowed shared heap size \n");
         return 0;
     }
-    if(plugin_context == NULL) {
+    if(pluglet_context == NULL) {
         printf("NULL pointer \n");
         return 0;
     }
-    memcpy(plugin_context->shared_heap, val, size);
+    memcpy(pluglet_context->shared_heap, val, size);
     return 1;
 }
 
@@ -101,7 +101,7 @@ uint64_t send_data(int type, void *data) {
     }
     msgsnd(msgid, &message, sizeof(message), 0);
 
-    return 0;
+    return 1;
 }
 
 /*
@@ -124,18 +124,18 @@ void set_pointer_toInt(void *pointer, int value) {
  * Getter function to get an ospf_interface.
  */
 int get_ospf_interface(struct ospf_interface *oi) {
-    plugin_context_t *plugin_context = current_context;
-    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
-    switch (plugin_context->type_arg) {
+    switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_HELLO_SEND:
-            memcpy(oi, ((struct arg_plugin_hello_send *) plugin_context->original_arg)->oi, sizeof(struct ospf_interface));
+            memcpy(oi, ((struct arg_plugin_hello_send *) pluglet_context->original_arg)->oi, sizeof(struct ospf_interface));
             break;
         case ARG_PLUGIN_ISM_CHANGE_STATE:
-            memcpy(oi, ((struct arg_plugin_ism_change_state *) plugin_context->original_arg)->oi, sizeof(struct ospf_interface));
+            memcpy(oi, ((struct arg_plugin_ism_change_state *) pluglet_context->original_arg)->oi, sizeof(struct ospf_interface));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
@@ -148,18 +148,18 @@ int get_ospf_interface(struct ospf_interface *oi) {
  * Getter function to get an interface.
  */
 int get_interface(struct interface *ifp) {
-    plugin_context_t *plugin_context = current_context;
-    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
-    switch (plugin_context->type_arg) {
+    switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_HELLO_SEND:
-            memcpy(ifp, ((struct arg_plugin_hello_send *) plugin_context->original_arg)->oi->ifp, sizeof(struct interface));
+            memcpy(ifp, ((struct arg_plugin_hello_send *) pluglet_context->original_arg)->oi->ifp, sizeof(struct interface));
             break;
         case ARG_PLUGIN_ISM_CHANGE_STATE:
-            memcpy(ifp, ((struct arg_plugin_ism_change_state *) plugin_context->original_arg)->oi->ifp, sizeof(struct interface));
+            memcpy(ifp, ((struct arg_plugin_ism_change_state *) pluglet_context->original_arg)->oi->ifp, sizeof(struct interface));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
@@ -172,15 +172,15 @@ int get_interface(struct interface *ifp) {
  * Getter function to get an ospf_lsa
  */
 int get_ospf_lsa(struct ospf_lsa *lsa) {
-    plugin_context_t *plugin_context = current_context;
-    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
-    switch (plugin_context->type_arg) {
+    switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_LSA_FLOOD:
-            memcpy(lsa, ((struct arg_plugin_lsa_flood *) plugin_context->original_arg)->lsa, sizeof(struct ospf_lsa));
+            memcpy(lsa, ((struct arg_plugin_lsa_flood *) pluglet_context->original_arg)->lsa, sizeof(struct ospf_lsa));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
@@ -193,15 +193,15 @@ int get_ospf_lsa(struct ospf_lsa *lsa) {
  * Getter function to get an lsa_header
  */
 int get_lsa_header(struct lsa_header *lsah) {
-    plugin_context_t *plugin_context = current_context;
-    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
-    switch (plugin_context->type_arg) {
+    switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_LSA_FLOOD:
-            memcpy(lsah, ((struct arg_plugin_lsa_flood *) plugin_context->original_arg)->lsa->data, sizeof(struct lsa_header));
+            memcpy(lsah, ((struct arg_plugin_lsa_flood *) pluglet_context->original_arg)->lsa->data, sizeof(struct lsa_header));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
@@ -214,15 +214,15 @@ int get_lsa_header(struct lsa_header *lsah) {
  * Getter function to get an ospf area
  */
 int get_ospf_area(struct ospf_area *area) {
-    plugin_context_t *plugin_context = current_context;
-    if(plugin_context == NULL) { // check that plugin didn't send null pointer
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
         return 0;
     }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
-    switch (plugin_context->type_arg) {
+    switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_SPF_CALC:
-            memcpy(area, ((struct arg_plugin_spf_calc *) plugin_context->original_arg)->area, sizeof(struct ospf_area));
+            memcpy(area, ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area, sizeof(struct ospf_area));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");

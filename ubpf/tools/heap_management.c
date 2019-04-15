@@ -46,21 +46,21 @@ static unsigned int align_size(unsigned int size) {
 /**
  * Home-made implementation of sbrk within a given context_t.
  */
-static void *my_sbrk(heap_t *heap, intptr_t increment) {
-    if (heap->heap_end + increment - heap->heap_start > MEM_BUFFER) {
+static void *my_sbrk(intptr_t increment) {
+    if (current_context->heap->heap_end + increment - current_context->heap->heap_start > MEM_BUFFER) {
         /* Out of memory */
         return (void *) -1;
     }
 
-    heap->heap_end += increment;
-    return heap->heap_end;
+    current_context->heap->heap_end += increment;
+    return current_context->heap->heap_end;
 }
 
 /**
  * Goes through the whole heap to find an empty slot.
  */
-static meta_data *find_slot(heap_t *heap, unsigned int size) {
-    meta_data *iter = (meta_data*) heap->heap_start;
+static meta_data *find_slot(unsigned int size) {
+    meta_data *iter = (meta_data*) current_context->heap->heap_start;
     while(iter) {
         if (iter->available && iter->size >= size) {
             iter->available = 0;
@@ -91,20 +91,20 @@ static void divide_slot(void *slot, unsigned int size) {
 /**
  * Extends the heap using ou own sbrk function.
  */
-static void *extend(heap_t *heap, unsigned int size) {
-    meta_data *new_block = (meta_data*) my_sbrk(heap, 0);
-    if ((char*) new_block - (char*) heap->heap_start > MEM_BUFFER) return NULL;
-    int *flag = (int *) my_sbrk(heap, size + METADATA_SIZE);
+static void *extend(unsigned int size) {
+    meta_data *new_block = (meta_data*) my_sbrk(0);
+    if ((char*) new_block - (char*) current_context->heap->heap_start > MEM_BUFFER) return NULL;
+    int *flag = (int *) my_sbrk(size + METADATA_SIZE);
     if (*flag == -1) return NULL;
     new_block->size = size;
     new_block->available = 0;
     new_block->next_block = NULL;
     new_block->magic_number = MAGIC_NUMBER;
 
-    if (heap->heap_last_block) {
-        ((meta_data *) heap->heap_last_block)->next_block = new_block;
+    if (current_context->heap->heap_last_block) {
+        ((meta_data *) current_context->heap->heap_last_block)->next_block = new_block;
     }
-    heap->heap_last_block = new_block;
+    current_context->heap->heap_last_block = new_block;
     return new_block;
 }
 
@@ -121,25 +121,24 @@ static meta_data* get_metadata(void *ptr) {
 * Return the pointer to this slot.
 * If no adequately large free slot is available, extend the heap and return the pointer.
 */
-void *my_malloc(heap_t *heap, unsigned int size) {
+void *my_malloc(unsigned int size) {
     size = align_size(size);
     void *slot;
-    if (heap->heap_start){
-        slot = find_slot(heap, size);
+    if (current_context->heap->heap_start){
+        slot = find_slot(size);
         if (slot) {
             if (((meta_data *) slot)->size > size + METADATA_SIZE) {
                 divide_slot(slot, size);
             }
         } else {
-            slot = extend(heap, size);
+            slot = extend(size);
         }
     } else {
-        heap->heap_start = my_sbrk(heap, 0);
-        slot = extend(heap, size);
+        current_context->heap->heap_start = my_sbrk(0);
+        slot = extend(size);
     }
 
     if (!slot) { return slot; }
-
     return ((char *) slot) + METADATA_SIZE;
 }
 
@@ -149,9 +148,9 @@ void *my_malloc(heap_t *heap, unsigned int size) {
  * to be deleted is actually allocated. this is done by using the
  * magic number. Due to lack of time i haven't worked on fragmentation.
  */
-void my_free(heap_t *heap, void *ptr) {
-    if (!heap->heap_start) return;
-    if (ptr >= heap->heap_start + METADATA_SIZE && ptr < my_sbrk(heap, 0)) {
+void my_free(void *ptr) {
+    if (!current_context->heap->heap_start) return;
+    if (ptr >= current_context->heap->heap_start + METADATA_SIZE && ptr < my_sbrk(0)) {
         meta_data *ptr_metadata = get_metadata(ptr);
         if (ptr_metadata->magic_number == MAGIC_NUMBER) {
             ptr_metadata->available = 1;
@@ -169,11 +168,11 @@ void my_free(heap_t *heap, void *ptr) {
  *    Free the pointer and return NULL.
  * If an invalid pointer is provided, it returns NULL without changing anything.
  */
-void *my_realloc(heap_t *heap, void *ptr, unsigned int size) {
+void *my_realloc(void *ptr, unsigned int size) {
     /* If no previous ptr, fast-track to my_malloc */
-    if (!ptr) return my_malloc(heap, size);
+    if (!ptr) return my_malloc(size);
     /* If the previous ptr is invalid, return NULL */
-    if (ptr < heap->heap_start + METADATA_SIZE && ptr >= my_sbrk(heap, 0)) return NULL;
+    if (ptr < current_context->heap->heap_start + METADATA_SIZE && ptr >= my_sbrk(0)) return NULL;
     /* Now take metadata */
     meta_data *ptr_metadata = get_metadata(ptr);
     if (ptr_metadata->magic_number != MAGIC_NUMBER) {
@@ -188,12 +187,12 @@ void *my_realloc(heap_t *heap, void *ptr, unsigned int size) {
     }
 
     /* This is clearly not the most optimized way, but it will always work */
-    void *new_ptr = my_malloc(heap, size);
+    void *new_ptr = my_malloc(size);
     if (!new_ptr) {
-        my_free(heap, ptr);
+        my_free(ptr);
         return NULL;
     }
     memcpy(new_ptr, ptr, old_size);
-    my_free(heap, ptr);
+    my_free(ptr);
     return new_ptr;
 }

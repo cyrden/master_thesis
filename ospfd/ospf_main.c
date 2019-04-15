@@ -148,7 +148,7 @@ FRR_DAEMON_INFO(ospfd, OSPF, .vty_port = OSPF_VTY_PORT,
 
 
 plugins_tab_t plugins_tab; // struct which is a tab that contains all the plugins, need to be accessed from all files
-plugin_context_t *current_context;
+pluglet_context_t *current_context;
 pthread_t th_user_msg;
 
 /* OSPFd main routine. */
@@ -158,7 +158,6 @@ int main(int argc, char **argv)
     if(plugins_tab_init(&plugins_tab) != 1) { // Initialization of the tab of plugins
         fprintf(stderr, "Error while initiating the plugins tab");
     }
-    current_context = NULL; // Init current_context
 
     unsigned short instance = 0;
 
@@ -264,7 +263,6 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
     sleep(1); // wait for one second (for test plugin, could be removed)
-
     if(plugins_tab.plugins[MAIN] != NULL) {
         struct test *t = malloc(sizeof(struct test));
         t->a = 8;

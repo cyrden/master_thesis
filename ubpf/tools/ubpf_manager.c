@@ -92,29 +92,32 @@ static void *readfile(const char *path, size_t maxlen, size_t *len)
 
 static plugin_t *load_elf(plugin_t *plugin, void *code, size_t code_len, int pos) {
 
-    plugin->vm[pos] = ubpf_create();
-    if (!plugin->vm[pos]) {
+    plugin->pluglets[pos] = malloc(sizeof(pluglet_t));
+    plugin->pluglets[pos]->pluglet_context = NULL;
+    plugin->pluglets[pos]->vm = ubpf_create();
+    if (!plugin->pluglets[pos]->vm) {
         fprintf(stderr, "Failed to create VM\n");
         free(plugin);
         return NULL;
     }
 
-    register_functions(plugin->vm[pos]);
+    int test = register_functions(plugin->pluglets[pos]->vm);
+    zlog_notice("register function pos: %d, code_len: %ld,  return val: %d \n",pos, code_len, test);
 
     int elf = code_len >= SELFMAG && !memcmp(code, ELFMAG, SELFMAG);
 
     char *errmsg;
     int rv;
     if (elf) {
-        rv = ubpf_load_elf(plugin->vm[pos], code, code_len, &errmsg);
+        rv = ubpf_load_elf(plugin->pluglets[pos]->vm, code, code_len, &errmsg);
     }else {
-        rv = ubpf_load(plugin->vm[pos], code, code_len, &errmsg);
+        rv = ubpf_load(plugin->pluglets[pos]->vm, code, code_len, &errmsg);
     }
 
     if (rv < 0) {
         fprintf(stderr, "Failed to load code: %s\n", errmsg);
         free(errmsg);
-        ubpf_destroy(plugin->vm[pos]);
+        ubpf_destroy(plugin->pluglets[pos]->vm);
         free(plugin);
         return NULL;
     }
@@ -137,13 +140,13 @@ plugin_t *load_elf_file(plugin_t *plugin, const char *code_filename, int pos) {
 }
 
 int release_elf(plugin_t *plugin, int pos) {
-    if (plugin->plugin_context != NULL) {
-        free(plugin->plugin_context);
-        plugin->plugin_context = NULL;
-    }
-    if (plugin->vm[pos] != NULL) {
-        ubpf_destroy(plugin->vm[pos]);
-        plugin->vm[pos] = NULL;
+    if (plugin->pluglets[pos] != NULL) {
+        ubpf_destroy(plugin->pluglets[pos]->vm);
+        if(plugin->pluglets[pos]->pluglet_context != NULL) {
+            free(plugin->pluglets[pos]->pluglet_context);
+        }
+        free(plugin->pluglets[pos]);
+        plugin->pluglets[pos] = NULL;
     }
     return 0;
 }
@@ -151,18 +154,20 @@ int release_elf(plugin_t *plugin, int pos) {
 uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len, int pos) {
     uint64_t ret;
     if(plugin == NULL) return 0;
-    if (plugin->vm[pos] == NULL) {
+    if (plugin->pluglets[pos] == NULL) {
         return 0;
     }
-    plugin->arg = malloc(mem_len); // because we will put a copy of the arg here
-    if(plugin->arg == NULL) {
-        fprintf(stderr, "Malloc of plugin -> arg failed");
-        return 0;
+
+    plugin->pluglets[pos]->pluglet_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
+    plugin->pluglets[pos]->pluglet_context->shared_heap = plugin->shared_heap; // TODO: I initialized it to NULL --> doesn't work need to fix
+    while(1) {
+        if (current_context == NULL) { // Sort of mutex ...
+            current_context = plugin->pluglets[pos]->pluglet_context; // Set the current_context to the context of the pluglet we want to execute
+            break;
+        }
+        sleep(1);
     }
-    memcpy(plugin->arg, mem, mem_len); // Make a copy of mem to give it as argument field to plugin structure
-    plugin->plugin_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
-    current_context = plugin->plugin_context; // Set the current_context to the context of the plugin we want to execute
-    ret = ubpf_exec(plugin->vm[pos], plugin->arg, mem_len);
-    current_context = NULL;
+    ret = ubpf_exec(plugin->pluglets[pos]->vm, mem, mem_len);
+    current_context = NULL; // release mutex
     return ret;
 }

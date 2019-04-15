@@ -106,3 +106,4 @@ doc/user/basic.rst
 lib/pqueue.c
 lib/sbuf.h
 ospf6d/ospf6_intra.c
+.Xauthority
