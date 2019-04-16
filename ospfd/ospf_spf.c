@@ -1183,6 +1183,22 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		free(plugin_arg);
 	}
 
+	/* TODO: This is a test for the new type of LSA */
+    if(plugins_tab.plugins[SPF_LSA] != NULL && plugins_tab.plugins[SPF_LSA]->pluglets[PRE] != NULL) { // TODO: this is just a test !!
+        /* Definition of the plugin argument */
+        struct arg_plugin_spf_calc *plugin_arg = malloc(sizeof(struct arg_plugin_spf_calc));
+        plugin_arg->area = area;
+        plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+        plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+        plugin_arg->heap.heap_last_block = NULL;
+
+        plugins_tab.plugins[SPF_LSA]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
+        plugins_tab.plugins[SPF_LSA]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_SPF_CALC;
+
+        exec_loaded_code(plugins_tab.plugins[SPF_LSA], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), PRE);
+        free(plugin_arg);
+    }
+
     if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets[REP] != NULL) {
         // REP
     }

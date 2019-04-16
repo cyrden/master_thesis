@@ -234,3 +234,26 @@ int get_ospf_area(struct ospf_area *area) {
     }
     return 1;
 }
+
+/*
+ * Getter function to get an ospf structure (bigger than stack --> need to allocate on heap)
+ */
+int get_ospf(struct ospf *ospf) {
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_SPF_CALC:
+            memcpy(ospf, ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area->ospf, sizeof(struct ospf));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
+

@@ -51,6 +51,7 @@
 #define RCV_PACKET 9
 #define LSA_FLOOD 10
 #define SPF_TEST 13
+#define SPF_LSA 14
 
 
 /* Structures to pass as argument to plugins */
@@ -104,5 +105,7 @@ int get_ospf_lsa(struct ospf_lsa *lsa);
 int get_lsa_header(struct lsa_header *lsah);
 
 int get_ospf_area(struct ospf_area *area);
+
+int get_ospf(struct ospf *ospf);
 
 #endif //OSPF_PLUGINS_API_H
