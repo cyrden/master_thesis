@@ -3720,7 +3720,6 @@ void ospf_hello_send(struct ospf_interface *oi)
 {
 	// Added by Cyril
     if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[PRE] != NULL) {
-    	zlog_notice("SEND HELLO PRE \n");
 		/* Definition of the plugin argument */
 		struct arg_plugin_hello_send *plugin_arg = malloc(sizeof(struct arg_plugin_hello_send));
 		plugin_arg->oi = oi;

@@ -65,6 +65,7 @@ int main(int argc, char **argv) {
             struct test *t;
             struct stream *s;
             struct hello_struct *hello_struct;
+            //struct ospf_lsa *lsa;
             struct lsa_header *lsah;
             struct spf_mon *spf_mon;
             struct ism_change_state *ism;

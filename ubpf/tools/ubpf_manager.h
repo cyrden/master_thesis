@@ -12,7 +12,7 @@
 #include "ubpf/vm/inc/ubpf.h"
 #include "ubpf/vm/ubpf_int.h"
 
-#define SIZE_EBPF_VM_HEAP 16000
+#define SIZE_EBPF_VM_HEAP 64000
 #define MAX_SIZE_SHARED_HEAP 1000 // Stack is ~2000 and this has to be copied on it
 
 struct plugin;

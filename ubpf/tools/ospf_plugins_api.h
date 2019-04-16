@@ -64,9 +64,9 @@ struct arg_plugin_hello_send {
 
 #define ARG_PLUGIN_ISM_CHANGE_STATE 1
 struct arg_plugin_ism_change_state {
+    int new_state; // TODO: This is a hack ! Because if I put it as last arg, it might fail to access in the plugin. I think that the VM can access memory of pointer --> pointer+mem_len. So if malloc goes on block not successive it is a bad memory access ...
     heap_t heap;
     struct ospf_interface *oi;
-    int new_state;
 };
 
 #define ARG_PLUGIN_LSA_FLOOD 2
@@ -107,5 +107,9 @@ int get_lsa_header(struct lsa_header *lsah);
 int get_ospf_area(struct ospf_area *area);
 
 int get_ospf(struct ospf *ospf);
+
+struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type);
+
+int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah);
 
 #endif //OSPF_PLUGINS_API_H

@@ -133,6 +133,7 @@ int get_ospf_interface(struct ospf_interface *oi) {
         printf("NULL pointer \n");
         return 0;
     }
+    if(oi == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_HELLO_SEND:
@@ -157,6 +158,7 @@ int get_interface(struct interface *ifp) {
         printf("NULL pointer \n");
         return 0;
     }
+    if(ifp == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_HELLO_SEND:
@@ -181,6 +183,7 @@ int get_ospf_lsa(struct ospf_lsa *lsa) {
         printf("NULL pointer \n");
         return 0;
     }
+    if(lsa == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_LSA_FLOOD:
@@ -202,6 +205,7 @@ int get_lsa_header(struct lsa_header *lsah) {
         printf("NULL pointer \n");
         return 0;
     }
+    if(lsah == NULL) return 0; // otherwise memcpy could fail
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_LSA_FLOOD:
@@ -223,6 +227,7 @@ int get_ospf_area(struct ospf_area *area) {
         printf("NULL pointer \n");
         return 0;
     }
+    if(area == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_SPF_CALC:
@@ -244,6 +249,7 @@ int get_ospf(struct ospf *ospf) {
         printf("NULL pointer \n");
         return 0;
     }
+    if(ospf == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_SPF_CALC:
@@ -253,6 +259,58 @@ int get_ospf(struct ospf *ospf) {
             fprintf(stderr, "Argument type not recognized by helper function");
             return 0;
     }
+    return 1;
+}
+
+/* Create new my-LSA. */
+struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type)
+{
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    struct ospf_area *area_real;
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_SPF_CALC:
+            area_real = ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area;
+            area = area_real;
+            break;
+        default:
+            return NULL;
+    }
+    struct ospf *ospf = area->ospf;
+    struct stream *s;
+    struct lsa_header *lsah;
+    struct ospf_lsa *new;
+    int length;
+
+    /* Create a stream for LSA. */
+    s = stream_new(OSPF_MAX_LSA_SIZE);
+    /* Set LSA common header fields. */
+    lsa_header_set(s, LSA_OPTIONS_GET(area) | LSA_OPTIONS_NSSA_GET(area),
+                   type, ospf->router_id, ospf->router_id);
+
+    /* Set length. */
+    length = stream_get_endp(s);
+    lsah = (struct lsa_header *)STREAM_DATA(s);
+    lsah->length = htons(length);
+
+    /* Now, create OSPF LSA instance. */
+    new = ospf_lsa_new_and_data(length);
+
+    new->area = area;
+    SET_FLAG(new->flags, OSPF_LSA_SELF | OSPF_LSA_SELF_CHECKED);
+    new->vrf_id = area->ospf->vrf_id;
+
+    /* Copy LSA data to store, discard stream. */
+    memcpy(new->data, lsah, length);
+    stream_free(s);
+    return new;
+}
+
+int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah) {
+    memcpy(lsah, lsa->data, sizeof(struct lsa_header));
     return 1;
 }
 
