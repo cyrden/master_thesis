@@ -98,12 +98,16 @@ static void sighup(void)
     zlog_info("SIGHUP received");
 }
 
+// Added by Cyril
+pthread_mutex_t lock_current_context;
+
 /* SIGINT / SIGTERM handler. */
 static void sigint(void)
 {
     zlog_notice("Terminating on signal");
     // Added by Cyril
     release_all_plugins(); // Release ressources allocated to all loaded plugins
+    pthread_mutex_destroy(&lock_current_context);
     ospf_terminate();
 }
 
@@ -157,6 +161,12 @@ int main(int argc, char **argv)
     // Added by Cyril
     if(plugins_tab_init(&plugins_tab) != 1) { // Initialization of the tab of plugins
         fprintf(stderr, "Error while initiating the plugins tab");
+    }
+    current_context = NULL; // init current_context
+    if (pthread_mutex_init(&lock_current_context, NULL) != 0)
+    {
+        printf("\n mutex init failed\n");
+        return 1;
     }
 
     unsigned short instance = 0;

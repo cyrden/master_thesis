@@ -1184,7 +1184,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 	}
 
 	/* TODO: This is a test for the new type of LSA */
-    if(plugins_tab.plugins[SPF_LSA] != NULL && plugins_tab.plugins[SPF_LSA]->pluglets[PRE] != NULL) { // TODO: this is just a test !!
+    if(plugins_tab.plugins[SPF_LSA] != NULL && plugins_tab.plugins[SPF_LSA]->pluglets[PRE] != NULL) {
         /* Definition of the plugin argument */
         struct arg_plugin_spf_calc *plugin_arg = malloc(sizeof(struct arg_plugin_spf_calc));
         plugin_arg->area = area;

@@ -61,6 +61,8 @@ static void *my_sbrk(intptr_t increment) {
  */
 static meta_data *find_slot(unsigned int size) {
     meta_data *iter = (meta_data*) current_context->heap->heap_start;
+    if(current_context->heap->heap_start == current_context->heap->heap_end) return NULL; // otherwise sometime it finds a block but the heap is empty ...
+    if(my_sbrk(0) - current_context->heap->heap_start < size) return NULL; // One more guard: if heap is smaller than size -> impossible to find a slot ...
     while(iter) {
         if (iter->available && iter->size >= size) {
             iter->available = 0;
@@ -93,7 +95,9 @@ static void divide_slot(void *slot, unsigned int size) {
  */
 static void *extend(unsigned int size) {
     meta_data *new_block = (meta_data*) my_sbrk(0);
-    if ((char*) new_block - (char*) current_context->heap->heap_start > MEM_BUFFER) return NULL;
+    if ((char*) new_block - (char*) current_context->heap->heap_start > MEM_BUFFER) { // No more memory
+        return NULL;
+    }
     int *flag = (int *) my_sbrk(size + METADATA_SIZE);
     if (*flag == -1) return NULL;
     new_block->size = size;
@@ -125,20 +129,31 @@ void *my_malloc(unsigned int size) {
     size = align_size(size);
     void *slot;
     if (current_context->heap->heap_start){
+        //zlog_notice("Heap starts at: %p and ends at: %p", current_context->heap->heap_start, current_context->heap->heap_end);
+        //zlog_notice("Context has arg of type: %d ", current_context->type_arg);
         slot = find_slot(size);
         if (slot) {
+            //zlog_notice("Slot found");
             if (((meta_data *) slot)->size > size + METADATA_SIZE) {
                 divide_slot(slot, size);
             }
         } else {
+            //zlog_notice("Slot not found -> extend");
             slot = extend(size);
         }
     } else {
         current_context->heap->heap_start = my_sbrk(0);
+        //zlog_notice("Heap starts at: %p", current_context->heap->heap_start);
         slot = extend(size);
     }
 
-    if (!slot) { return slot; }
+    if (!slot) {
+        //zlog_notice("MALLOC FAILED");
+        return slot;
+    }
+    //zlog_notice("Memory assigned from %p to %p (size = %u)", slot, (void *)((char *) slot + METADATA_SIZE + ((meta_data *) slot)->size), size);
+    //zlog_notice("Memory ends at: %p", my_sbrk(0));
+    //zlog_notice("Size of heap so far: 0x%lx", (unsigned long) ((char *) my_sbrk(0) - (char *) current_context->heap->heap_start));
     return ((char *) slot) + METADATA_SIZE;
 }
 
@@ -154,6 +169,7 @@ void my_free(void *ptr) {
         meta_data *ptr_metadata = get_metadata(ptr);
         if (ptr_metadata->magic_number == MAGIC_NUMBER) {
             ptr_metadata->available = 1;
+            //zlog_notice("Memory freed at: %p", ptr_metadata);
         }
     }
 }

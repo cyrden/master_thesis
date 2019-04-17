@@ -2582,8 +2582,8 @@ void ospf_discard_from_db(struct ospf *ospf, struct ospf_lsdb *lsdb,
 struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 				  struct ospf_lsa *lsa)
 {
-	zlog_notice("ospf_lsa_install: LSA to install: \n");
-	ospf_lsa_header_dump(lsa->data);
+	//zlog_notice("ospf_lsa_install: LSA to install: \n");
+	//ospf_lsa_header_dump(lsa->data);
 
 	struct ospf_lsa *new = NULL;
 	struct ospf_lsa *old = NULL;
@@ -2636,15 +2636,15 @@ struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 	/* Look up old LSA and determine if any SPF calculation or incremental
 	   update is needed */
 	old = ospf_lsdb_lookup(lsdb, lsa);
-	zlog_notice("OLD : \n");
-	if(old != NULL && old->data != NULL) ospf_lsa_header_dump(old->data);
+	//zlog_notice("OLD : \n");
+	//if(old != NULL && old->data != NULL) ospf_lsa_header_dump(old->data);
 
 	/* Do comparision and record if recalc needed. */
 	rt_recalc = 0;
 	if (old == NULL || ospf_lsa_different(old, lsa))
 		rt_recalc = 1;
 
-	zlog_notice("lsainstall: rt_recalc = %d \n", rt_recalc);
+	//zlog_notice("lsainstall: rt_recalc = %d \n", rt_recalc);
 	/*
 	   Sequence number check (Section 14.1 of rfc 2328)
 	   "Premature aging is used when it is time for a self-originated
@@ -3217,9 +3217,9 @@ int ospf_lsa_more_recent(struct ospf_lsa *l1, struct ospf_lsa *l2)
 /* If two LSAs are different, return 1, otherwise return 0. */
 int ospf_lsa_different(struct ospf_lsa *l1, struct ospf_lsa *l2)
 {
-    zlog_notice("ospf_lsa_different: l1 and l2 :\n");
-    ospf_lsa_header_dump(l1->data);
-    ospf_lsa_header_dump(l2->data);
+    //zlog_notice("ospf_lsa_different: l1 and l2 :\n");
+    //ospf_lsa_header_dump(l1->data);
+    //ospf_lsa_header_dump(l2->data);
 	char *p1, *p2;
 	assert(l1);
 	assert(l2);

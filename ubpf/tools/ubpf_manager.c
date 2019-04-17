@@ -54,6 +54,7 @@ static int register_functions(struct ubpf_vm *vm) {
     return 1;
 }
 
+
 static void *readfile(const char *path, size_t maxlen, size_t *len)
 {
     FILE *file;
@@ -108,8 +109,7 @@ static plugin_t *load_elf(plugin_t *plugin, void *code, size_t code_len, int pos
         return NULL;
     }
 
-    int test = register_functions(plugin->pluglets[pos]->vm);
-    zlog_notice("register function pos: %d, code_len: %ld,  return val: %d \n",pos, code_len, test);
+    register_functions(plugin->pluglets[pos]->vm);
 
     int elf = code_len >= SELFMAG && !memcmp(code, ELFMAG, SELFMAG);
 
@@ -159,6 +159,8 @@ int release_elf(plugin_t *plugin, int pos) {
 }
 
 uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len, int pos) {
+    pthread_mutex_lock(&lock_current_context);
+
     uint64_t ret;
     if(plugin == NULL) return 0;
     if (plugin->pluglets[pos] == NULL) {
@@ -166,14 +168,16 @@ uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len, int pos) 
     }
 
     plugin->pluglets[pos]->pluglet_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
-    while(1) {
-        if (current_context == NULL) { // Sort of mutex ...
-            current_context = plugin->pluglets[pos]->pluglet_context; // Set the current_context to the context of the pluglet we want to execute
-            break;
-        }
-        sleep(1); // avoid using all CPU. There is probably a better way
-    }
+
+    current_context = plugin->pluglets[pos]->pluglet_context; // Set the current_context to the context of the pluglet we want to execute
+
     ret = ubpf_exec(plugin->pluglets[pos]->vm, mem, mem_len);
-    current_context = NULL; // release mutex
+    plugin->pluglets[pos]->pluglet_context->original_arg = NULL;
+    plugin->pluglets[pos]->pluglet_context->type_arg = -1;
+    plugin->pluglets[pos]->pluglet_context->heap = NULL;
+    current_context = NULL;
+
+    pthread_mutex_unlock(&lock_current_context);
+
     return ret;
 }

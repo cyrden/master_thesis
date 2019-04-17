@@ -12,9 +12,9 @@ uint64_t originate_my_lsa(void *data) {
     struct arg_plugin_spf_calc *plugin_arg = (struct arg_plugin_spf_calc *) data;
 
     struct ospf_area *area = my_malloc(sizeof(struct ospf_area));
-    if(get_ospf_area(area) != 1) return 0;
+    if(get_ospf_area(plugin_arg->area, area) != 1) return 0;
     area->ospf = my_malloc(sizeof(struct ospf));
-    if(get_ospf(area->ospf) != 1) return 0;
+    if(get_ospf(area->ospf, area->ospf) != 1) return 0;
     struct ospf_lsa *lsa = ospf_my_lsa_originate(area);
     if(lsa == NULL) return 0;
     my_free(area->ospf);

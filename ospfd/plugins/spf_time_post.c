@@ -12,7 +12,7 @@ uint64_t spf_count(void *data) {
     struct spf_mon mon;
     mon.time_spf = ((t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec) - t1.tv_usec;
     struct ospf_area area;
-    if(get_ospf_area(&area) != 1) return 0;
+    if(get_ospf_area(plugin_arg->area, &area) != 1) return 0;
     mon.area_id = area.area_id;
     mon.spf_count = area.spf_calculation;
     shared_heap_free();

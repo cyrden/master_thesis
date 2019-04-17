@@ -26,7 +26,7 @@ int plugins_tab_init(plugins_tab_t *tab) {
     tab = malloc(sizeof(plugins_tab_t));
     if(tab == NULL) return 0;
     for (int i = 0; i < MAX_NBR_PLUGINS; i++) {
-        tab->plugins[i] = NULL;
+        tab->plugins[i] = NULL; // create an empty tab of plugins
     }
     return 1;
 }
@@ -34,7 +34,7 @@ int plugins_tab_init(plugins_tab_t *tab) {
 /*
  * Injects a plugin (file elfname) at a specific position (identified by the id)
  */
-static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int pos) {
+static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int pos) { // TODO: I should rename it inject_pluglet to be consistent ...
     if(id < 0 || id > MAX_NBR_PLUGINS-1) {
         fprintf(stderr, "Id not valid \n");
         return 0;
@@ -50,7 +50,12 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
         tab->plugins[id]->shared_heap = NULL;
     }
 
+    /*
+     * This malloc pluglet. Set pluglet context to NULL. Create the vm of the pluglet. Register functions to the vm. Load code into the VM.
+     * So we are ready to execute. Still need to set the context of the pluglet before running it.
+     */
     if(load_elf_file(tab->plugins[id], elfname, pos) == NULL) return 0;
+
     if (tab->plugins[id]->pluglets[pos] == NULL) {
         perror("Failed to load file\n");
         return 0;
@@ -58,7 +63,7 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
     if(tab->plugins[id]->pluglets[pos]->pluglet_context == NULL) {
         tab->plugins[id]->pluglets[pos]->pluglet_context = malloc(sizeof(pluglet_context_t));
         tab->plugins[id]->pluglets[pos]->pluglet_context->original_arg = NULL;
-        tab->plugins[id]->pluglets[pos]->pluglet_context->type_arg = -1;
+        tab->plugins[id]->pluglets[pos]->pluglet_context->type_arg = -1; // error value
         tab->plugins[id]->pluglets[pos]->pluglet_context->heap = NULL;
         tab->plugins[id]->pluglets[pos]->pluglet_context->parent_plugin = tab->plugins[id];
     }
@@ -111,7 +116,7 @@ void *plugins_manager(void *tab) {
     //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o"); // TODO: Broken
     //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
     inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
-    inject_plugins((plugins_tab_t *) tab, SPF_LSA, "/plugins/originate_my_lsa.o", PRE);
+    //inject_plugins((plugins_tab_t *) tab, SPF_LSA, "/plugins/originate_my_lsa.o", PRE);
 
     /*while(1) { // In that loop receives messages from UI to inject plugins
         printf("Wait for message \n");

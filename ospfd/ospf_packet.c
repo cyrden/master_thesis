@@ -3730,9 +3730,9 @@ void ospf_hello_send(struct ospf_interface *oi)
         plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
         plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_HELLO_SEND;
 
-        exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), PRE);
+		exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), PRE);
         free(plugin_arg);
-    }
+	}
 
     if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[REP] != NULL) {
 		// REP
@@ -3806,7 +3806,6 @@ void ospf_hello_send(struct ospf_interface *oi)
 
 	// Added by Cyril
 	if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[POST] != NULL) {
-		zlog_notice("SEND HELLO POST \n");
 		/* Definition of the plugin argument */
 		struct arg_plugin_hello_send *plugin_arg = malloc(sizeof(struct arg_plugin_hello_send));
 		plugin_arg->oi = oi;
