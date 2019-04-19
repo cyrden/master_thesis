@@ -6,18 +6,19 @@
 
 #define OSPF_MY_LSA_TYPE 13
 
-static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area);
+static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area, struct ospf_area *area_copy);
 
 uint64_t originate_my_lsa(void *data) {
     struct arg_plugin_spf_calc *plugin_arg = (struct arg_plugin_spf_calc *) data;
 
     struct ospf_area *area = my_malloc(sizeof(struct ospf_area));
     if(get_ospf_area(plugin_arg->area, area) != 1) return 0;
-    area->ospf = my_malloc(sizeof(struct ospf));
-    if(get_ospf(area->ospf, area->ospf) != 1) return 0;
-    struct ospf_lsa *lsa = ospf_my_lsa_originate(area);
+    struct ospf *ospf = my_malloc(sizeof(struct ospf));
+    if(get_ospf(area->ospf, ospf) != 1) return 0;
+    area->ospf= ospf;
+    struct ospf_lsa *lsa = ospf_my_lsa_originate(plugin_arg->area, area);
     if(lsa == NULL) return 0;
-    my_free(area->ospf);
+    my_free(ospf);
     my_free(area);
     struct lsa_header lsah;
     my_get_lsah(lsa, &lsah);
@@ -25,7 +26,7 @@ uint64_t originate_my_lsa(void *data) {
 }
 
 /* Originate my-LSA. */
-static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area)
+static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area, struct ospf_area *area_copy)
 {
     struct ospf_lsa *new;
 
@@ -34,19 +35,14 @@ static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area)
         return NULL;
     }
 
-    /* Sanity check. */
-    /*if (new->data->adv_router.s_addr == 0) {
-        return NULL;
-    }*/
-
     /* Install LSA to LSDB. */
-    //new = ospf_lsa_install(area->ospf, NULL, new); // Here area->ospf is a copy be careful
+    new = ospf_lsa_install(area_copy->ospf, NULL, new);
 
     /* Update LSA origination count. */
-    //area->ospf->lsa_originate_count++; // I think this will work because we receive as argument real var from OSPF for the moment and not copy
+    //area->ospf->lsa_originate_count++;
 
     /* Flooding new LSA through area. */
-    //ospf_flood_through_area(area, NULL, new);
+    ospf_flood_through_area(area, NULL, new);
 
     return new;
 }

@@ -278,11 +278,9 @@ struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type)
         printf("NULL pointer \n");
         return 0;
     }
-    struct ospf_area *area_real;
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_SPF_CALC:
-            area_real = ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area;
-            area = area_real;
+            if(area != ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area) return NULL; // check that plugin gave the right pointer
             break;
         default:
             return NULL;
@@ -314,6 +312,13 @@ struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type)
     /* Copy LSA data to store, discard stream. */
     memcpy(new->data, lsah, length);
     stream_free(s);
+
+    /* Sanity check. */
+    if (new->data->adv_router.s_addr == 0) {
+        return NULL;
+    }
+    zlog_notice("ospf_my_lsa_new return");
+
     return new;
 }
 

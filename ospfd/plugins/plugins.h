@@ -25,6 +25,7 @@
 #include "ospfd/ospf_zebra.h"
 #include "ospfd/ospf_vty.h"
 #include "ospfd/ospf_errors.h"
+#include "ospfd/ospf_flood.h"
 
 #include <lib/version.h>
 #include "getopt.h"

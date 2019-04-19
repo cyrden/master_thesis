@@ -51,6 +51,7 @@
 #include "ospfd/ospf_zebra.h"
 #include "ospfd/ospf_abr.h"
 #include "ospfd/ospf_errors.h"
+#include "ospf_lsdb.h"
 
 uint32_t get_metric(uint8_t *metric)
 {
@@ -2582,8 +2583,8 @@ void ospf_discard_from_db(struct ospf *ospf, struct ospf_lsdb *lsdb,
 struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 				  struct ospf_lsa *lsa)
 {
-	//zlog_notice("ospf_lsa_install: LSA to install: \n");
-	//ospf_lsa_header_dump(lsa->data);
+	zlog_notice("ospf_lsa_install: LSA to install: \n");
+	ospf_lsa_header_dump(lsa->data);
 
 	struct ospf_lsa *new = NULL;
 	struct ospf_lsa *old = NULL;
@@ -2636,8 +2637,8 @@ struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 	/* Look up old LSA and determine if any SPF calculation or incremental
 	   update is needed */
 	old = ospf_lsdb_lookup(lsdb, lsa);
-	//zlog_notice("OLD : \n");
-	//if(old != NULL && old->data != NULL) ospf_lsa_header_dump(old->data);
+	/*zlog_notice("OLD : \n");
+	if(old != NULL && old->data != NULL) ospf_lsa_header_dump(old->data);*/
 
 	/* Do comparision and record if recalc needed. */
 	rt_recalc = 0;
@@ -2686,15 +2687,18 @@ struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 	if (old != NULL)
 		ospf_discard_from_db(ospf, lsdb, lsa);
 
-	/* Calculate Checksum if self-originated?. */
+    /* Calculate Checksum if self-originated?. */
 	if (IS_LSA_SELF(lsa))
 		ospf_lsa_checksum(lsa->data);
 
-	/* Insert LSA to LSDB. */
+    /* Insert LSA to LSDB. */
 	ospf_lsdb_add(lsdb, lsa);
 	lsa->lsdb = lsdb;
 
-	/* Do LSA specific installation process. */
+	/*zlog_notice("Route table dump after lsdb add:");
+	ospf_route_table_dump(lsa->lsdb->type[lsa->data->type].db);*/
+
+    /* Do LSA specific installation process. */
 	switch (lsa->data->type) {
 	case OSPF_ROUTER_LSA:
 		new = ospf_router_lsa_install(ospf, lsa, rt_recalc);
@@ -2727,13 +2731,16 @@ struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 		break;
 	case OSPF_AS_NSSA_LSA:
 		new = ospf_external_lsa_install(ospf, lsa, rt_recalc);
+		break; // Added by Cyril
 	default: /* type-6,8,9....nothing special */
+	    new = lsa; // TODO: Added by Cyril, Maybe I should put an insertion point here
 		break;
 	}
 
-	if (new == NULL)
+	if (new == NULL) {
 		return new; /* Installation failed, cannot proceed further --
 			       endo. */
+	}
 
 	/* Debug logs. */
 	if (IS_DEBUG_OSPF(lsa, LSA_INSTALL)) {
@@ -3217,9 +3224,6 @@ int ospf_lsa_more_recent(struct ospf_lsa *l1, struct ospf_lsa *l2)
 /* If two LSAs are different, return 1, otherwise return 0. */
 int ospf_lsa_different(struct ospf_lsa *l1, struct ospf_lsa *l2)
 {
-    //zlog_notice("ospf_lsa_different: l1 and l2 :\n");
-    //ospf_lsa_header_dump(l1->data);
-    //ospf_lsa_header_dump(l2->data);
 	char *p1, *p2;
 	assert(l1);
 	assert(l2);

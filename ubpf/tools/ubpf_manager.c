@@ -23,8 +23,8 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x03, "send_data", send_data) == -1) return 0;
 
     /* Test functions to try manipulating OSPF var in plugins */
-    if (ubpf_register(vm, 0x04, "set_pointer_toInt", set_pointer_toInt) == -1) return 0;
-    if (ubpf_register(vm, 0x05, "read_int", read_int) == -1) return 0;
+    //if (ubpf_register(vm, 0x04, "set_pointer_toInt", set_pointer_toInt) == -1) return 0;
+    //if (ubpf_register(vm, 0x05, "read_int", read_int) == -1) return 0;
 
     /* Getter functions */
     if (ubpf_register(vm, 0x10, "get_ospf_interface", get_ospf_interface) == -1) return 0;
@@ -45,6 +45,7 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x27, "my_memcpy", my_memcpy) == -1) return 0;
 
     /* Functions from OSPF */
+    if (ubpf_register(vm, 0x5, "ospf_flood_through_area", ospf_flood_through_area) == -1) return 0;
     if (ubpf_register(vm, 0x6, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
     if (ubpf_register(vm, 0x7, "ospf_lsa_install", ospf_lsa_install) == -1) return 0;
     if (ubpf_register(vm, 0x8, "ospf_my_lsa_new", ospf_my_lsa_new) == -1) return 0;
