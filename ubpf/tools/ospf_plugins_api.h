@@ -110,8 +110,12 @@ int get_ospf_area(struct ospf_area *area, struct ospf_area *area_copy);
 
 int get_ospf(struct ospf *ospf, struct ospf *ospf_copy);
 
-struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type);
+struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type, uint32_t metric, uint32_t seqnum);
 
 int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah);
+
+struct ospf_lsa *my_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi, struct ospf_lsa *lsa);
+
+int my_ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inbr, struct ospf_lsa *lsa);
 
 #endif //OSPF_PLUGINS_API_H

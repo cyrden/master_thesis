@@ -1699,6 +1699,8 @@ static struct list *ospf_ls_upd_list_lsa(struct ospf_neighbor *nbr,
 	for (; size >= OSPF_LSA_HEADER_SIZE && count > 0;
 	     size -= length, stream_forward_getp(s, length), count--) {
 		lsah = (struct lsa_header *)stream_pnt(s);
+		//zlog_notice("Get list of LSA from LSUpdate: lsah");
+		//ospf_lsa_header_dump(lsah);
 		length = ntohs(lsah->length);
 
 		if (length > size) {
@@ -1711,6 +1713,7 @@ static struct list *ospf_ls_upd_list_lsa(struct ospf_neighbor *nbr,
 		/* Validate the LSA's LS checksum. */
 		sum = lsah->checksum;
 		if (!ospf_lsa_checksum_valid(lsah)) {
+			//zlog_notice("LSA checksum not valid !!!!!");;
 			/* (bug #685) more details in a one-line message make it
 			 * possible
 			 * to identify problem source on the one hand and to
@@ -1728,6 +1731,7 @@ static struct list *ospf_ls_upd_list_lsa(struct ospf_neighbor *nbr,
 
 		/* Examine the LSA's LS type. */
 		if (lsah->type < OSPF_MIN_LSA || lsah->type >= OSPF_MAX_LSA) {
+			//zlog_notice("LSA TYPE not know !!!");
 			flog_warn(EC_OSPF_PACKET,
 				  "Link State Update: Unknown LS type %d",
 				  lsah->type);
@@ -3923,6 +3927,8 @@ void ospf_ls_req_send(struct ospf_neighbor *nbr)
 void ospf_ls_upd_send_lsa(struct ospf_neighbor *nbr, struct ospf_lsa *lsa,
 			  int flag)
 {
+    //zlog_notice("Send link state update with LSA: ");
+    //ospf_lsa_header_dump(lsa->data);
 	struct list *update;
 
 	update = list_new();

@@ -45,9 +45,9 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x27, "my_memcpy", my_memcpy) == -1) return 0;
 
     /* Functions from OSPF */
-    if (ubpf_register(vm, 0x5, "ospf_flood_through_area", ospf_flood_through_area) == -1) return 0;
+    if (ubpf_register(vm, 0x5, "my_ospf_flood_through_area", my_ospf_flood_through_area) == -1) return 0;
     if (ubpf_register(vm, 0x6, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
-    if (ubpf_register(vm, 0x7, "ospf_lsa_install", ospf_lsa_install) == -1) return 0;
+    if (ubpf_register(vm, 0x7, "my_ospf_lsa_install", my_ospf_lsa_install) == -1) return 0;
     if (ubpf_register(vm, 0x8, "ospf_my_lsa_new", ospf_my_lsa_new) == -1) return 0;
     if (ubpf_register(vm, 0x9, "my_get_lsah", my_get_lsah) == -1) return 0;
 

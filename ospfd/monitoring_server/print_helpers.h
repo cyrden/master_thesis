@@ -23,6 +23,21 @@
 #include "ospfd/ospf_neighbor.h"
 #include "ospfd/ospf_dump.h"
 
+struct my_lsa {
+    struct lsa_header header;
+    uint8_t flags;
+    uint8_t zero;
+    uint16_t links;
+    struct {
+        struct in_addr link_id;
+        struct in_addr link_data;
+        uint8_t type;
+        uint8_t tos;
+        uint16_t metric;
+        uint32_t color;
+    } link[3]; // TODO: Here I modified 1 into 3. Only way I found for the moment for my malloc to accept up to 3 links instead of 1 ...
+};
+
 void my_ospf_packet_dump(struct stream *s);
 
 void my_ospf_header_dump(struct ospf_header *ospfh);

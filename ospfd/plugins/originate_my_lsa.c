@@ -31,18 +31,18 @@ static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area, struct osp
     struct ospf_lsa *new;
 
     /* Create new my-LSA instance. */
-    if ((new = ospf_my_lsa_new(area, OSPF_MY_LSA_TYPE)) == NULL) {
+    if ((new = ospf_my_lsa_new(area, OSPF_MY_LSA_TYPE, 14, 16)) == NULL) {
         return NULL;
     }
 
     /* Install LSA to LSDB. */
-    new = ospf_lsa_install(area_copy->ospf, NULL, new);
+    new = my_ospf_lsa_install(area_copy->ospf, NULL, new);
 
     /* Update LSA origination count. */
     //area->ospf->lsa_originate_count++;
 
     /* Flooding new LSA through area. */
-    ospf_flood_through_area(area, NULL, new);
+    my_ospf_flood_through_area(area, NULL, new);
 
     return new;
 }

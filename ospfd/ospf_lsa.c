@@ -2583,8 +2583,8 @@ void ospf_discard_from_db(struct ospf *ospf, struct ospf_lsdb *lsdb,
 struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 				  struct ospf_lsa *lsa)
 {
-	zlog_notice("ospf_lsa_install: LSA to install: \n");
-	ospf_lsa_header_dump(lsa->data);
+	//ice("ospf_lsa_install: LSA to install: ");
+	//ospf_lsa_header_dump(lsa->data);
 
 	struct ospf_lsa *new = NULL;
 	struct ospf_lsa *old = NULL;
@@ -2695,8 +2695,8 @@ struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 	ospf_lsdb_add(lsdb, lsa);
 	lsa->lsdb = lsdb;
 
-	/*zlog_notice("Route table dump after lsdb add:");
-	ospf_route_table_dump(lsa->lsdb->type[lsa->data->type].db);*/
+	//zlog_notice("Route table dump after lsdb add:");
+	//ospf_route_table_dump(lsa->lsdb->type[lsa->data->type].db);
 
     /* Do LSA specific installation process. */
 	switch (lsa->data->type) {
@@ -3111,7 +3111,8 @@ struct ospf_lsa *ospf_lsa_lookup(struct ospf *ospf, struct ospf_area *area,
 	case OSPF_OPAQUE_AS_LSA:
 		return ospf_lsdb_lookup_by_id(ospf->lsdb, type, id, adv_router);
 	default:
-		break;
+        return ospf_lsdb_lookup_by_id(area->lsdb, type, id, adv_router); // For new types of LSAs
+        //break;
 	}
 
 	return NULL;

@@ -105,6 +105,8 @@ static void ospf_lsdb_delete_entry(struct ospf_lsdb *lsdb,
 /* Add new LSA to lsdb. */
 void ospf_lsdb_add(struct ospf_lsdb *lsdb, struct ospf_lsa *lsa)
 {
+	//zlog_notice("lsdb add :");
+	//ospf_lsa_header_dump(lsa->data);
 	struct route_table *table;
 	struct prefix_ls lp;
 	struct route_node *rn;

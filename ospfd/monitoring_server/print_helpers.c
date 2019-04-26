@@ -70,6 +70,39 @@ static void my_ospf_router_lsa_dump(struct stream *s, uint16_t length)
     }
 }
 
+static void my_ospf_lsa_dump(struct stream *s)
+{
+    struct lsa_header *lsa;
+    int lsa_len;
+    lsa = (struct lsa_header *)stream_pnt(s);
+    lsa_len = ntohs(lsa->length);
+    my_ospf_lsa_header_dump(lsa);
+
+    char buf[BUFSIZ];
+    struct my_lsa *rl;
+    int i, len;
+
+    rl = (struct my_lsa *)stream_pnt(s);
+
+    zlog_notice("  my-LSA ");
+    zlog_notice("    flags %s ",
+                my_ospf_router_lsa_flags_dump(rl->flags, buf, BUFSIZ));
+    zlog_notice("    # links %d ", ntohs(rl->links));
+
+    len = ntohs(rl->header.length) - OSPF_LSA_HEADER_SIZE - 4;
+    for (i = 0; len > 0; i++) {
+        zlog_notice("    Link ID %s ", inet_ntoa(rl->link[i].link_id));
+        zlog_notice("    Link Data %s ",
+                    inet_ntoa(rl->link[i].link_data));
+        zlog_notice("    Type %d", (uint8_t)rl->link[i].type);
+        zlog_notice("    TOS %d ", (uint8_t)rl->link[i].tos);
+        zlog_notice("    metric %d ", ntohs(rl->link[i].metric));
+        zlog_notice("    color %d ", ntohl(rl->link[i].color));
+
+        len -= 16;
+    }
+}
+
 void test_print_router_lsa(struct router_lsa *rl) {
     char buf[BUFSIZ];
     int i, len;
@@ -235,11 +268,11 @@ static void my_ospf_packet_ls_upd_dump(struct stream *s, uint16_t length)
     printf("  # LSAs %d \n", count);
 
     while (length > 0 && count > 0) {
-        if (length < OSPF_HEADER_SIZE || length % 4 != 0) {
+        /*if (length < OSPF_HEADER_SIZE || length % 4 != 0) {
             printf("  Remaining %d bytes; Incorrect length. \n",
                    length);
             break;
-        }
+        }*/
 
         lsa = (struct lsa_header *)stream_pnt(s);
         lsa_len = ntohs(lsa->length);
@@ -267,6 +300,8 @@ static void my_ospf_packet_ls_upd_dump(struct stream *s, uint16_t length)
             case OSPF_OPAQUE_AS_LSA:
                 my_ospf_opaque_lsa_dump(s, length);
                 break;
+            case 13:
+                my_ospf_lsa_dump(s, length);
             default:
                 break;
         }

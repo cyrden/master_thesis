@@ -395,6 +395,8 @@ static int ospf_flood_through_interface(struct ospf_interface *oi,
 					struct ospf_neighbor *inbr,
 					struct ospf_lsa *lsa)
 {
+	//zlog_notice("lsa flood through interface, lsah:");
+	//ospf_lsa_header_dump(lsa->data);
 	struct ospf_neighbor *onbr;
 	struct route_node *rn;
 	int retx_flag;
@@ -432,8 +434,10 @@ static int ospf_flood_through_interface(struct ospf_interface *oi,
 		/* If the neighbor is in a lesser state than Exchange, it
 		   does not participate in flooding, and the next neighbor
 		   should be examined. */
-		if (onbr->state < NSM_Exchange)
-			continue;
+		if (onbr->state < NSM_Exchange) {
+            //zlog_notice("No flood on interface %s because state < exchange with the neighbor", onbr->oi->ifp->name);
+            continue;
+        }
 
 		/* If the adjacency is not yet full (neighbor state is
 		   Exchange or Loading), examine the Link state request
@@ -442,6 +446,7 @@ static int ospf_flood_through_interface(struct ospf_interface *oi,
 		   the neighboring router has an instance of the LSA
 		   already.  Compare the new LSA to the neighbor's copy: */
 		if (onbr->state < NSM_Full) {
+		    //zlog_notice("Nbr adjacent not in FULL state");
 			if (IS_DEBUG_OSPF_EVENT)
 				zlog_debug(
 					"ospf_flood_through_interface(): nbr adj is not Full");
@@ -877,6 +882,8 @@ int ospf_ls_retransmit_isempty(struct ospf_neighbor *nbr)
 /* Add LSA to be retransmitted to neighbor's ls-retransmit list. */
 void ospf_ls_retransmit_add(struct ospf_neighbor *nbr, struct ospf_lsa *lsa)
 {
+
+    //zlog_notice("LSA has been added to the LSAs to transmit for interface %s !! GOOD", nbr->oi->ifp->name);
 	struct ospf_lsa *old;
 
 	old = ospf_ls_retransmit_lookup(nbr, lsa);
