@@ -301,7 +301,7 @@ static void my_ospf_packet_ls_upd_dump(struct stream *s, uint16_t length)
                 my_ospf_opaque_lsa_dump(s, length);
                 break;
             case 13:
-                my_ospf_lsa_dump(s, length);
+                my_ospf_lsa_dump(s);
             default:
                 break;
         }
