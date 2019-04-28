@@ -169,7 +169,7 @@ struct router_lsa {
 		uint8_t type;
 		uint8_t tos;
 		uint16_t metric;
-	} link[3]; // TODO: Here I modified 1 into 3. Only way I found for the moment for my malloc to accept up to 3 links instead of 1 ...
+	} link[1]; // TODO: Here I modified 1 into 3. Only way I found for the moment for my malloc to accept up to 3 links instead of 1 ... /!\ finally, putting 3 breaks the routing table of OSPF !!
 };
 
 /* OSPF Network-LSAs structure. */
