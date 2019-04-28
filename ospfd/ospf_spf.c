@@ -1176,7 +1176,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_last_block = NULL;
 
-		plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
+		plugins_tab.plugins[SPF_CALC]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
 		plugins_tab.plugins[SPF_CALC]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_SPF_CALC;
 
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), PRE);

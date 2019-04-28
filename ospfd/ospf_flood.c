@@ -395,8 +395,10 @@ static int ospf_flood_through_interface(struct ospf_interface *oi,
 					struct ospf_neighbor *inbr,
 					struct ospf_lsa *lsa)
 {
-	//zlog_notice("lsa flood through interface, lsah:");
-	//ospf_lsa_header_dump(lsa->data);
+    /*if(lsa->data->type == 13) {
+        zlog_notice("lsa flood through interface, lsah:");
+        ospf_lsa_header_dump(lsa->data);
+    }*/
 	struct ospf_neighbor *onbr;
 	struct route_node *rn;
 	int retx_flag;
@@ -530,6 +532,7 @@ static int ospf_flood_through_interface(struct ospf_interface *oi,
 	   the Link state retransmission lists, there is no need to
 	   flood the LSA out the interface. */
 	if (retx_flag == 0) {
+		//zlog_notice("No need to send LSA, no neighbors");
 		return (inbr && inbr->oi == oi);
 	}
 
@@ -604,6 +607,10 @@ static int ospf_flood_through_interface(struct ospf_interface *oi,
 int ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inbr,
 			    struct ospf_lsa *lsa)
 {
+    /*if(lsa->data->type == 13) {
+        zlog_notice("ospf_flood_through_area");
+        ospf_lsa_header_dump(lsa->data);
+    }*/
 	struct listnode *node, *nnode;
 	struct ospf_interface *oi;
 	int lsa_ack_flag = 0;
@@ -882,8 +889,9 @@ int ospf_ls_retransmit_isempty(struct ospf_neighbor *nbr)
 /* Add LSA to be retransmitted to neighbor's ls-retransmit list. */
 void ospf_ls_retransmit_add(struct ospf_neighbor *nbr, struct ospf_lsa *lsa)
 {
-
-    //zlog_notice("LSA has been added to the LSAs to transmit for interface %s !! GOOD", nbr->oi->ifp->name);
+	/*if(lsa->data->type == 13) {
+		zlog_notice("LSA has been added to the LSAs to transmit for interface %s !! GOOD", nbr->oi->ifp->name);
+	}*/
 	struct ospf_lsa *old;
 
 	old = ospf_ls_retransmit_lookup(nbr, lsa);

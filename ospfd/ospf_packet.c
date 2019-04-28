@@ -114,7 +114,10 @@ static const uint16_t ospf_lsa_minlen[] = {
 	0,
 	0,
 	0,
-};
+	0,
+	0,
+	0
+}; //TODO: I had to add some 0's here. Otherwise when it checks for validity of LSA length for my new LSA it fails of course
 
 /* for ospf_check_auth() */
 static int ospf_check_sum(struct ospf_header *);
@@ -2705,10 +2708,11 @@ static unsigned ospf_lsa_examin(struct lsa_header *lsah, const uint16_t lsalen,
 		ret = lsalen % 4 ? MSG_NG : MSG_OK;
 		break;
 	default:
-		if (IS_DEBUG_OSPF_PACKET(0, RECV))
+		/*if (IS_DEBUG_OSPF_PACKET(0, RECV))
 			zlog_debug("%s: unsupported LSA type 0x%02x", __func__,
 				   lsah->type);
-		return MSG_NG;
+		return MSG_NG;*/
+		break;
 	}
 	if (ret != MSG_OK && IS_DEBUG_OSPF_PACKET(0, RECV))
 		zlog_debug("%s: alignment error in %s", __func__,
@@ -2914,6 +2918,7 @@ static unsigned ospf_packet_examin(struct ospf_header *oh,
 	if (ret != MSG_OK && IS_DEBUG_OSPF_PACKET(0, RECV))
 		zlog_debug("%s: malformed %s packet", __func__,
 			   lookup_msg(ospf_packet_type_str, oh->type, NULL));
+	if (ret != MSG_OK) zlog_notice("malformed packet");
 	return ret;
 }
 
@@ -2968,8 +2973,10 @@ int ospf_read(struct thread *thread)
 
 	stream_reset(ospf->ibuf);
 	ibuf = ospf_recv_packet(ospf, ospf->fd, &ifp, ospf->ibuf);
-	if (ibuf == NULL)
+	if (ibuf == NULL) {
+		zlog_notice("ibuf = NULL !!");
 		return -1;
+	}
 	/* This raw packet is known to be at least as big as its IP header. */
 
 	/* Note that there should not be alignment problems with this assignment
@@ -3013,9 +3020,15 @@ int ospf_read(struct thread *thread)
 	ospfh = (struct ospf_header *)stream_pnt(ibuf);
 	if (MSG_OK
 	    != ospf_packet_examin(
-		       ospfh, stream_get_endp(ibuf) - stream_get_getp(ibuf)))
+		       ospfh, stream_get_endp(ibuf) - stream_get_getp(ibuf))) {
+		zlog_notice("packet_exmine FAILED !!");
 		return -1;
+	}
 	/* Now it is safe to access all fields of OSPF packet header. */
+
+	if(plugins_tab.plugins[RCV_PACKET] != NULL) {// TODO: this doesn't work anymore because we give a copy and not the original
+		exec_loaded_code(plugins_tab.plugins[RCV_PACKET], (void *) ibuf, sizeof(struct stream), PRE);
+	}
 
 	/* associate packet with ospf interface */
 	oi = ospf_if_lookup_recv_if(ospf, iph->ip_src, ifp);
@@ -3149,11 +3162,6 @@ int ospf_read(struct thread *thread)
 			zlog_debug(
 				"-----------------------------------------------------");
 	}
-
-
-    if(plugins_tab.plugins[RCV_PACKET] != NULL) {// TODO: this doesn't work anymore because we give a copy and not the original
-        exec_loaded_code(plugins_tab.plugins[RCV_PACKET], (void *) ibuf, sizeof(struct stream), PRE);
-    }
 
 
     stream_forward_getp(ibuf, OSPF_HEADER_SIZE);
@@ -3725,7 +3733,7 @@ void ospf_hello_send(struct ospf_interface *oi)
 	// Added by Cyril
     if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[PRE] != NULL) {
 		/* Definition of the plugin argument */
-		struct arg_plugin_hello_send *plugin_arg = malloc(sizeof(struct arg_plugin_hello_send));
+		/*struct arg_plugin_hello_send *plugin_arg = malloc(sizeof(struct arg_plugin_hello_send));
 		plugin_arg->oi = oi;
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
         plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
@@ -3735,13 +3743,12 @@ void ospf_hello_send(struct ospf_interface *oi)
         plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_HELLO_SEND;
 
 		exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), PRE);
-        free(plugin_arg);
+        free(plugin_arg);*/
 	}
 
     if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[REP] != NULL) {
 		// REP
-	}
-	else {
+	} else {
 
 		/* If this is passive interface, do not send OSPF Hello. */
 		if (OSPF_IF_PASSIVE_STATUS(oi) == OSPF_IF_PASSIVE)

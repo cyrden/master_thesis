@@ -279,7 +279,7 @@ static void my_ospf_packet_ls_upd_dump(struct stream *s, uint16_t length)
         my_ospf_lsa_header_dump(lsa);
 
         switch (lsa->type) {
-            case OSPF_ROUTER_LSA:
+            /*case OSPF_ROUTER_LSA:
                 my_ospf_router_lsa_dump(s, length);
                 break;
             case OSPF_NETWORK_LSA:
@@ -299,7 +299,7 @@ static void my_ospf_packet_ls_upd_dump(struct stream *s, uint16_t length)
             case OSPF_OPAQUE_AREA_LSA:
             case OSPF_OPAQUE_AS_LSA:
                 my_ospf_opaque_lsa_dump(s, length);
-                break;
+                break;*/
             case 13:
                 my_ospf_lsa_dump(s);
             default:
@@ -378,21 +378,21 @@ void my_ospf_packet_dump(struct stream *s)
     stream_forward_getp(s, OSPF_HEADER_SIZE);
 
     switch (ospfh->type) {
-        case OSPF_MSG_HELLO:
+        /*case OSPF_MSG_HELLO:
             my_ospf_packet_hello_dump(s, ntohs(ospfh->length));
             break;
-            case OSPF_MSG_DB_DESC:
-                my_ospf_packet_db_desc_dump(s, ntohs(ospfh->length));
-                break;
-            case OSPF_MSG_LS_REQ:
-                my_ospf_packet_ls_req_dump(s, ntohs(ospfh->length));
-                break;
+        case OSPF_MSG_DB_DESC:
+            my_ospf_packet_db_desc_dump(s, ntohs(ospfh->length));
+            break;
+        case OSPF_MSG_LS_REQ:
+            my_ospf_packet_ls_req_dump(s, ntohs(ospfh->length));
+            break;*/
         case OSPF_MSG_LS_UPD:
             my_ospf_packet_ls_upd_dump(s, ntohs(ospfh->length));
             break;
-            case OSPF_MSG_LS_ACK:
-                my_ospf_packet_ls_ack_dump(s, ntohs(ospfh->length));
-                break;
+        /*case OSPF_MSG_LS_ACK:
+            my_ospf_packet_ls_ack_dump(s, ntohs(ospfh->length));
+            break;*/
         default:
             break;
     }

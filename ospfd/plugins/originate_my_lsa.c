@@ -30,6 +30,7 @@ static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area, struct osp
 {
     struct ospf_lsa *new;
 
+    // TODO: Here I should go through interfaces and say what metric I want to put for each one -> add a parameter to new LSA
     /* Create new my-LSA instance. */
     if ((new = ospf_my_lsa_new(area, OSPF_MY_LSA_TYPE, 14, 16)) == NULL) {
         return NULL;
