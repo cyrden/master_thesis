@@ -778,6 +778,30 @@ static unsigned int ospf_nexthop_calculation(struct ospf_area *area,
 	return added;
 }
 
+struct my_link {
+    struct in_addr link_id;
+    struct in_addr link_data;
+    uint8_t type;
+    uint8_t tos;
+    uint16_t metric;
+    uint32_t color;
+};
+
+/*struct my_lsa {
+    struct lsa_header header;
+    uint8_t flags;
+    uint8_t zero;
+    uint16_t links;
+    struct {
+        struct in_addr link_id;
+        struct in_addr link_data;
+        uint8_t type;
+        uint8_t tos;
+        uint16_t metric;
+        uint32_t color;
+    } link[1];
+};*/
+
 /* RFC2328 Section 16.1 (2).
  * v is on the SPF tree.  Examine the links in v's LSA.  Update the list
  * of candidates with any vertices not already on the list.  If a lower-cost
@@ -815,11 +839,51 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
 		/* In case of V is Router-LSA. */
 		if (v->lsa->type == OSPF_ROUTER_LSA) {
 			l = (struct router_lsa_link *)p;
+			zlog_notice("l->linkid = %s", inet_ntoa(l->link_id));
 
-			lsa_pos = lsa_pos_next; /* LSA link position */
+			// TODO: This is a try
+			int ignored = 0;
+			struct ospf_lsa *test_lsa = ospf_lsa_lookup(ospf, area,
+                                    13,
+                                    v->id, v->id);
+            zlog_notice("test_lsa = ");
+            if(test_lsa != NULL) {
+                /*int i=0;
+                u_char  * ptr=(u_char *) test_lsa->data;
+                for (; i<40; i++) {
+                    zlog_notice("%x ", *ptr);
+                    ptr++;
+                }*/
+				ospf_lsa_header_dump(test_lsa->data);
+                uint8_t *my_p = ((uint8_t *) test_lsa->data) + OSPF_LSA_HEADER_SIZE + 4;
+                while (my_p < ((uint8_t  *) test_lsa->data) + ntohs(test_lsa->data->length)) {
+                    zlog_notice("lsa length = %d, sizeof my_link = %d", (int) (ntohs(test_lsa->data->length)), (int) sizeof(struct my_link));
+                    struct my_link *my_link = (struct my_link *) my_p;
+                    zlog_notice("l->linkid = %s", inet_ntoa(l->link_id));
+                    zlog_notice("my link addr = %s", inet_ntoa(my_link->link_id));
+                    if (l->link_id.s_addr == my_link->link_id.s_addr) {
+                        if(ntohl(my_link->color) == 14) {
+                            ignored = 1;
+                            zlog_notice("link %s has color %d and thus is ignored is SPF", inet_ntoa(my_link->link_id), ntohl(my_link->color));
+                            break;
+                        }
+                    }
+                    zlog_notice("4");
+                    my_p += sizeof(struct my_link);
+                }
+			} else {
+                zlog_notice("test_lsa = NULL");
+            }
+
+            lsa_pos = lsa_pos_next; /* LSA link position */
 			lsa_pos_next++;
 			p += (OSPF_ROUTER_LSA_LINK_SIZE
 			      + (l->m[0].tos_count * OSPF_ROUTER_LSA_TOS_SIZE));
+
+			if(ignored){
+				zlog_notice("ignored = 1 -> continue");
+				continue;
+			}
 
 			/* (a) If this is a link to a stub network, examine the
 			   next

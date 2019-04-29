@@ -320,7 +320,7 @@ struct my_lsa {
         uint8_t tos;
         uint16_t metric;
         uint32_t color;
-    } link[3]; // TODO: Here I modified 1 into 3. Only way I found for the moment for my malloc to accept up to 3 links instead of 1 ...
+    } link[1]; // TODO: Here I modified 1 into 3. Only way I found for the moment for my malloc to accept up to 3 links instead of 1 ...
 };
 
 static void my_ospf_lsa_dump(struct stream *s)
@@ -373,14 +373,55 @@ static char my_link_info_set(struct stream **s, struct in_addr id,
     return 1;
 }
 
+static uint16_t my_ospf_link_cost(struct ospf_interface *oi)
+{
+    /* RFC3137 stub router support */
+    if (!CHECK_FLAG(oi->area->stub_router_state, OSPF_AREA_IS_STUB_ROUTED))
+        return oi->output_cost;
+    else
+        return OSPF_OUTPUT_COST_INFINITE;
+}
+
 /* Describe Broadcast Link. */
 static int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi)
 {
+    struct ospf_neighbor *dr;
     struct in_addr id, mask;
+    uint16_t cost = my_ospf_link_cost(oi);
+
+    /* Describe Type 3 Link. */
+    if (oi->state == 3) {
+        if (IS_DEBUG_OSPF(lsa, LSA_GENERATE))
+            zlog_debug(
+                    "LSA[Type1]: Interface %s is in state Waiting. "
+                    "Adding stub interface",
+                    oi->ifp->name);
+        masklen2ip(oi->address->prefixlen, &mask);
+        id.s_addr = oi->address->u.prefix4.s_addr & mask.s_addr;
+        return my_link_info_set(s, id, mask, LSA_LINK_TYPE_STUB, 0,
+                             oi->output_cost, 14);
+    }
+
+    dr = ospf_nbr_lookup_by_addr(oi->nbrs, &DR(oi));
+    /* Describe Type 2 link. */
+    if (dr && (dr->state == 9
+               || IPV4_ADDR_SAME(&oi->address->u.prefix4, &DR(oi)))
+        && ospf_nbr_count(oi, 9) > 0) {
+        return my_link_info_set(s, DR(oi), oi->address->u.prefix4,
+                             LSA_LINK_TYPE_TRANSIT, 0, cost, 14);
+    }
+        /* Describe type 3 link. */
+    else {
+        masklen2ip(oi->address->prefixlen, &mask);
+        id.s_addr = oi->address->u.prefix4.s_addr & mask.s_addr;
+        return my_link_info_set(s, id, mask, LSA_LINK_TYPE_STUB, 0,
+                             oi->output_cost, 14);
+    }
+    /*struct in_addr id, mask;
 
     masklen2ip(oi->address->prefixlen, &mask);
     id.s_addr = oi->address->u.prefix4.s_addr & mask.s_addr;
-    return my_link_info_set(s, id, mask, LSA_LINK_TYPE_STUB, 0, oi->output_cost, 14);
+    return my_link_info_set(s, id, mask, LSA_LINK_TYPE_STUB, 0, oi->output_cost, 14);*/
 }
 
 /* Set my-LSA link information. */
@@ -399,11 +440,24 @@ static int my_lsa_link_set(struct stream **s, struct ospf_area *area)
                 oi->lsa_pos_beg = links;
                 /* Describe each link. */
                 switch (oi->type) {
+                    /*case OSPF_IFTYPE_POINTOPOINT:
+                        links += lsa_link_ptop_set(s, oi);
+                        break;*/
                     case OSPF_IFTYPE_BROADCAST:
                         links += my_lsa_link_broadcast_set(s, oi);
                         break;
-                    default:
+                    /*case OSPF_IFTYPE_NBMA:
+                        links += lsa_link_nbma_set(s, oi);
                         break;
+                    case OSPF_IFTYPE_POINTOMULTIPOINT:
+                        links += lsa_link_ptomp_set(s, oi);
+                        break;
+                    case OSPF_IFTYPE_VIRTUALLINK:
+                        links +=
+                                lsa_link_virtuallink_set(s, oi);
+                        break;
+                    case OSPF_IFTYPE_LOOPBACK:
+                        links += lsa_link_loopback_set(s, oi);*/
                 }
                 oi->lsa_pos_end = links;
             }
