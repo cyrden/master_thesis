@@ -117,6 +117,7 @@ void *plugins_manager(void *tab) {
     //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
     //inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
     inject_plugins((plugins_tab_t *) tab, SPF_LSA, "/plugins/originate_my_lsa.o", PRE);
+    //inject_plugins((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
 
     /*while(1) { // In that loop receives messages from UI to inject plugins
         printf("Wait for message \n");

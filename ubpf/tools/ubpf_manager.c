@@ -18,8 +18,8 @@ static int register_functions(struct ubpf_vm *vm) {
     /* Generic functions */
     if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
-    if (ubpf_register(vm, 0x04, "my_ntohl", my_ntohl) == -1) return 0;
-    if (ubpf_register(vm, 0x05, "my_ntohs", my_ntohs) == -1) return 0;
+    if (ubpf_register(vm, 0x0a, "my_ntohl", my_ntohl) == -1) return 0;
+    if (ubpf_register(vm, 0x0b, "my_ntohs", my_ntohs) == -1) return 0;
 
     /* Sends data to the monitoring server */
     if (ubpf_register(vm, 0x03, "send_data", send_data) == -1) return 0;
@@ -51,7 +51,14 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x6, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
     if (ubpf_register(vm, 0x7, "my_ospf_lsa_install", my_ospf_lsa_install) == -1) return 0;
     if (ubpf_register(vm, 0x8, "ospf_my_lsa_new", ospf_my_lsa_new) == -1) return 0;
-    if (ubpf_register(vm, 0x9, "my_get_lsah", my_get_lsah) == -1) return 0;
+    if (ubpf_register(vm, 0x9, "my_get_lsah", my_get_lsah) == -1) return 0; // TODO: this function is just help to print
+    if (ubpf_register(vm, 0x19, "trickle_up", trickle_up) == -1) return 0;
+    if (ubpf_register(vm, 0x1a, "ospf_lsa_has_link", ospf_lsa_has_link) == -1) return 0;
+    if (ubpf_register(vm, 0x1b, "ospf_lsa_lookup_by_id", ospf_lsa_lookup_by_id) == -1) return 0;
+    if (ubpf_register(vm, 0x1c, "ospf_lsa_lookup", ospf_lsa_lookup) == -1) return 0;
+    if (ubpf_register(vm, 0x1d, "ospf_next_hop_calculation", ospf_nexthop_calculation) == -1) return 0;
+    if (ubpf_register(vm, 0x1e, "pqueue_enqueue", pqueue_enqueue) == -1) return 0;
+
 
 
     return 1;

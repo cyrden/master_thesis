@@ -32,6 +32,8 @@
 #include "ospfd/ospf_errors.h"
 #include "ospfd/ospf_flood.h"
 
+#include "pqueue.h"
+
 #include "ospfd/monitoring_server/monitoring_server.h"
 
 /*
@@ -96,6 +98,13 @@ struct arg_plugin_ospf_spf_next {
 uint16_t my_ntohs(uint16_t value);
 
 uint32_t my_ntohl(uint32_t value);
+
+int ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v);
+
+unsigned int ospf_nexthop_calculation(struct ospf_area *area,
+                                      struct vertex *v, struct vertex *w,
+                                      struct router_lsa_link *l,
+                                      unsigned int distance, int lsa_pos);
 
 int shared_heap_malloc(size_t size);
 

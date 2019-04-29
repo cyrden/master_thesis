@@ -23,13 +23,13 @@ struct my_link {
                           struct ospf_area *area, struct pqueue *candidate)*/
 uint64_t ospf_spf_next(void *data)
 {
-    struct vertex *v;
-    struct ospf *ospf;
-    struct ospf_area *area;
-    struct pqueue *candidate;
+    struct arg_plugin_ospf_spf_next *plugin_arg = (struct arg_plugin_ospf_spf_next *) data;
+    struct vertex *v = plugin_arg->v;
+    struct ospf *ospf = plugin_arg->ospf;
+    struct ospf_area *area = plugin_arg->area;
+    struct pqueue *candidate = plugin_arg->candidate;
 
-    //struct ospf_lsa *w_lsa = NULL;
-    struct ospf_lsa *w_lsa;
+    struct ospf_lsa *w_lsa = NULL;
     uint8_t *p;
     uint8_t *lim;
     struct router_lsa_link *l = NULL;
@@ -44,7 +44,7 @@ uint64_t ospf_spf_next(void *data)
     }
 
     p = ((uint8_t *)v->lsa) + OSPF_LSA_HEADER_SIZE + 4;
-    //lim = ((uint8_t *)v->lsa) + my_ntohs(v->lsa->length);
+    //lim = ((uint8_t *)v->lsa) + my_ntohs(v->lsa->length); // TODO: this bugs, why ??
 
     while (p < lim) {
         struct vertex *w;
@@ -56,7 +56,7 @@ uint64_t ospf_spf_next(void *data)
 
             int ignored = 0;
             struct ospf_lsa *test_lsa;
-            //test_lsa = ospf_lsa_lookup(ospf, area, 13, v->id, v->id);
+            test_lsa = ospf_lsa_lookup(ospf, area, 13, v->id, v->id);
            /* if(test_lsa != NULL) {
                 uint8_t *my_p = ((uint8_t *) test_lsa->data) + OSPF_LSA_HEADER_SIZE + 4;
                 while (my_p < ((uint8_t  *) test_lsa->data) + my_ntohs(test_lsa->data->length)) {
@@ -94,10 +94,10 @@ uint64_t ospf_spf_next(void *data)
             switch (type) {
                 case LSA_LINK_TYPE_POINTOPOINT:
                 case LSA_LINK_TYPE_VIRTUALLINK:
-                    //w_lsa = ospf_lsa_lookup(ospf, area, OSPF_ROUTER_LSA, l->link_id, l->link_id);
+                    w_lsa = ospf_lsa_lookup(ospf, area, OSPF_ROUTER_LSA, l->link_id, l->link_id);
                     break;
                 case LSA_LINK_TYPE_TRANSIT:
-                    //w_lsa = ospf_lsa_lookup_by_id(area, OSPF_NETWORK_LSA, l->link_id);
+                    w_lsa = ospf_lsa_lookup_by_id(area, OSPF_NETWORK_LSA, l->link_id);
                     break;
                 default:
                     continue;
@@ -108,7 +108,7 @@ uint64_t ospf_spf_next(void *data)
             p += sizeof(struct in_addr);
 
             /* Lookup the vertex W's LSA. */
-            //w_lsa = ospf_lsa_lookup_by_id(area, OSPF_ROUTER_LSA, *r);
+            w_lsa = ospf_lsa_lookup_by_id(area, OSPF_ROUTER_LSA, *r);
         }
 
         /* (b cont.) If the LSA does not exist, or its LS age is equal
@@ -122,9 +122,9 @@ uint64_t ospf_spf_next(void *data)
             continue;
         }
 
-        /*if (ospf_lsa_has_link(w_lsa->data, v->lsa) < 0) {
+        if (ospf_lsa_has_link(w_lsa->data, v->lsa) < 0) {
             continue;
-        }*/
+        }
 
         /* (c) If vertex W is already on the shortest-path tree, examine
            the next link in the LSA. */
@@ -150,8 +150,8 @@ uint64_t ospf_spf_next(void *data)
             //w = ospf_vertex_new(w_lsa);
 
             /* Calculate nexthop to W. */
-            //if (ospf_nexthop_calculation(area, v, w, l, distance, lsa_pos))
-            //    pqueue_enqueue(w, candidate);
+            if (ospf_nexthop_calculation(area, v, w, l, distance, lsa_pos))
+                pqueue_enqueue(w, candidate);
         } else if (w_lsa->stat >= 0) {
             /* Get the vertex from candidates. */
             w = candidate->array[w_lsa->stat];
@@ -164,7 +164,7 @@ uint64_t ospf_spf_next(void *data)
             else if (w->distance == distance) {
                 /* Found an equal-cost path to W.
                  * Calculate nexthop of to W from V. */
-                //ospf_nexthop_calculation(area, v, w, l, distance, lsa_pos);
+                ospf_nexthop_calculation(area, v, w, l, distance, lsa_pos);
             }
                 /* less than. */
             else {
@@ -175,7 +175,7 @@ uint64_t ospf_spf_next(void *data)
                  * which
                  * will flush the old parents
                  */
-                //if (ospf_nexthop_calculation(area, v, w, l, distance, lsa_pos))
+                if (ospf_nexthop_calculation(area, v, w, l, distance, lsa_pos))
                     /* Decrease the key of the node in the
                      * heap.
                      * trickle-sort it up towards root, just
@@ -185,7 +185,7 @@ uint64_t ospf_spf_next(void *data)
                      * (next pqueu_{de,en}queue will fully
                      * re-heap the queue).
                      */
-                    //trickle_up(w_lsa->stat, candidate);
+                    trickle_up(w_lsa->stat, candidate);
             }
         } /* end W is already on the candidate list */
     }	 /* end loop over the links in V's LSA */
