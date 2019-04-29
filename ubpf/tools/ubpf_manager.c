@@ -18,6 +18,8 @@ static int register_functions(struct ubpf_vm *vm) {
     /* Generic functions */
     if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
+    if (ubpf_register(vm, 0x04, "my_ntohl", my_ntohl) == -1) return 0;
+    if (ubpf_register(vm, 0x05, "my_ntohs", my_ntohs) == -1) return 0;
 
     /* Sends data to the monitoring server */
     if (ubpf_register(vm, 0x03, "send_data", send_data) == -1) return 0;

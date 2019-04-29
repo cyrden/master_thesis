@@ -53,6 +53,7 @@
 #define LSA_FLOOD 10
 #define SPF_TEST 13
 #define SPF_LSA 14
+#define OSPF_SPF_NEXT 15
 
 
 /* Structures to pass as argument to plugins */
@@ -83,6 +84,18 @@ struct arg_plugin_spf_calc {
     struct ospf_area *area;
 };
 
+#define ARG_PLUGIN_OSPF_SPF_NEXT 4
+struct arg_plugin_ospf_spf_next {
+    heap_t heap;
+    struct vertex *v;
+    struct ospf *ospf;
+    struct ospf_area *area;
+    struct pqueue *candidate;
+};
+
+uint16_t my_ntohs(uint16_t value);
+
+uint32_t my_ntohl(uint32_t value);
 
 int shared_heap_malloc(size_t size);
 

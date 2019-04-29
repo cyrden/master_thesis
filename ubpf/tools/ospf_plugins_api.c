@@ -17,6 +17,30 @@ struct mesg_buffer {
     char mesg_text[SIZE_MESG];
 } message;
 
+uint32_t my_ntohl(uint32_t value) {
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+    return (((value & 0x000000FF) << 24) |
+            ((value & 0x0000FF00) << 8) |
+            ((value & 0x00FF0000) >> 8) |
+            ((value & 0xFF000000) >> 24));
+#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    return value;
+#else
+#    error unsupported endianness
+#endif
+}
+
+uint16_t my_ntohs(uint16_t value) {
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+    return (uint16_t) (((value & 0x00FF) << 8) |
+                       ((value & 0xFF00) >> 8));
+#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    return value;
+#else
+#    error unsupported endianness
+#endif
+}
+
 int shared_heap_malloc(size_t size) {
     pluglet_context_t *pluglet_context = current_context;
     if(size > MAX_SIZE_SHARED_HEAP) {
@@ -271,11 +295,43 @@ int get_ospf(struct ospf *ospf, struct ospf *ospf_copy) {
 }
 
 struct ospf_lsa *my_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi, struct ospf_lsa *lsa) {
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return NULL;
+    }
+    if(lsa == NULL) return NULL;
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_SPF_CALC:
+            // TODO: Not sure that I need to do this check .. user could put NULL area
+            //if(ospf != ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area->ospf) return 0;
+            break;
+        default:
+            return NULL;
+    }
     ospf_lsa_install(ospf, oi, lsa);
+    return lsa;
 }
 
 int my_ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inbr, struct ospf_lsa *lsa) {
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(area == NULL) return 0;
+    if(lsa == NULL) return 0;
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_SPF_CALC:
+            if(area != ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area) return 0;
+            break;
+        default:
+            return 0;
+    }
     ospf_flood_through_area(area, inbr, lsa);
+    return 1;
 }
 
 

@@ -38,12 +38,14 @@ static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area, struct osp
 
     /* Install LSA to LSDB. */
     new = my_ospf_lsa_install(area_copy->ospf, NULL, new);
+    if(new == NULL) return NULL;
 
     /* Update LSA origination count. */
     //area->ospf->lsa_originate_count++;
 
     /* Flooding new LSA through area. */
-    my_ospf_flood_through_area(area, NULL, new);
+    int ret = my_ospf_flood_through_area(area, NULL, new);
+    if(ret == 0) return NULL;
 
     return new;
 }
