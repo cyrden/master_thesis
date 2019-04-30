@@ -8,7 +8,7 @@ all: $(SRC) $(OBJ)
 $(OBJ): %.o
 
 %.o: %.c # .o constructed for dependance .c
-	clang-3.9 -O2 -target bpf -c $< -o $@ $(CFLAGS) $(LDFLAGS)
+	clang-6.0 $(CFLAGS) $(LDFLAGS) -fno-stack-protector -O2 -emit-llvm -c $< -o - | /usr/lib/llvm-6.0/bin/llc -march=bpf -filetype=obj -o $@
 
 clean:
 	rm -rf *.o

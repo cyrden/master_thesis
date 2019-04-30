@@ -16,10 +16,13 @@ static void *readfile(const char *path, size_t maxlen, size_t *len);
 static int register_functions(struct ubpf_vm *vm) {
 
     /* Generic functions */
+    //if (ubpf_register(vm, 0x0e, "my_print", my_print) == -1) return 0;
     if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
     if (ubpf_register(vm, 0x0a, "my_ntohl", my_ntohl) == -1) return 0;
     if (ubpf_register(vm, 0x0b, "my_ntohs", my_ntohs) == -1) return 0;
+    if (ubpf_register(vm, 0x0c, "print_helper", print_helper) == -1) return 0;
+    if (ubpf_register(vm, 0x0d, "lsa_head_dump", lsa_head_dump) == -1) return 0;
 
     /* Sends data to the monitoring server */
     if (ubpf_register(vm, 0x03, "send_data", send_data) == -1) return 0;
@@ -35,6 +38,12 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x13, "get_lsa_header", get_lsa_header) == -1) return 0;
     if (ubpf_register(vm, 0x14, "get_ospf_area", get_ospf_area) == -1) return 0;
     if (ubpf_register(vm, 0x15, "get_ospf", get_ospf) == -1) return 0;
+    if (ubpf_register(vm, 0x16, "get_vertex", get_vertex) == -1) return 0;
+    if (ubpf_register(vm, 0x17, "get_router_lsa", get_router_lsa) == -1) return 0;
+
+    /* Setter functions */
+    if (ubpf_register(vm, 0x30, "set_ospf_area_transit", set_ospf_area_transit) == -1) return 0;
+
 
     /* Plugins shared_heap management functions */
     if (ubpf_register(vm, 0x20, "shared_heap_malloc", shared_heap_malloc) == -1) return 0;
@@ -56,8 +65,9 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x1a, "ospf_lsa_has_link", ospf_lsa_has_link) == -1) return 0;
     if (ubpf_register(vm, 0x1b, "ospf_lsa_lookup_by_id", ospf_lsa_lookup_by_id) == -1) return 0;
     if (ubpf_register(vm, 0x1c, "ospf_lsa_lookup", ospf_lsa_lookup) == -1) return 0;
-    if (ubpf_register(vm, 0x1d, "ospf_next_hop_calculation", ospf_nexthop_calculation) == -1) return 0;
+    if (ubpf_register(vm, 0x1d, "my_ospf_nexthop_calculation", my_ospf_nexthop_calculation) == -1) return 0;
     if (ubpf_register(vm, 0x1e, "pqueue_enqueue", pqueue_enqueue) == -1) return 0;
+    if (ubpf_register(vm, 0x1f, "ospf_vertex_new", ospf_vertex_new) == -1) return 0;
 
 
 

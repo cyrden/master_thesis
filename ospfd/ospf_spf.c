@@ -53,6 +53,7 @@
 #include "ubpf/tools/ubpf_manager.h"
 #include "ubpf/tools/ospf_plugins_api.h"
 #include "lib/log.h"
+#include "ospf_lsa.h"
 
 /* Variables to ensure a SPF scheduled log message is printed only once */
 
@@ -171,7 +172,7 @@ static void vertex_parent_free(void *p)
 	XFREE(MTYPE_OSPF_VERTEX_PARENT, p);
 }
 
-static struct vertex *ospf_vertex_new(struct ospf_lsa *lsa)
+struct vertex *ospf_vertex_new(struct ospf_lsa *lsa)
 {
 	struct vertex *new;
 
@@ -300,6 +301,7 @@ static void ospf_spf_init(struct ospf_area *area)
 //static int ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v)
 int ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v)
 {
+    zlog_notice("ospf_lsa_has_link");
 	unsigned int i, length;
 	struct router_lsa *rl;
 	struct network_lsa *nl;
@@ -830,7 +832,8 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
         plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[REP]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
         plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[REP]->pluglet_context->type_arg = ARG_PLUGIN_OSPF_SPF_NEXT;
 
-        exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT], (void *) plugin_arg, sizeof(struct arg_plugin_ospf_spf_next), REP);
+        uint64_t ret = exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT], (void *) plugin_arg, sizeof(struct arg_plugin_ospf_spf_next), REP);
+        zlog_notice("OSPF SPF NEXT REP: ret = %d", (int) ret);
         free(plugin_arg);
     }
     else {
@@ -844,8 +847,9 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
         /* If this is a router-LSA, and bit V of the router-LSA (see Section
            A.4.2:RFC2328) is set, set Area A's TransitCapability to TRUE.  */
         if (v->type == OSPF_VERTEX_ROUTER) {
-            if (IS_ROUTER_LSA_VIRTUAL((struct router_lsa *) v->lsa))
+            if (IS_ROUTER_LSA_VIRTUAL((struct router_lsa *) v->lsa)) {
                 area->transit = OSPF_TRANSIT_TRUE;
+            }
         }
 
         //if (IS_DEBUG_OSPF_EVENT)
@@ -857,16 +861,17 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
         lim = ((uint8_t *) v->lsa) + ntohs(v->lsa->length);
 
         while (p < lim) {
+            //print_helper((void*)p, (void*)lim);
             struct vertex *w;
             unsigned int distance;
 
             /* In case of V is Router-LSA. */
             if (v->lsa->type == OSPF_ROUTER_LSA) {
                 l = (struct router_lsa_link *) p;
-                zlog_notice("l->linkid = %s", inet_ntoa(l->link_id));
+                zlog_notice("l->linkid = %s, link type: %d", inet_ntoa(l->link_id), (int) l->m[0].type);
 
                 // TODO: This is a try
-                int ignored = 0;
+                /*int ignored = 0;
                 struct ospf_lsa *test_lsa = ospf_lsa_lookup(ospf, area,
                                                             13,
                                                             v->id, v->id);
@@ -893,17 +898,18 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
                     }
                 } else {
                     zlog_notice("test_lsa = NULL");
-                }
+                }*/
 
                 lsa_pos = lsa_pos_next; /* LSA link position */
                 lsa_pos_next++;
                 p += (OSPF_ROUTER_LSA_LINK_SIZE
                       + (l->m[0].tos_count * OSPF_ROUTER_LSA_TOS_SIZE));
+                zlog_notice("l->m[0].toscount = %d", (int) l->m[0].tos_count);
 
-                if (ignored) {
+                /*if (ignored) {
                     zlog_notice("ignored = 1 -> continue");
                     continue;
-                }
+                }*/
 
                 /* (a) If this is a link to a stub network, examine the
                    next

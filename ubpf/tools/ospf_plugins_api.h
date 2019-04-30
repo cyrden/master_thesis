@@ -95,16 +95,23 @@ struct arg_plugin_ospf_spf_next {
     struct pqueue *candidate;
 };
 
+void print_helper(void *ptr1, void *ptr2, uint16_t val);
+
+void my_print(const char *format, ...);
+
+void lsa_head_dump (struct lsa_header *lsah);
+
 uint16_t my_ntohs(uint16_t value);
 
 uint32_t my_ntohl(uint32_t value);
 
 int ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v);
 
-unsigned int ospf_nexthop_calculation(struct ospf_area *area,
-                                      struct vertex *v, struct vertex *w,
+unsigned int my_ospf_nexthop_calculation(struct arg_plugin_ospf_spf_next *s, struct vertex *w,
                                       struct router_lsa_link *l,
                                       unsigned int distance, int lsa_pos);
+
+struct vertex *ospf_vertex_new(struct ospf_lsa *lsa);
 
 int shared_heap_malloc(size_t size);
 
@@ -120,6 +127,8 @@ int read_int(void *pointer);
 
 void set_pointer_toInt(void *pointer, int value);
 
+/* Getters */
+
 int get_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy);
 
 int get_interface(struct interface *ifp, struct interface *ifp_copy);
@@ -128,13 +137,23 @@ int get_ospf_lsa(struct ospf_lsa *lsa, struct ospf_lsa *lsa_copy);
 
 int get_lsa_header(struct lsa_header *lsah, struct lsa_header *lsah_copy);
 
+int get_router_lsa(struct router_lsa *lsa, struct router_lsa *lsa_copy);
+
 int get_ospf_area(struct ospf_area *area, struct ospf_area *area_copy);
 
 int get_ospf(struct ospf *ospf, struct ospf *ospf_copy);
 
+int get_vertex(struct vertex *vertex, struct vertex *vertex_copy);
+
+/* Setters */
+
+int set_ospf_area_transit(struct ospf_area *area, uint8_t transit);
+
 struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type, uint32_t metric, uint32_t seqnum);
 
 int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah);
+
+/* OSPF functions */
 
 struct ospf_lsa *my_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi, struct ospf_lsa *lsa);
 

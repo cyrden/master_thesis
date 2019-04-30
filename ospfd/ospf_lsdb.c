@@ -208,6 +208,7 @@ struct ospf_lsa *ospf_lsdb_lookup_by_id(struct ospf_lsdb *lsdb, uint8_t type,
 					struct in_addr id,
 					struct in_addr adv_router)
 {
+	zlog_notice("ospf_lsdb_lookup_by id");
 	struct route_table *table;
 	struct prefix_ls lp;
 	struct route_node *rn;
@@ -225,6 +226,8 @@ struct ospf_lsa *ospf_lsdb_lookup_by_id(struct ospf_lsdb *lsdb, uint8_t type,
 	if (rn) {
 		find = rn->info;
 		route_unlock_node(rn);
+		zlog_notice("found and LSA:");
+		ospf_lsa_header_dump(find->data);
 		return find;
 	}
 	return NULL;

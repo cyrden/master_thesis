@@ -6,6 +6,7 @@
  * Helper functions are registered to the eBPF vm on creation to be used as external functions
  */
 
+#include <ospfd/ospf_lsa.h>
 #include "ospf_plugins_api.h"
 #include "../../ospfd/plugins_manager/plugins_manager.h"
 
@@ -16,6 +17,22 @@ struct mesg_buffer {
     long mesg_type;
     char mesg_text[SIZE_MESG];
 } message;
+
+void print_helper(void *ptr1, void *ptr2, uint16_t val) {
+    zlog_notice("lsah = %p,  lim= %p, my_ntohs(lsah->length) = %d = %x", ptr1, ptr2, (int) val, val);
+}
+
+void my_print(const char *format, ...) {
+    va_list vars;
+    va_start(vars, format);
+    vfprintf(stderr, format, vars);
+    va_end(vars);
+}
+
+void lsa_head_dump (struct lsa_header *lsah) {
+    zlog_notice("lsa_head_dump :");
+    ospf_lsa_header_dump(lsah);
+}
 
 uint32_t my_ntohl(uint32_t value) {
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
@@ -32,14 +49,16 @@ uint32_t my_ntohl(uint32_t value) {
 
 uint16_t my_ntohs(uint16_t value) {
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-    return (uint16_t) (((value & 0x00FF) << 8) |
-                       ((value & 0xFF00) >> 8));
+    return (((value & 0x00FF) << 8) |
+            ((value & 0xFF00) >> 8));
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
     return value;
 #else
 #    error unsupported endianness
 #endif
 }
+
+/* Shared heap management functions */
 
 int shared_heap_malloc(size_t size) {
     pluglet_context_t *pluglet_context = current_context;
@@ -148,6 +167,10 @@ void set_pointer_toInt(void *pointer, int value) {
     *((int *) pointer) = value;
 }
 
+
+/* Getter functions */
+
+
 /*
  * Getter function to get an ospf_interface.
  */
@@ -185,6 +208,7 @@ int get_interface(struct interface *ifp, struct interface *ifp_copy) {
         return 0;
     }
     if(ifp == NULL) return 0;
+    if(ifp_copy == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_HELLO_SEND:
@@ -212,11 +236,16 @@ int get_ospf_lsa(struct ospf_lsa *lsa, struct ospf_lsa *lsa_copy) {
         return 0;
     }
     if(lsa == NULL) return 0;
+    if(lsa_copy == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_LSA_FLOOD:
             if(lsa != ((struct arg_plugin_lsa_flood *) pluglet_context->original_arg)->lsa) return 0; // user didn't give the good pointer. We probably don't want it to access it.
             memcpy(lsa_copy, ((struct arg_plugin_lsa_flood *) pluglet_context->original_arg)->lsa, sizeof(struct ospf_lsa));
+            break;
+        case ARG_PLUGIN_OSPF_SPF_NEXT:
+            zlog_notice("get_ospf_lsa");
+            memcpy(lsa_copy, lsa, sizeof(struct ospf_lsa));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
@@ -235,11 +264,38 @@ int get_lsa_header(struct lsa_header *lsah, struct lsa_header *lsah_copy) {
         return 0;
     }
     if(lsah == NULL) return 0; // otherwise memcpy could fail
+    if(lsah_copy == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_LSA_FLOOD:
             if(lsah != ((struct arg_plugin_lsa_flood *) pluglet_context->original_arg)->lsa->data) return 0; // user didn't give the good pointer. We probably don't want it to access it.
             memcpy(lsah_copy, ((struct arg_plugin_lsa_flood *) pluglet_context->original_arg)->lsa->data, sizeof(struct lsa_header));
+            break;
+        case ARG_PLUGIN_OSPF_SPF_NEXT:
+            memcpy(lsah_copy, lsah, sizeof(struct lsa_header));
+            zlog_notice("get lsa header, type = %d", (int) lsah_copy->type);
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
+int get_router_lsa(struct router_lsa *lsa, struct router_lsa *lsa_copy) {
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(lsa == NULL) return 0; // otherwise memcpy could fail
+    if(lsa_copy == NULL) return 0;
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_OSPF_SPF_NEXT:
+            if(lsa != ((struct router_lsa *)((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->v->lsa)) return 0; // user didn't give the good pointer. We probably don't want it to access it.
+            memcpy(lsa_copy, ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->v->lsa, sizeof(struct router_lsa));
+            zlog_notice("get router_lsa, header type = %d, link id = %s", (int) lsa_copy->header.type, inet_ntoa(lsa_copy->link[0].link_id));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
@@ -258,11 +314,17 @@ int get_ospf_area(struct ospf_area *area, struct ospf_area *area_copy) {
         return 0;
     }
     if(area == NULL) return 0;
+    if(area_copy == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_SPF_CALC:
             if(area != ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area) return 0; // user didn't give the good pointer. We probably don't want it to access it.
             memcpy(area_copy, ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area, sizeof(struct ospf_area));
+            break;
+        case ARG_PLUGIN_OSPF_SPF_NEXT:
+            zlog_notice("get ospf area");
+            if(area != ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area) return 0; // user didn't give the good pointer. We probably don't want it to access it.
+            memcpy(area_copy, ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area, sizeof(struct ospf_area));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
@@ -293,6 +355,53 @@ int get_ospf(struct ospf *ospf, struct ospf *ospf_copy) {
     }
     return 1;
 }
+
+int get_vertex(struct vertex *vertex, struct vertex *vertex_copy) {
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(vertex == NULL) return 0;
+    if(vertex_copy == NULL) return 0;
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_OSPF_SPF_NEXT:
+            memcpy(vertex_copy, vertex, sizeof(struct vertex));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
+
+/* Setter functions */
+
+int set_ospf_area_transit(struct ospf_area *area, uint8_t transit) {
+    zlog_notice("set ospf area transit");
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(area == NULL) return 0;
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_OSPF_SPF_NEXT:
+            if(area != ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area) return 0; // user didn't give the good pointer. We probably don't want it to access it.
+            area->transit = transit;
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
+
+
 
 struct ospf_lsa *my_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi, struct ospf_lsa *lsa) {
     pluglet_context_t *pluglet_context = current_context;
@@ -332,6 +441,19 @@ int my_ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inb
     }
     ospf_flood_through_area(area, inbr, lsa);
     return 1;
+}
+
+unsigned int ospf_nexthop_calculation(struct ospf_area *area,
+                                      struct vertex *v, struct vertex *w,
+                                      struct router_lsa_link *l,
+                                      unsigned int distance, int lsa_pos);
+
+unsigned int my_ospf_nexthop_calculation(struct arg_plugin_ospf_spf_next *s, struct vertex *w,
+                                         struct router_lsa_link *l,
+                                         unsigned int distance, int lsa_pos) {
+    struct ospf_area *area = s->area;
+    struct vertex *v = s->v;
+    ospf_nexthop_calculation(area, v, w, l, distance, lsa_pos);
 }
 
 
