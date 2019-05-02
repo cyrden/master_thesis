@@ -301,7 +301,7 @@ static void ospf_spf_init(struct ospf_area *area)
 //static int ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v)
 int ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v)
 {
-    zlog_notice("ospf_lsa_has_link");
+    //zlog_notice("ospf_lsa_has_link");
 	unsigned int i, length;
 	struct router_lsa *rl;
 	struct network_lsa *nl;
@@ -802,8 +802,9 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
 	// Added by Cyril
 	if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[PRE] != NULL) {
 		/* Definition of the plugin argument */
-		struct arg_plugin_ospf_spf_next *plugin_arg = malloc(sizeof(struct arg_plugin_ospf_spf_next));
-		plugin_arg->v = v;
+		struct arg_plugin_ospf_spf_next *plugin_arg = calloc(sizeof(struct arg_plugin_ospf_spf_next), 1);
+        if(plugin_arg == NULL) return;
+        plugin_arg->v = v;
 		plugin_arg->ospf = ospf;
 		plugin_arg->area = area;
 		plugin_arg->candidate = candidate;
@@ -820,7 +821,10 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
     // Added by Cyril
     if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[REP] != NULL) {
         /* Definition of the plugin argument */
-        struct arg_plugin_ospf_spf_next *plugin_arg = malloc(sizeof(struct arg_plugin_ospf_spf_next));
+        struct arg_plugin_ospf_spf_next *plugin_arg = calloc(sizeof(struct arg_plugin_ospf_spf_next), 1);
+        if(plugin_arg == NULL) {
+        	return;
+        }
         plugin_arg->v = v;
         plugin_arg->ospf = ospf;
         plugin_arg->area = area;
@@ -852,8 +856,8 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
             }
         }
 
-        //if (IS_DEBUG_OSPF_EVENT)
-        zlog_debug("%s: Next vertex of %s vertex %s", __func__,
+        if (IS_DEBUG_OSPF_EVENT)
+            zlog_debug("%s: Next vertex of %s vertex %s", __func__,
                    v->type == OSPF_VERTEX_ROUTER ? "Router" : "Network",
                    inet_ntoa(v->lsa->id));
 
@@ -861,53 +865,55 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
         lim = ((uint8_t *) v->lsa) + ntohs(v->lsa->length);
 
         while (p < lim) {
-            //print_helper((void*)p, (void*)lim);
             struct vertex *w;
             unsigned int distance;
 
             /* In case of V is Router-LSA. */
             if (v->lsa->type == OSPF_ROUTER_LSA) {
                 l = (struct router_lsa_link *) p;
-                zlog_notice("l->linkid = %s, link type: %d", inet_ntoa(l->link_id), (int) l->m[0].type);
+                //zlog_notice("l->linkid = %s, link type: %d", inet_ntoa(l->link_id), (int) l->m[0].type);
 
                 // TODO: This is a try
                 /*int ignored = 0;
                 struct ospf_lsa *test_lsa = ospf_lsa_lookup(ospf, area,
                                                             13,
                                                             v->id, v->id);
-                zlog_notice("test_lsa = ");
+                //zlog_notice("test_lsa = ");
                 if (test_lsa != NULL) {
+                    print_helper(111);
                     ospf_lsa_header_dump(test_lsa->data);
                     uint8_t *my_p = ((uint8_t *) test_lsa->data) + OSPF_LSA_HEADER_SIZE + 4;
                     while (my_p < ((uint8_t *) test_lsa->data) + ntohs(test_lsa->data->length)) {
-                        zlog_notice("lsa length = %d, sizeof my_link = %d", (int) (ntohs(test_lsa->data->length)),
+                        print_helper(112);
+                        //zlog_notice("lsa length = %d, sizeof my_link = %d", (int) (ntohs(test_lsa->data->length)),
                                     (int) sizeof(struct my_link));
                         struct my_link *my_link = (struct my_link *) my_p;
-                        zlog_notice("l->linkid = %s", inet_ntoa(l->link_id));
-                        zlog_notice("my link addr = %s", inet_ntoa(my_link->link_id));
+                        //zlog_notice("l->linkid = %s", inet_ntoa(l->link_id));
+                        //zlog_notice("my link addr = %s", inet_ntoa(my_link->link_id));
                         if (l->link_id.s_addr == my_link->link_id.s_addr) {
+                            print_helper(113);
                             if (ntohl(my_link->color) == 14) {
+                                print_helper(114);
                                 ignored = 1;
-                                zlog_notice("link %s has color %d and thus is ignored is SPF",
-                                            inet_ntoa(my_link->link_id), ntohl(my_link->color));
+                                //zlog_notice("link %s has color %d and thus is ignored is SPF", inet_ntoa(my_link->link_id), ntohl(my_link->color));
                                 break;
                             }
                         }
-                        zlog_notice("4");
+                        //zlog_notice("4");
                         my_p += sizeof(struct my_link);
                     }
                 } else {
-                    zlog_notice("test_lsa = NULL");
+                    //zlog_notice("test_lsa = NULL");
                 }*/
 
                 lsa_pos = lsa_pos_next; /* LSA link position */
                 lsa_pos_next++;
                 p += (OSPF_ROUTER_LSA_LINK_SIZE
                       + (l->m[0].tos_count * OSPF_ROUTER_LSA_TOS_SIZE));
-                zlog_notice("l->m[0].toscount = %d", (int) l->m[0].tos_count);
+                //zlog_notice("l->m[0].toscount = %d", (int) l->m[0].tos_count);
 
                 /*if (ignored) {
-                    zlog_notice("ignored = 1 -> continue");
+                    //zlog_notice("ignored = 1 -> continue");
                     continue;
                 }*/
 
@@ -926,9 +932,10 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
                 switch (type) {
                     case LSA_LINK_TYPE_POINTOPOINT:
                     case LSA_LINK_TYPE_VIRTUALLINK:
+                        //print_helper(3);
                         if (type == LSA_LINK_TYPE_VIRTUALLINK) {
-                            //if (IS_DEBUG_OSPF_EVENT)
-                            zlog_debug(
+                            if (IS_DEBUG_OSPF_EVENT)
+                                zlog_debug(
                                     "looking up LSA through VL: %s",
                                     inet_ntoa(l->link_id));
                         }
@@ -937,24 +944,28 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
                                                 OSPF_ROUTER_LSA,
                                                 l->link_id, l->link_id);
                         if (w_lsa) {
-                            //if (IS_DEBUG_OSPF_EVENT)
-                            zlog_debug(
+                            if (IS_DEBUG_OSPF_EVENT)
+                                zlog_debug(
                                     "found Router LSA %s",
                                     inet_ntoa(l->link_id));
                         }
                         break;
                     case LSA_LINK_TYPE_TRANSIT:
-                        //if (IS_DEBUG_OSPF_EVENT)
-                        zlog_debug(
+                        //print_helper(4);
+                        if (IS_DEBUG_OSPF_EVENT)
+                            zlog_debug(
                                 "Looking up Network LSA, ID: %s",
                                 inet_ntoa(l->link_id));
                         w_lsa = ospf_lsa_lookup_by_id(
                                 area, OSPF_NETWORK_LSA, l->link_id);
-                        if (w_lsa)
-                            //if (IS_DEBUG_OSPF_EVENT)
+                        if (w_lsa) {
+                            if (IS_DEBUG_OSPF_EVENT)
                             zlog_debug("found the LSA");
+                            //print_helper(20);
+                        }
                         break;
                     default:
+                        //print_helper(5);
                         flog_warn(EC_OSPF_LSA,
                                   "Invalid LSA link type %d", type);
                         continue;
@@ -968,6 +979,7 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
                 w_lsa = ospf_lsa_lookup_by_id(area, OSPF_ROUTER_LSA,
                                               *r);
                 if (w_lsa) {
+                    //print_helper(6);
                     if (IS_DEBUG_OSPF_EVENT)
                         zlog_debug("found Router LSA %s",
                                    inet_ntoa(w_lsa->data->id));
@@ -978,28 +990,32 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
                to MaxAge, or it does not have a link back to vertex V,
                examine the next link in V's LSA.[23] */
             if (w_lsa == NULL) {
-                //if (IS_DEBUG_OSPF_EVENT)
-                zlog_debug("No LSA found");
+                if (IS_DEBUG_OSPF_EVENT)
+                //print_helper(7);
+                    zlog_debug("No LSA found");
                 continue;
             }
 
             if (IS_LSA_MAXAGE(w_lsa)) {
-                //if (IS_DEBUG_OSPF_EVENT)
-                zlog_debug("LSA is MaxAge");
+                print_helper(8);
+                if (IS_DEBUG_OSPF_EVENT)
+                    zlog_debug("LSA is MaxAge");
                 continue;
             }
 
             if (ospf_lsa_has_link(w_lsa->data, v->lsa) < 0) {
-                //if (IS_DEBUG_OSPF_EVENT)
-                zlog_debug("The LSA doesn't have a link back");
+                print_helper(9);
+                if (IS_DEBUG_OSPF_EVENT)
+                    zlog_debug("The LSA doesn't have a link back");
                 continue;
             }
 
             /* (c) If vertex W is already on the shortest-path tree, examine
                the next link in the LSA. */
             if (w_lsa->stat == LSA_SPF_IN_SPFTREE) {
-                //if (IS_DEBUG_OSPF_EVENT)
-                zlog_debug("The LSA is already in SPF");
+                print_helper(10);
+                if (IS_DEBUG_OSPF_EVENT)
+                    zlog_debug("The LSA is already in SPF");
                 continue;
             }
 
@@ -1024,9 +1040,13 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
                 if (ospf_nexthop_calculation(area, v, w, l, distance,
                                              lsa_pos))
                     pqueue_enqueue(w, candidate);
-                else if (IS_DEBUG_OSPF_EVENT)
+                else if (IS_DEBUG_OSPF_EVENT) {
+                    //print_helper(11);
                     zlog_debug("Nexthop Calc failed");
+                }
             } else if (w_lsa->stat >= 0) {
+                //print_helper(12);
+                //zlog_notice("wlsa->state >= 0");
                 /* Get the vertex from candidates. */
                 w = candidate->array[w_lsa->stat];
 
@@ -1069,7 +1089,8 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
     // Added by Cyril
     if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[POST] != NULL) {
         /* Definition of the plugin argument */
-        struct arg_plugin_ospf_spf_next *plugin_arg = malloc(sizeof(struct arg_plugin_ospf_spf_next));
+        struct arg_plugin_ospf_spf_next *plugin_arg = calloc(sizeof(struct arg_plugin_ospf_spf_next), 1);
+        if(plugin_arg == NULL) return;
         plugin_arg->v = v;
         plugin_arg->ospf = ospf;
         plugin_arg->area = area;

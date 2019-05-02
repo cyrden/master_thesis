@@ -39,7 +39,7 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x14, "get_ospf_area", get_ospf_area) == -1) return 0;
     if (ubpf_register(vm, 0x15, "get_ospf", get_ospf) == -1) return 0;
     if (ubpf_register(vm, 0x16, "get_vertex", get_vertex) == -1) return 0;
-    if (ubpf_register(vm, 0x17, "get_router_lsa", get_router_lsa) == -1) return 0;
+    if (ubpf_register(vm, 0x17, "get_lsa_with_length", get_lsa_with_length) == -1) return 0;
 
     /* Setter functions */
     if (ubpf_register(vm, 0x30, "set_ospf_area_transit", set_ospf_area_transit) == -1) return 0;

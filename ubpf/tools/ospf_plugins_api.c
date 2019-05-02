@@ -18,15 +18,8 @@ struct mesg_buffer {
     char mesg_text[SIZE_MESG];
 } message;
 
-void print_helper(void *ptr1, void *ptr2, uint16_t val) {
-    zlog_notice("lsah = %p,  lim= %p, my_ntohs(lsah->length) = %d = %x", ptr1, ptr2, (int) val, val);
-}
-
-void my_print(const char *format, ...) {
-    va_list vars;
-    va_start(vars, format);
-    vfprintf(stderr, format, vars);
-    va_end(vars);
+void print_helper(int a) {
+    zlog_notice("%d", a);
 }
 
 void lsa_head_dump (struct lsa_header *lsah) {
@@ -49,7 +42,7 @@ uint32_t my_ntohl(uint32_t value) {
 
 uint16_t my_ntohs(uint16_t value) {
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-    return (((value & 0x00FF) << 8) |
+    return (uint16_t) (((value & 0x00FF) << 8) |
             ((value & 0xFF00) >> 8));
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
     return value;
@@ -232,11 +225,17 @@ int get_interface(struct interface *ifp, struct interface *ifp_copy) {
 int get_ospf_lsa(struct ospf_lsa *lsa, struct ospf_lsa *lsa_copy) {
     pluglet_context_t *pluglet_context = current_context;
     if(pluglet_context == NULL) { // check that plugin didn't send null pointer
-        printf("NULL pointer \n");
+        //zlog_notice("NULL pointer \n");
         return 0;
     }
-    if(lsa == NULL) return 0;
-    if(lsa_copy == NULL) return 0;
+    if(lsa == NULL) {
+        //zlog_notice("lsa null");
+        return 0;
+    }
+    if(lsa_copy == NULL) {
+        //zlog_notice("lsa copy null");
+        return 0;
+    }
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_LSA_FLOOD:
@@ -244,13 +243,14 @@ int get_ospf_lsa(struct ospf_lsa *lsa, struct ospf_lsa *lsa_copy) {
             memcpy(lsa_copy, ((struct arg_plugin_lsa_flood *) pluglet_context->original_arg)->lsa, sizeof(struct ospf_lsa));
             break;
         case ARG_PLUGIN_OSPF_SPF_NEXT:
-            zlog_notice("get_ospf_lsa");
+            //zlog_notice("get_ospf_lsa");
             memcpy(lsa_copy, lsa, sizeof(struct ospf_lsa));
             break;
         default:
-            fprintf(stderr, "Argument type not recognized by helper function");
+            zlog_notice("Argument type not recognized by helper function");
             return 0;
     }
+    //zlog_notice("get ospf lsa return 1");
     return 1;
 }
 
@@ -273,16 +273,26 @@ int get_lsa_header(struct lsa_header *lsah, struct lsa_header *lsah_copy) {
             break;
         case ARG_PLUGIN_OSPF_SPF_NEXT:
             memcpy(lsah_copy, lsah, sizeof(struct lsa_header));
-            zlog_notice("get lsa header, type = %d", (int) lsah_copy->type);
+            //zlog_notice("get lsa header, type = %d", (int) lsah_copy->type);
             break;
         default:
-            fprintf(stderr, "Argument type not recognized by helper function");
+            zlog_notice("Argument type not recognized by helper function");
             return 0;
     }
+    //zlog_notice("get lsah return 1");
     return 1;
 }
 
-int get_router_lsa(struct router_lsa *lsa, struct router_lsa *lsa_copy) {
+struct my_link {
+    struct in_addr link_id;
+    struct in_addr link_data;
+    uint8_t type;
+    uint8_t tos;
+    uint16_t metric;
+    uint32_t color;
+};
+
+int get_lsa_with_length(struct router_lsa *lsa, struct router_lsa *lsa_copy) {
     pluglet_context_t *pluglet_context = current_context;
     if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
@@ -293,12 +303,17 @@ int get_router_lsa(struct router_lsa *lsa, struct router_lsa *lsa_copy) {
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_OSPF_SPF_NEXT:
-            if(lsa != ((struct router_lsa *)((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->v->lsa)) return 0; // user didn't give the good pointer. We probably don't want it to access it.
-            memcpy(lsa_copy, ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->v->lsa, sizeof(struct router_lsa));
-            zlog_notice("get router_lsa, header type = %d, link id = %s", (int) lsa_copy->header.type, inet_ntoa(lsa_copy->link[0].link_id));
+            //if(lsa != ((struct router_lsa *)((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->v->lsa)) return 0; // user didn't give the good pointer. We probably don't want it to access it.
+            memcpy(lsa_copy, lsa, lsa->header.length);
+            //zlog_notice("get router_lsa, header type = %d, link id = %s", (int) lsa_copy->header.type, inet_ntoa(lsa_copy->link[0].link_id));
+            if(lsa_copy->header.length == 56) {
+                struct my_link *my_link = (struct my_link *) (((struct ospf_lsa *) lsa_copy)->data +
+                                                              OSPF_LSA_HEADER_SIZE + 4);
+                //zlog_notice("my link -> link id = %s, color: %d", inet_ntoa(my_link->link_id), (int) my_link->color);
+            }
             break;
         default:
-            fprintf(stderr, "Argument type not recognized by helper function");
+            zlog_notice("Argument type not recognized by helper function");
             return 0;
     }
     return 1;
@@ -322,12 +337,12 @@ int get_ospf_area(struct ospf_area *area, struct ospf_area *area_copy) {
             memcpy(area_copy, ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area, sizeof(struct ospf_area));
             break;
         case ARG_PLUGIN_OSPF_SPF_NEXT:
-            zlog_notice("get ospf area");
+            //zlog_notice("get ospf area");
             if(area != ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area) return 0; // user didn't give the good pointer. We probably don't want it to access it.
             memcpy(area_copy, ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area, sizeof(struct ospf_area));
             break;
         default:
-            fprintf(stderr, "Argument type not recognized by helper function");
+            zlog_notice("Argument type not recognized by helper function");
             return 0;
     }
     return 1;
@@ -380,7 +395,7 @@ int get_vertex(struct vertex *vertex, struct vertex *vertex_copy) {
 /* Setter functions */
 
 int set_ospf_area_transit(struct ospf_area *area, uint8_t transit) {
-    zlog_notice("set ospf area transit");
+    //zlog_notice("set ospf area transit");
     pluglet_context_t *pluglet_context = current_context;
     if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
@@ -561,7 +576,7 @@ static uint16_t my_ospf_link_cost(struct ospf_interface *oi)
 }
 
 /* Describe Broadcast Link. */
-static int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi)
+static int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi, uint32_t metric)
 {
     struct ospf_neighbor *dr;
     struct in_addr id, mask;
@@ -577,7 +592,7 @@ static int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *o
         masklen2ip(oi->address->prefixlen, &mask);
         id.s_addr = oi->address->u.prefix4.s_addr & mask.s_addr;
         return my_link_info_set(s, id, mask, LSA_LINK_TYPE_STUB, 0,
-                             oi->output_cost, 14);
+                             oi->output_cost, metric);
     }
 
     dr = ospf_nbr_lookup_by_addr(oi->nbrs, &DR(oi));
@@ -586,24 +601,19 @@ static int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *o
                || IPV4_ADDR_SAME(&oi->address->u.prefix4, &DR(oi)))
         && ospf_nbr_count(oi, 9) > 0) {
         return my_link_info_set(s, DR(oi), oi->address->u.prefix4,
-                             LSA_LINK_TYPE_TRANSIT, 0, cost, 14);
+                             LSA_LINK_TYPE_TRANSIT, 0, cost, metric);
     }
         /* Describe type 3 link. */
     else {
         masklen2ip(oi->address->prefixlen, &mask);
         id.s_addr = oi->address->u.prefix4.s_addr & mask.s_addr;
         return my_link_info_set(s, id, mask, LSA_LINK_TYPE_STUB, 0,
-                             oi->output_cost, 14);
+                             oi->output_cost, metric);
     }
-    /*struct in_addr id, mask;
-
-    masklen2ip(oi->address->prefixlen, &mask);
-    id.s_addr = oi->address->u.prefix4.s_addr & mask.s_addr;
-    return my_link_info_set(s, id, mask, LSA_LINK_TYPE_STUB, 0, oi->output_cost, 14);*/
 }
 
 /* Set my-LSA link information. */
-static int my_lsa_link_set(struct stream **s, struct ospf_area *area)
+static int my_lsa_link_set(struct stream **s, struct ospf_area *area, uint32_t metric)
 {
     struct listnode *node;
     struct ospf_interface *oi;
@@ -622,7 +632,7 @@ static int my_lsa_link_set(struct stream **s, struct ospf_area *area)
                         links += lsa_link_ptop_set(s, oi);
                         break;*/
                     case OSPF_IFTYPE_BROADCAST:
-                        links += my_lsa_link_broadcast_set(s, oi);
+                        links += my_lsa_link_broadcast_set(s, oi, metric);
                         break;
                     /*case OSPF_IFTYPE_NBMA:
                         links += lsa_link_nbma_set(s, oi);
@@ -693,7 +703,7 @@ struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type, uint32_t 
     /* Forward word */
     stream_putw(s, 0);
     /* Set all link information. */
-    cnt = my_lsa_link_set(&s, area);
+    cnt = my_lsa_link_set(&s, area, metric);
     /* Set # of links here. */
     stream_putw_at(s, putp, cnt);
 

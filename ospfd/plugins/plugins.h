@@ -55,4 +55,8 @@
 #include "../monitoring_server/monitoring_server.h"
 
 
+#define RED 1
+#define GREEN 2
+
+
 #endif //PROJECT_PLUGINS_H

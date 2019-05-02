@@ -48,11 +48,14 @@ static unsigned int align_size(unsigned int size) {
  */
 static void *my_sbrk(intptr_t increment) {
     if (current_context->heap->heap_end + increment - current_context->heap->heap_start > MEM_BUFFER) {
+        //zlog_notice("my sbrk -1: heap end= %p, heap start = %p, increment = %ld", current_context->heap->heap_end, current_context->heap->heap_start, increment);
         /* Out of memory */
-        return (void *) -1;
+        //return (void *) -1;
+        return NULL;
     }
 
     current_context->heap->heap_end += increment;
+    //zlog_notice("my sbrk NOT -1: return heap end= %p, heap start = %p, increment = %ld", current_context->heap->heap_end, current_context->heap->heap_start, increment);
     return current_context->heap->heap_end;
 }
 
@@ -96,10 +99,17 @@ static void divide_slot(void *slot, unsigned int size) {
 static void *extend(unsigned int size) {
     meta_data *new_block = (meta_data*) my_sbrk(0);
     if ((char*) new_block - (char*) current_context->heap->heap_start > MEM_BUFFER) { // No more memory
+        //zlog_notice("No more memory");
         return NULL;
     }
-    int *flag = (int *) my_sbrk(size + METADATA_SIZE);
-    if (*flag == -1) return NULL;
+    //int *flag = (int *) my_sbrk(size + METADATA_SIZE);
+    void *flag = my_sbrk(size + METADATA_SIZE);
+    //zlog_notice("extend: flag = %p", flag);
+    //if (*flag == -1) {
+    if(flag == NULL) {
+        //zlog_notice("flag = NULL");
+        return NULL;
+    }
     new_block->size = size;
     new_block->available = 0;
     new_block->next_block = NULL;

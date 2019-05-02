@@ -95,9 +95,9 @@ struct arg_plugin_ospf_spf_next {
     struct pqueue *candidate;
 };
 
-void print_helper(void *ptr1, void *ptr2, uint16_t val);
+void print_helper(int a);
 
-void my_print(const char *format, ...);
+//void my_print(const char *format, ...);
 
 void lsa_head_dump (struct lsa_header *lsah);
 
@@ -137,7 +137,7 @@ int get_ospf_lsa(struct ospf_lsa *lsa, struct ospf_lsa *lsa_copy);
 
 int get_lsa_header(struct lsa_header *lsah, struct lsa_header *lsah_copy);
 
-int get_router_lsa(struct router_lsa *lsa, struct router_lsa *lsa_copy);
+int get_lsa_with_length(struct router_lsa *lsa, struct router_lsa *lsa_copy);
 
 int get_ospf_area(struct ospf_area *area, struct ospf_area *area_copy);
 

@@ -19,18 +19,12 @@ struct my_link {
  * of candidates with any vertices not already on the list.  If a lower-cost
  * path is found to a vertex already on the candidate list, store the new cost.
  */
-/*static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
-                          struct ospf_area *area, struct pqueue *candidate)*/
 uint64_t ospf_spf_next(void *data)
 {
     struct arg_plugin_ospf_spf_next *plugin_arg = (struct arg_plugin_ospf_spf_next *) data;
-    struct vertex *v = my_malloc(sizeof(struct vertex)); // TODO: free
+    struct vertex *v = my_malloc(sizeof(struct vertex));
     if(v == NULL) return 0;
     if(get_vertex(plugin_arg->v, v) != 1) return 0;
-    struct ospf *ospf = plugin_arg->ospf;
-    struct ospf_area *area = my_malloc(sizeof(struct ospf_area)); // TODO: free
-    if(area == NULL) return 0;
-    if(get_ospf_area(plugin_arg->area, area) != 1) return 0;
     struct pqueue *candidate = plugin_arg->candidate;
 
     struct ospf_lsa *w_lsa = NULL;
@@ -42,24 +36,32 @@ uint64_t ospf_spf_next(void *data)
 
     /* If this is a router-LSA, and bit V of the router-LSA (see Section
        A.4.2:RFC2328) is set, set Area A's TransitCapability to TRUE.  */
-    struct lsa_header *lsah = my_malloc(sizeof(struct lsa_header)); // TODO: free
+    struct lsa_header *lsah = my_malloc(sizeof(struct lsa_header));
     if(lsah == NULL) return 0;
     if(get_lsa_header(v->lsa, lsah) != 1) return 0;
+    lsah = my_realloc(lsah, (unsigned int) (((lsah->length & 0x00FF) << 8) | ((lsah->length & 0xFF00) >> 8)));
+    //print_helper(lsah->length); // TODO: endianess
+    //print_helper((((lsah->length & 0x00FF) << 8) | ((lsah->length & 0xFF00) >> 8)));
+    //print_helper(my_ntohs(lsah->length));
     if (v->type == OSPF_VERTEX_ROUTER) { // This is a router LSA
-        lsah = my_realloc(lsah, sizeof(struct router_lsa) + 100);
-        if(get_router_lsa((struct router_lsa *) v->lsa, (struct router_lsa *) lsah) != 1) return 0;
+        if(get_lsa_with_length((struct router_lsa *) v->lsa, (struct router_lsa *) lsah) != 1) return 0;
         if (IS_ROUTER_LSA_VIRTUAL((struct router_lsa *) lsah))
-            //area->transit = OSPF_TRANSIT_TRUE;
             if(set_ospf_area_transit(plugin_arg->area, OSPF_TRANSIT_TRUE) != 1) return 0;
     }
+    else {
+        if(get_lsa_with_length((struct router_lsa *) v->lsa, (struct router_lsa *) lsah) != 1) return 0;
+    }
+
+    /*if(v->type == OSPF_VERTEX_ROUTER) {
+        print_helper(1);
+    }
+    else print_helper(2);*/
 
     p = ((uint8_t *) lsah) + OSPF_LSA_HEADER_SIZE + 4;
     lim = ((uint8_t *) lsah) + ((uint8_t) my_ntohs(lsah->length));
     struct ospf_lsa *test_lsa;
     test_lsa = ospf_lsa_lookup(plugin_arg->ospf, plugin_arg->area, 13, v->id, v->id);
-    print_helper((void *) (uint8_t *) lsah, (void *)lim, my_ntohs(lsah->length));
     while (p < lim) {
-        print_helper((void *)p, (void *)lim, my_ntohs(lsah->length));
         struct vertex *w;
         unsigned int distance;
 
@@ -68,28 +70,42 @@ uint64_t ospf_spf_next(void *data)
             l = (struct router_lsa_link *)p;
 
             int ignored = 0;
-           /* if(test_lsa != NULL) {
-                uint8_t *my_p = ((uint8_t *) test_lsa->data) + OSPF_LSA_HEADER_SIZE + 4;
-                while (my_p < ((uint8_t  *) test_lsa->data) + my_ntohs(test_lsa->data->length)) {
+            if(test_lsa != NULL) {
+                //print_helper(111);
+                struct ospf_lsa *test_lsa_copy = my_malloc(sizeof(struct ospf_lsa));
+                if(test_lsa_copy == NULL) return 0;
+                if(get_ospf_lsa(test_lsa, test_lsa_copy) != 1) return 0;
+                struct lsa_header *test_lsah = my_malloc(sizeof(struct lsa_header));
+                if(test_lsah == NULL) return 0;
+                if(get_lsa_header(test_lsa_copy->data, test_lsah) != 1) return 0;
+                test_lsah = my_realloc(test_lsah, (unsigned int) (((test_lsah->length & 0x00FF) << 8) | ((test_lsah->length & 0xFF00) >> 8)));
+                if(get_lsa_with_length((struct router_lsa *) test_lsa_copy->data, (struct router_lsa *) test_lsah) != 1) return 0;
+                uint8_t *my_p = ((uint8_t *) test_lsah) + OSPF_LSA_HEADER_SIZE + 4;
+                while (my_p < ((uint8_t  *) test_lsah) + (((test_lsah->length & 0x00FF) << 8) | ((test_lsah->length & 0xFF00) >> 8))) {
+                    //print_helper(112);
                     struct my_link *my_link = (struct my_link *) my_p;
-                    if (l->link_id.s_addr == my_link->link_id.s_addr) {
-                        if(my_ntohl(my_link->color) == 14) {
+                    if (l->link_id.s_addr == my_link->link_id.s_addr) { // TODO: this fails
+                        //print_helper(113);
+                        if(my_ntohl(my_link->color)== RED) {
+                            //print_helper(114);
                             ignored = 1;
                             break;
                         }
                     }
                     my_p += sizeof(struct my_link);
                 }
-            }*/
+                my_free(test_lsah);
+                my_free(test_lsa_copy);
+            }
 
             lsa_pos = lsa_pos_next; /* LSA link position */
             lsa_pos_next++;
             //p += (OSPF_ROUTER_LSA_LINK_SIZE + (l->m[0].tos_count * OSPF_ROUTER_LSA_TOS_SIZE));
             p += (OSPF_ROUTER_LSA_LINK_SIZE); // TODO: this is cheating but otherwise out of bound memory access
 
-            /*if(ignored) { // skip this link, it is the wrong color
+            if(ignored) { // skip this link, it is the wrong color
                 continue;
-            }*/
+            }
 
             /* (a) If this is a link to a stub network, examine the
                next
@@ -106,12 +122,16 @@ uint64_t ospf_spf_next(void *data)
             switch (type) {
                 case LSA_LINK_TYPE_POINTOPOINT:
                 case LSA_LINK_TYPE_VIRTUALLINK:
+                    //print_helper(3);
                     w_lsa = ospf_lsa_lookup(plugin_arg->ospf, plugin_arg->area, OSPF_ROUTER_LSA, l->link_id, l->link_id);
                     break;
                 case LSA_LINK_TYPE_TRANSIT:
+                    //print_helper(4);
                     w_lsa = ospf_lsa_lookup_by_id(plugin_arg->area, OSPF_NETWORK_LSA, l->link_id);
+                    //if(w_lsa) print_helper(20);
                     break;
                 default:
+                    //print_helper(5);
                     continue;
             }
         } else {
@@ -121,27 +141,31 @@ uint64_t ospf_spf_next(void *data)
 
             /* Lookup the vertex W's LSA. */
             w_lsa = ospf_lsa_lookup_by_id(plugin_arg->area, OSPF_ROUTER_LSA, *r);
+            //if(w_lsa) print_helper(6);
         }
 
         /* (b cont.) If the LSA does not exist, or its LS age is equal
            to MaxAge, or it does not have a link back to vertex V,
            examine the next link in V's LSA.[23] */
         if (w_lsa == NULL) {
+            //print_helper(7);
             continue;
         }
 
+        //print_helper(119);
+
         struct ospf_lsa *w_lsa_copy = my_malloc(sizeof(struct ospf_lsa)); // TODO: free
-        if(w_lsa_copy == NULL) return 0;
+        if(w_lsa_copy == NULL) {
+            //print_helper(1199);
+            return 0;
+        }
         if(get_ospf_lsa(w_lsa, w_lsa_copy) != 1) return 0;
         struct lsa_header *w_lsah = my_malloc(sizeof(struct lsa_header)); // TODO: free
         if(w_lsah == NULL) return 0;
         if(get_lsa_header(w_lsa_copy->data, w_lsah) != 1) return 0;
-        struct lsa_header *real_wlsah = w_lsa_copy->data;
-        w_lsa_copy->data = w_lsah;
-        if (w_lsa_copy->data->ls_age == OSPF_LSA_MAXAGE) {
+        if (w_lsah->ls_age == OSPF_LSA_MAXAGE) {
             continue;
         }
-        w_lsa_copy->data = real_wlsah;
 
         if (ospf_lsa_has_link(w_lsa_copy->data, v->lsa) < 0) {
             continue;
@@ -161,9 +185,10 @@ uint64_t ospf_spf_next(void *data)
 
         /* calculate link cost D. */
         if (lsah->type == OSPF_ROUTER_LSA)
-            distance = v->distance + my_ntohs(l->m[0].metric);
+            distance = v->distance + (((l->m[0].metric & 0x00FF) << 8) | ((l->m[0].metric & 0xFF00) >> 8));
         else /* v is not a Router-LSA */
             distance = v->distance;
+
 
         /* Is there already vertex W in candidate list? */
         if (w_lsa_copy->stat == LSA_SPF_NOT_EXPLORED) {
@@ -173,11 +198,13 @@ uint64_t ospf_spf_next(void *data)
             /* Calculate nexthop to W. */
             if (my_ospf_nexthop_calculation(plugin_arg, w, l, distance, lsa_pos))
                 pqueue_enqueue(w, plugin_arg->candidate);
+            //else print_helper(11);
         } else if (w_lsa_copy->stat >= 0) {
+            //print_helper(12);
             /* Get the vertex from candidates. */
-            w = candidate->array[w_lsa->stat]; // TODO: I think this is out of memory -> need getter
+            w = candidate->array[w_lsa_copy->stat]; // TODO: Not sure this is ok
 
-            struct vertex *w_copy = my_malloc(sizeof(struct vertex)); // TODO: free
+            struct vertex *w_copy = my_malloc(sizeof(struct vertex));
             if(w_copy == NULL) return 0;
             if(get_vertex(w, w_copy) != 1) return 0;
             /* if D is greater than. */
@@ -209,9 +236,12 @@ uint64_t ospf_spf_next(void *data)
                      * (next pqueu_{de,en}queue will fully
                      * re-heap the queue).
                      */
-                    trickle_up(w_lsa_copy->stat, candidate);
+                    trickle_up(w_lsa_copy->stat, plugin_arg->candidate);
             }
+            my_free(w_copy);
         } /* end W is already on the candidate list */
     }	 /* end loop over the links in V's LSA */
+    my_free(v);
+    my_free(lsah);
     return 1;
 }

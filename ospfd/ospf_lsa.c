@@ -3095,7 +3095,7 @@ struct ospf_lsa *ospf_lsa_lookup(struct ospf *ospf, struct ospf_area *area,
 				 uint32_t type, struct in_addr id,
 				 struct in_addr adv_router)
 {
-	zlog_notice("ospf_lsa_lookup");
+	//zlog_notice("ospf_lsa_lookup");
 	if (!ospf)
 		return NULL;
 
@@ -3122,6 +3122,7 @@ struct ospf_lsa *ospf_lsa_lookup(struct ospf *ospf, struct ospf_area *area,
 struct ospf_lsa *ospf_lsa_lookup_by_id(struct ospf_area *area, uint32_t type,
 				       struct in_addr id)
 {
+    //zlog_notice("ospf_lsa_lookup_by id: %s", inet_ntoa(id));
 	struct ospf_lsa *lsa;
 	struct route_node *rn;
 
