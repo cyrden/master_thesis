@@ -3733,7 +3733,7 @@ void ospf_hello_send(struct ospf_interface *oi)
 	// Added by Cyril
     if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[PRE] != NULL) {
 		/* Definition of the plugin argument */
-		/*struct arg_plugin_hello_send *plugin_arg = malloc(sizeof(struct arg_plugin_hello_send));
+		struct arg_plugin_hello_send *plugin_arg = calloc(sizeof(struct arg_plugin_hello_send), 1);
 		plugin_arg->oi = oi;
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
         plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
@@ -3743,11 +3743,22 @@ void ospf_hello_send(struct ospf_interface *oi)
         plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_HELLO_SEND;
 
 		exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), PRE);
-        free(plugin_arg);*/
+        free(plugin_arg);
 	}
 
     if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[REP] != NULL) {
-		// REP
+		/* Definition of the plugin argument */
+		struct arg_plugin_hello_send *plugin_arg = calloc(sizeof(struct arg_plugin_hello_send), 1);
+		plugin_arg->oi = oi;
+		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+		plugin_arg->heap.heap_last_block = NULL;
+
+		plugins_tab.plugins[SEND_HELLO]->pluglets[REP]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
+		plugins_tab.plugins[SEND_HELLO]->pluglets[REP]->pluglet_context->type_arg = ARG_PLUGIN_HELLO_SEND;
+
+		exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), REP);
+		free(plugin_arg);
 	} else {
 
 		/* If this is passive interface, do not send OSPF Hello. */
@@ -3818,7 +3829,7 @@ void ospf_hello_send(struct ospf_interface *oi)
 	// Added by Cyril
 	if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[POST] != NULL) {
 		/* Definition of the plugin argument */
-		struct arg_plugin_hello_send *plugin_arg = malloc(sizeof(struct arg_plugin_hello_send));
+		struct arg_plugin_hello_send *plugin_arg = calloc(sizeof(struct arg_plugin_hello_send), 1);
 		plugin_arg->oi = oi;
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;

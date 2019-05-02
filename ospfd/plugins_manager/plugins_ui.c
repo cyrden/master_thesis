@@ -30,26 +30,53 @@ int main(int argc, char **argv) {
         printf("sender msgget error \n");
         return 0;
     }
-    char path[50];
-    long location;
-    char strloc[10];
-    char strpos[10];
-    long position;
-    while(1) { // Todo, check if valid values for inputs & deal with string inputs instead of IDs
-        printf("--> Please enter the path to your BPF file \n");
-        fgets(path, 50, stdin);
-        path[strlen(path) - 1] = '\0'; // Otherwise it is a \n and the path doesn't work ...
-
-        printf("--> Please enter the insertion point where you want to inject the plugin (as a int) \n");
-        fgets(strloc, 10, stdin);
-        location = strtol(strloc, NULL, 10);
-
-        printf("--> Please enter the position where you want to inject the bytecode (as a int: 0 = PRE, 1 = REP, 2 = POST) \n");
-        fgets(strpos, 10, stdin);
-        position = strtol(strpos, NULL, 10);
-
+    char path[100];
+    printf("--> Please enter the path to your input file \n");
+    fgets(path, 100, stdin);
+    path[strlen(path) - 1] = '\0'; // Otherwise it is a \n and the path doesn't work ...
+    printf("Path: %s \n", path);
+    FILE *fp;
+    printf("before fopen \n");
+    fp = fopen(path, "r");
+    if(fp == NULL) {
+        printf("fopen error \n");
+        return 0;
+    }
+    printf("after fopen \n");
+    char line[100];
+    while(fgets (line, 100, fp) != NULL) {
+        int i = 0;
+        char filename[100];
+        long location = -1;
+        long position = -1;
+        char *ptr = strtok(line, " ");
+        while(ptr != NULL)
+        {
+            i++;
+            if(i == 1) {
+                strcpy(filename, ptr);
+                printf("%s \n", ptr);
+            }
+            else if(i == 2) {
+                location = strtol(ptr, NULL, 10);
+                printf("%ld \n", location);
+            }
+            else if(i == 3) {
+                position = strtol(ptr, NULL, 10);
+                printf("%ld \n", position);
+            }
+            else {
+                printf("Error \n");
+                return 0;
+            }
+            ptr = strtok(NULL, " ");
+        }
+        if(i != 3) {
+            printf("Invalid line \n");
+            return 0;
+        }
         message.mesg_type = location*100+position;
-        memcpy((void *) message.mesg_text, (void *) path, 50*sizeof(char));
+        strcpy((void *) message.mesg_text, (void *) filename);
         if(msgsnd(msgid, &message, sizeof(message), 0) != -1) {
             printf("--> Plugin at location %s sent to plugins_manager at location %d, position %d \n", message.mesg_text, (int) location, (int) position);
         }
@@ -58,4 +85,6 @@ int main(int argc, char **argv) {
             return 0;
         }
     }
+    fclose(fp);
+    return 1;
 }
