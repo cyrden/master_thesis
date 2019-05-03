@@ -161,6 +161,31 @@ void set_pointer_toInt(void *pointer, int value) {
 }
 
 
+
+
+
+/* Setter functions */
+
+int set_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy) {
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) {
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(oi == NULL || oi_copy == NULL) return 0;
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_SPF_CALC:
+            memcpy(oi, oi_copy, sizeof(struct ospf_interface));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
+
 /* Getter functions */
 
 
@@ -184,12 +209,43 @@ int get_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy
             if(oi != ((struct arg_plugin_ism_change_state *) pluglet_context->original_arg)->oi) return 0; // user didn't give the good pointer. We probably don't want it to access it.
             memcpy(oi_copy, ((struct arg_plugin_ism_change_state *) pluglet_context->original_arg)->oi, sizeof(struct ospf_interface));
             break;
+        case ARG_PLUGIN_SPF_CALC:
+            memcpy(oi_copy, oi, sizeof(struct ospf_interface));
+            break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
             return 0;
     }
     return 1;
 }
+
+
+int get_ospf_interface_list(struct list *oilist, struct ospf_interface **oilist_copy, struct ospf_interface **oi_list_addresses) {
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) {
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(oilist == NULL || oilist_copy == NULL) return 0;
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_SPF_CALC: ;
+            struct listnode *node;
+            struct ospf_interface *oi;
+            int i = 0;
+            for (ALL_LIST_ELEMENTS_RO(oilist, node, oi)) {
+                memcpy(oilist_copy[i], oi, sizeof(struct ospf_interface));
+                oi_list_addresses[i] = oi;
+                i++;
+            }
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
 
 /*
  * Getter function to get an interface.
@@ -211,6 +267,9 @@ int get_interface(struct interface *ifp, struct interface *ifp_copy) {
         case ARG_PLUGIN_ISM_CHANGE_STATE:
             if(ifp != ((struct arg_plugin_ism_change_state *) pluglet_context->original_arg)->oi->ifp) return 0; // user didn't give the good pointer. We probably don't want it to access it.
             memcpy(ifp_copy, ((struct arg_plugin_ism_change_state *) pluglet_context->original_arg)->oi->ifp, sizeof(struct interface));
+            break;
+        case ARG_PLUGIN_SPF_CALC:
+            memcpy(ifp_copy, ifp, sizeof(struct ospf_interface));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
@@ -428,8 +487,6 @@ struct ospf_lsa *my_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *o
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_SPF_CALC:
-            // TODO: Not sure that I need to do this check .. user could put NULL area
-            //if(ospf != ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area->ospf) return 0;
             break;
         default:
             return NULL;
@@ -513,7 +570,7 @@ struct my_lsa {
         uint8_t tos;
         uint16_t metric;
         uint32_t color;
-    } link[1]; // TODO: Here I modified 1 into 3. Only way I found for the moment for my malloc to accept up to 3 links instead of 1 ...
+    } link[1];
 };
 
 static void my_ospf_lsa_dump(struct stream *s)
@@ -552,7 +609,7 @@ static void my_ospf_lsa_dump(struct stream *s)
 /* Set a link information. */
 static char my_link_info_set(struct stream **s, struct in_addr id,
                           struct in_addr data, uint8_t type, uint8_t tos,
-                          uint16_t cost, uint32_t color)
+                          uint16_t cost, uint32_t metric)
 {
 
     /* TOS based routing is not supported. */
@@ -561,7 +618,7 @@ static char my_link_info_set(struct stream **s, struct in_addr id,
     stream_putc(*s, type);		  /* Link Type. */
     stream_putc(*s, tos);		  /* TOS = 0. */
     stream_putw(*s, cost);		  /* Link Cost. */
-    stream_putl(*s, color);		  /* Link color */
+    stream_putl(*s, metric);		  /* Link color */
 
     return 1;
 }
@@ -576,7 +633,7 @@ static uint16_t my_ospf_link_cost(struct ospf_interface *oi)
 }
 
 /* Describe Broadcast Link. */
-static int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi, uint32_t metric)
+int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi, uint32_t metric)
 {
     struct ospf_neighbor *dr;
     struct in_addr id, mask;
@@ -584,11 +641,6 @@ static int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *o
 
     /* Describe Type 3 Link. */
     if (oi->state == 3) {
-        if (IS_DEBUG_OSPF(lsa, LSA_GENERATE))
-            zlog_debug(
-                    "LSA[Type1]: Interface %s is in state Waiting. "
-                    "Adding stub interface",
-                    oi->ifp->name);
         masklen2ip(oi->address->prefixlen, &mask);
         id.s_addr = oi->address->u.prefix4.s_addr & mask.s_addr;
         return my_link_info_set(s, id, mask, LSA_LINK_TYPE_STUB, 0,
@@ -612,125 +664,20 @@ static int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *o
     }
 }
 
-/* Set my-LSA link information. */
-static int my_lsa_link_set(struct stream **s, struct ospf_area *area, uint32_t metric)
-{
-    struct listnode *node;
-    struct ospf_interface *oi;
-    int links = 0;
-
-    for (ALL_LIST_ELEMENTS_RO(area->oiflist, node, oi)) {
-        struct interface *ifp = oi->ifp;
-
-        /* Check interface is up, OSPF is enable. */
-        if (if_is_operative(ifp)) {
-            if (oi->state != 1) {
-                oi->lsa_pos_beg = links;
-                /* Describe each link. */
-                switch (oi->type) {
-                    /*case OSPF_IFTYPE_POINTOPOINT:
-                        links += lsa_link_ptop_set(s, oi);
-                        break;*/
-                    case OSPF_IFTYPE_BROADCAST:
-                        links += my_lsa_link_broadcast_set(s, oi, metric);
-                        break;
-                    /*case OSPF_IFTYPE_NBMA:
-                        links += lsa_link_nbma_set(s, oi);
-                        break;
-                    case OSPF_IFTYPE_POINTOMULTIPOINT:
-                        links += lsa_link_ptomp_set(s, oi);
-                        break;
-                    case OSPF_IFTYPE_VIRTUALLINK:
-                        links +=
-                                lsa_link_virtuallink_set(s, oi);
-                        break;
-                    case OSPF_IFTYPE_LOOPBACK:
-                        links += lsa_link_loopback_set(s, oi);*/
-                }
-                oi->lsa_pos_end = links;
-            }
-        }
-    }
-
-    return links;
-}
-
-/* Create new my-LSA. */
-struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type, uint32_t metric, uint32_t seqnum)
-{
-    pluglet_context_t *pluglet_context = current_context;
-    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
-        printf("NULL pointer \n");
-        return 0;
-    }
-    switch (pluglet_context->type_arg) {
-        case ARG_PLUGIN_SPF_CALC:
-            if(area != ((struct arg_plugin_spf_calc *) pluglet_context->original_arg)->area) return NULL; // check that plugin gave the right pointer
-            break;
-        default:
-            return NULL;
-    }
-    struct ospf *ospf = area->ospf;
-    struct stream *s;
-    struct lsa_header *lsah;
-    struct ospf_lsa *new;
-    int length;
-
-    /* Create a stream for LSA. */
-    s = stream_new(OSPF_MAX_LSA_SIZE);
-    /* Set LSA common header fields. */
-
-    lsah = (struct lsa_header *)STREAM_DATA(s);
-
-    lsah->ls_age = htons(OSPF_LSA_INITIAL_AGE);
-    lsah->options = (uint8_t) 0;
-    lsah->type = type;
-    lsah->id = ospf->router_id;
-    lsah->adv_router = ospf->router_id;
-    lsah->ls_seqnum = htonl(seqnum);
-
-    stream_forward_endp(s, OSPF_LSA_HEADER_SIZE);
-
-    /* Lsa body */
-    unsigned long putp;
-    uint16_t cnt;
-    /* Set flags. */
-    stream_putc(s, (uint8_t) 0); // No flags
-    /* Set Zero fields. */
-    stream_putc(s, 0);
-    /* Keep pointer to # links. */
-    putp = stream_get_endp(s);
-    /* Forward word */
-    stream_putw(s, 0);
-    /* Set all link information. */
-    cnt = my_lsa_link_set(&s, area, metric);
-    /* Set # of links here. */
-    stream_putw_at(s, putp, cnt);
-
-    /* Set length. */
-    length = stream_get_endp(s);
-    lsah = (struct lsa_header *)STREAM_DATA(s);
+struct ospf_lsa *ospf_my_lsa_new_and_data(struct stream *s, struct ospf_area *area) {
+    int length = s->endp;
+    struct lsa_header *lsah = (struct lsa_header *) s->data;
     lsah->length = htons(length);
-
-    /* Now, create OSPF LSA instance. */
-    new = ospf_lsa_new_and_data(length);
-
+    struct ospf_lsa *new = ospf_lsa_new_and_data(length);
+    // TODO: This set should probably be done in the plugin
     new->area = area;
     SET_FLAG(new->flags, OSPF_LSA_SELF | OSPF_LSA_SELF_CHECKED);
     new->vrf_id = area->ospf->vrf_id;
-
-    /* Copy LSA data to store, discard stream. */
     memcpy(new->data, lsah, length);
-    //my_ospf_lsa_dump(s);
-    stream_free(s);
-
-    /* Sanity check. */
-    if (new->data->adv_router.s_addr == 0) {
-        return NULL;
-    }
-
+    my_ospf_lsa_dump(s);
     return new;
 }
+
 
 int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah) {
     memcpy(lsah, lsa->data, sizeof(struct lsa_header));

@@ -33,6 +33,8 @@
 #include "ospfd/ospf_flood.h"
 
 #include "pqueue.h"
+#include "linklist.h"
+#include "plist.h"
 
 #include "ospfd/monitoring_server/monitoring_server.h"
 
@@ -133,6 +135,8 @@ int get_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy
 
 int get_interface(struct interface *ifp, struct interface *ifp_copy);
 
+int get_ospf_interface_list(struct list *oilist, struct ospf_interface **oilist_copy, struct ospf_interface **oi_list_addresses);
+
 int get_ospf_lsa(struct ospf_lsa *lsa, struct ospf_lsa *lsa_copy);
 
 int get_lsa_header(struct lsa_header *lsah, struct lsa_header *lsah_copy);
@@ -147,9 +151,9 @@ int get_vertex(struct vertex *vertex, struct vertex *vertex_copy);
 
 /* Setters */
 
-int set_ospf_area_transit(struct ospf_area *area, uint8_t transit);
+int set_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy);
 
-struct ospf_lsa *ospf_my_lsa_new(struct ospf_area *area, uint8_t type, uint32_t metric, uint32_t seqnum);
+int set_ospf_area_transit(struct ospf_area *area, uint8_t transit);
 
 int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah);
 
@@ -158,5 +162,9 @@ int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah);
 struct ospf_lsa *my_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi, struct ospf_lsa *lsa);
 
 int my_ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inbr, struct ospf_lsa *lsa);
+
+int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi, uint32_t metric);
+
+struct ospf_lsa *ospf_my_lsa_new_and_data(struct stream *s, struct ospf_area *area);
 
 #endif //OSPF_PLUGINS_API_H

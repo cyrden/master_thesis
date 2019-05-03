@@ -40,9 +40,11 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x15, "get_ospf", get_ospf) == -1) return 0;
     if (ubpf_register(vm, 0x16, "get_vertex", get_vertex) == -1) return 0;
     if (ubpf_register(vm, 0x17, "get_lsa_with_length", get_lsa_with_length) == -1) return 0;
+    if (ubpf_register(vm, 0x18, "get_ospf_interface_list", get_ospf_interface_list) == -1) return 0;
 
     /* Setter functions */
     if (ubpf_register(vm, 0x30, "set_ospf_area_transit", set_ospf_area_transit) == -1) return 0;
+    if (ubpf_register(vm, 0x31, "set_ospf_interface", set_ospf_interface) == -1) return 0;
 
 
     /* Plugins shared_heap management functions */
@@ -59,7 +61,6 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x5, "my_ospf_flood_through_area", my_ospf_flood_through_area) == -1) return 0;
     if (ubpf_register(vm, 0x6, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
     if (ubpf_register(vm, 0x7, "my_ospf_lsa_install", my_ospf_lsa_install) == -1) return 0;
-    if (ubpf_register(vm, 0x8, "ospf_my_lsa_new", ospf_my_lsa_new) == -1) return 0;
     if (ubpf_register(vm, 0x9, "my_get_lsah", my_get_lsah) == -1) return 0; // TODO: this function is just help to print
     if (ubpf_register(vm, 0x19, "trickle_up", trickle_up) == -1) return 0;
     if (ubpf_register(vm, 0x1a, "ospf_lsa_has_link", ospf_lsa_has_link) == -1) return 0;
@@ -68,6 +69,8 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x1d, "my_ospf_nexthop_calculation", my_ospf_nexthop_calculation) == -1) return 0;
     if (ubpf_register(vm, 0x1e, "pqueue_enqueue", pqueue_enqueue) == -1) return 0;
     if (ubpf_register(vm, 0x1f, "ospf_vertex_new", ospf_vertex_new) == -1) return 0;
+    if (ubpf_register(vm, 0x2a, "my_lsa_link_broadcast_set", my_lsa_link_broadcast_set) == -1) return 0;
+    if (ubpf_register(vm, 0x2b, "ospf_my_lsa_new_and_data", ospf_my_lsa_new_and_data) == -1) return 0;
 
 
 

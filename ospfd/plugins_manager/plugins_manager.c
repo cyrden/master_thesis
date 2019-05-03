@@ -107,7 +107,7 @@ void *plugins_manager(void *tab) {
         return 0;
     }
     // TODO: The following lines will be removed. Just used for debugging purposes
-    /*//inject_plugins((plugins_tab_t *) tab, SPF_TEST, "/plugins/spf_test.o");
+    //inject_plugins((plugins_tab_t *) tab, SPF_TEST, "/plugins/spf_test.o");
     inject_plugins((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o", PRE);
     //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o", PRE);
     inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
@@ -117,9 +117,9 @@ void *plugins_manager(void *tab) {
     //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
     //inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
     inject_plugins((plugins_tab_t *) tab, SPF_LSA, "/plugins/originate_my_lsa.o", PRE);
-    inject_plugins((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);*/
+    //inject_plugins((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
 
-    while(1) { // In that loop receives messages from UI to inject plugins
+    /*while(1) { // In that loop receives messages from UI to inject plugins
         printf("Wait for message \n");
         if (msgrcv(msgid, &message, sizeof(message), 0, 0) != -1) { // blocking call
             // TODO: check that it is a valid location etc
@@ -141,7 +141,7 @@ void *plugins_manager(void *tab) {
             zlog_notice("Error while receiving message \n");
             return NULL;
         }
-    }
+    }*/
     return NULL;
 }
 
