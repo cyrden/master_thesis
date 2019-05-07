@@ -27,7 +27,7 @@ void lsa_head_dump (struct lsa_header *lsah) {
     ospf_lsa_header_dump(lsah);
 }
 
-uint32_t my_ntohl(uint32_t value) {
+uint32_t plugin_ntohl(uint32_t value) {
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
     return (((value & 0x000000FF) << 24) |
             ((value & 0x0000FF00) << 8) |
@@ -40,7 +40,7 @@ uint32_t my_ntohl(uint32_t value) {
 #endif
 }
 
-uint16_t my_ntohs(uint16_t value) {
+uint16_t plugin_ntohs(uint16_t value) {
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
     return (uint16_t) (((value & 0x00FF) << 8) |
             ((value & 0xFF00) >> 8));
@@ -50,67 +50,6 @@ uint16_t my_ntohs(uint16_t value) {
 #    error unsupported endianness
 #endif
 }
-
-/* Shared heap management functions */
-
-int shared_heap_malloc(size_t size) {
-    pluglet_context_t *pluglet_context = current_context;
-    if(size > MAX_SIZE_SHARED_HEAP) {
-        printf("Size exceeds maximum allowed shared heap size \n");
-        return 0;
-    }
-    if(pluglet_context == NULL) {
-        printf("NULL pointer \n");
-        return 0;
-    }
-    if(pluglet_context->parent_plugin->shared_heap != NULL) return 0;
-    pluglet_context->parent_plugin->shared_heap = malloc(size);
-    if(pluglet_context->parent_plugin->shared_heap == NULL) return 0;
-    return 1;
-}
-
-int shared_heap_free(void) {
-    pluglet_context_t *pluglet_context = current_context;
-    if(pluglet_context == NULL) {
-        printf("NULL pointer \n");
-        return 0;
-    }
-    if(pluglet_context->parent_plugin->shared_heap == NULL) return 0;
-    free(pluglet_context->parent_plugin->shared_heap);
-    pluglet_context->parent_plugin->shared_heap = NULL;
-    return 1;
-}
-
-int shared_heap_get(void *heap_copy, size_t size) {
-    pluglet_context_t * pluglet_context = current_context;
-    if(size > MAX_SIZE_SHARED_HEAP) {
-        printf("Size exceeds maximum allowed shared heap size \n");
-        return 0;
-    }
-    if(pluglet_context == NULL) {
-        printf("NULL pointer \n");
-        return 0;
-    }
-    if(pluglet_context->parent_plugin->shared_heap == NULL) return 0;
-    memcpy(heap_copy, pluglet_context->parent_plugin->shared_heap, size);
-    return 1;
-}
-
-int shared_heap_set(void *val, size_t size) {
-    pluglet_context_t *pluglet_context = current_context;
-    if(size > MAX_SIZE_SHARED_HEAP) {
-        printf("Size exceeds maximum allowed shared heap size \n");
-        return 0;
-    }
-    if(pluglet_context == NULL) {
-        printf("NULL pointer \n");
-        return 0;
-    }
-    if(pluglet_context->parent_plugin->shared_heap == NULL) return 0;
-    memcpy(pluglet_context->parent_plugin->shared_heap, val, size);
-    return 1;
-}
-
 
 
 /*

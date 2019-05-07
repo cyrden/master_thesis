@@ -103,9 +103,9 @@ void print_helper(int a);
 
 void lsa_head_dump (struct lsa_header *lsah);
 
-uint16_t my_ntohs(uint16_t value);
+uint16_t plugin_ntohs(uint16_t value);
 
-uint32_t my_ntohl(uint32_t value);
+uint32_t plugin_ntohl(uint32_t value);
 
 int ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v);
 
@@ -114,14 +114,6 @@ unsigned int my_ospf_nexthop_calculation(struct arg_plugin_ospf_spf_next *s, str
                                       unsigned int distance, int lsa_pos);
 
 struct vertex *ospf_vertex_new(struct ospf_lsa *lsa);
-
-int shared_heap_malloc(size_t size);
-
-int shared_heap_free(void);
-
-int shared_heap_get(void *heap_copy, size_t size);
-
-int shared_heap_set(void *val, size_t size);
 
 uint64_t send_data(int type, void *txt);
 

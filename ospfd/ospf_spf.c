@@ -486,6 +486,7 @@ static void ospf_spf_add_parent(struct vertex *v, struct vertex *w,
  * this function returns. This function will update the W vertex with the
  * provided distance as appropriate.
  */
+unsigned int ospf_nexthop_calculation(struct ospf_area *area, struct vertex *v, struct vertex *w, struct router_lsa_link *l, unsigned int distance, int lsa_pos);
 //static unsigned int ospf_nexthop_calculation(struct ospf_area *area,
 unsigned int ospf_nexthop_calculation(struct ospf_area *area,
 					     struct vertex *v, struct vertex *w,

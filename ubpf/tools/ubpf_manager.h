@@ -13,7 +13,6 @@
 #include "ubpf/vm/ubpf_int.h"
 
 #define SIZE_EBPF_VM_HEAP 16000
-#define MAX_SIZE_SHARED_HEAP 1000 // Stack is ~2000 and this has to be copied on it
 #define MAX_NBR_PLUGLETS 10
 
 struct plugin;
@@ -34,7 +33,7 @@ typedef struct pluglet_context {
     void *original_arg;
     int type_arg;
     heap_t *heap;
-    struct plugin *parent_plugin; // This is useful because we need to share the shared_heap among pluglets that belong to the same plugin
+    struct plugin *parent_plugin;
 } pluglet_context_t;
 
 /*
@@ -51,8 +50,6 @@ typedef struct pluglet {
  * A plugin contains 3 pluglets (PRE, REP, POST) and a shared heap (memory shared between all pluglets of a plugin)
  */
 typedef struct plugin {
-    //pluglet_t *pluglets[3]; // TODO: del
-    void *shared_heap; // TODO: del
     pluglet_t *pluglets_PRE[MAX_NBR_PLUGLETS];
     pluglet_t *pluglet_REP;
     pluglet_t *pluglets_POST[MAX_NBR_PLUGLETS];

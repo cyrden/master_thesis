@@ -33,6 +33,7 @@ typedef struct meta_data {
     unsigned int size;
     unsigned int available;
     struct meta_data *next_block;
+    unsigned int id;
     unsigned int magic_number;
 } meta_data;
 
@@ -135,7 +136,7 @@ static meta_data* get_metadata(void *ptr) {
 * Return the pointer to this slot.
 * If no adequately large free slot is available, extend the heap and return the pointer.
 */
-void *my_malloc(unsigned int size) {
+void *plugin_malloc(unsigned int size) {
     size = align_size(size);
     void *slot;
     if (current_context->heap->heap_start){
@@ -168,12 +169,67 @@ void *my_malloc(unsigned int size) {
 }
 
 /**
+* Search for big enough free space on heap.
+* Split the free space slot if it is too big, else space will be wasted.
+* Return the pointer to this slot.
+* If no adequately large free slot is available, extend the heap and return the pointer.
+*/
+void *plugin_malloc_with_id(unsigned int id, unsigned int size) {
+    size = align_size(size);
+    void *slot;
+    if (current_context->heap->heap_start){
+        //zlog_notice("Heap starts at: %p and ends at: %p", current_context->heap->heap_start, current_context->heap->heap_end);
+        //zlog_notice("Context has arg of type: %d ", current_context->type_arg);
+        slot = find_slot(size);
+        if (slot) {
+            //zlog_notice("Slot found");
+            if (((meta_data *) slot)->size > size + METADATA_SIZE) {
+                divide_slot(slot, size);
+            }
+        } else {
+            //zlog_notice("Slot not found -> extend");
+            slot = extend(size);
+        }
+    } else {
+        current_context->heap->heap_start = my_sbrk(0);
+        //zlog_notice("Heap starts at: %p", current_context->heap->heap_start);
+        slot = extend(size);
+    }
+
+    if (!slot) {
+        //zlog_notice("MALLOC FAILED");
+        return slot;
+    }
+    else {
+        ((meta_data *) slot)->id = id;
+        zlog_notice("Allow memory with id: %d", id);
+    }
+    //zlog_notice("Memory assigned from %p to %p (size = %u)", slot, (void *)((char *) slot + METADATA_SIZE + ((meta_data *) slot)->size), size);
+    //zlog_notice("Memory ends at: %p", my_sbrk(0));
+    //zlog_notice("Size of heap so far: 0x%lx", (unsigned long) ((char *) my_sbrk(0) - (char *) current_context->heap->heap_start));
+    return ((char *) slot) + METADATA_SIZE;
+}
+
+void *plugin_get_memory_with_id(unsigned int id) {
+    meta_data *iter = (meta_data*) current_context->heap->heap_start;
+    if(current_context->heap->heap_start == current_context->heap->heap_end) return NULL;
+    while(iter) {
+        if (!iter->available && iter->id == id) {
+            zlog_notice("Found memory with id %d", id);
+            return (char *) iter + METADATA_SIZE;
+        }
+        iter = iter->next_block;
+    }
+    return NULL;
+}
+
+/**
  * Frees the allocated memory. If first checks if the pointer falls
  * between the allocated heap range. It also checks if the pointer
  * to be deleted is actually allocated. this is done by using the
  * magic number. Due to lack of time i haven't worked on fragmentation.
  */
-void my_free(void *ptr) {
+void plugin_free(void *ptr) {
     if (!current_context->heap->heap_start) return;
     if (ptr >= current_context->heap->heap_start + METADATA_SIZE && ptr < my_sbrk(0)) {
         meta_data *ptr_metadata = get_metadata(ptr);
@@ -194,9 +250,9 @@ void my_free(void *ptr) {
  *    Free the pointer and return NULL.
  * If an invalid pointer is provided, it returns NULL without changing anything.
  */
-void *my_realloc(void *ptr, unsigned int size) {
-    /* If no previous ptr, fast-track to my_malloc */
-    if (!ptr) return my_malloc(size);
+void *plugin_realloc(void *ptr, unsigned int size) {
+    /* If no previous ptr, fast-track to plugin_malloc */
+    if (!ptr) return plugin_malloc(size);
     /* If the previous ptr is invalid, return NULL */
     if (ptr < current_context->heap->heap_start + METADATA_SIZE && ptr >= my_sbrk(0)) return NULL;
     /* Now take metadata */
@@ -213,12 +269,12 @@ void *my_realloc(void *ptr, unsigned int size) {
     }
 
     /* This is clearly not the most optimized way, but it will always work */
-    void *new_ptr = my_malloc(size);
+    void *new_ptr = plugin_malloc(size);
     if (!new_ptr) {
-        my_free(ptr);
+        plugin_free(ptr);
         return NULL;
     }
     memcpy(new_ptr, ptr, old_size);
-    my_free(ptr);
+    plugin_free(ptr);
     return new_ptr;
 }

@@ -11,27 +11,28 @@ static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area, struct osp
 uint64_t originate_my_lsa(void *data) {
     struct arg_plugin_spf_calc *plugin_arg = (struct arg_plugin_spf_calc *) data;
 
-    struct ospf_area *area = my_malloc(sizeof(struct ospf_area));
+    struct ospf_area *area = plugin_malloc(sizeof(struct ospf_area));
     if(get_ospf_area(plugin_arg->area, area) != 1) return 0;
-    struct ospf *ospf = my_malloc(sizeof(struct ospf));
+    struct ospf *ospf = plugin_malloc(sizeof(struct ospf));
     if(get_ospf(area->ospf, ospf) != 1) return 0;
     area->ospf= ospf;
 
-    struct ospf_interface **oi_list = (struct ospf_interface **) my_malloc(sizeof(struct ospf_interface *) * 3);
-    struct ospf_interface **oi_list_addresses = (struct ospf_interface **) my_malloc(sizeof(struct ospf_interface *) * 3);
+    struct ospf_interface **oi_list = (struct ospf_interface **) plugin_malloc(sizeof(struct ospf_interface *) * 3);
+    struct ospf_interface **oi_list_addresses = (struct ospf_interface **) plugin_malloc(
+            sizeof(struct ospf_interface *) * 3);
     if(oi_list == NULL) return 0;
-    struct interface **i_list = (struct interface **) my_malloc(sizeof(struct interface *) * 3);
+    struct interface **i_list = (struct interface **) plugin_malloc(sizeof(struct interface *) * 3);
     if(i_list == NULL) return 0;
 
     for (int i=0; i< 3; i++) {
-        oi_list[i] = (struct ospf_interface *) my_malloc(sizeof(struct ospf_interface));
+        oi_list[i] = (struct ospf_interface *) plugin_malloc(sizeof(struct ospf_interface));
         if(oi_list[i] == NULL) return 0;
         oi_list[i]->hello_out = (uint32_t) -1;
     }
     if(get_ospf_interface_list(area->oiflist, oi_list, oi_list_addresses) != 1) return 0;
     for (int i=0; i< 3; i++) {
         if(oi_list[i]->hello_out != (uint32_t) -1) {
-            i_list[i] = (struct interface *) my_malloc(sizeof(struct interface));
+            i_list[i] = (struct interface *) plugin_malloc(sizeof(struct interface));
             if (i_list[i] == NULL) return 0;
             if (get_interface(oi_list[i]->ifp, i_list[i]) != 1) return 0;
         }
@@ -45,7 +46,7 @@ uint64_t originate_my_lsa(void *data) {
     int length;
 
     /* Create a stream for LSA. */
-    s = my_malloc(sizeof(struct stream) + OSPF_MAX_LSA_SIZE);
+    s = plugin_malloc(sizeof(struct stream) + OSPF_MAX_LSA_SIZE);
 
     s->getp = s->endp = 0;
     s->next = NULL;
@@ -59,7 +60,7 @@ uint64_t originate_my_lsa(void *data) {
     lsah->type = OSPF_MY_LSA_TYPE;
     lsah->id = ospf->router_id;
     lsah->adv_router = ospf->router_id;
-    lsah->ls_seqnum = my_ntohs(0x10);
+    lsah->ls_seqnum = plugin_ntohs(0x10);
 
     s->endp += OSPF_LSA_HEADER_SIZE;
 
@@ -113,25 +114,25 @@ uint64_t originate_my_lsa(void *data) {
     /* Now, create OSPF LSA instance. */
     new = ospf_my_lsa_new_and_data(s, plugin_arg->area);
 
-    my_free(s);
+    plugin_free(s);
 
     new = my_ospf_lsa_install(area->ospf, NULL, new);
     if(new == NULL) return 0;
     int ret = my_ospf_flood_through_area(plugin_arg->area, NULL, new);
     if(ret == 0) return 0;
 
-    my_free(ospf);
-    my_free(area);
+    plugin_free(ospf);
+    plugin_free(area);
     struct lsa_header print_lsah;
     my_get_lsah(new, &print_lsah);
 
     for (int i=0; i<3; i++) {
-        my_free(oi_list[i]);
+        plugin_free(oi_list[i]);
     }
-    my_free(i_list);    for (int i=0; i<3; i++) {
-        my_free(i_list[i]);
+    plugin_free(i_list);    for (int i=0; i<3; i++) {
+        plugin_free(i_list[i]);
     }
-    my_free(i_list);
+    plugin_free(i_list);
 
 
     return send_data(SPF_LSA, (void *) &print_lsah);

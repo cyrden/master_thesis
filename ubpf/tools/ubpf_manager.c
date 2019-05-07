@@ -19,8 +19,8 @@ static int register_functions(struct ubpf_vm *vm) {
     //if (ubpf_register(vm, 0x0e, "my_print", my_print) == -1) return 0;
     if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
-    if (ubpf_register(vm, 0x0a, "my_ntohl", my_ntohl) == -1) return 0;
-    if (ubpf_register(vm, 0x0b, "my_ntohs", my_ntohs) == -1) return 0;
+    if (ubpf_register(vm, 0x0a, "plugin_ntohl", plugin_ntohl) == -1) return 0;
+    if (ubpf_register(vm, 0x0b, "plugin_ntohs", plugin_ntohs) == -1) return 0;
     if (ubpf_register(vm, 0x0c, "print_helper", print_helper) == -1) return 0;
     if (ubpf_register(vm, 0x0d, "lsa_head_dump", lsa_head_dump) == -1) return 0;
 
@@ -43,15 +43,14 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x31, "set_ospf_interface", set_ospf_interface) == -1) return 0;
 
 
-    /* Plugins shared_heap management functions */
-    if (ubpf_register(vm, 0x20, "shared_heap_malloc", shared_heap_malloc) == -1) return 0;
-    if (ubpf_register(vm, 0x21, "shared_heap_free", shared_heap_free) == -1) return 0;
-    if (ubpf_register(vm, 0x22, "shared_heap_get", shared_heap_get) == -1) return 0;
-    if (ubpf_register(vm, 0x23, "shared_heap_set", shared_heap_set) == -1) return 0;
-    if (ubpf_register(vm, 0x24, "my_malloc", my_malloc) == -1) return 0;
-    if (ubpf_register(vm, 0x25, "my_free", my_free) == -1) return 0;
-    if (ubpf_register(vm, 0x26, "my_realloc", my_realloc) == -1) return 0;
+    /* Plugins heap management functions */
+    if (ubpf_register(vm, 0x24, "plugin_malloc", plugin_malloc) == -1) return 0;
+    if (ubpf_register(vm, 0x25, "plugin_free", plugin_free) == -1) return 0;
+    if (ubpf_register(vm, 0x26, "plugin_realloc", plugin_realloc) == -1) return 0;
     if (ubpf_register(vm, 0x27, "my_memcpy", my_memcpy) == -1) return 0;
+    if (ubpf_register(vm, 0x28, "plugin_malloc_with_id", plugin_malloc_with_id) == -1) return 0;
+    if (ubpf_register(vm, 0x29, "plugin_get_memory_with_id", plugin_get_memory_with_id) == -1) return 0;
+
 
     /* Functions from OSPF */
     if (ubpf_register(vm, 0x5, "my_ospf_flood_through_area", my_ospf_flood_through_area) == -1) return 0;

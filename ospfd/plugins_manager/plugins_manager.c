@@ -53,7 +53,6 @@ static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int p
             tab->plugins[id]->pluglets_PRE[i] = NULL;
             tab->plugins[id]->pluglets_POST[i] = NULL;
         }
-        tab->plugins[id]->shared_heap = NULL;
         tab->plugins[id]->heap = NULL;
         tab->plugins[id]->type_arg = -1;
     }
@@ -111,17 +110,6 @@ static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int p
      */
     if(load_elf_file(created_pluglet, elfname) == NULL) return 0;
 
-    /*if (tab->plugins[id]->pluglets[pos] == NULL) {
-        perror("Failed to load file\n");
-        return 0;
-    }
-    if(tab->plugins[id]->pluglets[pos]->pluglet_context == NULL) {
-        tab->plugins[id]->pluglets[pos]->pluglet_context = malloc(sizeof(pluglet_context_t));
-        tab->plugins[id]->pluglets[pos]->pluglet_context->original_arg = NULL;
-        tab->plugins[id]->pluglets[pos]->pluglet_context->type_arg = -1; // error value
-        tab->plugins[id]->pluglets[pos]->pluglet_context->heap = NULL;
-        tab->plugins[id]->pluglets[pos]->pluglet_context->parent_plugin = tab->plugins[id];
-    }*/
     if(created_pluglet->pluglet_context == NULL) {
         created_pluglet->pluglet_context = malloc(sizeof(pluglet_context_t));
         created_pluglet->pluglet_context->original_arg = NULL;
@@ -143,10 +131,6 @@ void release_all_plugins(void) {
                 release_elf(plugins_tab.plugins[i]->pluglets_PRE[j]);
                 release_elf(plugins_tab.plugins[i]->pluglets_POST[j]);
             }
-            /*release_elf(plugins_tab.plugins[i], PRE);
-            release_elf(plugins_tab.plugins[i], REP);
-            release_elf(plugins_tab.plugins[i], POST);*/
-            free(plugins_tab.plugins[i]->shared_heap);
             free(plugins_tab.plugins[i]);
             plugins_tab.plugins[i] = NULL;
         }
@@ -182,8 +166,8 @@ void *plugins_manager(void *tab) {
     inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
     //inject_pluglet((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
-    //inject_pluglet((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
-    //inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/originate_my_lsa.o", PRE);
+    inject_pluglet((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
+    inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/originate_my_lsa.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
 
     /*while(1) { // In that loop receives messages from UI to inject plugins

@@ -8,8 +8,10 @@
 #include "ospf_plugins_api.h"
 
 
-void *my_malloc(unsigned int size);
-void my_free(void *ptr);
-void *my_realloc(void *ptr, unsigned int size);
+void *plugin_malloc(unsigned int size);
+void plugin_free(void *ptr);
+void *plugin_realloc(void *ptr, unsigned int size);
+void *plugin_malloc_with_id(unsigned int id, unsigned int size);
+void *plugin_get_memory_with_id(unsigned int id);
 
 #endif //MASTER_THESIS_HEAP_MANAGEMENT_H
