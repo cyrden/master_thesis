@@ -125,10 +125,6 @@ int shared_heap_set(void *val, size_t size);
 
 uint64_t send_data(int type, void *txt);
 
-int read_int(void *pointer);
-
-void set_pointer_toInt(void *pointer, int value);
-
 /* Getters */
 
 int get_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy);

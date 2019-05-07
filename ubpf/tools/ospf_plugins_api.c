@@ -144,25 +144,6 @@ uint64_t send_data(int type, void *data) {
     return 1;
 }
 
-/*
- * Function to test reading OSPF variables from a plugin
- */
-int read_int(void *pointer) {
-    if(pointer == NULL) return -1;
-    int *read = (int *) pointer;
-    return *read;
-}
-
-/*
- * Function to test writing OSPF variables from a plugin
- */
-void set_pointer_toInt(void *pointer, int value) {
-    *((int *) pointer) = value;
-}
-
-
-
-
 
 /* Setter functions */
 

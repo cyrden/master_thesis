@@ -48,7 +48,6 @@
 #include "ospfd/ospf_zebra.h"
 #include "ospfd/ospf_dump.h"
 
-// Added by Cyril
 #include "ubpf/tools/ubpf_manager.h"
 #include "ubpf/tools/ospf_plugins_api.h"
 
@@ -257,24 +256,30 @@ static void ospf_process_self_originated_lsa(struct ospf *ospf,
 int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 	       struct ospf_lsa *current, struct ospf_lsa *new)
 {
-    // Added by Cyril
-    if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->pluglets[PRE] != NULL) {
+	struct arg_plugin_lsa_flood *plugin_arg = NULL;
+	if(plugins_tab.plugins[LSA_FLOOD] != NULL) {
 		/* Definition of the plugin argument */
-		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
+		plugin_arg = calloc(sizeof(struct arg_plugin_lsa_flood), 1);
 		plugin_arg->lsa = new;
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_last_block = NULL;
-
-		plugins_tab.plugins[LSA_FLOOD]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-		plugins_tab.plugins[LSA_FLOOD]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
-
-		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood), PRE);
-		free(plugin_arg);
-    }
-
-	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->pluglets[REP] != NULL) {
-		// REP
+		plugins_tab.plugins[LSA_FLOOD]->heap = &plugin_arg->heap;
+		plugins_tab.plugins[LSA_FLOOD]->arguments = (void *) plugin_arg;
+		plugins_tab.plugins[LSA_FLOOD]->type_arg = ARG_PLUGIN_LSA_FLOOD;
+	}
+	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->pluglets_PRE[0] != NULL) {
+		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+			if(plugins_tab.plugins[LSA_FLOOD]->pluglets_PRE[i] == NULL) break;
+			else {
+				plugins_tab.plugins[LSA_FLOOD]->pluglets_PRE[i]->pluglet_context->heap = plugins_tab.plugins[LSA_FLOOD]->heap; // Context needs to know where is the heap of the pluglet
+				exec_loaded_code(plugins_tab.plugins[LSA_FLOOD]->pluglets_PRE[i], plugins_tab.plugins[LSA_FLOOD]->arguments, sizeof(struct arg_plugin_lsa_flood));
+			}
+		}
+	}
+	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->pluglet_REP != NULL) {
+		plugins_tab.plugins[LSA_FLOOD]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[LSA_FLOOD]->heap; // Context needs to know where is the heap of the pluglet
+		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD]->pluglet_REP, plugins_tab.plugins[LSA_FLOOD]->arguments, sizeof(struct arg_plugin_lsa_flood));
 	}
 	else {
 		struct ospf_interface *oi;
@@ -371,22 +376,17 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 			ospf->rx_lsa_count++;
 	}
 
-	// Added by Cyril
-	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->pluglets[POST] != NULL) {
-		/* Definition of the plugin argument */
-		struct arg_plugin_lsa_flood *plugin_arg = malloc(sizeof(struct arg_plugin_lsa_flood));
-		plugin_arg->lsa = new;
-		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_last_block = NULL;
-		
-		plugins_tab.plugins[LSA_FLOOD]->pluglets[POST]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-		plugins_tab.plugins[LSA_FLOOD]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_LSA_FLOOD;
-
-		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD], (void *) plugin_arg, sizeof(struct arg_plugin_lsa_flood), POST);
-		free(plugin_arg);
+	if(plugins_tab.plugins[LSA_FLOOD] != NULL && plugins_tab.plugins[LSA_FLOOD]->pluglets_POST[0] != NULL) {
+		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+			if(plugins_tab.plugins[LSA_FLOOD]->pluglets_POST[i] == NULL) break;
+			else {
+				plugins_tab.plugins[LSA_FLOOD]->pluglets_POST[i]->pluglet_context->heap = plugins_tab.plugins[LSA_FLOOD]->heap; // Context needs to know where is the heap of the pluglet
+				exec_loaded_code(plugins_tab.plugins[LSA_FLOOD]->pluglets_POST[i], plugins_tab.plugins[LSA_FLOOD]->arguments, sizeof(struct arg_plugin_lsa_flood));
+			}
+		}
 	}
 
+	if(plugin_arg != NULL) free(plugin_arg);
 	return 0;
 }
 

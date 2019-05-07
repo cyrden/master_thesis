@@ -575,7 +575,6 @@ extern void ospf_vrf_unlink(struct ospf *ospf, struct vrf *vrf);
 const char *ospf_vrf_id_to_name(vrf_id_t vrf_id);
 int ospf_area_nssa_no_summary_set(struct ospf *, struct in_addr);
 
-// Added by Cyril
 extern plugins_tab_t plugins_tab; // Give access to the structure of all plugins in all files
 extern pluglet_context_t *current_context; // Give access to the current_context in all files
 extern pthread_mutex_t lock_current_context;

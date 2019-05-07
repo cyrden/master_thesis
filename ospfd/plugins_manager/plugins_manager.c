@@ -32,31 +32,86 @@ int plugins_tab_init(plugins_tab_t *tab) {
 }
 
 /*
- * Injects a plugin (file elfname) at a specific position (identified by the id)
+ * Injects a pluglet (file elfname) at a specific insertion point (identified by the id)
  */
-static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int pos) { // TODO: I should rename it inject_pluglet to be consistent ...
+static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int pos) { // TODO: I should rename it inject_pluglet to be consistent ...
     if(id < 0 || id > MAX_NBR_PLUGINS-1) {
         fprintf(stderr, "Id not valid \n");
         return 0;
     }
-    if(tab->plugins[id] == NULL) { // First pluglet injected
+    if(tab->plugins[id] == NULL) { // First pluglet injected at this insertion point -> need to create the plugin
         tab->plugins[id] = (plugin_t *) malloc(sizeof(plugin_t));
         if (!tab->plugins[id]) {
             return 0;
         }
-        tab->plugins[id]->pluglets[PRE] = NULL;
+        /*tab->plugins[id]->pluglets[PRE] = NULL;
         tab->plugins[id]->pluglets[REP] = NULL;
-        tab->plugins[id]->pluglets[POST] = NULL;
+        tab->plugins[id]->pluglets[POST] = NULL;*/
+        // TODO: del top
+        tab->plugins[id]->pluglet_REP = NULL;
+        for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+            tab->plugins[id]->pluglets_PRE[i] = NULL;
+            tab->plugins[id]->pluglets_POST[i] = NULL;
+        }
         tab->plugins[id]->shared_heap = NULL;
+        tab->plugins[id]->heap = NULL;
+        tab->plugins[id]->type_arg = -1;
+    }
+
+    pluglet_t *created_pluglet = NULL;
+    if(pos == PRE) {
+        int i;
+        for(i = 0; i < MAX_NBR_PLUGLETS; i++) {
+            if(tab->plugins[id]->pluglets_PRE[i] == NULL){
+                tab->plugins[id]->pluglets_PRE[i] = malloc(sizeof(pluglet_t));
+                created_pluglet = tab->plugins[id]->pluglets_PRE[i];
+                break;
+            }
+        }
+        if(i == 10) {
+            fprintf(stderr, "Error: There are already too many pluglets in PRE mode \n");
+            return 0;
+        }
+    }
+    else if(pos == REP) {
+        if(tab->plugins[id]->pluglet_REP != NULL) {
+            fprintf(stderr, "Error, there is already a pluglet in REP mode \n");
+            return 0;
+        }
+        tab->plugins[id]->pluglet_REP = malloc(sizeof(pluglet_t));
+        created_pluglet = tab->plugins[id]->pluglet_REP;
+    }
+    else if(pos == POST) {
+        int i;
+        for(i = 0; i < MAX_NBR_PLUGLETS; i++) {
+            if(tab->plugins[id]->pluglets_POST[i] == NULL){
+                tab->plugins[id]->pluglets_POST[i] = malloc(sizeof(pluglet_t));
+                created_pluglet = tab->plugins[id]->pluglets_POST[i];
+                break;
+            }
+        }
+        if(i == 10) {
+            fprintf(stderr, "Error: There are already too many pluglets in POST mode \n");
+            return 0;
+        }
+    }
+    else {
+        fprintf(stderr, "Error, wrong position to inject a pluglet \n");
+        return 0;
+    }
+
+    if(created_pluglet == NULL) {
+        fprintf(stderr, "Failed to create the pluglet \n");
+        return 0;
     }
 
     /*
-     * This malloc pluglet. Set pluglet context to NULL. Create the vm of the pluglet. Register functions to the vm. Load code into the VM.
+     * Set pluglet context to NULL. Create the vm of the pluglet. Register functions to the vm. Load code into the VM.
      * So we are ready to execute. Still need to set the context of the pluglet before running it.
      */
-    if(load_elf_file(tab->plugins[id], elfname, pos) == NULL) return 0;
+    if(load_elf_file(created_pluglet, elfname) == NULL) return 0;
 
-    if (tab->plugins[id]->pluglets[pos] == NULL) {
+    /*if (tab->plugins[id]->pluglets[pos] == NULL) {
         perror("Failed to load file\n");
         return 0;
     }
@@ -66,6 +121,13 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
         tab->plugins[id]->pluglets[pos]->pluglet_context->type_arg = -1; // error value
         tab->plugins[id]->pluglets[pos]->pluglet_context->heap = NULL;
         tab->plugins[id]->pluglets[pos]->pluglet_context->parent_plugin = tab->plugins[id];
+    }*/
+    if(created_pluglet->pluglet_context == NULL) {
+        created_pluglet->pluglet_context = malloc(sizeof(pluglet_context_t));
+        created_pluglet->pluglet_context->original_arg = NULL;
+        created_pluglet->pluglet_context->type_arg = -1; // error value
+        created_pluglet->pluglet_context->heap = NULL;
+        created_pluglet->pluglet_context->parent_plugin = tab->plugins[id];
     }
     return 1;
 }
@@ -76,9 +138,14 @@ static int inject_plugins(plugins_tab_t *tab, int id, const char *elfname, int p
 void release_all_plugins(void) {
     for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
         if(plugins_tab.plugins[i] != NULL) {
-            release_elf(plugins_tab.plugins[i], PRE);
+            release_elf(plugins_tab.plugins[i]->pluglet_REP);
+            for(int j = 0; j < MAX_NBR_PLUGLETS; j++) {
+                release_elf(plugins_tab.plugins[i]->pluglets_PRE[j]);
+                release_elf(plugins_tab.plugins[i]->pluglets_POST[j]);
+            }
+            /*release_elf(plugins_tab.plugins[i], PRE);
             release_elf(plugins_tab.plugins[i], REP);
-            release_elf(plugins_tab.plugins[i], POST);
+            release_elf(plugins_tab.plugins[i], POST);*/
             free(plugins_tab.plugins[i]->shared_heap);
             free(plugins_tab.plugins[i]);
             plugins_tab.plugins[i] = NULL;
@@ -107,17 +174,17 @@ void *plugins_manager(void *tab) {
         return 0;
     }
     // TODO: The following lines will be removed. Just used for debugging purposes
-    //inject_plugins((plugins_tab_t *) tab, SPF_TEST, "/plugins/spf_test.o");
-    inject_plugins((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o", PRE);
-    //inject_plugins((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o", PRE);
-    inject_plugins((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
-    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
-    inject_plugins((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
-    //inject_plugins((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o", PRE);
-    //inject_plugins((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
-    //inject_plugins((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
-    inject_plugins((plugins_tab_t *) tab, SPF_LSA, "/plugins/originate_my_lsa.o", PRE);
-    //inject_plugins((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
+    //inject_pluglet((plugins_tab_t *) tab, SPF_TEST, "/plugins/spf_test.o");
+    inject_pluglet((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o", PRE);
+    //inject_pluglet((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o", PRE);
+    inject_pluglet((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
+    inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
+    inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
+    //inject_pluglet((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o", PRE);
+    //inject_pluglet((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
+    //inject_pluglet((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
+    //inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/originate_my_lsa.o", PRE);
+    //inject_pluglet((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
 
     /*while(1) { // In that loop receives messages from UI to inject plugins
         printf("Wait for message \n");
@@ -127,7 +194,7 @@ void *plugins_manager(void *tab) {
             int pos;
             pos = ((int) message.mesg_type) % 100;
             loc = (((int) message.mesg_type) - pos) / 100;
-            if(!inject_plugins((plugins_tab_t *) tab, loc, (const char *) message.mesg_text, pos)) {
+            if(!inject_pluglet((plugins_tab_t *) tab, loc, (const char *) message.mesg_text, pos)) {
                 zlog_notice("Failed to inject plugin \n");
             }
         }

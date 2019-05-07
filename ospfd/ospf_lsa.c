@@ -2731,7 +2731,7 @@ struct ospf_lsa *ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi,
 		break;
 	case OSPF_AS_NSSA_LSA:
 		new = ospf_external_lsa_install(ospf, lsa, rt_recalc);
-		break; // Added by Cyril
+		break;
 	default: /* type-6,8,9....nothing special */
 	    new = lsa; // TODO: Added by Cyril, Maybe I should put an insertion point here
 		break;

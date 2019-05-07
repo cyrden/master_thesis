@@ -55,7 +55,6 @@
 #include "ospfd/ospf_bfd.h"
 #include "ospfd/ospf_errors.h"
 
-// Added by Cyril
 #include "lib/log.h"
 #include <pthread.h>
 #include "ubpf/tools/ubpf_manager.h"
@@ -98,14 +97,12 @@ static void sighup(void)
     zlog_info("SIGHUP received");
 }
 
-// Added by Cyril
 pthread_mutex_t lock_current_context;
 
 /* SIGINT / SIGTERM handler. */
 static void sigint(void)
 {
     zlog_notice("Terminating on signal");
-    // Added by Cyril
     release_all_plugins(); // Release ressources allocated to all loaded plugins
     pthread_mutex_destroy(&lock_current_context);
     ospf_terminate();
@@ -158,7 +155,6 @@ pthread_t th_user_msg;
 /* OSPFd main routine. */
 int main(int argc, char **argv)
 {
-    // Added by Cyril
     if(plugins_tab_init(&plugins_tab) != 1) { // Initialization of the tab of plugins
         fprintf(stderr, "Error while initiating the plugins tab");
     }
@@ -277,7 +273,7 @@ int main(int argc, char **argv)
         struct test *t = malloc(sizeof(struct test));
         t->a = 8;
         t->b = 101;
-        exec_loaded_code(plugins_tab.plugins[MAIN], (void *) t, sizeof(struct test), PRE);
+        exec_loaded_code(plugins_tab.plugins[MAIN]->pluglets_PRE[0], (void *) t, sizeof(struct test));
         free(t);
     }
 

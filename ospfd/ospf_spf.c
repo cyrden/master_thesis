@@ -49,7 +49,6 @@
 #include "ospfd/ospf_sr.h"
 #include "ospfd/ospf_errors.h"
 
-// Added by Cyril
 #include "ubpf/tools/ubpf_manager.h"
 #include "ubpf/tools/ospf_plugins_api.h"
 #include "lib/log.h"
@@ -799,32 +798,10 @@ struct my_link {
 static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
 			  struct ospf_area *area, struct pqueue *candidate)
 {
-	// Added by Cyril
-	if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[PRE] != NULL) {
-		/* Definition of the plugin argument */
-		struct arg_plugin_ospf_spf_next *plugin_arg = calloc(sizeof(struct arg_plugin_ospf_spf_next), 1);
-        if(plugin_arg == NULL) return;
-        plugin_arg->v = v;
-		plugin_arg->ospf = ospf;
-		plugin_arg->area = area;
-		plugin_arg->candidate = candidate;
-		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_last_block = NULL;
-
-		plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-		plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_OSPF_SPF_NEXT;
-
-		exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT], (void *) plugin_arg, sizeof(struct arg_plugin_ospf_spf_next), PRE);
-		free(plugin_arg);
-	}
-    // Added by Cyril
-    if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[REP] != NULL) {
+    struct arg_plugin_ospf_spf_next *plugin_arg = NULL;
+    if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL) {
         /* Definition of the plugin argument */
-        struct arg_plugin_ospf_spf_next *plugin_arg = calloc(sizeof(struct arg_plugin_ospf_spf_next), 1);
-        if(plugin_arg == NULL) {
-        	return;
-        }
+        plugin_arg = calloc(sizeof(struct arg_plugin_ospf_spf_next), 1);
         plugin_arg->v = v;
         plugin_arg->ospf = ospf;
         plugin_arg->area = area;
@@ -832,13 +809,23 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
         plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
         plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
         plugin_arg->heap.heap_last_block = NULL;
-
-        plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[REP]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-        plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[REP]->pluglet_context->type_arg = ARG_PLUGIN_OSPF_SPF_NEXT;
-
-        uint64_t ret = exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT], (void *) plugin_arg, sizeof(struct arg_plugin_ospf_spf_next), REP);
-        zlog_notice("OSPF SPF NEXT REP: ret = %d", (int) ret);
-        free(plugin_arg);
+        plugins_tab.plugins[OSPF_SPF_NEXT]->heap = &plugin_arg->heap;
+        plugins_tab.plugins[OSPF_SPF_NEXT]->arguments = (void *) plugin_arg;
+        plugins_tab.plugins[OSPF_SPF_NEXT]->type_arg = ARG_PLUGIN_OSPF_SPF_NEXT;
+    }
+    if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets_PRE[0] != NULL) {
+        for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+            if(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets_PRE[i] == NULL) break;
+            else {
+                plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets_PRE[i]->pluglet_context->heap = plugins_tab.plugins[OSPF_SPF_NEXT]->heap; // Context needs to know where is the heap of the pluglet
+                exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets_PRE[i], plugins_tab.plugins[OSPF_SPF_NEXT]->arguments, sizeof(struct arg_plugin_ospf_spf_next));
+            }
+        }
+    }
+    if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP != NULL) {
+        plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[OSPF_SPF_NEXT]->heap; // Context needs to know where is the heap of the pluglet
+        uint64_t ret = exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP, plugins_tab.plugins[OSPF_SPF_NEXT]->arguments, sizeof(struct arg_plugin_ospf_spf_next));
+        zlog_notice("SPF NEXT REP: ret = %d", (int) ret);
     }
     else {
         struct ospf_lsa *w_lsa = NULL;
@@ -1086,25 +1073,16 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
             } /* end W is already on the candidate list */
         }     /* end loop over the links in V's LSA */
     }
-    // Added by Cyril
-    if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[POST] != NULL) {
-        /* Definition of the plugin argument */
-        struct arg_plugin_ospf_spf_next *plugin_arg = calloc(sizeof(struct arg_plugin_ospf_spf_next), 1);
-        if(plugin_arg == NULL) return;
-        plugin_arg->v = v;
-        plugin_arg->ospf = ospf;
-        plugin_arg->area = area;
-        plugin_arg->candidate = candidate;
-        plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_last_block = NULL;
-
-        plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[POST]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-        plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_OSPF_SPF_NEXT;
-
-        exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT], (void *) plugin_arg, sizeof(struct arg_plugin_ospf_spf_next), POST);
-        free(plugin_arg);
+    if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets_POST[0] != NULL) {
+        for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+            if(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets_POST[i] == NULL) break;
+            else {
+                plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets_POST[i]->pluglet_context->heap = plugins_tab.plugins[OSPF_SPF_NEXT]->heap; // Context needs to know where is the heap of the pluglet
+                exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets_POST[i], plugins_tab.plugins[OSPF_SPF_NEXT]->arguments, sizeof(struct arg_plugin_ospf_spf_next));
+            }
+        }
     }
+    if(plugin_arg != NULL) free(plugin_arg);
 }
 
 static void ospf_spf_dump(struct vertex *v, int i)
@@ -1295,189 +1273,156 @@ ospf_rtrs_print (struct route_table *rtrs)
 /* Calculating the shortest-path tree for an area. */
 static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			       struct route_table *new_table,
-			       struct route_table *new_rtrs)
-{
-	// Added by Cyril
-	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets[PRE] != NULL) {
+			       struct route_table *new_rtrs) {
+    struct arg_plugin_spf_calc *plugin_arg = NULL;
+	if (plugins_tab.plugins[SPF_CALC] != NULL) {
 		/* Definition of the plugin argument */
-		struct arg_plugin_spf_calc *plugin_arg = calloc(sizeof(struct arg_plugin_spf_calc), 1);
+		plugin_arg = calloc(sizeof(struct arg_plugin_spf_calc), 1);
 		plugin_arg->area = area;
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_last_block = NULL;
-
-		plugins_tab.plugins[SPF_CALC]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-		plugins_tab.plugins[SPF_CALC]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_SPF_CALC;
-
-        exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), PRE);
-        free(plugin_arg);
+		plugins_tab.plugins[SPF_CALC]->heap = &plugin_arg->heap;
+		plugins_tab.plugins[SPF_CALC]->arguments = (void *) plugin_arg;
+		plugins_tab.plugins[SPF_CALC]->type_arg = ARG_PLUGIN_SPF_CALC;
+	}
+	if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets_PRE[0] != NULL) {
+		for (int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+			if (plugins_tab.plugins[SPF_CALC]->pluglets_PRE[i] == NULL) break;
+			else {
+				plugins_tab.plugins[SPF_CALC]->pluglets_PRE[i]->pluglet_context->heap = plugins_tab.plugins[SPF_CALC]->heap; // Context needs to know where is the heap of the pluglet
+				exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglets_PRE[i], plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
+			}
+		}
 	}
 
-	/* TODO: This is a test for the new type of LSA */
-    if(plugins_tab.plugins[SPF_LSA] != NULL && plugins_tab.plugins[SPF_LSA]->pluglets[PRE] != NULL) {
-        /* Definition of the plugin argument */
-        zlog_notice("SPF_LSA: Start");
-        struct arg_plugin_spf_calc *plugin_arg = calloc(sizeof(struct arg_plugin_spf_calc), 1);
-        plugin_arg->area = area;
-        plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_last_block = NULL;
+	if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglet_REP != NULL) {
+		/* Definition of the plugin argument */
+		plugins_tab.plugins[SPF_CALC]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[SPF_CALC]->heap; // Context needs to know where is the heap of the pluglet
+		exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglet_REP, plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
+	} else {
 
-        plugins_tab.plugins[SPF_LSA]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-        plugins_tab.plugins[SPF_LSA]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_SPF_CALC;
+		struct pqueue *candidate;
+		struct vertex *v;
 
-        uint64_t ret = exec_loaded_code(plugins_tab.plugins[SPF_LSA], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), PRE);
-        zlog_notice("SPF_LSA: ret = %d", (int) ret);
-        free(plugin_arg);
-    }
+		//if (IS_DEBUG_OSPF_EVENT) {
+		zlog_debug("ospf_spf_calculate: Start");
+		zlog_debug("ospf_spf_calculate: running Dijkstra for area %s",
+				   inet_ntoa(area->area_id));
+		//}
 
-    if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets[REP] != NULL) {
-        /* Definition of the plugin argument */
-        struct arg_plugin_spf_calc *plugin_arg = calloc(sizeof(struct arg_plugin_spf_calc), 1);
-        plugin_arg->area = area;
-        plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_last_block = NULL;
-
-        plugins_tab.plugins[SPF_CALC]->pluglets[REP]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-        plugins_tab.plugins[SPF_CALC]->pluglets[REP]->pluglet_context->type_arg = ARG_PLUGIN_SPF_CALC;
-
-        exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), REP);
-        free(plugin_arg);
-    }
-    else {
-
-        struct pqueue *candidate;
-        struct vertex *v;
-
-        //if (IS_DEBUG_OSPF_EVENT) {
-            zlog_debug("ospf_spf_calculate: Start");
-            zlog_debug("ospf_spf_calculate: running Dijkstra for area %s",
-                       inet_ntoa(area->area_id));
-        //}
-
-        /* Check router-lsa-self.  If self-router-lsa is not yet allocated,
+		/* Check router-lsa-self.  If self-router-lsa is not yet allocated,
            return this area's calculation. */
-        if (!area->router_lsa_self) {
-            //if (IS_DEBUG_OSPF_EVENT)
-                zlog_debug(
-                        "ospf_spf_calculate: "
-                        "Skip area %s's calculation due to empty router_lsa_self",
-                        inet_ntoa(area->area_id));
-            return;
-        }
+		if (!area->router_lsa_self) {
+			//if (IS_DEBUG_OSPF_EVENT)
+			zlog_debug(
+					"ospf_spf_calculate: "
+					"Skip area %s's calculation due to empty router_lsa_self",
+					inet_ntoa(area->area_id));
+			return;
+		}
 
-        /* RFC2328 16.1. (1). */
-        /* Initialize the algorithm's data structures. */
+		/* RFC2328 16.1. (1). */
+		/* Initialize the algorithm's data structures. */
 
-        /* This function scans all the LSA database and set the stat field to
+		/* This function scans all the LSA database and set the stat field to
          * LSA_SPF_NOT_EXPLORED. */
-        ospf_lsdb_clean_stat(area->lsdb);
-        /* Create a new heap for the candidates. */
-        candidate = pqueue_create();
-        candidate->cmp = cmp;
-        candidate->update = update_stat;
+		ospf_lsdb_clean_stat(area->lsdb);
+		/* Create a new heap for the candidates. */
+		candidate = pqueue_create();
+		candidate->cmp = cmp;
+		candidate->update = update_stat;
 
-        /* Initialize the shortest-path tree to only the root (which is the
+		/* Initialize the shortest-path tree to only the root (which is the
            router doing the calculation). */
-        ospf_spf_init(area);
-        v = area->spf;
-        /* Set LSA position to LSA_SPF_IN_SPFTREE. This vertex is the root of
+		ospf_spf_init(area);
+		v = area->spf;
+		/* Set LSA position to LSA_SPF_IN_SPFTREE. This vertex is the root of
          * the
          * spanning tree. */
-        *(v->stat) = LSA_SPF_IN_SPFTREE;
+		*(v->stat) = LSA_SPF_IN_SPFTREE;
 
-        /* Set Area A's TransitCapability to FALSE. */
-        area->transit = OSPF_TRANSIT_FALSE;
-        area->shortcut_capability = 1;
+		/* Set Area A's TransitCapability to FALSE. */
+		area->transit = OSPF_TRANSIT_FALSE;
+		area->shortcut_capability = 1;
 
-        for (;;) {
-            /* RFC2328 16.1. (2). */
-            ospf_spf_next(v, ospf, area, candidate);
+		for (;;) {
+			/* RFC2328 16.1. (2). */
+			ospf_spf_next(v, ospf, area, candidate);
 
-            /* RFC2328 16.1. (3). */
-            /* If at this step the candidate list is empty, the shortest-
+			/* RFC2328 16.1. (3). */
+			/* If at this step the candidate list is empty, the shortest-
                path tree (of transit vertices) has been completely built and
                this stage of the procedure terminates. */
-            if (candidate->size == 0)
-                break;
+			if (candidate->size == 0)
+				break;
 
-            /* Otherwise, choose the vertex belonging to the candidate list
+			/* Otherwise, choose the vertex belonging to the candidate list
                that is closest to the root, and add it to the shortest-path
                tree (removing it from the candidate list in the
                process). */
-            /* Extract from the candidates the node with the lower key. */
-            v = (struct vertex *) pqueue_dequeue(candidate);
-            /* Update stat field in vertex. */
-            *(v->stat) = LSA_SPF_IN_SPFTREE;
+			/* Extract from the candidates the node with the lower key. */
+			v = (struct vertex *) pqueue_dequeue(candidate);
+			/* Update stat field in vertex. */
+			*(v->stat) = LSA_SPF_IN_SPFTREE;
 
-            ospf_vertex_add_parent(v);
+			ospf_vertex_add_parent(v);
 
-            /* RFC2328 16.1. (4). */
-            if (v->type == OSPF_VERTEX_ROUTER)
-                ospf_intra_add_router(new_rtrs, v, area);
-            else
-                ospf_intra_add_transit(new_table, v, area);
+			/* RFC2328 16.1. (4). */
+			if (v->type == OSPF_VERTEX_ROUTER)
+				ospf_intra_add_router(new_rtrs, v, area);
+			else
+				ospf_intra_add_transit(new_table, v, area);
 
-            /* RFC2328 16.1. (5). */
-            /* Iterate the algorithm by returning to Step 2. */
+			/* RFC2328 16.1. (5). */
+			/* Iterate the algorithm by returning to Step 2. */
 
-        } /* end loop until no more candidate vertices */
+		} /* end loop until no more candidate vertices */
 
-        //if (IS_DEBUG_OSPF_EVENT) {
-            ospf_spf_dump(area->spf, 0);
-            ospf_route_table_dump(new_table);
-        //}
+		//if (IS_DEBUG_OSPF_EVENT) {
+		ospf_spf_dump(area->spf, 0);
+		ospf_route_table_dump(new_table);
+		//}
 
-        /* Second stage of SPF calculation procedure's  */
-        ospf_spf_process_stubs(area, area->spf, new_table, 0);
+		/* Second stage of SPF calculation procedure's  */
+		ospf_spf_process_stubs(area, area->spf, new_table, 0);
 
-        /* Free candidate queue. */
-        pqueue_delete(candidate);
+		/* Free candidate queue. */
+		pqueue_delete(candidate);
 
-        ospf_vertex_dump(__func__, area->spf, 0, 1);
-        /* Free nexthop information, canonical versions of which are attached
+		ospf_vertex_dump(__func__, area->spf, 0, 1);
+		/* Free nexthop information, canonical versions of which are attached
          * the first level of router vertices attached to the root vertex, see
          * ospf_nexthop_calculation.
          */
-        ospf_canonical_nexthops_free(area->spf);
+		ospf_canonical_nexthops_free(area->spf);
 
-        /* Increment SPF Calculation Counter. */
-        area->spf_calculation++;
+		/* Increment SPF Calculation Counter. */
+		area->spf_calculation++;
 
-        // Added by Cyril
-        if (plugins_tab.plugins[SPF_TEST] != NULL) {
-            exec_loaded_code(plugins_tab.plugins[SPF_TEST], &area->spf_calculation, sizeof(int), PRE);
-        }
+		monotime(&area->ospf->ts_spf);
+		area->ts_spf = area->ospf->ts_spf;
 
-        monotime(&area->ospf->ts_spf);
-        area->ts_spf = area->ospf->ts_spf;
+		//if (IS_DEBUG_OSPF_EVENT)
+		zlog_debug("ospf_spf_calculate: Stop. %zd vertices",
+				   mtype_stats_alloc(MTYPE_OSPF_VERTEX));
 
-        //if (IS_DEBUG_OSPF_EVENT)
-            zlog_debug("ospf_spf_calculate: Stop. %zd vertices",
-                       mtype_stats_alloc(MTYPE_OSPF_VERTEX));
-
-        /* Free SPF vertices, but not the list. List has ospf_vertex_free
+		/* Free SPF vertices, but not the list. List has ospf_vertex_free
          * as deconstructor.
          */
-        list_delete_all_node(&vertex_list);
-    }
-
-	// Added by Cyril
-	if(plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets[POST] != NULL) {
-		/* Definition of the plugin argument */
-		struct arg_plugin_spf_calc *plugin_arg = calloc(sizeof(struct arg_plugin_spf_calc), 1);
-		plugin_arg->area = area;
-		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_last_block = NULL;
-
-		plugins_tab.plugins[SPF_CALC]->pluglets[POST]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-		plugins_tab.plugins[SPF_CALC]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_SPF_CALC;
-
-		exec_loaded_code(plugins_tab.plugins[SPF_CALC], (void *) plugin_arg, sizeof(struct arg_plugin_spf_calc), POST);
-		free(plugin_arg);
+		list_delete_all_node(&vertex_list);
 	}
+
+	if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets_POST[0] != NULL) {
+		for (int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+			if (plugins_tab.plugins[SPF_CALC]->pluglets_POST[i] == NULL) break;
+			else {
+				plugins_tab.plugins[SPF_CALC]->pluglets_POST[i]->pluglet_context->heap = plugins_tab.plugins[SPF_CALC]->heap; // Context needs to know where is the heap of the pluglet
+				exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglets_POST[i], plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
+			}
+		}
+	}
+	if(plugin_arg != NULL) free(plugin_arg);
 }
 
 /* Timer for SPF calculation. */

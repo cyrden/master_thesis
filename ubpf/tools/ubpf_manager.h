@@ -14,6 +14,7 @@
 
 #define SIZE_EBPF_VM_HEAP 16000
 #define MAX_SIZE_SHARED_HEAP 1000 // Stack is ~2000 and this has to be copied on it
+#define MAX_NBR_PLUGLETS 10
 
 struct plugin;
 
@@ -50,23 +51,29 @@ typedef struct pluglet {
  * A plugin contains 3 pluglets (PRE, REP, POST) and a shared heap (memory shared between all pluglets of a plugin)
  */
 typedef struct plugin {
-    pluglet_t *pluglets[3];
-    void *shared_heap;
+    //pluglet_t *pluglets[3]; // TODO: del
+    void *shared_heap; // TODO: del
+    pluglet_t *pluglets_PRE[MAX_NBR_PLUGLETS];
+    pluglet_t *pluglet_REP;
+    pluglet_t *pluglets_POST[MAX_NBR_PLUGLETS];
+    heap_t *heap;
+    void *arguments;
+    int type_arg;
 } plugin_t;
 
 /*
  * Loads an elf file in a ubpf virtual machine (pos specifies which pluglet it is). The elf file should be BPF bytecode
  */
-plugin_t *load_elf_file(plugin_t *plugin, const char *code_filename, int pos);
+pluglet_t *load_elf_file(pluglet_t *pluglet, const char *code_filename);
 
 /*
  * Release all the resources of a pluglet
  */
-int release_elf(plugin_t *plugin, int pos);
+int release_elf(pluglet_t *pluglet);
 
 /*
  * Executes the code loaded in a pluglet
  */
-uint64_t exec_loaded_code(plugin_t *plugin, void *mem, size_t mem_len, int pos);
+uint64_t exec_loaded_code(pluglet_t *pluglet, void *mem, size_t mem_len);
 
 #endif //FRR_THESIS_UBPF_MANAGER_H

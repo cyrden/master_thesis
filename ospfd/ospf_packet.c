@@ -52,7 +52,6 @@
 #include "ospfd/ospf_dump.h"
 #include "ospfd/ospf_errors.h"
 
-// Added by Cyril
 #include "ubpf/tools/ubpf_manager.h"
 #include "ubpf/tools/ospf_plugins_api.h"
 #include "lib/log.h"
@@ -861,9 +860,8 @@ static int ospf_write(struct thread *thread)
 			break;
 		}
 
-		// Added by Cyril
         if(plugins_tab.plugins[SEND_PACKET] != NULL) {
-            exec_loaded_code(plugins_tab.plugins[SEND_PACKET], (void *) op->s, sizeof(struct ospf_packet), PRE);
+            exec_loaded_code(plugins_tab.plugins[SEND_PACKET]->pluglets_PRE[0], (void *) op->s, sizeof(struct ospf_packet));
         }
 
 		/* Now delete packet from queue. */
@@ -3026,8 +3024,8 @@ int ospf_read(struct thread *thread)
 	}
 	/* Now it is safe to access all fields of OSPF packet header. */
 
-	if(plugins_tab.plugins[RCV_PACKET] != NULL) {// TODO: this doesn't work anymore because we give a copy and not the original
-		exec_loaded_code(plugins_tab.plugins[RCV_PACKET], (void *) ibuf, sizeof(struct stream), PRE);
+	if(plugins_tab.plugins[RCV_PACKET] != NULL) {
+		exec_loaded_code(plugins_tab.plugins[RCV_PACKET]->pluglets_PRE[0], (void *) ibuf, sizeof(struct stream));
 	}
 
 	/* associate packet with ospf interface */
@@ -3730,35 +3728,31 @@ int ospf_hello_reply_timer(struct thread *thread)
 /* Send OSPF Hello. */
 void ospf_hello_send(struct ospf_interface *oi)
 {
-	// Added by Cyril
-    if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[PRE] != NULL) {
+	struct arg_plugin_hello_send *plugin_arg = NULL;
+	if(plugins_tab.plugins[SEND_HELLO] != NULL) {
 		/* Definition of the plugin argument */
-		struct arg_plugin_hello_send *plugin_arg = calloc(sizeof(struct arg_plugin_hello_send), 1);
-		plugin_arg->oi = oi;
-		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_last_block = NULL;
-
-        plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-        plugins_tab.plugins[SEND_HELLO]->pluglets[PRE]->pluglet_context->type_arg = ARG_PLUGIN_HELLO_SEND;
-
-		exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), PRE);
-        free(plugin_arg);
-	}
-
-    if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[REP] != NULL) {
-		/* Definition of the plugin argument */
-		struct arg_plugin_hello_send *plugin_arg = calloc(sizeof(struct arg_plugin_hello_send), 1);
+		plugin_arg = calloc(sizeof(struct arg_plugin_hello_send), 1);
 		plugin_arg->oi = oi;
 		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
 		plugin_arg->heap.heap_last_block = NULL;
+		plugins_tab.plugins[SEND_HELLO]->heap = &plugin_arg->heap;
+		plugins_tab.plugins[SEND_HELLO]->arguments = (void *) plugin_arg;
+		plugins_tab.plugins[SEND_HELLO]->type_arg = ARG_PLUGIN_HELLO_SEND;
+	}
+	if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets_PRE[0] != NULL) {
+		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+			if(plugins_tab.plugins[SEND_HELLO]->pluglets_PRE[i] == NULL) break;
+			else {
+				plugins_tab.plugins[SEND_HELLO]->pluglets_PRE[i]->pluglet_context->heap = plugins_tab.plugins[SEND_HELLO]->heap; // Context needs to know where is the heap of the pluglet
+				exec_loaded_code(plugins_tab.plugins[SEND_HELLO]->pluglets_PRE[i], plugins_tab.plugins[SEND_HELLO]->arguments, sizeof(struct arg_plugin_hello_send));
+			}
+		}
+	}
 
-		plugins_tab.plugins[SEND_HELLO]->pluglets[REP]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-		plugins_tab.plugins[SEND_HELLO]->pluglets[REP]->pluglet_context->type_arg = ARG_PLUGIN_HELLO_SEND;
-
-		exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), REP);
-		free(plugin_arg);
+	if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglet_REP != NULL) {
+		plugins_tab.plugins[SEND_HELLO]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[SEND_HELLO]->heap; // Context needs to know where is the heap of the pluglet
+		exec_loaded_code(plugins_tab.plugins[SEND_HELLO]->pluglet_REP, plugins_tab.plugins[SEND_HELLO]->arguments, sizeof(struct arg_plugin_hello_send));
 	} else {
 
 		/* If this is passive interface, do not send OSPF Hello. */
@@ -3826,21 +3820,16 @@ void ospf_hello_send(struct ospf_interface *oi)
 		}
 	}
 
-	// Added by Cyril
-	if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets[POST] != NULL) {
-		/* Definition of the plugin argument */
-		struct arg_plugin_hello_send *plugin_arg = calloc(sizeof(struct arg_plugin_hello_send), 1);
-		plugin_arg->oi = oi;
-		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_last_block = NULL;
-
-		plugins_tab.plugins[SEND_HELLO]->pluglets[POST]->pluglet_context->heap = &plugin_arg->heap; // Context needs to know where is the heap of the pluglet
-		plugins_tab.plugins[SEND_HELLO]->pluglets[POST]->pluglet_context->type_arg = ARG_PLUGIN_HELLO_SEND;
-
-		exec_loaded_code(plugins_tab.plugins[SEND_HELLO], (void *) plugin_arg, sizeof(struct arg_plugin_hello_send), POST);
-		free(plugin_arg);
+	if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets_POST[0] != NULL) {
+		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+			if(plugins_tab.plugins[SEND_HELLO]->pluglets_POST[i] == NULL) break;
+			else {
+				plugins_tab.plugins[SEND_HELLO]->pluglets_POST[i]->pluglet_context->heap = plugins_tab.plugins[SEND_HELLO]->heap; // Context needs to know where is the heap of the pluglet
+				exec_loaded_code(plugins_tab.plugins[SEND_HELLO]->pluglets_POST[i], plugins_tab.plugins[SEND_HELLO]->arguments, sizeof(struct arg_plugin_hello_send));
+			}
+		}
 	}
+	if(plugin_arg != NULL) free(plugin_arg);
 }
 
 /* Send OSPF Database Description. */
