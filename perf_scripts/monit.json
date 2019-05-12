@@ -1,0 +1,6 @@
+{
+  "pre_start": [
+    "/usr/bin/zebra -f /etc/quagga/zebra.conf -i /tmp/zebra.pid -z /tmp/zebra.api -u root -k"
+  ],
+  "monit": "/usr/bin/bgpd -f /etc/quagga/bgpd.conf -i /tmp/bgpd.pid -z /tmp/zebra.api -u root -p 179"
+}
