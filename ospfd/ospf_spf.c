@@ -992,7 +992,6 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
             }
 
             if (ospf_lsa_has_link(w_lsa->data, v->lsa) < 0) {
-                print_helper(9);
                 if (IS_DEBUG_OSPF_EVENT)
                     zlog_debug("The LSA doesn't have a link back");
                 continue;
@@ -1001,7 +1000,6 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
             /* (c) If vertex W is already on the shortest-path tree, examine
                the next link in the LSA. */
             if (w_lsa->stat == LSA_SPF_IN_SPFTREE) {
-                print_helper(10);
                 if (IS_DEBUG_OSPF_EVENT)
                     zlog_debug("The LSA is already in SPF");
                 continue;
@@ -1093,18 +1091,18 @@ static void ospf_spf_dump(struct vertex *v, int i)
 	struct vertex_parent *parent;
 
 	if (v->type == OSPF_VERTEX_ROUTER) {
-		//if (IS_DEBUG_OSPF_EVENT)
+		if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug("SPF Result: %d [R] %s", i,
 				   inet_ntoa(v->lsa->id));
 	} else {
 		struct network_lsa *lsa = (struct network_lsa *)v->lsa;
-		//if (IS_DEBUG_OSPF_EVENT)
+		if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug("SPF Result: %d [N] %s/%d", i,
 				   inet_ntoa(v->lsa->id),
 				   ip_masklen(lsa->mask));
 	}
 
-	//if (IS_DEBUG_OSPF_EVENT)
+	if (IS_DEBUG_OSPF_EVENT)
 		for (ALL_LIST_ELEMENTS_RO(v->parents, nnode, parent)) {
 			zlog_debug(" nexthop %p %s %s", (void *)parent->nexthop,
 				   inet_ntoa(parent->nexthop->router),
@@ -1126,7 +1124,7 @@ static void ospf_spf_process_stubs(struct ospf_area *area, struct vertex *v,
 	struct listnode *cnode, *cnnode;
 	struct vertex *child;
 
-	//if (IS_DEBUG_OSPF_EVENT)
+	if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("ospf_process_stub():processing stubs for area %s",
 			   inet_ntoa(area->area_id));
 	if (v->type == OSPF_VERTEX_ROUTER) {
@@ -1136,14 +1134,14 @@ static void ospf_spf_process_stubs(struct ospf_area *area, struct vertex *v,
 		struct router_lsa *rlsa;
 		int lsa_pos = 0;
 
-		//if (IS_DEBUG_OSPF_EVENT)
+		if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug(
 				"ospf_process_stubs():processing router LSA, id: %s",
 				inet_ntoa(v->lsa->id));
 		rlsa = (struct router_lsa *)v->lsa;
 
 
-		//if (IS_DEBUG_OSPF_EVENT)
+		if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug(
 				"ospf_process_stubs(): we have %d links to process",
 				ntohs(rlsa->links));
@@ -1306,7 +1304,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		struct pqueue *candidate;
 		struct vertex *v;
 
-		//if (IS_DEBUG_OSPF_EVENT) {
+		if (IS_DEBUG_OSPF_EVENT) {
 		zlog_debug("ospf_spf_calculate: Start");
 		zlog_debug("ospf_spf_calculate: running Dijkstra for area %s",
 				   inet_ntoa(area->area_id));
@@ -1315,7 +1313,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		/* Check router-lsa-self.  If self-router-lsa is not yet allocated,
            return this area's calculation. */
 		if (!area->router_lsa_self) {
-			//if (IS_DEBUG_OSPF_EVENT)
+			if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug(
 					"ospf_spf_calculate: "
 					"Skip area %s's calculation due to empty router_lsa_self",
@@ -1380,10 +1378,10 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 
 		} /* end loop until no more candidate vertices */
 
-		//if (IS_DEBUG_OSPF_EVENT) {
-		ospf_spf_dump(area->spf, 0);
-		ospf_route_table_dump(new_table);
-		//}
+		if (IS_DEBUG_OSPF_EVENT) {
+		    ospf_spf_dump(area->spf, 0);
+		    ospf_route_table_dump(new_table);
+		}
 
 		/* Second stage of SPF calculation procedure's  */
 		ospf_spf_process_stubs(area, area->spf, new_table, 0);
@@ -1404,7 +1402,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		monotime(&area->ospf->ts_spf);
 		area->ts_spf = area->ospf->ts_spf;
 
-		//if (IS_DEBUG_OSPF_EVENT)
+		if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("ospf_spf_calculate: Stop. %zd vertices",
 				   mtype_stats_alloc(MTYPE_OSPF_VERTEX));
 

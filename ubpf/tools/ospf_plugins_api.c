@@ -597,7 +597,6 @@ struct ospf_lsa *ospf_my_lsa_new_and_data(struct stream *s, struct ospf_area *ar
     SET_FLAG(new->flags, OSPF_LSA_SELF | OSPF_LSA_SELF_CHECKED);
     new->vrf_id = area->ospf->vrf_id;
     memcpy(new->data, lsah, length);
-    my_ospf_lsa_dump(s);
     return new;
 }
 

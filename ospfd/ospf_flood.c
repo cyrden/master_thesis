@@ -282,6 +282,10 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 		exec_loaded_code(plugins_tab.plugins[LSA_FLOOD]->pluglet_REP, plugins_tab.plugins[LSA_FLOOD]->arguments, sizeof(struct arg_plugin_lsa_flood));
 	}
 	else {
+	    /*if(new->data->type == 13) {
+	        zlog_notice("ospf_flood: LSA of type 13 to flood");
+	    }*/
+
 		struct ospf_interface *oi;
 		int lsa_ack_flag;
 
@@ -438,6 +442,9 @@ static int ospf_flood_through_interface(struct ospf_interface *oi,
 		   should be examined. */
 		if (onbr->state < NSM_Exchange) {
             //zlog_notice("No flood on interface %s because state < exchange with the neighbor", onbr->oi->ifp->name);
+            if(lsa->data->type == 13) {
+                ospf_ls_retransmit_add(onbr, lsa); // TODO: This is a test but this is cheating ! BUT LOOKS LIKE IT WORKS
+            }
             continue;
         }
 
@@ -608,8 +615,7 @@ int ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inbr,
 			    struct ospf_lsa *lsa)
 {
     /*if(lsa->data->type == 13) {
-        zlog_notice("ospf_flood_through_area");
-        ospf_lsa_header_dump(lsa->data);
+        zlog_notice("ospf_flood_through_area: LSA type 13.");
     }*/
 	struct listnode *node, *nnode;
 	struct ospf_interface *oi;
@@ -726,6 +732,9 @@ int ospf_flood_through_as(struct ospf *ospf, struct ospf_neighbor *inbr,
 int ospf_flood_through(struct ospf *ospf, struct ospf_neighbor *inbr,
 		       struct ospf_lsa *lsa)
 {
+    /*if(lsa->data->type == 13) {
+        zlog_notice("ospfd_flood_through: lsa type 13 to be flooded");
+    }*/
 	int lsa_ack_flag = 0;
 
 /* Type-7 LSA's for NSSA are flooded throughout the AS here, and

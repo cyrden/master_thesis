@@ -1895,6 +1895,9 @@ static void ospf_ls_upd(struct ospf *ospf, struct ip *iph,
 	 * text below are from the steps in RFC 2328, Section 13.
 	 */
 	for (ALL_LIST_ELEMENTS(lsas, node, nnode, lsa)) {
+	    if(lsa->data->type == 13) {
+	        zlog_notice("ospf_ls_upd: LSA TYPE 13 received ");
+	    }
 		struct ospf_lsa *ls_ret, *current;
 		int ret = 1;
 
