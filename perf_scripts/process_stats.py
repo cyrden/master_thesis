@@ -8,6 +8,7 @@ import sys
 from argparse import ArgumentParser as ap
 from time import clock_gettime_ns, CLOCK_MONOTONIC, sleep
 
+
 import psutil
 
 __STOP__ = False
@@ -50,7 +51,7 @@ def perf(json_path, pid=None, args=None, interval=1, ):
                 'time': tick(),
                 'info': p.as_dict(attrs)
             }))
-            f.write('\n')
+            f.write(',\n')
             sleep(interval)
 
     return p

@@ -68,7 +68,7 @@ uint64_t send_data(int type, void *data) {
     }
 
     // msgget creates a message queue and returns identifier of this queue
-    msgid = msgget(key, 0);
+    msgid = msgget(key, 0666 | IPC_CREAT);
     if (msgid == -1) {
         printf("sender msgget error \n");
         return 0;
@@ -319,6 +319,9 @@ int get_ospf_area(struct ospf_area *area, struct ospf_area *area_copy) {
             //zlog_notice("get ospf area");
             if(area != ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area) return 0; // user didn't give the good pointer. We probably don't want it to access it.
             memcpy(area_copy, ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area, sizeof(struct ospf_area));
+            break;
+        case ARG_PLUGIN_HELLO_SEND:
+            memcpy(area_copy, area, sizeof(struct ospf_area));
             break;
         default:
             zlog_notice("Argument type not recognized by helper function");

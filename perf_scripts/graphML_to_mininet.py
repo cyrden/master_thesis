@@ -99,13 +99,6 @@ class SimpleOSPFNet(IPTopo):
 outputstring_2a='''
         # add nodes, routers first...
 '''
-outputstring_2b='''
-        # ... and now hosts
-'''
-
-outputstring_3a='''
-        # add edges between router and corresponding host
-'''
 
 outputstring_3b='''
         # add edges between routers
@@ -218,31 +211,10 @@ for i in range(0, len(id_node_name_dict)):
         temp1 += " = self.addRouter_v4( 'r"
         temp1 += str(i)
         temp1 += "' )\n"
-
-        #create corresponding host
-        temp2 =  '        '
-        temp2 += strcheck
-        temp2 += "_host = self.addHost( 'h"
-        temp2 += str(i)
-        temp2 += "' )\n"
-        tempstring1 += temp1
-        tempstring2 += temp2
-
-        # link each switch and its host...
-        temp3 =  '        self.addLink( '
-        temp3 += strcheck
-        temp3 += ' , '
-        temp3 += strcheck
-        temp3 += "_host )"
-        temp3 += '\n'
-        tempstring3 += temp3
+	tempstring1 += temp1
 
 outputstring_to_be_exported += outputstring_2a
 outputstring_to_be_exported += tempstring1
-outputstring_to_be_exported += outputstring_2b
-outputstring_to_be_exported += tempstring2
-outputstring_to_be_exported += outputstring_3a
-outputstring_to_be_exported += tempstring3
 outputstring_to_be_exported += outputstring_3b
 
 

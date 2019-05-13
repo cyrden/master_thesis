@@ -202,7 +202,6 @@ void *plugin_malloc_with_id(unsigned int id, unsigned int size) {
     }
     else {
         ((meta_data *) slot)->id = id;
-        zlog_notice("Allow memory with id: %d", id);
     }
     //zlog_notice("Memory assigned from %p to %p (size = %u)", slot, (void *)((char *) slot + METADATA_SIZE + ((meta_data *) slot)->size), size);
     //zlog_notice("Memory ends at: %p", my_sbrk(0));
@@ -215,7 +214,6 @@ void *plugin_get_memory_with_id(unsigned int id) {
     if(current_context->heap->heap_start == current_context->heap->heap_end) return NULL;
     while(iter) {
         if (!iter->available && iter->id == id) {
-            zlog_notice("Found memory with id %d", id);
             return (char *) iter + METADATA_SIZE;
         }
         iter = iter->next_block;

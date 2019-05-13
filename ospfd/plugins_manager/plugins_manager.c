@@ -170,10 +170,9 @@ void *plugins_manager(void *tab) {
     inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/originate_my_lsa.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
 
-    /*while(1) { // In that loop receives messages from UI to inject plugins
+    while(1) { // In that loop receives messages from UI to inject plugins
         printf("Wait for message \n");
         if (msgrcv(msgid, &message, sizeof(message), 0, 0) != -1) { // blocking call
-            // TODO: check that it is a valid location etc
             int loc;
             int pos;
             pos = ((int) message.mesg_type) % 100;
@@ -192,7 +191,7 @@ void *plugins_manager(void *tab) {
             zlog_notice("Error while receiving message \n");
             return NULL;
         }
-    }*/
+    }
     return NULL;
 }
 
