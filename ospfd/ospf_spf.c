@@ -1308,7 +1308,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		zlog_debug("ospf_spf_calculate: Start");
 		zlog_debug("ospf_spf_calculate: running Dijkstra for area %s",
 				   inet_ntoa(area->area_id));
-		//}
+		}
 
 		/* Check router-lsa-self.  If self-router-lsa is not yet allocated,
            return this area's calculation. */
