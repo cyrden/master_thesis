@@ -37,6 +37,7 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x16, "get_vertex", get_vertex) == -1) return 0;
     if (ubpf_register(vm, 0x17, "get_lsa_with_length", get_lsa_with_length) == -1) return 0;
     if (ubpf_register(vm, 0x18, "get_ospf_interface_list", get_ospf_interface_list) == -1) return 0;
+    if (ubpf_register(vm, 0x9, "get_candidate", get_candidate) == -1) return 0;
 
     /* Setter functions */
     if (ubpf_register(vm, 0x30, "set_ospf_area_transit", set_ospf_area_transit) == -1) return 0;
@@ -56,7 +57,7 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x5, "my_ospf_flood_through_area", my_ospf_flood_through_area) == -1) return 0;
     if (ubpf_register(vm, 0x6, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
     if (ubpf_register(vm, 0x7, "my_ospf_lsa_install", my_ospf_lsa_install) == -1) return 0;
-    if (ubpf_register(vm, 0x9, "my_get_lsah", my_get_lsah) == -1) return 0; // TODO: this function is just help to print
+    if (ubpf_register(vm, 0x8, "my_get_lsah", my_get_lsah) == -1) return 0; // TODO: this function is just help to print
     if (ubpf_register(vm, 0x19, "trickle_up", trickle_up) == -1) return 0;
     if (ubpf_register(vm, 0x1a, "ospf_lsa_has_link", ospf_lsa_has_link) == -1) return 0;
     if (ubpf_register(vm, 0x1b, "ospf_lsa_lookup_by_id", ospf_lsa_lookup_by_id) == -1) return 0;

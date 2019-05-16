@@ -62,7 +62,7 @@ uint64_t ospf_spf_next(void *data)
     struct ospf_lsa *test_lsa;
     test_lsa = ospf_lsa_lookup(plugin_arg->ospf, plugin_arg->area, 13, v->id, v->id);
     while (p < lim) {
-        struct vertex *w;
+        struct vertex *w = NULL;
         unsigned int distance;
 
         /* In case of V is Router-LSA. */
@@ -203,7 +203,8 @@ uint64_t ospf_spf_next(void *data)
         } else if (w_lsa_copy->stat >= 0) {
             print_helper(12);
             /* Get the vertex from candidates. */
-            w = candidate->array[w_lsa_copy->stat]; // TODO: Not sure this is ok
+            //w = candidate->array[w_lsa_copy->stat]; // TODO: Not sure this is ok IT IS NOT
+            if(get_candidate(plugin_arg->candidate, w_lsa_copy->stat, w) != 1) return 0;
 
             struct vertex *w_copy = plugin_malloc(sizeof(struct vertex));
             if(w_copy == NULL) return 0;
