@@ -51,7 +51,7 @@ def perf(json_path, pid=None, args=None, interval=1, ):
                 'time': tick(),
                 'info': p.as_dict(attrs)
             }))
-            f.write(',\n')
+            f.write('\n')
             sleep(interval)
 
     return p

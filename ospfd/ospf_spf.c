@@ -1091,18 +1091,18 @@ static void ospf_spf_dump(struct vertex *v, int i)
 	struct vertex_parent *parent;
 
 	if (v->type == OSPF_VERTEX_ROUTER) {
-		if (IS_DEBUG_OSPF_EVENT)
+		//if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug("SPF Result: %d [R] %s", i,
 				   inet_ntoa(v->lsa->id));
 	} else {
 		struct network_lsa *lsa = (struct network_lsa *)v->lsa;
-		if (IS_DEBUG_OSPF_EVENT)
+		//if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug("SPF Result: %d [N] %s/%d", i,
 				   inet_ntoa(v->lsa->id),
 				   ip_masklen(lsa->mask));
 	}
 
-	if (IS_DEBUG_OSPF_EVENT)
+	//if (IS_DEBUG_OSPF_EVENT)
 		for (ALL_LIST_ELEMENTS_RO(v->parents, nnode, parent)) {
 			zlog_debug(" nexthop %p %s %s", (void *)parent->nexthop,
 				   inet_ntoa(parent->nexthop->router),
@@ -1304,16 +1304,16 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		struct pqueue *candidate;
 		struct vertex *v;
 
-		if (IS_DEBUG_OSPF_EVENT) {
+		//if (IS_DEBUG_OSPF_EVENT) {
 		zlog_debug("ospf_spf_calculate: Start");
 		zlog_debug("ospf_spf_calculate: running Dijkstra for area %s",
 				   inet_ntoa(area->area_id));
-		}
+		//}
 
 		/* Check router-lsa-self.  If self-router-lsa is not yet allocated,
            return this area's calculation. */
 		if (!area->router_lsa_self) {
-			if (IS_DEBUG_OSPF_EVENT)
+			//if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug(
 					"ospf_spf_calculate: "
 					"Skip area %s's calculation due to empty router_lsa_self",
@@ -1378,10 +1378,10 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 
 		} /* end loop until no more candidate vertices */
 
-		if (IS_DEBUG_OSPF_EVENT) {
+		//if (IS_DEBUG_OSPF_EVENT) {
 		    ospf_spf_dump(area->spf, 0);
 		    ospf_route_table_dump(new_table);
-		}
+		//}
 
 		/* Second stage of SPF calculation procedure's  */
 		ospf_spf_process_stubs(area, area->spf, new_table, 0);
@@ -1402,7 +1402,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		monotime(&area->ospf->ts_spf);
 		area->ts_spf = area->ospf->ts_spf;
 
-		if (IS_DEBUG_OSPF_EVENT)
+		//if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("ospf_spf_calculate: Stop. %zd vertices",
 				   mtype_stats_alloc(MTYPE_OSPF_VERTEX));
 
@@ -1437,7 +1437,7 @@ static int ospf_spf_calculate_timer(struct thread *thread)
 	unsigned long abr_time, total_spf_time, spf_time;
 	char rbuf[32]; /* reason_buf */
 
-	if (IS_DEBUG_OSPF_EVENT)
+	//if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("SPF: Timer (SPF calculation expire)");
 
 	ospf->t_spf_calc = NULL;
@@ -1546,7 +1546,7 @@ static int ospf_spf_calculate_timer(struct thread *thread)
 			rbuf[0] = '\0';
 	}
 
-	if (IS_DEBUG_OSPF_EVENT) {
+	//if (IS_DEBUG_OSPF_EVENT) {
 		zlog_info("SPF Processing Time(usecs): %ld", total_spf_time);
 		zlog_info("\t    SPF Time: %ld", spf_time);
 		zlog_info("\t   InterArea: %ld", ia_time);
@@ -1556,7 +1556,7 @@ static int ospf_spf_calculate_timer(struct thread *thread)
 			zlog_info("\t         ABR: %ld (%d areas)", abr_time,
 				  areas_processed);
 		zlog_info("Reason(s) for SPF: %s", rbuf);
-	}
+	//}
 
 	ospf_clear_spf_reason_flags();
 
@@ -1569,7 +1569,7 @@ void ospf_spf_calculate_schedule(struct ospf *ospf, ospf_spf_reason_t reason)
 {
 	unsigned long delay, elapsed, ht;
 
-	if (IS_DEBUG_OSPF_EVENT)
+	//if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("SPF: calculation timer scheduled");
 
 	/* OSPF instance does not exist. */
@@ -1580,7 +1580,7 @@ void ospf_spf_calculate_schedule(struct ospf *ospf, ospf_spf_reason_t reason)
 
 	/* SPF calculation timer is already scheduled. */
 	if (ospf->t_spf_calc) {
-		if (IS_DEBUG_OSPF_EVENT)
+		//if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug(
 				"SPF: calculation timer is already scheduled: %p",
 				(void *)ospf->t_spf_calc);
@@ -1614,7 +1614,7 @@ void ospf_spf_calculate_schedule(struct ospf *ospf, ospf_spf_reason_t reason)
 		ospf->spf_hold_multiplier = 1;
 	}
 
-	if (IS_DEBUG_OSPF_EVENT)
+	//if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("SPF: calculation timer delay = %ld msec", delay);
 
 	ospf->t_spf_calc = NULL;
