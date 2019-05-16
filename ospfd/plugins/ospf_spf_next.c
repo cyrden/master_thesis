@@ -101,8 +101,8 @@ uint64_t ospf_spf_next(void *data)
 
             lsa_pos = lsa_pos_next; /* LSA link position */
             lsa_pos_next++;
-            //p += (OSPF_ROUTER_LSA_LINK_SIZE + (l->m[0].tos_count * OSPF_ROUTER_LSA_TOS_SIZE));
-            p += (OSPF_ROUTER_LSA_LINK_SIZE); // TODO: this is cheating but otherwise out of bound memory access
+            p += (OSPF_ROUTER_LSA_LINK_SIZE + (l->m[0].tos_count * OSPF_ROUTER_LSA_TOS_SIZE));
+            //p += (OSPF_ROUTER_LSA_LINK_SIZE); // TODO: this is cheating but otherwise out of bound memory access
 
             if(ignored) { // skip this link, it is the wrong color
                 continue;
@@ -123,16 +123,16 @@ uint64_t ospf_spf_next(void *data)
             switch (type) {
                 case LSA_LINK_TYPE_POINTOPOINT:
                 case LSA_LINK_TYPE_VIRTUALLINK:
-                    //print_helper(3);
+                    print_helper(3);
                     w_lsa = ospf_lsa_lookup(plugin_arg->ospf, plugin_arg->area, OSPF_ROUTER_LSA, l->link_id, l->link_id);
                     break;
                 case LSA_LINK_TYPE_TRANSIT:
-                    //print_helper(4);
+                    print_helper(4);
                     w_lsa = ospf_lsa_lookup_by_id(plugin_arg->area, OSPF_NETWORK_LSA, l->link_id);
-                    //if(w_lsa) print_helper(20);
+                    if(w_lsa) print_helper(20);
                     break;
                 default:
-                    //print_helper(5);
+                    print_helper(5);
                     continue;
             }
         } else {
@@ -153,7 +153,7 @@ uint64_t ospf_spf_next(void *data)
             continue;
         }
 
-        //print_helper(119);
+        print_helper(119);
 
         struct ospf_lsa *w_lsa_copy = plugin_malloc(sizeof(struct ospf_lsa)); // TODO: free
         if(w_lsa_copy == NULL) {
@@ -201,7 +201,7 @@ uint64_t ospf_spf_next(void *data)
                 pqueue_enqueue(w, plugin_arg->candidate);
             //else print_helper(11);
         } else if (w_lsa_copy->stat >= 0) {
-            //print_helper(12);
+            print_helper(12);
             /* Get the vertex from candidates. */
             w = candidate->array[w_lsa_copy->stat]; // TODO: Not sure this is ok
 

@@ -283,13 +283,8 @@ int get_lsa_with_length(struct router_lsa *lsa, struct router_lsa *lsa_copy) {
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_OSPF_SPF_NEXT:
             //if(lsa != ((struct router_lsa *)((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->v->lsa)) return 0; // user didn't give the good pointer. We probably don't want it to access it.
-            memcpy(lsa_copy, lsa, lsa->header.length);
+            memcpy(lsa_copy, lsa, ntohs(lsa->header.length));
             //zlog_notice("get router_lsa, header type = %d, link id = %s", (int) lsa_copy->header.type, inet_ntoa(lsa_copy->link[0].link_id));
-            if(lsa_copy->header.length == 56) {
-                struct my_link *my_link = (struct my_link *) (((struct ospf_lsa *) lsa_copy)->data +
-                                                              OSPF_LSA_HEADER_SIZE + 4);
-                //zlog_notice("my link -> link id = %s, color: %d", inet_ntoa(my_link->link_id), (int) my_link->color);
-            }
             break;
         default:
             zlog_notice("Argument type not recognized by helper function");
