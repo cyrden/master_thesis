@@ -44,10 +44,6 @@ static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int p
         if (!tab->plugins[id]) {
             return 0;
         }
-        /*tab->plugins[id]->pluglets[PRE] = NULL;
-        tab->plugins[id]->pluglets[REP] = NULL;
-        tab->plugins[id]->pluglets[POST] = NULL;*/
-        // TODO: del top
         tab->plugins[id]->pluglet_REP = NULL;
         for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
             tab->plugins[id]->pluglets_PRE[i] = NULL;

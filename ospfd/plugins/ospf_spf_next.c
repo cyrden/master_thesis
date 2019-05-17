@@ -129,7 +129,7 @@ uint64_t ospf_spf_next(void *data)
                 case LSA_LINK_TYPE_TRANSIT:
                     //print_helper(4);
                     w_lsa = ospf_lsa_lookup_by_id(plugin_arg->area, OSPF_NETWORK_LSA, l->link_id);
-                    if(w_lsa) print_helper(20);
+                    //if(w_lsa) print_helper(20);
                     break;
                 default:
                     //print_helper(5);
