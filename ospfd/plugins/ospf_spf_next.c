@@ -204,17 +204,17 @@ uint64_t ospf_spf_next(void *data)
             //print_helper(12);
             /* Get the vertex from candidates. */
             //w = candidate->array[w_lsa_copy->stat]; // TODO: Not sure this is ok IT IS NOT
-            if(get_candidate(plugin_arg->candidate, w_lsa_copy->stat, w) != 1) return 0;
+            if((w = get_candidate(plugin_arg->candidate, w_lsa_copy->stat)) == NULL) return 0;
 
             struct vertex *w_copy = plugin_malloc(sizeof(struct vertex));
             if(w_copy == NULL) return 0;
             if(get_vertex(w, w_copy) != 1) return 0;
             /* if D is greater than. */
-            if (w->distance < distance) {
+            if (w_copy->distance < distance) {
                 continue;
             }
                 /* equal to. */
-            else if (w->distance == distance) {
+            else if (w_copy->distance == distance) {
                 /* Found an equal-cost path to W.
                  * Calculate nexthop of to W from V. */
                 my_ospf_nexthop_calculation(plugin_arg, w, l, distance, lsa_pos);

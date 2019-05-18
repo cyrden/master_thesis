@@ -348,11 +348,12 @@ int get_ospf(struct ospf *ospf, struct ospf *ospf_copy) {
     return 1;
 }
 
-int get_candidate(struct pqueue *candidate, int stat, struct vertex *vertex) {
+struct vertex *get_candidate(struct pqueue *candidate, int stat) {
     pluglet_context_t *pluglet_context = current_context;
+    struct vertex *vertex = NULL;
     if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
-        return 0;
+        return NULL;
     }
     if(candidate == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
@@ -362,9 +363,9 @@ int get_candidate(struct pqueue *candidate, int stat, struct vertex *vertex) {
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");
-            return 0;
+            return NULL;
     }
-    return 1;
+    return vertex;
 }
 
 int get_vertex(struct vertex *vertex, struct vertex *vertex_copy) {

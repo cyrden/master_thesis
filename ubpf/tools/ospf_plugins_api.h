@@ -137,7 +137,7 @@ int get_ospf(struct ospf *ospf, struct ospf *ospf_copy);
 
 int get_vertex(struct vertex *vertex, struct vertex *vertex_copy);
 
-int get_candidate(struct pqueue *candidate, int stat, struct vertex *vertex);
+struct vertex *get_candidate(struct pqueue *candidate, int stat);
 
 /* Setters */
 

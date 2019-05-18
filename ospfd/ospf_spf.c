@@ -1437,7 +1437,7 @@ static int ospf_spf_calculate_timer(struct thread *thread)
 	unsigned long abr_time, total_spf_time, spf_time;
 	char rbuf[32]; /* reason_buf */
 
-	//if (IS_DEBUG_OSPF_EVENT)
+	if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("SPF: Timer (SPF calculation expire)");
 
 	ospf->t_spf_calc = NULL;
@@ -1569,7 +1569,7 @@ void ospf_spf_calculate_schedule(struct ospf *ospf, ospf_spf_reason_t reason)
 {
 	unsigned long delay, elapsed, ht;
 
-	//if (IS_DEBUG_OSPF_EVENT)
+	if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("SPF: calculation timer scheduled");
 
 	/* OSPF instance does not exist. */
@@ -1580,7 +1580,7 @@ void ospf_spf_calculate_schedule(struct ospf *ospf, ospf_spf_reason_t reason)
 
 	/* SPF calculation timer is already scheduled. */
 	if (ospf->t_spf_calc) {
-		//if (IS_DEBUG_OSPF_EVENT)
+		if (IS_DEBUG_OSPF_EVENT)
 			zlog_debug(
 				"SPF: calculation timer is already scheduled: %p",
 				(void *)ospf->t_spf_calc);
@@ -1614,7 +1614,7 @@ void ospf_spf_calculate_schedule(struct ospf *ospf, ospf_spf_reason_t reason)
 		ospf->spf_hold_multiplier = 1;
 	}
 
-	//if (IS_DEBUG_OSPF_EVENT)
+	if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("SPF: calculation timer delay = %ld msec", delay);
 
 	ospf->t_spf_calc = NULL;
