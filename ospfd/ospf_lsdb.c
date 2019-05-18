@@ -208,7 +208,7 @@ struct ospf_lsa *ospf_lsdb_lookup_by_id(struct ospf_lsdb *lsdb, uint8_t type,
 					struct in_addr id,
 					struct in_addr adv_router)
 {
-	//zlog_notice("ospf_lsdb_lookup_by id");
+	//("ospf_lsdb_lookup_by id: %s", inet_ntoa(id));
 	struct route_table *table;
 	struct prefix_ls lp;
 	struct route_node *rn;

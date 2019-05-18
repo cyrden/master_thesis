@@ -2975,7 +2975,7 @@ int ospf_read(struct thread *thread)
 	stream_reset(ospf->ibuf);
 	ibuf = ospf_recv_packet(ospf, ospf->fd, &ifp, ospf->ibuf);
 	if (ibuf == NULL) {
-		zlog_notice("ibuf = NULL !!");
+		//zlog_notice("ibuf = NULL !!");
 		return -1;
 	}
 	/* This raw packet is known to be at least as big as its IP header. */
@@ -3022,7 +3022,7 @@ int ospf_read(struct thread *thread)
 	if (MSG_OK
 	    != ospf_packet_examin(
 		       ospfh, stream_get_endp(ibuf) - stream_get_getp(ibuf))) {
-		zlog_notice("packet_exmine FAILED !!");
+		//zlog_notice("packet_exmine FAILED !!");
 		return -1;
 	}
 	/* Now it is safe to access all fields of OSPF packet header. */

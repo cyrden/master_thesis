@@ -826,7 +826,7 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
     if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP != NULL) {
         plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[OSPF_SPF_NEXT]->heap; // Context needs to know where is the heap of the pluglet
         uint64_t ret = exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP, plugins_tab.plugins[OSPF_SPF_NEXT]->arguments, sizeof(struct arg_plugin_ospf_spf_next));
-        zlog_notice("SPF NEXT REP: ret = %d", (int) ret);
+        //zlog_notice("SPF NEXT REP: ret = %d", (int) ret);
     }
     else {
         struct ospf_lsa *w_lsa = NULL;
@@ -1402,7 +1402,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		monotime(&area->ospf->ts_spf);
 		area->ts_spf = area->ospf->ts_spf;
 
-		if (IS_DEBUG_OSPF_EVENT)
+		//if (IS_DEBUG_OSPF_EVENT)
 		zlog_debug("ospf_spf_calculate: Stop. %zd vertices",
 				   mtype_stats_alloc(MTYPE_OSPF_VERTEX));
 
@@ -1546,7 +1546,7 @@ static int ospf_spf_calculate_timer(struct thread *thread)
 			rbuf[0] = '\0';
 	}
 
-	if (IS_DEBUG_OSPF_EVENT) {
+	//if (IS_DEBUG_OSPF_EVENT) {
 		zlog_info("SPF Processing Time(usecs): %ld", total_spf_time);
 		zlog_info("\t    SPF Time: %ld", spf_time);
 		zlog_info("\t   InterArea: %ld", ia_time);
@@ -1556,7 +1556,7 @@ static int ospf_spf_calculate_timer(struct thread *thread)
 			zlog_info("\t         ABR: %ld (%d areas)", abr_time,
 				  areas_processed);
 		zlog_info("Reason(s) for SPF: %s", rbuf);
-	}
+	//}
 
 	ospf_clear_spf_reason_flags();
 
