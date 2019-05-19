@@ -1273,6 +1273,8 @@ ospf_rtrs_print (struct route_table *rtrs)
 static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			       struct route_table *new_table,
 			       struct route_table *new_rtrs) {
+    struct timeval start_glob;
+    monotime(&start_glob);
     struct arg_plugin_spf_calc *plugin_arg = NULL;
 	if (plugins_tab.plugins[SPF_CALC] != NULL) {
 		/* Definition of the plugin argument */
@@ -1300,6 +1302,8 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		plugins_tab.plugins[SPF_CALC]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[SPF_CALC]->heap; // Context needs to know where is the heap of the pluglet
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglet_REP, plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
 	} else {
+	    struct timeval start;
+	    monotime(&start);
 
 		struct pqueue *candidate;
 		struct vertex *v;
@@ -1345,11 +1349,15 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		area->transit = OSPF_TRANSIT_FALSE;
 		area->shortcut_capability = 1;
 
+        unsigned long time = 0;
 		for (;;) {
 			/* RFC2328 16.1. (2). */
-			ospf_spf_next(v, ospf, area, candidate);
+			struct timeval start;
+            monotime(&start);
+            ospf_spf_next(v, ospf, area, candidate);
+            time += monotime_since(&start, NULL);
 
-			/* RFC2328 16.1. (3). */
+            /* RFC2328 16.1. (3). */
 			/* If at this step the candidate list is empty, the shortest-
                path tree (of transit vertices) has been completely built and
                this stage of the procedure terminates. */
@@ -1377,8 +1385,9 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			/* Iterate the algorithm by returning to Step 2. */
 
 		} /* end loop until no more candidate vertices */
+        zlog_notice("Time for all spf next: %ld", time);
 
-		if (IS_DEBUG_OSPF_EVENT) {
+        if (IS_DEBUG_OSPF_EVENT) {
 		    ospf_spf_dump(area->spf, 0);
 		    ospf_route_table_dump(new_table);
 		}
@@ -1410,7 +1419,8 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
          * as deconstructor.
          */
 		list_delete_all_node(&vertex_list);
-	}
+        zlog_notice("Time for SPF function: %ld", monotime_since(&start, NULL));
+    }
 
 	if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets_POST[0] != NULL) {
 		for (int i = 0; i < MAX_NBR_PLUGLETS; i++) {
@@ -1422,6 +1432,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		}
 	}
 	if(plugin_arg != NULL) free(plugin_arg);
+    zlog_notice("Time for SPF function with insertion point: %ld", monotime_since(&start_glob, NULL));
 }
 
 /* Timer for SPF calculation. */
@@ -1460,14 +1471,16 @@ static int ospf_spf_calculate_timer(struct thread *thread)
 		ospf_spf_calculate(ospf, area, new_table, new_rtrs);
 		areas_processed++;
 	}
+	zlog_notice("Time until areas processed: %ld", monotime_since(&spf_start_time, NULL));
 
 	/* SPF for backbone, if required */
 	if (ospf->backbone) {
 		ospf_spf_calculate(ospf, ospf->backbone, new_table, new_rtrs);
 		areas_processed++;
 	}
+    zlog_notice("Time until backbone processed: %ld", monotime_since(&spf_start_time, NULL));
 
-	spf_time = monotime_since(&spf_start_time, NULL);
+    spf_time = monotime_since(&spf_start_time, NULL);
 
 	ospf_vl_shut_unapproved(ospf);
 
