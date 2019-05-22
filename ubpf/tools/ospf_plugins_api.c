@@ -84,28 +84,6 @@ uint64_t send_data(int type, void *data) {
 }
 
 
-/* Setter functions */
-
-int set_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy) {
-    pluglet_context_t *pluglet_context = current_context;
-    if(pluglet_context == NULL) {
-        printf("NULL pointer \n");
-        return 0;
-    }
-    if(oi == NULL || oi_copy == NULL) return 0;
-    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
-    switch (pluglet_context->type_arg) {
-        case ARG_PLUGIN_SPF_CALC:
-            memcpy(oi, oi_copy, sizeof(struct ospf_interface));
-            break;
-        default:
-            fprintf(stderr, "Argument type not recognized by helper function");
-            return 0;
-    }
-    return 1;
-}
-
-
 /* Getter functions */
 
 
@@ -312,7 +290,7 @@ int get_ospf_area(struct ospf_area *area, struct ospf_area *area_copy) {
         case ARG_PLUGIN_OSPF_SPF_NEXT:
             //zlog_notice("get ospf area");
             if(area != ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area) return 0; // user didn't give the good pointer. We probably don't want it to access it.
-            memcpy(area_copy, ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area, sizeof(struct ospf_area));
+            memcpy(area_copy, area, sizeof(struct ospf_area));
             break;
         case ARG_PLUGIN_HELLO_SEND:
             memcpy(area_copy, area, sizeof(struct ospf_area));
@@ -390,8 +368,7 @@ int get_vertex(struct vertex *vertex, struct vertex *vertex_copy) {
 
 /* Setter functions */
 
-int set_ospf_area_transit(struct ospf_area *area, uint8_t transit) {
-    //zlog_notice("set ospf area transit");
+int set_ospf_area(struct ospf_area *area, struct ospf_area *area_copy) {
     pluglet_context_t *pluglet_context = current_context;
     if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
@@ -402,7 +379,27 @@ int set_ospf_area_transit(struct ospf_area *area, uint8_t transit) {
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_OSPF_SPF_NEXT:
             if(area != ((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->area) return 0; // user didn't give the good pointer. We probably don't want it to access it.
-            area->transit = transit;
+            memcpy(area, area_copy, sizeof(struct ospf_area));
+            break;
+        default:
+            fprintf(stderr, "Argument type not recognized by helper function");
+            return 0;
+    }
+    return 1;
+}
+
+
+int set_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy) {
+    pluglet_context_t *pluglet_context = current_context;
+    if(pluglet_context == NULL) {
+        printf("NULL pointer \n");
+        return 0;
+    }
+    if(oi == NULL || oi_copy == NULL) return 0;
+    /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
+    switch (pluglet_context->type_arg) {
+        case ARG_PLUGIN_SPF_CALC:
+            memcpy(oi, oi_copy, sizeof(struct ospf_interface));
             break;
         default:
             fprintf(stderr, "Argument type not recognized by helper function");

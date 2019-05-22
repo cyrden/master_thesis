@@ -40,7 +40,7 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x9, "get_candidate", get_candidate) == -1) return 0;
 
     /* Setter functions */
-    if (ubpf_register(vm, 0x30, "set_ospf_area_transit", set_ospf_area_transit) == -1) return 0;
+    if (ubpf_register(vm, 0x30, "set_ospf_area", set_ospf_area) == -1) return 0;
     if (ubpf_register(vm, 0x31, "set_ospf_interface", set_ospf_interface) == -1) return 0;
 
 

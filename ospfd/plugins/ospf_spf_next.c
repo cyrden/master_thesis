@@ -45,8 +45,14 @@ uint64_t ospf_spf_next(void *data)
     //print_helper(plugin_ntohs(lsah->length));
     if (v->type == OSPF_VERTEX_ROUTER) { // This is a router LSA
         if(get_lsa_with_length((struct router_lsa *) v->lsa, (struct router_lsa *) lsah) != 1) return 0;
-        if (IS_ROUTER_LSA_VIRTUAL((struct router_lsa *) lsah))
-            if(set_ospf_area_transit(plugin_arg->area, OSPF_TRANSIT_TRUE) != 1) return 0;
+        if (IS_ROUTER_LSA_VIRTUAL((struct router_lsa *) lsah)) {
+            struct ospf_area *area_copy = plugin_malloc(sizeof(struct ospf_area));
+            if(area_copy == NULL) return 0;
+            if(get_ospf_area(plugin_arg->area, area_copy) != 1) return 0;
+            area_copy->transit = OSPF_TRANSIT_TRUE;
+            if (set_ospf_area(plugin_arg->area, area_copy) != 1) return 0;
+            plugin_free(area_copy);
+        }
     }
     else {
         if(get_lsa_with_length((struct router_lsa *) v->lsa, (struct router_lsa *) lsah) != 1) return 0;

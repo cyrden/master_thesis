@@ -149,7 +149,7 @@ struct vertex *get_candidate(struct pqueue *candidate, int stat);
 
 int set_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy);
 
-int set_ospf_area_transit(struct ospf_area *area, uint8_t transit);
+int set_ospf_area(struct ospf_area *area, struct ospf_area *area_copy);
 
 int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah);
 
