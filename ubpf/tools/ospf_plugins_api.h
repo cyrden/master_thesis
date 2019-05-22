@@ -55,9 +55,9 @@
 #define SEND_PACKET 8
 #define RCV_PACKET 9
 #define LSA_FLOOD 10
-#define SPF_TEST 13
 #define SPF_LSA 14
 #define OSPF_SPF_NEXT 15
+#define DR_ELECTION 16
 
 
 /* Structures to pass as argument to plugins */
@@ -95,6 +95,12 @@ struct arg_plugin_ospf_spf_next {
     struct ospf *ospf;
     struct ospf_area *area;
     struct pqueue *candidate;
+};
+
+#define ARG_PLUGIN_DR_ELECTION 5
+struct arg_plugin_dr_election {
+    heap_t heap;
+    struct ospf_interface *oi;
 };
 
 void print_helper(int a);

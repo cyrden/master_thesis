@@ -825,7 +825,7 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
     }
     if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP != NULL) {
         plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[OSPF_SPF_NEXT]->heap; // Context needs to know where is the heap of the pluglet
-        uint64_t ret = exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP, plugins_tab.plugins[OSPF_SPF_NEXT]->arguments, sizeof(struct arg_plugin_ospf_spf_next));
+        exec_loaded_code(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP, plugins_tab.plugins[OSPF_SPF_NEXT]->arguments, sizeof(struct arg_plugin_ospf_spf_next));
         //zlog_notice("SPF NEXT REP: ret = %d", (int) ret);
     }
     else {

@@ -202,48 +202,88 @@ static void ospf_dr_change(struct ospf *ospf, struct route_table *nbrs)
 
 static int ospf_dr_election(struct ospf_interface *oi)
 {
-	struct in_addr old_dr, old_bdr;
-	int old_state, new_state;
-	struct list *el_list;
+	struct arg_plugin_dr_election *plugin_arg = NULL;
+	uint64_t ret;
+	if(plugins_tab.plugins[DR_ELECTION] != NULL) {
+		/* Definition of the plugin argument */
+		plugin_arg = calloc(sizeof(struct arg_plugin_dr_election), 1);
+		plugin_arg->oi = oi;
+		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+		plugin_arg->heap.heap_last_block = NULL;
+		plugins_tab.plugins[DR_ELECTION]->heap = &plugin_arg->heap;
+		plugins_tab.plugins[DR_ELECTION]->arguments = (void *) plugin_arg;
+		plugins_tab.plugins[DR_ELECTION]->type_arg = ARG_PLUGIN_DR_ELECTION;
+	}
+	if(plugins_tab.plugins[DR_ELECTION] != NULL && plugins_tab.plugins[DR_ELECTION]->pluglets_PRE[0] != NULL) {
+		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+			if(plugins_tab.plugins[DR_ELECTION]->pluglets_PRE[i] == NULL) break;
+			else {
+				plugins_tab.plugins[DR_ELECTION]->pluglets_PRE[i]->pluglet_context->heap = plugins_tab.plugins[DR_ELECTION]->heap; // Context needs to know where is the heap of the pluglet
+				exec_loaded_code(plugins_tab.plugins[DR_ELECTION]->pluglets_PRE[i], plugins_tab.plugins[DR_ELECTION]->arguments, sizeof(struct arg_plugin_dr_election));
+			}
+		}
+	}
+	if(plugins_tab.plugins[DR_ELECTION] != NULL && plugins_tab.plugins[DR_ELECTION]->pluglet_REP != NULL) {
+		plugins_tab.plugins[DR_ELECTION]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[DR_ELECTION]->heap; // Context needs to know where is the heap of the pluglet
+		ret = exec_loaded_code(plugins_tab.plugins[DR_ELECTION]->pluglet_REP, plugins_tab.plugins[DR_ELECTION]->arguments, sizeof(struct arg_plugin_dr_election));
+	}
+	else {
+		struct in_addr old_dr, old_bdr;
+		int old_state, new_state;
+		struct list *el_list;
 
-	/* backup current values. */
-	old_dr = DR(oi);
-	old_bdr = BDR(oi);
-	old_state = oi->state;
+		/* backup current values. */
+		old_dr = DR(oi);
+		old_bdr = BDR(oi);
+		old_state = oi->state;
 
-	el_list = list_new();
+		el_list = list_new();
 
-	/* List eligible routers. */
-	ospf_dr_eligible_routers(oi->nbrs, el_list);
+		/* List eligible routers. */
+		ospf_dr_eligible_routers(oi->nbrs, el_list);
 
-	/* First election of DR and BDR. */
-	ospf_elect_bdr(oi, el_list);
-	ospf_elect_dr(oi, el_list);
-
-	new_state = ospf_ism_state(oi);
-
-	zlog_debug("DR-Election[1st]: Backup %s", inet_ntoa(BDR(oi)));
-	zlog_debug("DR-Election[1st]: DR     %s", inet_ntoa(DR(oi)));
-
-	if (new_state != old_state
-	    && !(new_state == ISM_DROther && old_state < ISM_DROther)) {
+		/* First election of DR and BDR. */
 		ospf_elect_bdr(oi, el_list);
 		ospf_elect_dr(oi, el_list);
 
 		new_state = ospf_ism_state(oi);
 
-		zlog_debug("DR-Election[2nd]: Backup %s", inet_ntoa(BDR(oi)));
-		zlog_debug("DR-Election[2nd]: DR     %s", inet_ntoa(DR(oi)));
+		zlog_debug("DR-Election[1st]: Backup %s", inet_ntoa(BDR(oi)));
+		zlog_debug("DR-Election[1st]: DR     %s", inet_ntoa(DR(oi)));
+
+		if (new_state != old_state
+			&& !(new_state == ISM_DROther && old_state < ISM_DROther)) {
+			ospf_elect_bdr(oi, el_list);
+			ospf_elect_dr(oi, el_list);
+
+			new_state = ospf_ism_state(oi);
+
+			zlog_debug("DR-Election[2nd]: Backup %s", inet_ntoa(BDR(oi)));
+			zlog_debug("DR-Election[2nd]: DR     %s", inet_ntoa(DR(oi)));
+		}
+
+		list_delete(&el_list);
+
+		/* if DR or BDR changes, cause AdjOK? neighbor event. */
+		if (!IPV4_ADDR_SAME(&old_dr, &DR(oi))
+			|| !IPV4_ADDR_SAME(&old_bdr, &BDR(oi)))
+			ospf_dr_change(oi->ospf, oi->nbrs);
+
+		//return new_state;
+		ret = (uint64_t) new_state;
 	}
-
-	list_delete(&el_list);
-
-	/* if DR or BDR changes, cause AdjOK? neighbor event. */
-	if (!IPV4_ADDR_SAME(&old_dr, &DR(oi))
-	    || !IPV4_ADDR_SAME(&old_bdr, &BDR(oi)))
-		ospf_dr_change(oi->ospf, oi->nbrs);
-
-	return new_state;
+	if(plugins_tab.plugins[DR_ELECTION] != NULL && plugins_tab.plugins[DR_ELECTION]->pluglets_POST[0] != NULL) {
+		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
+			if(plugins_tab.plugins[DR_ELECTION]->pluglets_POST[i] == NULL) break;
+			else {
+				plugins_tab.plugins[DR_ELECTION]->pluglets_POST[i]->pluglet_context->heap = plugins_tab.plugins[DR_ELECTION]->heap; // Context needs to know where is the heap of the pluglet
+				exec_loaded_code(plugins_tab.plugins[DR_ELECTION]->pluglets_POST[i], plugins_tab.plugins[DR_ELECTION]->arguments, sizeof(struct arg_plugin_dr_election));
+			}
+		}
+	}
+	if(plugin_arg != NULL) free(plugin_arg);
+	return (int) ret;
 }
 
 

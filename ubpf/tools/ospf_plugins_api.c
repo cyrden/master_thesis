@@ -238,11 +238,11 @@ int get_ospf_lsa(struct ospf_lsa *lsa, struct ospf_lsa *lsa_copy) {
  */
 int get_lsa_header(struct lsa_header *lsah, struct lsa_header *lsah_copy) {
     pluglet_context_t *pluglet_context = current_context;
-    if(pluglet_context == NULL) { // check that plugin didn't send null pointer
+    if(pluglet_context == NULL) {
         printf("NULL pointer \n");
         return 0;
     }
-    if(lsah == NULL) return 0; // otherwise memcpy could fail
+    if(lsah == NULL) return 0; // check that plugin didn't send NULL pointer
     if(lsah_copy == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
@@ -258,7 +258,6 @@ int get_lsa_header(struct lsa_header *lsah, struct lsa_header *lsah_copy) {
             zlog_notice("Argument type not recognized by helper function");
             return 0;
     }
-    //zlog_notice("get lsah return 1");
     return 1;
 }
 
@@ -514,9 +513,7 @@ struct my_lsa {
 static void my_ospf_lsa_dump(struct stream *s)
 {
     struct lsa_header *lsa;
-    int lsa_len;
     lsa = (struct lsa_header *)stream_pnt(s);
-    lsa_len = ntohs(lsa->length);
     my_lsa_header_dump(lsa);
 
     char buf[BUFSIZ];

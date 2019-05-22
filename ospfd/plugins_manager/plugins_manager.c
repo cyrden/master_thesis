@@ -157,12 +157,12 @@ void *plugins_manager(void *tab) {
     inject_pluglet((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
-    inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
-    inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
+    //inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
+    //inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
     //inject_pluglet((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
-    //inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/originate_my_lsa.o", PRE);
+    inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/originate_my_lsa.o", PRE);
     inject_pluglet((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
 
     /*while(1) { // In that loop receives messages from UI to inject plugins

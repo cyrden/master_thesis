@@ -116,8 +116,8 @@ uint64_t originate_my_lsa(void *data) {
 
     plugin_free(s);
 
-    new = my_ospf_lsa_install(area->ospf, NULL, new);
     if(new == NULL) return 0;
+    new = my_ospf_lsa_install(area->ospf, NULL, new);
     int ret = my_ospf_flood_through_area(plugin_arg->area, NULL, new);
     if(ret == 0) return 0;
 

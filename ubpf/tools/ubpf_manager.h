@@ -12,7 +12,7 @@
 #include "ubpf/vm/inc/ubpf.h"
 #include "ubpf/vm/ubpf_int.h"
 
-#define SIZE_EBPF_VM_HEAP 16000
+#define SIZE_EBPF_VM_HEAP 64000
 #define MAX_NBR_PLUGLETS 10
 
 struct plugin;
