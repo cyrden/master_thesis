@@ -135,7 +135,7 @@ int get_ospf_lsa(struct ospf_lsa *lsa, struct ospf_lsa *lsa_copy);
 
 int get_lsa_header(struct lsa_header *lsah, struct lsa_header *lsah_copy);
 
-int get_lsa_with_length(struct router_lsa *lsa, struct router_lsa *lsa_copy);
+int get_lsa_with_length(struct lsa_header *lsah, struct lsa_header *lsah_copy);
 
 int get_ospf_area(struct ospf_area *area, struct ospf_area *area_copy);
 

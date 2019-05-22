@@ -248,19 +248,19 @@ struct my_link {
     uint32_t color;
 };
 
-int get_lsa_with_length(struct router_lsa *lsa, struct router_lsa *lsa_copy) {
+int get_lsa_with_length(struct lsa_header *lsah, struct lsa_header *lsah_copy) {
     pluglet_context_t *pluglet_context = current_context;
     if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
         return 0;
     }
-    if(lsa == NULL) return 0; // otherwise memcpy could fail
-    if(lsa_copy == NULL) return 0;
+    if(lsah == NULL) return 0; // otherwise memcpy could fail
+    if(lsah_copy == NULL) return 0;
     /* This switch is because depending on where the plugin that uses this helper function has been inserted, we need to cast to the good argument type */
     switch (pluglet_context->type_arg) {
         case ARG_PLUGIN_OSPF_SPF_NEXT:
             //if(lsa != ((struct router_lsa *)((struct arg_plugin_ospf_spf_next *) pluglet_context->original_arg)->v->lsa)) return 0; // user didn't give the good pointer. We probably don't want it to access it.
-            memcpy(lsa_copy, lsa, ntohs(lsa->header.length));
+            memcpy(lsah_copy, lsah, ntohs(lsah->length));
             //zlog_notice("get router_lsa, header type = %d, link id = %s", (int) lsa_copy->header.type, inet_ntoa(lsa_copy->link[0].link_id));
             break;
         default:
