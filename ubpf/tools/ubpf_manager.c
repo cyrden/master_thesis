@@ -205,3 +205,33 @@ uint64_t exec_loaded_code(pluglet_t *pluglet, void *mem, size_t mem_len) {
 
     return ret;
 }
+
+uint64_t compile_and_exec_jit(pluglet_t *pluglet, void *mem, size_t mem_len) {
+
+    pthread_mutex_lock(&lock_current_context); // Lock current context
+
+    char *errmsg;
+    if (pluglet == NULL) {
+        fprintf(stderr, "NULL pluglet in exec_loaded_code \n");
+        return 0;
+    }
+
+    ubpf_jit_fn fn = ubpf_compile(pluglet->vm, &errmsg); // This actually compiles it only the first time. Then it is stored in the vm and exits imediatly
+    if (fn == NULL) {
+        fprintf(stderr, "Failed to compile: %s\n", errmsg);
+        free(errmsg);
+        return 1;
+    }
+    pluglet->pluglet_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
+    pluglet->pluglet_context->type_arg = pluglet->pluglet_context->parent_plugin->type_arg;
+    zlog_notice("Before fn");
+    uint64_t ret = fn(mem, mem_len);
+    zlog_notice("After fn");
+
+    pluglet->pluglet_context->original_arg = NULL;
+    pluglet->pluglet_context->type_arg = -1;
+    pluglet->pluglet_context->heap = NULL;
+    current_context = NULL;
+    pthread_mutex_unlock(&lock_current_context); // unlock current context
+    return ret;
+}

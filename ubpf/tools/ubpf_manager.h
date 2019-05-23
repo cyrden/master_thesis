@@ -73,4 +73,6 @@ int release_elf(pluglet_t *pluglet);
  */
 uint64_t exec_loaded_code(pluglet_t *pluglet, void *mem, size_t mem_len);
 
+uint64_t compile_and_exec_jit(pluglet_t *pluglet, void *mem, size_t mem_len);
+
 #endif //FRR_THESIS_UBPF_MANAGER_H
