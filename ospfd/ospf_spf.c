@@ -799,20 +799,22 @@ struct my_link {
 static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
 			  struct ospf_area *area, struct pqueue *candidate)
 {
-    struct arg_plugin_ospf_spf_next *plugin_arg = NULL;
     if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL) {
         /* Definition of the plugin argument */
-        plugin_arg = calloc(sizeof(struct arg_plugin_ospf_spf_next), 1);
+        if(plugins_tab.plugins[OSPF_SPF_NEXT]->arguments == NULL) {
+            plugins_tab.plugins[OSPF_SPF_NEXT]->arguments = calloc(sizeof(struct arg_plugin_ospf_spf_next), 1);
+            struct arg_plugin_ospf_spf_next *plugin_arg = plugins_tab.plugins[OSPF_SPF_NEXT]->arguments;
+            plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+            plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+            plugin_arg->heap.heap_last_block = NULL;
+            plugins_tab.plugins[OSPF_SPF_NEXT]->heap = &plugin_arg->heap;
+            plugins_tab.plugins[OSPF_SPF_NEXT]->type_arg = ARG_PLUGIN_OSPF_SPF_NEXT;
+        }
+        struct arg_plugin_ospf_spf_next *plugin_arg = plugins_tab.plugins[OSPF_SPF_NEXT]->arguments;
         plugin_arg->v = v;
         plugin_arg->ospf = ospf;
         plugin_arg->area = area;
         plugin_arg->candidate = candidate;
-        plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-        plugin_arg->heap.heap_last_block = NULL;
-        plugins_tab.plugins[OSPF_SPF_NEXT]->heap = &plugin_arg->heap;
-        plugins_tab.plugins[OSPF_SPF_NEXT]->arguments = (void *) plugin_arg;
-        plugins_tab.plugins[OSPF_SPF_NEXT]->type_arg = ARG_PLUGIN_OSPF_SPF_NEXT;
     }
     if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglets_PRE[0] != NULL) {
         for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
@@ -985,7 +987,7 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
             }
 
             if (IS_LSA_MAXAGE(w_lsa)) {
-                print_helper(8);
+                //print_helper(8);
                 if (IS_DEBUG_OSPF_EVENT)
                     zlog_debug("LSA is MaxAge");
                 continue;
@@ -1081,7 +1083,6 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
             }
         }
     }
-    if(plugin_arg != NULL) free(plugin_arg);
 }
 
 static void ospf_spf_dump(struct vertex *v, int i)
@@ -1273,18 +1274,24 @@ ospf_rtrs_print (struct route_table *rtrs)
 static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			       struct route_table *new_table,
 			       struct route_table *new_rtrs) {
-    struct arg_plugin_spf_calc *plugin_arg = NULL;
-	if (plugins_tab.plugins[SPF_CALC] != NULL) {
-		/* Definition of the plugin argument */
-		plugin_arg = calloc(sizeof(struct arg_plugin_spf_calc), 1);
-		plugin_arg->area = area;
-		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_last_block = NULL;
-		plugins_tab.plugins[SPF_CALC]->heap = &plugin_arg->heap;
-		plugins_tab.plugins[SPF_CALC]->arguments = (void *) plugin_arg;
-		plugins_tab.plugins[SPF_CALC]->type_arg = ARG_PLUGIN_SPF_CALC;
-	}
+    struct timeval start_glob;
+    monotime(&start_glob);
+    if(plugins_tab.plugins[SPF_CALC] != NULL) {
+        /* Definition of the plugin argument */
+        if (plugins_tab.plugins[SPF_CALC]->arguments == NULL) {
+        	zlog_notice("malloc SPF CALC");
+            plugins_tab.plugins[SPF_CALC]->arguments = calloc(sizeof(struct arg_plugin_spf_calc), 1);
+            struct arg_plugin_spf_calc *plugin_arg = plugins_tab.plugins[SPF_CALC]->arguments;
+            plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+            plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+            plugin_arg->heap.heap_last_block = NULL;
+            plugins_tab.plugins[SPF_CALC]->heap = &plugin_arg->heap;
+            plugins_tab.plugins[SPF_CALC]->type_arg = ARG_PLUGIN_SPF_CALC;
+        }
+        zlog_notice("set SPF CALC");
+        struct arg_plugin_spf_calc *plugin_arg = plugins_tab.plugins[SPF_CALC]->arguments;
+        plugin_arg->area = area;
+    }
 	if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets_PRE[0] != NULL) {
 		for (int i = 0; i < MAX_NBR_PLUGLETS; i++) {
 			if (plugins_tab.plugins[SPF_CALC]->pluglets_PRE[i] == NULL) break;
@@ -1300,6 +1307,8 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		plugins_tab.plugins[SPF_CALC]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[SPF_CALC]->heap; // Context needs to know where is the heap of the pluglet
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglet_REP, plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
 	} else {
+        struct timeval start_spf;
+        monotime(&start_spf);
 
 		struct pqueue *candidate;
 		struct vertex *v;
@@ -1345,9 +1354,15 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		area->transit = OSPF_TRANSIT_FALSE;
 		area->shortcut_capability = 1;
 
-		for (;;) {
+        unsigned long time = 0;
+        int nbr_exec = 0;
+        for (;;) {
 			/* RFC2328 16.1. (2). */
-			ospf_spf_next(v, ospf, area, candidate);
+            struct timeval start;
+            monotime(&start);
+            ospf_spf_next(v, ospf, area, candidate);
+            time += monotime_since(&start, NULL);
+            nbr_exec++;
 
 			/* RFC2328 16.1. (3). */
 			/* If at this step the candidate list is empty, the shortest-
@@ -1410,7 +1425,9 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
          * as deconstructor.
          */
 		list_delete_all_node(&vertex_list);
-	}
+        zlog_notice("Time for SPF function: %ld", monotime_since(&start_spf, NULL));
+        zlog_notice("NBR exec SPF next: %d,  Time spent in SPF next: %ld", nbr_exec, time);
+    }
 
 	if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets_POST[0] != NULL) {
 		for (int i = 0; i < MAX_NBR_PLUGLETS; i++) {
@@ -1421,7 +1438,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			}
 		}
 	}
-	if(plugin_arg != NULL) free(plugin_arg);
+    zlog_notice("Time for SPF function with insertion point: %ld", monotime_since(&start_glob, NULL));
 }
 
 /* Timer for SPF calculation. */

@@ -202,18 +202,21 @@ static void ospf_dr_change(struct ospf *ospf, struct route_table *nbrs)
 
 static int ospf_dr_election(struct ospf_interface *oi)
 {
-	struct arg_plugin_dr_election *plugin_arg = NULL;
 	uint64_t ret;
 	if(plugins_tab.plugins[DR_ELECTION] != NULL) {
 		/* Definition of the plugin argument */
-		plugin_arg = calloc(sizeof(struct arg_plugin_dr_election), 1);
+		if (plugins_tab.plugins[DR_ELECTION]->arguments == NULL) {
+			plugins_tab.plugins[DR_ELECTION]->arguments = calloc(sizeof(struct arg_plugin_dr_election), 1);
+			struct arg_plugin_dr_election *plugin_arg = plugins_tab.plugins[DR_ELECTION]->arguments;
+			plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+			plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+			plugin_arg->heap.heap_last_block = NULL;
+			plugins_tab.plugins[DR_ELECTION]->heap = &plugin_arg->heap;
+			plugins_tab.plugins[DR_ELECTION]->arguments = (void *) plugin_arg;
+			plugins_tab.plugins[DR_ELECTION]->type_arg = ARG_PLUGIN_DR_ELECTION;
+		}
+		struct arg_plugin_dr_election *plugin_arg = plugins_tab.plugins[DR_ELECTION]->arguments;
 		plugin_arg->oi = oi;
-		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_last_block = NULL;
-		plugins_tab.plugins[DR_ELECTION]->heap = &plugin_arg->heap;
-		plugins_tab.plugins[DR_ELECTION]->arguments = (void *) plugin_arg;
-		plugins_tab.plugins[DR_ELECTION]->type_arg = ARG_PLUGIN_DR_ELECTION;
 	}
 	if(plugins_tab.plugins[DR_ELECTION] != NULL && plugins_tab.plugins[DR_ELECTION]->pluglets_PRE[0] != NULL) {
 		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
@@ -282,7 +285,6 @@ static int ospf_dr_election(struct ospf_interface *oi)
 			}
 		}
 	}
-	if(plugin_arg != NULL) free(plugin_arg);
 	return (int) ret;
 }
 
@@ -565,18 +567,21 @@ static const char *ospf_ism_event_str[] = {
 
 static void ism_change_state(struct ospf_interface *oi, int state)
 {
-	struct arg_plugin_ism_change_state *plugin_arg = NULL;
 	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL) {
 		/* Definition of the plugin argument */
-		plugin_arg = calloc(sizeof(struct arg_plugin_ism_change_state), 1);
+		if (plugins_tab.plugins[ISM_CHANGE_STATE]->arguments == NULL) {
+			plugins_tab.plugins[ISM_CHANGE_STATE]->arguments = calloc(sizeof(struct arg_plugin_ism_change_state), 1);
+			struct arg_plugin_ism_change_state *plugin_arg = plugins_tab.plugins[ISM_CHANGE_STATE]->arguments;
+			plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+			plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+			plugin_arg->heap.heap_last_block = NULL;
+			plugins_tab.plugins[ISM_CHANGE_STATE]->heap = &plugin_arg->heap;
+			plugins_tab.plugins[ISM_CHANGE_STATE]->arguments = (void *) plugin_arg;
+			plugins_tab.plugins[ISM_CHANGE_STATE]->type_arg = ISM_CHANGE_STATE;
+		}
+		struct arg_plugin_ism_change_state*plugin_arg = plugins_tab.plugins[ISM_CHANGE_STATE]->arguments;
 		plugin_arg->oi = oi;
 		plugin_arg->new_state = state;
-		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_last_block = NULL;
-		plugins_tab.plugins[ISM_CHANGE_STATE]->heap = &plugin_arg->heap;
-		plugins_tab.plugins[ISM_CHANGE_STATE]->arguments = (void *) plugin_arg;
-		plugins_tab.plugins[ISM_CHANGE_STATE]->type_arg = ARG_PLUGIN_ISM_CHANGE_STATE;
 	}
 	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets_PRE[0] != NULL) {
 		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
@@ -652,7 +657,6 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 			}
 		}
 	}
-	if(plugin_arg != NULL) free(plugin_arg);
 }
 
 /* Execute ISM event process. */

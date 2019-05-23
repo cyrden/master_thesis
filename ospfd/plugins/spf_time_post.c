@@ -15,5 +15,6 @@ uint64_t spf_count(void *data) {
     if(get_ospf_area(plugin_arg->area, &area) != 1) return 0;
     mon.area_id = area.area_id;
     mon.spf_count = area.spf_calculation;
+    plugin_free(t1);
     return send_data(SPF_CALC, (void *) &mon);
 }

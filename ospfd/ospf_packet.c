@@ -3731,17 +3731,21 @@ int ospf_hello_reply_timer(struct thread *thread)
 /* Send OSPF Hello. */
 void ospf_hello_send(struct ospf_interface *oi)
 {
-	struct arg_plugin_hello_send *plugin_arg = NULL;
 	if(plugins_tab.plugins[SEND_HELLO] != NULL) {
 		/* Definition of the plugin argument */
-		plugin_arg = calloc(sizeof(struct arg_plugin_hello_send), 1);
+		if(plugins_tab.plugins[SEND_HELLO]->arguments == NULL) {
+			zlog_notice("malloc SEND_HELLO");
+			plugins_tab.plugins[SEND_HELLO]->arguments = calloc(sizeof(struct arg_plugin_hello_send), 1);
+			struct arg_plugin_hello_send *plugin_arg = plugins_tab.plugins[SEND_HELLO]->arguments;
+			plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
+			plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
+			plugin_arg->heap.heap_last_block = NULL;
+			plugins_tab.plugins[SEND_HELLO]->heap = &plugin_arg->heap;
+			plugins_tab.plugins[SEND_HELLO]->type_arg = ARG_PLUGIN_HELLO_SEND;
+		}
+		zlog_notice("set SEND HELLO");
+		struct arg_plugin_hello_send *plugin_arg = plugins_tab.plugins[SEND_HELLO]->arguments;
 		plugin_arg->oi = oi;
-		plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
-		plugin_arg->heap.heap_last_block = NULL;
-		plugins_tab.plugins[SEND_HELLO]->heap = &plugin_arg->heap;
-		plugins_tab.plugins[SEND_HELLO]->arguments = (void *) plugin_arg;
-		plugins_tab.plugins[SEND_HELLO]->type_arg = ARG_PLUGIN_HELLO_SEND;
 	}
 	if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglets_PRE[0] != NULL) {
 		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
@@ -3832,7 +3836,6 @@ void ospf_hello_send(struct ospf_interface *oi)
 			}
 		}
 	}
-	if(plugin_arg != NULL) free(plugin_arg);
 }
 
 /* Send OSPF Database Description. */

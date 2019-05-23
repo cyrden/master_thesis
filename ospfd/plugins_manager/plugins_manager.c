@@ -51,6 +51,7 @@ static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int p
         }
         tab->plugins[id]->heap = NULL;
         tab->plugins[id]->type_arg = -1;
+        tab->plugins[id]->arguments = NULL;
     }
 
     pluglet_t *created_pluglet = NULL;
@@ -122,6 +123,9 @@ static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int p
 void release_all_plugins(void) {
     for(int i = 0; i < MAX_NBR_PLUGINS; i++) {
         if(plugins_tab.plugins[i] != NULL) {
+            if(plugins_tab.plugins[i]->arguments != NULL) {
+                free(plugins_tab.plugins[i]->arguments);
+            }
             release_elf(plugins_tab.plugins[i]->pluglet_REP);
             for(int j = 0; j < MAX_NBR_PLUGLETS; j++) {
                 release_elf(plugins_tab.plugins[i]->pluglets_PRE[j]);
@@ -156,14 +160,14 @@ void *plugins_manager(void *tab) {
     // TODO: The following lines will be removed. Just used for debugging purposes
     inject_pluglet((plugins_tab_t *) tab, MAIN, "/plugins/test_plugin.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, RCV_PACKET, "/plugins/rcv_packet.o", PRE);
-    //inject_pluglet((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
-    //inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
-    //inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
+    inject_pluglet((plugins_tab_t *) tab, SEND_HELLO, "/plugins/hello_count.o", PRE);
+    inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time.o", PRE);
+    inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/spf_time_post.o", POST);
     //inject_pluglet((plugins_tab_t *) tab, SEND_PACKET, "/plugins/send_packet.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
-    inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/originate_my_lsa.o", PRE);
-    inject_pluglet((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
+    //inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/originate_my_lsa.o", PRE);
+    //inject_pluglet((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
 
     /*while(1) { // In that loop receives messages from UI to inject plugins
         printf("Wait for message \n");

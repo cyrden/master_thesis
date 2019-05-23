@@ -79,7 +79,10 @@ struct arg_plugin_ism_change_state {
 #define ARG_PLUGIN_LSA_FLOOD 2
 struct arg_plugin_lsa_flood {
     heap_t heap;
-    struct ospf_lsa *lsa;
+    struct ospf *ospf;
+    struct ospf_neighbor *nbr;
+    struct ospf_lsa *current;
+    struct ospf_lsa *lsa; // = new
 };
 
 #define ARG_PLUGIN_SPF_CALC 3
