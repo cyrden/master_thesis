@@ -259,7 +259,6 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 	if(plugins_tab.plugins[LSA_FLOOD] != NULL) {
 		/* Definition of the plugin argument */
 		if (plugins_tab.plugins[LSA_FLOOD]->arguments == NULL) {
-			zlog_notice("malloc LSA_FLOOD");
 			plugins_tab.plugins[LSA_FLOOD]->arguments = calloc(sizeof(struct arg_plugin_lsa_flood), 1);
 			struct arg_plugin_lsa_flood *plugin_arg = plugins_tab.plugins[LSA_FLOOD]->arguments;
 			plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
@@ -268,7 +267,6 @@ int ospf_flood(struct ospf *ospf, struct ospf_neighbor *nbr,
 			plugins_tab.plugins[LSA_FLOOD]->heap = &plugin_arg->heap;
 			plugins_tab.plugins[LSA_FLOOD]->type_arg = ARG_PLUGIN_LSA_FLOOD;
 		}
-		zlog_notice("set LSA FLOOD");
 		struct arg_plugin_lsa_flood *plugin_arg = plugins_tab.plugins[LSA_FLOOD]->arguments;
 		plugin_arg->lsa = new;
 		plugin_arg->ospf = ospf;

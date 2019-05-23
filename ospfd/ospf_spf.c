@@ -1279,7 +1279,6 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
     if(plugins_tab.plugins[SPF_CALC] != NULL) {
         /* Definition of the plugin argument */
         if (plugins_tab.plugins[SPF_CALC]->arguments == NULL) {
-        	zlog_notice("malloc SPF CALC");
             plugins_tab.plugins[SPF_CALC]->arguments = calloc(sizeof(struct arg_plugin_spf_calc), 1);
             struct arg_plugin_spf_calc *plugin_arg = plugins_tab.plugins[SPF_CALC]->arguments;
             plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
@@ -1288,7 +1287,6 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
             plugins_tab.plugins[SPF_CALC]->heap = &plugin_arg->heap;
             plugins_tab.plugins[SPF_CALC]->type_arg = ARG_PLUGIN_SPF_CALC;
         }
-        zlog_notice("set SPF CALC");
         struct arg_plugin_spf_calc *plugin_arg = plugins_tab.plugins[SPF_CALC]->arguments;
         plugin_arg->area = area;
     }

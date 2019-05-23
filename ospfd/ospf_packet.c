@@ -3734,7 +3734,6 @@ void ospf_hello_send(struct ospf_interface *oi)
 	if(plugins_tab.plugins[SEND_HELLO] != NULL) {
 		/* Definition of the plugin argument */
 		if(plugins_tab.plugins[SEND_HELLO]->arguments == NULL) {
-			zlog_notice("malloc SEND_HELLO");
 			plugins_tab.plugins[SEND_HELLO]->arguments = calloc(sizeof(struct arg_plugin_hello_send), 1);
 			struct arg_plugin_hello_send *plugin_arg = plugins_tab.plugins[SEND_HELLO]->arguments;
 			plugin_arg->heap.heap_start = &plugin_arg->heap.mem;
@@ -3743,7 +3742,6 @@ void ospf_hello_send(struct ospf_interface *oi)
 			plugins_tab.plugins[SEND_HELLO]->heap = &plugin_arg->heap;
 			plugins_tab.plugins[SEND_HELLO]->type_arg = ARG_PLUGIN_HELLO_SEND;
 		}
-		zlog_notice("set SEND HELLO");
 		struct arg_plugin_hello_send *plugin_arg = plugins_tab.plugins[SEND_HELLO]->arguments;
 		plugin_arg->oi = oi;
 	}
