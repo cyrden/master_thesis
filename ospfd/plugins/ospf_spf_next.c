@@ -166,16 +166,22 @@ uint64_t ospf_spf_next(void *data)
         if(w_lsah == NULL) return 0;
         if(get_lsa_header(w_lsa_copy->data, w_lsah) != 1) return 0;
         if (w_lsah->ls_age == OSPF_LSA_MAXAGE) {
+            plugin_free(w_lsa_copy);
+            plugin_free(w_lsah);
             continue;
         }
 
         if (ospf_lsa_has_link(w_lsa_copy->data, v->lsa) < 0) {
+            plugin_free(w_lsa_copy);
+            plugin_free(w_lsah);
             continue;
         }
 
         /* (c) If vertex W is already on the shortest-path tree, examine
            the next link in the LSA. */
         if (w_lsa_copy->stat == LSA_SPF_IN_SPFTREE) {
+            plugin_free(w_lsa_copy);
+            plugin_free(w_lsah);
             continue;
         }
 
@@ -211,6 +217,8 @@ uint64_t ospf_spf_next(void *data)
             if(get_vertex(w, w_copy) != 1) return 0;
             /* if D is greater than. */
             if (w_copy->distance < distance) {
+                plugin_free(w_lsa_copy);
+                plugin_free(w_lsah);
                 continue;
             }
                 /* equal to. */
