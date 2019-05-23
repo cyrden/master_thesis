@@ -224,9 +224,9 @@ uint64_t compile_and_exec_jit(pluglet_t *pluglet, void *mem, size_t mem_len) {
     }
     pluglet->pluglet_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
     pluglet->pluglet_context->type_arg = pluglet->pluglet_context->parent_plugin->type_arg;
-    zlog_notice("Before fn");
+    current_context = pluglet->pluglet_context; // Set the current_context to the context of the pluglet we want to execute
+
     uint64_t ret = fn(mem, mem_len);
-    zlog_notice("After fn");
 
     pluglet->pluglet_context->original_arg = NULL;
     pluglet->pluglet_context->type_arg = -1;

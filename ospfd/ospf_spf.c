@@ -799,7 +799,7 @@ struct my_link {
 static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
 			  struct ospf_area *area, struct pqueue *candidate)
 {
-	int jit = 0;
+	int jit = 1;
     if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL) {
         /* Definition of the plugin argument */
         if(plugins_tab.plugins[OSPF_SPF_NEXT]->arguments == NULL) {
@@ -829,10 +829,8 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
     if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL && plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP != NULL) {
     	if(jit) {
             plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[OSPF_SPF_NEXT]->heap; // Context needs to know where is the heap of the pluglet
-            zlog_notice("SPF NEXT REP: before fn");
-            uint64_t ret = compile_and_exec_jit(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP,
+            compile_and_exec_jit(plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP,
                              plugins_tab.plugins[OSPF_SPF_NEXT]->arguments, sizeof(struct arg_plugin_ospf_spf_next));
-			zlog_notice("SPF NEXT REP: ret = %d", (int) ret);
 		}
     	else {
 			plugins_tab.plugins[OSPF_SPF_NEXT]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[OSPF_SPF_NEXT]->heap; // Context needs to know where is the heap of the pluglet
