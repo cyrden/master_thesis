@@ -61,7 +61,7 @@ uint64_t ospf_spf_next(void *data)
     p = ((uint8_t *) lsah) + OSPF_LSA_HEADER_SIZE + 4;
     lim = ((uint8_t *) lsah) + ((uint8_t) plugin_ntohs(lsah->length));
     struct ospf_lsa *test_lsa;
-    test_lsa = ospf_lsa_lookup(plugin_arg->ospf, plugin_arg->area, 13, v->id, v->id);
+    test_lsa = plugin_ospf_lsa_lookup(plugin_arg->ospf, plugin_arg->area, 13, v->id, v->id);
     while (p < lim) {
         struct vertex *w = NULL;
         unsigned int distance;
@@ -125,11 +125,11 @@ uint64_t ospf_spf_next(void *data)
                 case LSA_LINK_TYPE_POINTOPOINT:
                 case LSA_LINK_TYPE_VIRTUALLINK:
                     //print_helper(3);
-                    w_lsa = ospf_lsa_lookup(plugin_arg->ospf, plugin_arg->area, OSPF_ROUTER_LSA, l->link_id, l->link_id);
+                    w_lsa = plugin_ospf_lsa_lookup(plugin_arg->ospf, plugin_arg->area, OSPF_ROUTER_LSA, l->link_id, l->link_id);
                     break;
                 case LSA_LINK_TYPE_TRANSIT:
                     //print_helper(4);
-                    w_lsa = ospf_lsa_lookup_by_id(plugin_arg->area, OSPF_NETWORK_LSA, l->link_id);
+                    w_lsa = plugin_ospf_lsa_lookup_by_id(plugin_arg->area, OSPF_NETWORK_LSA, l->link_id);
                     //if(w_lsa) print_helper(20);
                     break;
                 default:
@@ -142,7 +142,7 @@ uint64_t ospf_spf_next(void *data)
             p += sizeof(struct in_addr);
 
             /* Lookup the vertex W's LSA. */
-            w_lsa = ospf_lsa_lookup_by_id(plugin_arg->area, OSPF_ROUTER_LSA, *r);
+            w_lsa = plugin_ospf_lsa_lookup_by_id(plugin_arg->area, OSPF_ROUTER_LSA, *r);
             //if(w_lsa) print_helper(6);
         }
 
@@ -171,7 +171,7 @@ uint64_t ospf_spf_next(void *data)
             continue;
         }
 
-        if (ospf_lsa_has_link(w_lsa_copy->data, v->lsa) < 0) {
+        if (plugin_ospf_lsa_has_link(w_lsa_copy->data, v->lsa) < 0) {
             plugin_free(w_lsa_copy);
             plugin_free(w_lsah);
             continue;
@@ -201,11 +201,11 @@ uint64_t ospf_spf_next(void *data)
         /* Is there already vertex W in candidate list? */
         if (w_lsa_copy->stat == LSA_SPF_NOT_EXPLORED) {
             /* prepare vertex W. */
-            w = ospf_vertex_new(w_lsa);
+            w = plugin_ospf_vertex_new(w_lsa);
 
             /* Calculate nexthop to W. */
-            if (my_ospf_nexthop_calculation(plugin_arg, w, l, distance, lsa_pos))
-                pqueue_enqueue(w, plugin_arg->candidate);
+            if (plugin_ospf_nexthop_calculation(plugin_arg, w, l, distance, lsa_pos))
+                plugin_pqueue_enqueue(w, plugin_arg->candidate);
             //else print_helper(11);
         } else if (w_lsa_copy->stat >= 0) {
             //print_helper(12);
@@ -225,7 +225,7 @@ uint64_t ospf_spf_next(void *data)
             else if (w_copy->distance == distance) {
                 /* Found an equal-cost path to W.
                  * Calculate nexthop of to W from V. */
-                my_ospf_nexthop_calculation(plugin_arg, w, l, distance, lsa_pos);
+                plugin_ospf_nexthop_calculation(plugin_arg, w, l, distance, lsa_pos);
             }
                 /* less than. */
             else {
@@ -236,7 +236,7 @@ uint64_t ospf_spf_next(void *data)
                  * which
                  * will flush the old parents
                  */
-                if (my_ospf_nexthop_calculation(plugin_arg, w, l, distance, lsa_pos))
+                if (plugin_ospf_nexthop_calculation(plugin_arg, w, l, distance, lsa_pos))
                     /* Decrease the key of the node in the
                      * heap.
                      * trickle-sort it up towards root, just
@@ -246,7 +246,7 @@ uint64_t ospf_spf_next(void *data)
                      * (next pqueu_{de,en}queue will fully
                      * re-heap the queue).
                      */
-                    trickle_up(w_lsa_copy->stat, plugin_arg->candidate);
+                    plugin_trickle_up(w_lsa_copy->stat, plugin_arg->candidate);
             }
             plugin_free(w_copy);
         } /* end W is already on the candidate list */

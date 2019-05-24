@@ -16,7 +16,6 @@ static void *readfile(const char *path, size_t maxlen, size_t *len);
 static int register_functions(struct ubpf_vm *vm) {
 
     /* Generic functions */
-    //if (ubpf_register(vm, 0x0e, "my_print", my_print) == -1) return 0;
     if (ubpf_register(vm, 0x01, "strcpy", strcpy) == -1) return 0;
     if (ubpf_register(vm, 0x02, "gettimeofday", gettimeofday) == -1) return 0;
     if (ubpf_register(vm, 0x0a, "plugin_ntohl", plugin_ntohl) == -1) return 0;
@@ -54,19 +53,19 @@ static int register_functions(struct ubpf_vm *vm) {
 
 
     /* Functions from OSPF */
-    if (ubpf_register(vm, 0x5, "my_ospf_flood_through_area", my_ospf_flood_through_area) == -1) return 0;
+    if (ubpf_register(vm, 0x5, "plugin_ospf_flood_through_area", plugin_ospf_flood_through_area) == -1) return 0;
     if (ubpf_register(vm, 0x6, "ospf_if_name_string", ospf_if_name_string) == -1) return 0;
-    if (ubpf_register(vm, 0x7, "my_ospf_lsa_install", my_ospf_lsa_install) == -1) return 0;
+    if (ubpf_register(vm, 0x7, "plugin_ospf_lsa_install", plugin_ospf_lsa_install) == -1) return 0;
     if (ubpf_register(vm, 0x8, "my_get_lsah", my_get_lsah) == -1) return 0; // TODO: this function is just help to print
-    if (ubpf_register(vm, 0x19, "trickle_up", trickle_up) == -1) return 0;
-    if (ubpf_register(vm, 0x1a, "ospf_lsa_has_link", ospf_lsa_has_link) == -1) return 0;
-    if (ubpf_register(vm, 0x1b, "ospf_lsa_lookup_by_id", ospf_lsa_lookup_by_id) == -1) return 0;
-    if (ubpf_register(vm, 0x1c, "ospf_lsa_lookup", ospf_lsa_lookup) == -1) return 0;
-    if (ubpf_register(vm, 0x1d, "my_ospf_nexthop_calculation", my_ospf_nexthop_calculation) == -1) return 0;
-    if (ubpf_register(vm, 0x1e, "pqueue_enqueue", pqueue_enqueue) == -1) return 0;
-    if (ubpf_register(vm, 0x1f, "ospf_vertex_new", ospf_vertex_new) == -1) return 0;
-    if (ubpf_register(vm, 0x2a, "my_lsa_link_broadcast_set", my_lsa_link_broadcast_set) == -1) return 0;
-    if (ubpf_register(vm, 0x2b, "ospf_my_lsa_new_and_data", ospf_my_lsa_new_and_data) == -1) return 0;
+    if (ubpf_register(vm, 0x19, "plugin_trickle_up", plugin_trickle_up) == -1) return 0;
+    if (ubpf_register(vm, 0x1a, "plugin_ospf_lsa_has_link", plugin_ospf_lsa_has_link) == -1) return 0;
+    if (ubpf_register(vm, 0x1b, "plugin_ospf_lsa_lookup_by_id", plugin_ospf_lsa_lookup_by_id) == -1) return 0;
+    if (ubpf_register(vm, 0x1c, "plugin_ospf_lsa_lookup", plugin_ospf_lsa_lookup) == -1) return 0;
+    if (ubpf_register(vm, 0x1d, "plugin_ospf_nexthop_calculation", plugin_ospf_nexthop_calculation) == -1) return 0;
+    if (ubpf_register(vm, 0x1e, "plugin_pqueue_enqueue", plugin_pqueue_enqueue) == -1) return 0;
+    if (ubpf_register(vm, 0x1f, "plugin_ospf_vertex_new", plugin_ospf_vertex_new) == -1) return 0;
+    if (ubpf_register(vm, 0x2a, "plugin_lsa_link_broadcast_set", plugin_lsa_link_broadcast_set) == -1) return 0;
+    if (ubpf_register(vm, 0x2b, "plugin_ospf_lsa_new_and_data", plugin_ospf_lsa_new_and_data) == -1) return 0;
 
 
 

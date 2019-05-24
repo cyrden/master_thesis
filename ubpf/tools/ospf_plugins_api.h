@@ -116,14 +116,6 @@ uint16_t plugin_ntohs(uint16_t value);
 
 uint32_t plugin_ntohl(uint32_t value);
 
-int ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v);
-
-unsigned int my_ospf_nexthop_calculation(struct arg_plugin_ospf_spf_next *s, struct vertex *w,
-                                      struct router_lsa_link *l,
-                                      unsigned int distance, int lsa_pos);
-
-struct vertex *ospf_vertex_new(struct ospf_lsa *lsa);
-
 uint64_t send_data(int type, void *txt);
 
 /* Getters */
@@ -154,16 +146,38 @@ int set_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy
 
 int set_ospf_area(struct ospf_area *area, struct ospf_area *area_copy);
 
-int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah);
+int my_get_lsah(struct ospf_lsa *lsa, struct lsa_header *lsah); // TODO: This is just used for print purposes, to be deleted
 
-/* OSPF functions */
+/* OSPF function needed prototypes */
 
-struct ospf_lsa *my_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi, struct ospf_lsa *lsa);
+struct vertex *ospf_vertex_new(struct ospf_lsa *lsa);
 
-int my_ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inbr, struct ospf_lsa *lsa);
+int ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v);
 
-int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi, uint32_t metric);
+/* plugin OSPF functions */
 
-struct ospf_lsa *ospf_my_lsa_new_and_data(struct stream *s, struct ospf_area *area);
+struct ospf_lsa *plugin_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi, struct ospf_lsa *lsa);
+
+int plugin_ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inbr, struct ospf_lsa *lsa);
+
+int plugin_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi, uint32_t metric);
+
+struct ospf_lsa *plugin_ospf_lsa_new_and_data(struct stream *s, struct ospf_area *area);
+
+unsigned int plugin_ospf_nexthop_calculation(struct arg_plugin_ospf_spf_next *s, struct vertex *w,
+                                             struct router_lsa_link *l,
+                                             unsigned int distance, int lsa_pos);
+
+int plugin_ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v);
+
+void plugin_trickle_up(int index, struct pqueue *queue);
+
+struct ospf_lsa *plugin_ospf_lsa_lookup_by_id(struct ospf_area *area, uint32_t type, struct in_addr id);
+
+struct ospf_lsa *plugin_ospf_lsa_lookup(struct ospf *ospf, struct ospf_area *area, uint32_t type, struct in_addr id, struct in_addr adv_router);
+
+void plugin_pqueue_enqueue(void *data, struct pqueue *queue);
+
+struct vertex *plugin_ospf_vertex_new(struct ospf_lsa *lsa);
 
 #endif //OSPF_PLUGINS_API_H

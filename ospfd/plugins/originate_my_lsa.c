@@ -92,10 +92,10 @@ uint64_t originate_my_lsa(void *data) {
                 switch (oi->type) {
                     case OSPF_IFTYPE_BROADCAST:
                         if(ifp->speed > 500) {
-                            links += my_lsa_link_broadcast_set(&s, oi_list_addresses[i], GREEN);
+                            links += plugin_lsa_link_broadcast_set(&s, oi_list_addresses[i], GREEN);
                         }
                         else{
-                            links += my_lsa_link_broadcast_set(&s, oi_list_addresses[i], RED);
+                            links += plugin_lsa_link_broadcast_set(&s, oi_list_addresses[i], RED);
                         }
                         break;
                 }
@@ -112,13 +112,13 @@ uint64_t originate_my_lsa(void *data) {
     /* Set length. */
 
     /* Now, create OSPF LSA instance. */
-    new = ospf_my_lsa_new_and_data(s, plugin_arg->area);
+    new = plugin_ospf_lsa_new_and_data(s, plugin_arg->area);
 
     plugin_free(s);
 
     if(new == NULL) return 0;
-    new = my_ospf_lsa_install(area->ospf, NULL, new);
-    int ret = my_ospf_flood_through_area(plugin_arg->area, NULL, new);
+    new = plugin_ospf_lsa_install(area->ospf, NULL, new);
+    int ret = plugin_ospf_flood_through_area(plugin_arg->area, NULL, new);
     if(ret == 0) return 0;
 
     plugin_free(ospf);

@@ -409,9 +409,46 @@ int set_ospf_interface(struct ospf_interface *oi, struct ospf_interface *oi_copy
 }
 
 
+/* OSPF functions */
+
+struct vertex *plugin_ospf_vertex_new(struct ospf_lsa *lsa) {
+    if(lsa == NULL) return NULL;
+    return ospf_vertex_new(lsa);
+}
+
+int plugin_ospf_lsa_has_link(struct lsa_header *w, struct lsa_header *v) {
+    if(w == NULL) return 0;
+    if(v == NULL) return 0;
+    return ospf_lsa_has_link(w, v);
+}
+
+void plugin_trickle_up(int index, struct pqueue *queue) {
+    if(queue == NULL) return;
+    trickle_up(index, queue);
+}
+
+struct ospf_lsa *plugin_ospf_lsa_lookup(struct ospf *ospf, struct ospf_area *area,
+                                 uint32_t type, struct in_addr id,
+                                 struct in_addr adv_router) {
+    if(ospf == NULL) return NULL;
+    if(area == NULL) return NULL;
+    return ospf_lsa_lookup(ospf, area, type, id, adv_router);
+}
+
+void plugin_pqueue_enqueue(void *data, struct pqueue *queue) {
+    if(data == NULL) return;
+    if(queue == NULL) return;
+    return pqueue_enqueue(data, queue);
+}
+
+struct ospf_lsa *plugin_ospf_lsa_lookup_by_id(struct ospf_area *area, uint32_t type,
+                                       struct in_addr id) {
+    if(area == NULL) return NULL;
+    return ospf_lsa_lookup_by_id(area, type, id);
+}
 
 
-struct ospf_lsa *my_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi, struct ospf_lsa *lsa) {
+struct ospf_lsa *plugin_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *oi, struct ospf_lsa *lsa) {
     pluglet_context_t *pluglet_context = current_context;
     if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
@@ -429,7 +466,7 @@ struct ospf_lsa *my_ospf_lsa_install(struct ospf *ospf, struct ospf_interface *o
     return lsa;
 }
 
-int my_ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inbr, struct ospf_lsa *lsa) {
+int plugin_ospf_flood_through_area(struct ospf_area *area, struct ospf_neighbor *inbr, struct ospf_lsa *lsa) {
     pluglet_context_t *pluglet_context = current_context;
     if(pluglet_context == NULL) { // check that plugin didn't send null pointer
         printf("NULL pointer \n");
@@ -454,9 +491,9 @@ unsigned int ospf_nexthop_calculation(struct ospf_area *area,
                                       struct router_lsa_link *l,
                                       unsigned int distance, int lsa_pos);
 
-unsigned int my_ospf_nexthop_calculation(struct arg_plugin_ospf_spf_next *s, struct vertex *w,
-                                         struct router_lsa_link *l,
-                                         unsigned int distance, int lsa_pos) {
+unsigned int plugin_ospf_nexthop_calculation(struct arg_plugin_ospf_spf_next *s, struct vertex *w,
+                                             struct router_lsa_link *l,
+                                             unsigned int distance, int lsa_pos) {
     struct ospf_area *area = s->area;
     struct vertex *v = s->v;
     ospf_nexthop_calculation(area, v, w, l, distance, lsa_pos);
@@ -565,7 +602,7 @@ static uint16_t my_ospf_link_cost(struct ospf_interface *oi)
 }
 
 /* Describe Broadcast Link. */
-int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi, uint32_t metric)
+int plugin_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi, uint32_t metric)
 {
     struct ospf_neighbor *dr;
     struct in_addr id, mask;
@@ -596,7 +633,7 @@ int my_lsa_link_broadcast_set(struct stream **s, struct ospf_interface *oi, uint
     }
 }
 
-struct ospf_lsa *ospf_my_lsa_new_and_data(struct stream *s, struct ospf_area *area) {
+struct ospf_lsa *plugin_ospf_lsa_new_and_data(struct stream *s, struct ospf_area *area) {
     int length = s->endp;
     struct lsa_header *lsah = (struct lsa_header *) s->data;
     lsah->length = htons(length);
