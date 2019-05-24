@@ -12,14 +12,14 @@
 #include "ubpf/vm/inc/ubpf.h"
 #include "ubpf/vm/ubpf_int.h"
 
-#define SIZE_EBPF_VM_HEAP 64000
+#define SIZE_PLUGIN_HEAP 64000
 #define MAX_NBR_PLUGLETS 10
 
 struct plugin;
 
 /* Structure that represents a heap */
 typedef struct heap {
-    char mem[SIZE_EBPF_VM_HEAP];
+    char mem[SIZE_PLUGIN_HEAP];
     void *heap_start;
     void *heap_end;
     void *heap_last_block;

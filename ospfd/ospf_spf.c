@@ -1283,8 +1283,8 @@ ospf_rtrs_print (struct route_table *rtrs)
 static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			       struct route_table *new_table,
 			       struct route_table *new_rtrs) {
-    struct timeval start_glob;
-    monotime(&start_glob);
+    //struct timeval start_glob;
+    //monotime(&start_glob);
     if(plugins_tab.plugins[SPF_CALC] != NULL) {
         /* Definition of the plugin argument */
         if (plugins_tab.plugins[SPF_CALC]->arguments == NULL) {
@@ -1299,10 +1299,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
         struct arg_plugin_spf_calc *plugin_arg = plugins_tab.plugins[SPF_CALC]->arguments;
         plugin_arg->area = area;
     }
-    unsigned long t1 = monotime_since(&start_glob, NULL);
-    zlog_notice("Time for preparing the plugin (calloc etc): %ld", t1);
     if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets_PRE[0] != NULL) {
-        zlog_notice("IN PRE");
 		for (int i = 0; i < MAX_NBR_PLUGLETS; i++) {
 			if (plugins_tab.plugins[SPF_CALC]->pluglets_PRE[i] == NULL) break;
 			else {
@@ -1311,18 +1308,13 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			}
 		}
 	}
-    unsigned long t2 = monotime_since(&start_glob, NULL);
-    zlog_notice("Time for PRE: %ld", t2 - t1);
     if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglet_REP != NULL) {
-        zlog_notice("In REP");
 		/* Definition of the plugin argument */
 		plugins_tab.plugins[SPF_CALC]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[SPF_CALC]->heap; // Context needs to know where is the heap of the pluglet
 		exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglet_REP, plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
 	} else {
-        zlog_notice("Time for REP: %ld", monotime_since(&start_glob, NULL) - t2);
-
-        struct timeval start_spf;
-        monotime(&start_spf);
+        //struct timeval start_spf;
+        //monotime(&start_spf);
 
 		struct pqueue *candidate;
 		struct vertex *v;
@@ -1368,15 +1360,15 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 		area->transit = OSPF_TRANSIT_FALSE;
 		area->shortcut_capability = 1;
 
-        unsigned long time = 0;
-        int nbr_exec = 0;
+        //unsigned long time = 0;
+        //int nbr_exec = 0;
         for (;;) {
 			/* RFC2328 16.1. (2). */
-            struct timeval start;
-            monotime(&start);
+            //struct timeval start;
+            //monotime(&start);
             ospf_spf_next(v, ospf, area, candidate);
-            time += monotime_since(&start, NULL);
-            nbr_exec++;
+            //time += monotime_since(&start, NULL);
+            //nbr_exec++;
 
 			/* RFC2328 16.1. (3). */
 			/* If at this step the candidate list is empty, the shortest-
@@ -1439,11 +1431,9 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
          * as deconstructor.
          */
 		list_delete_all_node(&vertex_list);
-        zlog_notice("Time for SPF function: %ld", monotime_since(&start_spf, NULL));
-        zlog_notice("NBR exec SPF next: %d,  Time spent in SPF next: %ld", nbr_exec, time);
+        //zlog_notice("Time for SPF function: %ld", monotime_since(&start_spf, NULL));
+        //zlog_notice("NBR exec SPF next: %d,  Time spent in SPF next: %ld", nbr_exec, time);
     }
-    struct timeval start_post;
-    monotime(&start_post);
 	if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglets_POST[0] != NULL) {
 	    zlog_notice("In POST");
 		for (int i = 0; i < MAX_NBR_PLUGLETS; i++) {
@@ -1454,8 +1444,7 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			}
 		}
 	}
-    zlog_notice("Time for POST: %ld", monotime_since(&start_post, NULL));
-    zlog_notice("Time for SPF function with insertion point: %ld", monotime_since(&start_glob, NULL));
+    //zlog_notice("Time for SPF function with insertion point: %ld", monotime_since(&start_glob, NULL));
 }
 
 /* Timer for SPF calculation. */

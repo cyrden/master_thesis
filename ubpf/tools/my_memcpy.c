@@ -54,7 +54,7 @@ typedef	int word;		/* "word" used for optimal copy speed */
  * This is the routine that actually implements
  * (the portable versions of) bcopy, memcpy, and memmove.
  */
-void * my_memcpy(void *dst0, const void *src0, size_t length)
+void * plugin_memcpy(void *dst0, const void *src0, size_t length)
 {
     char *dst = dst0;
     const char *src = src0;
@@ -116,7 +116,6 @@ void * my_memcpy(void *dst0, const void *src0, size_t length)
         TLOOP(*--dst = *--src);
     }
     done:
-    printf("TEST: my_memcpy \n");
     return (dst0);
 }
 
@@ -132,7 +131,7 @@ my_bcopy(const void *s1, void *s2, size_t n)
     memcpy(s2, s1, n);
 }*/
 
-void * __attribute__((weak)) my_memset(void * dest, int c, size_t n)
+void * __attribute__((weak)) plugin_memset(void *dest, int c, size_t n)
 {
     unsigned char *s = dest;
     size_t k;

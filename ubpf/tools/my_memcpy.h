@@ -59,7 +59,7 @@
 #ifndef MASTER_THESIS_MY_MEMCPY_H
 #define MASTER_THESIS_MY_MEMCPY_H
 
-void *my_memcpy(void *dest, const void *src, size_t count);
-void *my_memset(void *dest, int c, size_t count);
+void *plugin_memcpy(void *dest, const void *src, size_t count);
+void *plugin_memset(void *dest, int c, size_t count);
 
 #endif //MASTER_THESIS_MY_MEMCPY_H

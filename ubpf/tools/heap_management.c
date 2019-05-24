@@ -19,7 +19,7 @@
  * ALIGNMENT_FACTOR determines the smallest chunk of memory in bytes.
  * MAGIC_NUMBER is used to check if the pointer to be freed is valid.
  */
-#define MEM_BUFFER SIZE_EBPF_VM_HEAP
+#define MEM_BUFFER SIZE_PLUGIN_HEAP
 #define METADATA_SIZE (sizeof(meta_data))
 #define ALIGNMENT_FACTOR 4
 #define MAGIC_NUMBER 0123

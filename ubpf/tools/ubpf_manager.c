@@ -48,7 +48,7 @@ static int register_functions(struct ubpf_vm *vm) {
     if (ubpf_register(vm, 0x24, "plugin_malloc", plugin_malloc) == -1) return 0;
     if (ubpf_register(vm, 0x25, "plugin_free", plugin_free) == -1) return 0;
     if (ubpf_register(vm, 0x26, "plugin_realloc", plugin_realloc) == -1) return 0;
-    if (ubpf_register(vm, 0x27, "my_memcpy", my_memcpy) == -1) return 0;
+    if (ubpf_register(vm, 0x27, "plugin_memcpy", plugin_memcpy) == -1) return 0;
     if (ubpf_register(vm, 0x28, "plugin_malloc_with_id", plugin_malloc_with_id) == -1) return 0;
     if (ubpf_register(vm, 0x29, "plugin_get_memory_with_id", plugin_get_memory_with_id) == -1) return 0;
 
