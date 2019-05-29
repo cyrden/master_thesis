@@ -5,6 +5,10 @@
 #ifndef PROJECT_PLUGINS_H
 #define PROJECT_PLUGINS_H
 
+/* All these includes should be removed. The only include plugins should have is the ospf_plugins_api.h
+ * Although for the moment we keep them, it helps to have access to OSPF macros / define otherwise we have to hardcode the values
+ */
+
 #include <sys/time.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -50,8 +54,6 @@
 #include "libfrr.h"
 
 #include "../../ubpf/tools/ospf_plugins_api.h"
-#include "../../ubpf/tools/heap_management.h"
-#include "../../ubpf/tools/my_memcpy.h"
 #include "../monitoring_server/monitoring_server.h"
 
 

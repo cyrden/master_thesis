@@ -3,7 +3,9 @@
 //
 
 #include "plugins.h"
-
+/*
+ * Plugin that monitors the number of OSPF hello packets sent (+ itf speed & name)
+ */
 uint64_t hello_count(void *data) {
     struct arg_plugin_hello_send *plugin_arg = (struct arg_plugin_hello_send *) data;
     struct hello_struct *s1 = plugin_malloc(sizeof(struct hello_struct));

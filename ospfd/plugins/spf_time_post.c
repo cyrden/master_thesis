@@ -4,6 +4,7 @@
 
 #include "plugins.h"
 
+/* Gets a previous time in the heap and computes the execution time */
 uint64_t spf_count(void *data) {
     struct arg_plugin_spf_calc *plugin_arg = (struct arg_plugin_spf_calc *) data;
     struct timeval t2;

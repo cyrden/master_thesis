@@ -8,6 +8,7 @@
 
 static struct ospf_lsa *ospf_my_lsa_originate(struct ospf_area *area, struct ospf_area *area_copy);
 
+/* Plugin to create and originate a new LSA of a new type (13) carrying supplementary information for each link (a color) */
 uint64_t originate_my_lsa(void *data) {
     struct arg_plugin_spf_calc *plugin_arg = (struct arg_plugin_spf_calc *) data;
 
@@ -43,7 +44,6 @@ uint64_t originate_my_lsa(void *data) {
     struct stream *s;
     struct lsa_header *lsah;
     struct ospf_lsa *new;
-    int length;
 
     /* Create a stream for LSA. */
     s = plugin_malloc(sizeof(struct stream) + OSPF_MAX_LSA_SIZE);
@@ -80,7 +80,6 @@ uint64_t originate_my_lsa(void *data) {
     /* My links lsa set */
     int links = 0;
 
-    struct stream **test = &s;
     for (int i = 0; i < 3; i++) {
         struct ospf_interface *oi = oi_list[i];
         struct interface *ifp = i_list[i];
@@ -91,6 +90,9 @@ uint64_t originate_my_lsa(void *data) {
                 /* Describe each link. */
                 switch (oi->type) {
                     case OSPF_IFTYPE_BROADCAST:
+                        /* We only take care of Broadcast but this could be extended
+                         * The following condition is used to choose the color of the links. This could be changed based on the network operator will
+                         */
                         if(ifp->speed > 500) {
                             links += plugin_lsa_link_broadcast_set(&s, oi_list_addresses[i], GREEN);
                         }
@@ -105,11 +107,9 @@ uint64_t originate_my_lsa(void *data) {
         set_ospf_interface(oi_list_addresses[i], oi_list[i]);
     }
 
-    //cnt = my_lsa_link_set(&s, area, metric);
     /* Set # of links here. */
     s->data[putp] = (uint8_t)(cnt >> 8);
     s->data[putp + 1] = (uint8_t)cnt;
-    /* Set length. */
 
     /* Now, create OSPF LSA instance. */
     new = plugin_ospf_lsa_new_and_data(s, plugin_arg->area);
@@ -129,7 +129,8 @@ uint64_t originate_my_lsa(void *data) {
     for (int i=0; i<3; i++) {
         plugin_free(oi_list[i]);
     }
-    plugin_free(i_list);    for (int i=0; i<3; i++) {
+    plugin_free(i_list);
+    for (int i=0; i<3; i++) {
         plugin_free(i_list[i]);
     }
     plugin_free(i_list);

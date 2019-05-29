@@ -4,9 +4,9 @@
 
 #include "plugins.h"
 
+/* Plugin used to monitor the change of ISM state */
 uint64_t ism_change_state(void *data) {
     struct arg_plugin_ism_change_state *plugin_arg = (struct arg_plugin_ism_change_state *) data;
-
     struct ism_change_state *s = plugin_malloc(sizeof(struct ism_change_state));
     if(s == NULL) return 0;
     struct ospf_interface *oi_read = plugin_malloc(sizeof(struct ospf_interface));

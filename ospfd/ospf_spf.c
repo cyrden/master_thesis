@@ -870,51 +870,11 @@ static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
             /* In case of V is Router-LSA. */
             if (v->lsa->type == OSPF_ROUTER_LSA) {
                 l = (struct router_lsa_link *) p;
-                //zlog_notice("l->linkid = %s, link type: %d", inet_ntoa(l->link_id), (int) l->m[0].type);
-
-                // TODO: This is a try
-                /*int ignored = 0;
-                struct ospf_lsa *test_lsa = ospf_lsa_lookup(ospf, area,
-                                                            13,
-                                                            v->id, v->id);
-                //zlog_notice("test_lsa = ");
-                if (test_lsa != NULL) {
-                    print_helper(111);
-                    ospf_lsa_header_dump(test_lsa->data);
-                    uint8_t *my_p = ((uint8_t *) test_lsa->data) + OSPF_LSA_HEADER_SIZE + 4;
-                    while (my_p < ((uint8_t *) test_lsa->data) + ntohs(test_lsa->data->length)) {
-                        print_helper(112);
-                        //zlog_notice("lsa length = %d, sizeof my_link = %d", (int) (ntohs(test_lsa->data->length)),
-                                    (int) sizeof(struct my_link));
-                        struct my_link *my_link = (struct my_link *) my_p;
-                        //zlog_notice("l->linkid = %s", inet_ntoa(l->link_id));
-                        //zlog_notice("my link addr = %s", inet_ntoa(my_link->link_id));
-                        if (l->link_id.s_addr == my_link->link_id.s_addr) {
-                            print_helper(113);
-                            if (ntohl(my_link->color) == 14) {
-                                print_helper(114);
-                                ignored = 1;
-                                //zlog_notice("link %s has color %d and thus is ignored is SPF", inet_ntoa(my_link->link_id), ntohl(my_link->color));
-                                break;
-                            }
-                        }
-                        //zlog_notice("4");
-                        my_p += sizeof(struct my_link);
-                    }
-                } else {
-                    //zlog_notice("test_lsa = NULL");
-                }*/
 
                 lsa_pos = lsa_pos_next; /* LSA link position */
                 lsa_pos_next++;
                 p += (OSPF_ROUTER_LSA_LINK_SIZE
                       + (l->m[0].tos_count * OSPF_ROUTER_LSA_TOS_SIZE));
-                //zlog_notice("l->m[0].toscount = %d", (int) l->m[0].tos_count);
-
-                /*if (ignored) {
-                    //zlog_notice("ignored = 1 -> continue");
-                    continue;
-                }*/
 
                 /* (a) If this is a link to a stub network, examine the
                    next

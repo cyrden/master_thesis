@@ -4,6 +4,7 @@
 
 #include "plugins.h"
 
+/* Monitors the flooding procedure of LSAs */
 uint64_t lsa_flood(void *data) {
     struct arg_plugin_lsa_flood *plugin_arg = (struct arg_plugin_lsa_flood *) data;
     struct ospf_lsa lsa;

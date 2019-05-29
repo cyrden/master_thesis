@@ -4,7 +4,6 @@
 
 /*
  * The plugin manager will receive messages from a user interface and react accordingly by injecting plugins at specific positions.
- * For the moment the communication is not implemented and thus the plugin manager just loads plugins as wished by the programmer.
  */
 
 #include "plugins_manager.h"
@@ -12,7 +11,7 @@
 #include "../plugins/plugins.h"
 #include "lib/log.h"
 
-
+/* Buffer for the communication with the user (injection of plugins) */
 struct mesg_buffer {
     long mesg_type;
     char mesg_text[SIZE_MESG];
@@ -32,14 +31,14 @@ int plugins_tab_init(plugins_tab_t *tab) {
 }
 
 /*
- * Injects a pluglet (file elfname) at a specific insertion point (identified by the id)
+ * Injects a pluglet (file elfname) at a specific insertion point (identified by the id) and anchor
  */
-static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int pos) { // TODO: I should rename it inject_pluglet to be consistent ...
+static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int anchor) {
     if(id < 0 || id > MAX_NBR_PLUGINS-1) {
         fprintf(stderr, "Id not valid \n");
         return 0;
     }
-    if(tab->plugins[id] == NULL) { // First pluglet injected at this insertion point -> need to create the plugin
+    if(tab->plugins[id] == NULL) { // First pluglet injected at this insertion point, we need to create the plugin
         tab->plugins[id] = (plugin_t *) malloc(sizeof(plugin_t));
         if (!tab->plugins[id]) {
             return 0;
@@ -55,7 +54,7 @@ static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int p
     }
 
     pluglet_t *created_pluglet = NULL;
-    if(pos == PRE) {
+    if(anchor == PRE) {
         int i;
         for(i = 0; i < MAX_NBR_PLUGLETS; i++) {
             if(tab->plugins[id]->pluglets_PRE[i] == NULL){
@@ -69,7 +68,7 @@ static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int p
             return 0;
         }
     }
-    else if(pos == REP) {
+    else if(anchor == REP) {
         if(tab->plugins[id]->pluglet_REP != NULL) {
             fprintf(stderr, "Error, there is already a pluglet in REP mode \n");
             return 0;
@@ -77,7 +76,7 @@ static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int p
         tab->plugins[id]->pluglet_REP = malloc(sizeof(pluglet_t));
         created_pluglet = tab->plugins[id]->pluglet_REP;
     }
-    else if(pos == POST) {
+    else if(anchor == POST) {
         int i;
         for(i = 0; i < MAX_NBR_PLUGLETS; i++) {
             if(tab->plugins[id]->pluglets_POST[i] == NULL){
@@ -107,6 +106,7 @@ static int inject_pluglet(plugins_tab_t *tab, int id, const char *elfname, int p
      */
     if(load_elf_file(created_pluglet, elfname) == NULL) return 0;
 
+    /* Init of the pluglet context */
     if(created_pluglet->pluglet_context == NULL) {
         created_pluglet->pluglet_context = malloc(sizeof(pluglet_context_t));
         created_pluglet->pluglet_context->original_arg = NULL;
@@ -167,21 +167,21 @@ void *plugins_manager(void *tab) {
     //inject_pluglet((plugins_tab_t *) tab, LSA_FLOOD, "/plugins/lsa_flood.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, ISM_CHANGE_STATE, "/plugins/ism_change_state.o", PRE);
     //inject_pluglet((plugins_tab_t *) tab, SPF_CALC, "/plugins/originate_my_lsa.o", PRE);
-    inject_pluglet((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
+    //inject_pluglet((plugins_tab_t *) tab, OSPF_SPF_NEXT, "/plugins/ospf_spf_next.o", REP);
 
-    /*while(1) { // In that loop receives messages from UI to inject plugins
+    while(1) { // In that loop receives messages from CLI to inject plugins
         printf("Wait for message \n");
         if (msgrcv(msgid, &message, sizeof(message), 0, 0) != -1) { // blocking call
-            int loc;
-            int pos;
-            pos = ((int) message.mesg_type) % 100;
-            loc = (((int) message.mesg_type) - pos) / 100;
-            if(!inject_pluglet((plugins_tab_t *) tab, loc, (const char *) message.mesg_text, pos)) {
+            int insertion_point;
+            int anchor;
+            anchor = ((int) message.mesg_type) % 100;
+            insertion_point = (((int) message.mesg_type) - anchor) / 100;
+            if(!inject_pluglet((plugins_tab_t *) tab, insertion_point, (const char *) message.mesg_text, anchor)) {
                 zlog_notice("Failed to inject plugin \n");
             }
         }
         else {
-            if(errno == EINTR) { // Because FRR is sending signals that are making msgrcv to fail ...
+            if(errno == EINTR) { // Because FRR is sending signals that are making msgrcv to fail ... This solution is not perfect though
                 perror("EINTR");
                 sleep(1);
                 continue;
@@ -190,7 +190,7 @@ void *plugins_manager(void *tab) {
             zlog_notice("Error while receiving message \n");
             return NULL;
         }
-    }*/
+    }
     return NULL;
 }
 

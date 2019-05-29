@@ -35,7 +35,7 @@ struct my_lsa {
         uint8_t tos;
         uint16_t metric;
         uint32_t color;
-    } link[3]; // TODO: Here I modified 1 into 3. Only way I found for the moment for my malloc to accept up to 3 links instead of 1 ...
+    } link[3];
 };
 
 void my_ospf_packet_dump(struct stream *s);

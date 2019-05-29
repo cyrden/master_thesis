@@ -7,6 +7,7 @@
 
 #include "ospf_plugins_api.h"
 
+/* Plugins heap management functions */
 
 void *plugin_malloc(unsigned int size);
 void plugin_free(void *ptr);

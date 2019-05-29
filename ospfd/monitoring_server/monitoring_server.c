@@ -3,7 +3,7 @@
 //
 
 /*
- * This file implements a server that reads messages in a queue. Messages are put by plugins. It then treats them in some ways that depends of the type of plugin.
+ * This file implements a server that reads messages in a kernel queue. Messages are put by plugins. It then treats them in some ways that depends of the type of plugin.
  * The communication is highly inspired from https://www.geeksforgeeks.org/ipc-using-message-queues/
  */
 
@@ -117,7 +117,6 @@ int main(int argc, char **argv) {
             return 0;
         }
     }
-    /* TODO: Never reached for the moment, need to delete the queue in signal handler or something else */
     // to destroy the message queue (never reached for the moment)
     msgctl(msgid, IPC_RMID, NULL);
     return 0;

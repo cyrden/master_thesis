@@ -11,8 +11,9 @@ struct mesg_buffer {
 } message;
 
 /*
- * CLI user interface. Allow the user to load a BPF file as a plugin at a position he choose in the code.
+ * CLI user interface. Allow the user to load BPF files as plugins at a positions he chooses in the code.
  * Sends messages to the plugins manager accordingly to what user asked for.
+ * User must provide a manifesto (.txt file formatted as plugins/input_file.txt)
  */
 int main(int argc, char **argv) {
     key_t key;
@@ -47,8 +48,8 @@ int main(int argc, char **argv) {
     while(fgets (line, 100, fp) != NULL) {
         int i = 0;
         char filename[100];
-        long location = -1;
-        long position = -1;
+        long insertion_point = -1;
+        long anchor = -1;
         char *ptr = strtok(line, " ");
         while(ptr != NULL)
         {
@@ -58,12 +59,12 @@ int main(int argc, char **argv) {
                 printf("%s \n", ptr);
             }
             else if(i == 2) {
-                location = strtol(ptr, NULL, 10);
-                printf("%ld \n", location);
+                insertion_point = strtol(ptr, NULL, 10);
+                printf("%ld \n", insertion_point);
             }
             else if(i == 3) {
-                position = strtol(ptr, NULL, 10);
-                printf("%ld \n", position);
+                anchor = strtol(ptr, NULL, 10);
+                printf("%ld \n", anchor);
             }
             else {
                 printf("Error \n");
@@ -75,10 +76,10 @@ int main(int argc, char **argv) {
             printf("Invalid line \n");
             return 0;
         }
-        message.mesg_type = location*100+position;
+        message.mesg_type = insertion_point*100+anchor;
         strcpy((void *) message.mesg_text, (void *) filename);
         if(msgsnd(msgid, &message, sizeof(message), 0) != -1) {
-            printf("--> Plugin at location %s sent to plugins_manager at location %d, position %d \n", message.mesg_text, (int) location, (int) position);
+            printf("--> Plugin at insertion_point %s sent to plugins_manager at insertion_point %d, anchor %d \n", message.mesg_text, (int) insertion_point, (int) anchor);
         }
         else {
             printf("Error while sending message \n");

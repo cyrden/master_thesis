@@ -58,6 +58,8 @@ typedef struct plugin {
     int type_arg;
 } plugin_t;
 
+
+
 /*
  * Loads an elf file in a ubpf virtual machine (pos specifies which pluglet it is). The elf file should be BPF bytecode
  */
@@ -73,6 +75,9 @@ int release_elf(pluglet_t *pluglet);
  */
 uint64_t exec_loaded_code(pluglet_t *pluglet, void *mem, size_t mem_len);
 
+/*
+ * Executes the jitted code. If it is the first execution, JIT compiles it as well
+ */
 uint64_t compile_and_exec_jit(pluglet_t *pluglet, void *mem, size_t mem_len);
 
 #endif //FRR_THESIS_UBPF_MANAGER_H

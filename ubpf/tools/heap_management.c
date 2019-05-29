@@ -49,14 +49,11 @@ static unsigned int align_size(unsigned int size) {
  */
 static void *my_sbrk(intptr_t increment) {
     if (current_context->heap->heap_end + increment - current_context->heap->heap_start > MEM_BUFFER) {
-        //zlog_notice("my sbrk -1: heap end= %p, heap start = %p, increment = %ld", current_context->heap->heap_end, current_context->heap->heap_start, increment);
         /* Out of memory */
-        //return (void *) -1;
         return NULL;
     }
 
     current_context->heap->heap_end += increment;
-    //zlog_notice("my sbrk NOT -1: return heap end= %p, heap start = %p, increment = %ld", current_context->heap->heap_end, current_context->heap->heap_start, increment);
     return current_context->heap->heap_end;
 }
 
@@ -103,12 +100,8 @@ static void *extend(unsigned int size) {
         //zlog_notice("No more memory");
         return NULL;
     }
-    //int *flag = (int *) my_sbrk(size + METADATA_SIZE);
     void *flag = my_sbrk(size + METADATA_SIZE);
-    //zlog_notice("extend: flag = %p", flag);
-    //if (*flag == -1) {
     if(flag == NULL) {
-        //zlog_notice("flag = NULL");
         return NULL;
     }
     new_block->size = size;
@@ -140,21 +133,16 @@ void *plugin_malloc(unsigned int size) {
     size = align_size(size);
     void *slot;
     if (current_context->heap->heap_start){
-        //zlog_notice("Heap starts at: %p and ends at: %p", current_context->heap->heap_start, current_context->heap->heap_end);
-        //zlog_notice("Context has arg of type: %d ", current_context->type_arg);
         slot = find_slot(size);
         if (slot) {
-            //zlog_notice("Slot found");
             if (((meta_data *) slot)->size > size + METADATA_SIZE) {
                 divide_slot(slot, size);
             }
         } else {
-            //zlog_notice("Slot not found -> extend");
             slot = extend(size);
         }
     } else {
         current_context->heap->heap_start = my_sbrk(0);
-        //zlog_notice("Heap starts at: %p", current_context->heap->heap_start);
         slot = extend(size);
     }
 
@@ -178,21 +166,16 @@ void *plugin_malloc_with_id(unsigned int id, unsigned int size) {
     size = align_size(size);
     void *slot;
     if (current_context->heap->heap_start){
-        //zlog_notice("Heap starts at: %p and ends at: %p", current_context->heap->heap_start, current_context->heap->heap_end);
-        //zlog_notice("Context has arg of type: %d ", current_context->type_arg);
         slot = find_slot(size);
         if (slot) {
-            //zlog_notice("Slot found");
             if (((meta_data *) slot)->size > size + METADATA_SIZE) {
                 divide_slot(slot, size);
             }
         } else {
-            //zlog_notice("Slot not found -> extend");
             slot = extend(size);
         }
     } else {
         current_context->heap->heap_start = my_sbrk(0);
-        //zlog_notice("Heap starts at: %p", current_context->heap->heap_start);
         slot = extend(size);
     }
 

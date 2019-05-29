@@ -97,6 +97,7 @@ static void sighup(void)
     zlog_info("SIGHUP received");
 }
 
+/* Lock for the current_context of execution of a pluglet */
 pthread_mutex_t lock_current_context;
 
 /* SIGINT / SIGTERM handler. */
@@ -147,18 +148,19 @@ FRR_DAEMON_INFO(ospfd, OSPF, .vty_port = OSPF_VTY_PORT,
                 .n_yang_modules = array_size(ospfd_yang_modules), )
 
 
-
-plugins_tab_t plugins_tab; // struct which is a tab that contains all the plugins, need to be accessed from all files
+/* Structure that contains pointer to all plugins injected, need to be accessed from all files */
+plugins_tab_t plugins_tab;
+/* Pointer to the courrent context of execution of a bytecode */
 pluglet_context_t *current_context;
-pthread_t th_user_msg;
 
 /* OSPFd main routine. */
 int main(int argc, char **argv)
 {
-    if(plugins_tab_init(&plugins_tab) != 1) { // Initialization of the tab of plugins
+    /* Plugins related structures initialisation */
+    if(plugins_tab_init(&plugins_tab) != 1) {
         fprintf(stderr, "Error while initiating the plugins tab");
     }
-    current_context = NULL; // init current_context
+    current_context = NULL;
     if (pthread_mutex_init(&lock_current_context, NULL) != 0)
     {
         printf("\n mutex init failed\n");
@@ -255,21 +257,21 @@ int main(int argc, char **argv)
     frr_config_fork();
 
     /*
-     * Added by Cyril
      * Launch a thread in charge of handling user messages to inject plugins dynamically
      * The thread needs to be launched after frr_config_fork() because is it the "daemonization". Otherwise it stops
+     * The thread launches the plugin_manager function
      */
     pthread_t th_user_msg;
     if(pthread_create (&th_user_msg, NULL, plugins_manager, (void *) &plugins_tab) != 0) {
         fprintf(stderr, "Error when creating thread");
         return EXIT_FAILURE;
     }
-    if(pthread_detach(th_user_msg) != 0) { // Detach the thread so that it releases resources automatically (thread is infinite loop)
+    if(pthread_detach(th_user_msg) != 0) { // Detach the thread so that it releases resources automatically when process ends (thread is infinite loop)
         fprintf(stderr, "Error when detaching thread");
         return EXIT_FAILURE;
     }
-    sleep(1); // wait for one second (for test plugin, could be removed)
-    if(plugins_tab.plugins[MAIN] != NULL) {
+    sleep(1); // TODO: wait for one second (for test plugin, could be removed)
+    if(plugins_tab.plugins[MAIN] != NULL) { // TODO: This is just a test to see if plugins are injected and if the monitoring server receives data
         struct test *t = malloc(sizeof(struct test));
         t->a = 8;
         t->b = 101;

@@ -4,6 +4,7 @@
 
 /*
  * All these functions were taken from "ospf_dump.c". We just made some small modifications
+ * These functions are just used to print OSPF structures in the monitoring server
  */
 
 #include "print_helpers.h"

@@ -8,7 +8,7 @@
 #include "../../ubpf/tools/ubpf_manager.h"
 
 #define MAX_NBR_PLUGINS 30 // Defines the maximum number of plugins that can be loaded (=size of the tab)
-#define SIZE_MESG 300
+#define SIZE_MESG 300 // Size of the message buffer for communication between user and plugin manager and between plugins and monitoring server
 
 typedef struct plugins_tab {
     plugin_t *plugins[MAX_NBR_PLUGINS];

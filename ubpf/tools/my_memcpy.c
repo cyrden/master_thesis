@@ -119,18 +119,6 @@ void * plugin_memcpy(void *dst0, const void *src0, size_t length)
     return (dst0);
 }
 
-/*void *
-my_memmove(void *s1, const void *s2, size_t n)
-{
-    return memcpy(s1, s2, n);
-}
-
-void
-my_bcopy(const void *s1, void *s2, size_t n)
-{
-    memcpy(s2, s1, n);
-}*/
-
 void * __attribute__((weak)) plugin_memset(void *dest, int c, size_t n)
 {
     unsigned char *s = dest;

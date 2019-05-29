@@ -37,6 +37,8 @@
 #include "plist.h"
 
 #include "ospfd/monitoring_server/monitoring_server.h"
+#include "heap_management.h"
+#include "my_memcpy.h"
 
 /*
  * PRE, POST, REPLACE
