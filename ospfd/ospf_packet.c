@@ -3749,14 +3749,12 @@ void ospf_hello_send(struct ospf_interface *oi)
 		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
 			if(plugins_tab.plugins[SEND_HELLO]->pluglets_PRE[i] == NULL) break;
 			else {
-				plugins_tab.plugins[SEND_HELLO]->pluglets_PRE[i]->pluglet_context->heap = plugins_tab.plugins[SEND_HELLO]->heap; // Context needs to know where is the heap of the pluglet
 				exec_loaded_code(plugins_tab.plugins[SEND_HELLO]->pluglets_PRE[i], plugins_tab.plugins[SEND_HELLO]->arguments, sizeof(struct arg_plugin_hello_send));
 			}
 		}
 	}
 
 	if(plugins_tab.plugins[SEND_HELLO] != NULL && plugins_tab.plugins[SEND_HELLO]->pluglet_REP != NULL) {
-		plugins_tab.plugins[SEND_HELLO]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[SEND_HELLO]->heap; // Context needs to know where is the heap of the pluglet
 		exec_loaded_code(plugins_tab.plugins[SEND_HELLO]->pluglet_REP, plugins_tab.plugins[SEND_HELLO]->arguments, sizeof(struct arg_plugin_hello_send));
 	} else {
 
@@ -3829,7 +3827,6 @@ void ospf_hello_send(struct ospf_interface *oi)
 		for(int i = 0; i < MAX_NBR_PLUGLETS; i++) {
 			if(plugins_tab.plugins[SEND_HELLO]->pluglets_POST[i] == NULL) break;
 			else {
-				plugins_tab.plugins[SEND_HELLO]->pluglets_POST[i]->pluglet_context->heap = plugins_tab.plugins[SEND_HELLO]->heap; // Context needs to know where is the heap of the pluglet
 				exec_loaded_code(plugins_tab.plugins[SEND_HELLO]->pluglets_POST[i], plugins_tab.plugins[SEND_HELLO]->arguments, sizeof(struct arg_plugin_hello_send));
 			}
 		}

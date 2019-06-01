@@ -189,6 +189,7 @@ uint64_t exec_loaded_code(pluglet_t *pluglet, void *mem, size_t mem_len) {
     }
 
     pluglet->pluglet_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
+    pluglet->pluglet_context->heap = pluglet->pluglet_context->parent_plugin->heap;
     pluglet->pluglet_context->type_arg = pluglet->pluglet_context->parent_plugin->type_arg;
 
     current_context = pluglet->pluglet_context; // Set the current_context to the context of the pluglet we want to execute
@@ -222,6 +223,7 @@ uint64_t compile_and_exec_jit(pluglet_t *pluglet, void *mem, size_t mem_len) {
         return 1;
     }
     pluglet->pluglet_context->original_arg = mem; // the plugin context has a pointer to the original argument. No need to malloc because it is just a pointer.
+    pluglet->pluglet_context->heap = pluglet->pluglet_context->parent_plugin->heap;
     pluglet->pluglet_context->type_arg = pluglet->pluglet_context->parent_plugin->type_arg;
     current_context = pluglet->pluglet_context; // Set the current_context to the context of the pluglet we want to execute
 
