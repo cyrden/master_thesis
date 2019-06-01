@@ -799,7 +799,7 @@ struct my_link {
 static void ospf_spf_next(struct vertex *v, struct ospf *ospf,
 			  struct ospf_area *area, struct pqueue *candidate)
 {
-	int jit = 1;
+	int jit = 0;
     if(plugins_tab.plugins[OSPF_SPF_NEXT] != NULL) {
         /* Definition of the plugin argument */
         if(plugins_tab.plugins[OSPF_SPF_NEXT]->arguments == NULL) {
@@ -1264,15 +1264,17 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			if (plugins_tab.plugins[SPF_CALC]->pluglets_PRE[i] == NULL) break;
 			else {
 				plugins_tab.plugins[SPF_CALC]->pluglets_PRE[i]->pluglet_context->heap = plugins_tab.plugins[SPF_CALC]->heap; // Context needs to know where is the heap of the pluglet
-				exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglets_PRE[i], plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
-			}
+				uint64_t ret = exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglets_PRE[i], plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
+                if(ret == 0) zlog_notice("RET = 0: spf_calc PRE");
+            }
 		}
 	}
     if (plugins_tab.plugins[SPF_CALC] != NULL && plugins_tab.plugins[SPF_CALC]->pluglet_REP != NULL) {
 		/* Definition of the plugin argument */
 		plugins_tab.plugins[SPF_CALC]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[SPF_CALC]->heap; // Context needs to know where is the heap of the pluglet
-		exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglet_REP, plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
-	} else {
+		uint64_t ret = exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglet_REP, plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
+        if(ret == 0) zlog_notice("RET = 0: spf_calc REP");
+    } else {
         //struct timeval start_spf;
         //monotime(&start_spf);
 
@@ -1400,8 +1402,9 @@ static void ospf_spf_calculate(struct ospf *ospf, struct ospf_area *area,
 			if (plugins_tab.plugins[SPF_CALC]->pluglets_POST[i] == NULL) break;
 			else {
 				plugins_tab.plugins[SPF_CALC]->pluglets_POST[i]->pluglet_context->heap = plugins_tab.plugins[SPF_CALC]->heap; // Context needs to know where is the heap of the pluglet
-				exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglets_POST[i], plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
-			}
+				uint64_t ret = exec_loaded_code(plugins_tab.plugins[SPF_CALC]->pluglets_POST[i], plugins_tab.plugins[SPF_CALC]->arguments, sizeof(struct arg_plugin_spf_calc));
+                if(ret == 0) zlog_notice("RET = 0: spf_calc POST");
+            }
 		}
 	}
     //zlog_notice("Time for SPF function with insertion point: %ld", monotime_since(&start_glob, NULL));

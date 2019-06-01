@@ -19,8 +19,7 @@ uint64_t originate_my_lsa(void *data) {
     area->ospf= ospf;
 
     struct ospf_interface **oi_list = (struct ospf_interface **) plugin_malloc(sizeof(struct ospf_interface *) * 3);
-    struct ospf_interface **oi_list_addresses = (struct ospf_interface **) plugin_malloc(
-            sizeof(struct ospf_interface *) * 3);
+    struct ospf_interface **oi_list_addresses = (struct ospf_interface **) plugin_malloc(sizeof(struct ospf_interface *) * 3);
     if(oi_list == NULL) return 0;
     struct interface **i_list = (struct interface **) plugin_malloc(sizeof(struct interface *) * 3);
     if(i_list == NULL) return 0;
@@ -127,13 +126,12 @@ uint64_t originate_my_lsa(void *data) {
     my_get_lsah(new, &print_lsah);
 
     for (int i=0; i<3; i++) {
+        plugin_free(i_list[i]);
         plugin_free(oi_list[i]);
     }
     plugin_free(i_list);
-    for (int i=0; i<3; i++) {
-        plugin_free(i_list[i]);
-    }
-    plugin_free(i_list);
+    plugin_free(oi_list);
+    plugin_free(oi_list_addresses);
 
 
     return send_data(SPF_LSA, (void *) &print_lsah);

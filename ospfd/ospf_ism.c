@@ -223,13 +223,15 @@ static int ospf_dr_election(struct ospf_interface *oi)
 			if(plugins_tab.plugins[DR_ELECTION]->pluglets_PRE[i] == NULL) break;
 			else {
 				plugins_tab.plugins[DR_ELECTION]->pluglets_PRE[i]->pluglet_context->heap = plugins_tab.plugins[DR_ELECTION]->heap; // Context needs to know where is the heap of the pluglet
-				exec_loaded_code(plugins_tab.plugins[DR_ELECTION]->pluglets_PRE[i], plugins_tab.plugins[DR_ELECTION]->arguments, sizeof(struct arg_plugin_dr_election));
+				uint64_t ret = exec_loaded_code(plugins_tab.plugins[DR_ELECTION]->pluglets_PRE[i], plugins_tab.plugins[DR_ELECTION]->arguments, sizeof(struct arg_plugin_dr_election));
+				if(ret == 0) zlog_notice("RET = 0: dr_election PRE");
 			}
 		}
 	}
 	if(plugins_tab.plugins[DR_ELECTION] != NULL && plugins_tab.plugins[DR_ELECTION]->pluglet_REP != NULL) {
 		plugins_tab.plugins[DR_ELECTION]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[DR_ELECTION]->heap; // Context needs to know where is the heap of the pluglet
 		ret = exec_loaded_code(plugins_tab.plugins[DR_ELECTION]->pluglet_REP, plugins_tab.plugins[DR_ELECTION]->arguments, sizeof(struct arg_plugin_dr_election));
+		if(ret == 0) zlog_notice("RET = 0: dr election REP");
 	}
 	else {
 		struct in_addr old_dr, old_bdr;
@@ -282,6 +284,7 @@ static int ospf_dr_election(struct ospf_interface *oi)
 			else {
 				plugins_tab.plugins[DR_ELECTION]->pluglets_POST[i]->pluglet_context->heap = plugins_tab.plugins[DR_ELECTION]->heap; // Context needs to know where is the heap of the pluglet
 				exec_loaded_code(plugins_tab.plugins[DR_ELECTION]->pluglets_POST[i], plugins_tab.plugins[DR_ELECTION]->arguments, sizeof(struct arg_plugin_dr_election));
+				if(ret == 0) zlog_notice("RET = 0: dr election POST");
 			}
 		}
 	}
@@ -576,8 +579,7 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 			plugin_arg->heap.heap_end = &plugin_arg->heap.mem;
 			plugin_arg->heap.heap_last_block = NULL;
 			plugins_tab.plugins[ISM_CHANGE_STATE]->heap = &plugin_arg->heap;
-			plugins_tab.plugins[ISM_CHANGE_STATE]->arguments = (void *) plugin_arg;
-			plugins_tab.plugins[ISM_CHANGE_STATE]->type_arg = ISM_CHANGE_STATE;
+			plugins_tab.plugins[ISM_CHANGE_STATE]->type_arg = ARG_PLUGIN_ISM_CHANGE_STATE;
 		}
 		struct arg_plugin_ism_change_state*plugin_arg = plugins_tab.plugins[ISM_CHANGE_STATE]->arguments;
 		plugin_arg->oi = oi;
@@ -588,13 +590,15 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 			if(plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets_PRE[i] == NULL) break;
 			else {
 				plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets_PRE[i]->pluglet_context->heap = plugins_tab.plugins[ISM_CHANGE_STATE]->heap; // Context needs to know where is the heap of the pluglet
-				exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets_PRE[i], plugins_tab.plugins[ISM_CHANGE_STATE]->arguments, sizeof(struct arg_plugin_ism_change_state));
+				uint64_t ret = exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets_PRE[i], plugins_tab.plugins[ISM_CHANGE_STATE]->arguments, sizeof(struct arg_plugin_ism_change_state));
+				if(ret == 0) zlog_notice("RET = 0: ospf ism PRE");
 			}
 		}
 	}
 	if(plugins_tab.plugins[ISM_CHANGE_STATE] != NULL && plugins_tab.plugins[ISM_CHANGE_STATE]->pluglet_REP != NULL) {
 		plugins_tab.plugins[ISM_CHANGE_STATE]->pluglet_REP->pluglet_context->heap = plugins_tab.plugins[ISM_CHANGE_STATE]->heap; // Context needs to know where is the heap of the pluglet
-		exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE]->pluglet_REP, plugins_tab.plugins[ISM_CHANGE_STATE]->arguments, sizeof(struct arg_plugin_ism_change_state));
+		uint64_t  ret = exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE]->pluglet_REP, plugins_tab.plugins[ISM_CHANGE_STATE]->arguments, sizeof(struct arg_plugin_ism_change_state));
+		if(ret == 0) zlog_notice("RET = 0: ospf ism REP");
 	}
 	else {
 
@@ -653,7 +657,8 @@ static void ism_change_state(struct ospf_interface *oi, int state)
 			if(plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets_POST[i] == NULL) break;
 			else {
 				plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets_POST[i]->pluglet_context->heap = plugins_tab.plugins[ISM_CHANGE_STATE]->heap; // Context needs to know where is the heap of the pluglet
-				exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets_POST[i], plugins_tab.plugins[ISM_CHANGE_STATE]->arguments, sizeof(struct arg_plugin_ism_change_state));
+				uint64_t ret = exec_loaded_code(plugins_tab.plugins[ISM_CHANGE_STATE]->pluglets_POST[i], plugins_tab.plugins[ISM_CHANGE_STATE]->arguments, sizeof(struct arg_plugin_ism_change_state));
+				if(ret == 0) zlog_notice("RET = 0: ospf ism POST");
 			}
 		}
 	}
