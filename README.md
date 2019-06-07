@@ -137,12 +137,12 @@ sudo /usr/bin/ospfd -d -f /etc/frr/ospfd.conf -i /tmp/ospfd.pid -z /tmp/zebra.ap
 ### Injecting plugins in OSPF
 To inject plugin in OSPF, you must run the user CLI
 ```
-./ospfd/plugins\_manager/plugins\_ui
+./ospfd/plugins_manager/plugins_ui
 ```
 Then you can input the path to your manifesto file. A sample file is available in ospfd/plugins/manifesto\_example.txt
 
 ### Run the monitoring server
 To run the monitoring server (monitoring are sending some datas to it) use the following command
 ```
-./ospfd/monitoring\_server/monitoring\_server
+./ospfd/monitoring_server/monitoring_server
 ```

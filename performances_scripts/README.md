@@ -11,7 +11,7 @@ To reproduce the performances graphs showed in the master thesis manuscript, you
 ### Generating a IPMIninet topology file
 To generate an IPMininet script for a given topology you just need to provide the graphML\_to\_IPMininet.py script with a .graphml file that describes your topology. Use it as follows:
 ```
-python graphML\_to\_IPmininet.py -f 'your\_file'
+python graphML_to_IPmininet.py -f 'your_file'
 ``` 
 GtsCe.graphml.xml is an example of a graphml topology file.
 GTS_CE-IPMininet.py is the file produced by the script for this topology.
