@@ -1,0 +1,6 @@
+{
+  "pre_start": [
+    "/usr/bin/zebra -f /etc/frr/zebra.conf -i /tmp/zebra.pid -z /tmp/zebra.api -u root -k"
+  ],
+  "monit": "/usr/bin/ospfd -f /etc/frr/ospfd.conf -i /tmp/ospfd.pid -z /tmp/zebra.api -u root"
+}

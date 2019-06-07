@@ -1,0 +1,3221 @@
+2019/05/24 06:33:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:33:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:33:34 OSPF: SPF Processing Time(usecs): 162
+2019/05/24 06:33:34 OSPF: 	    SPF Time: 115
+2019/05/24 06:33:34 OSPF: 	   InterArea: 1
+2019/05/24 06:33:34 OSPF: 	       Prune: 0
+2019/05/24 06:33:34 OSPF: 	RouteInstall: 33
+2019/05/24 06:33:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:33:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:33:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:33:43 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:33:43 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:33:43 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:33:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:33:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:33:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:33:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:33:43 OSPF: SPF Processing Time(usecs): 111
+2019/05/24 06:33:43 OSPF: 	    SPF Time: 95
+2019/05/24 06:33:43 OSPF: 	   InterArea: 1
+2019/05/24 06:33:43 OSPF: 	       Prune: 1
+2019/05/24 06:33:43 OSPF: 	RouteInstall: 4
+2019/05/24 06:33:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:33:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:33:43 OSPF: SPF Processing Time(usecs): 148
+2019/05/24 06:33:43 OSPF: 	    SPF Time: 91
+2019/05/24 06:33:43 OSPF: 	   InterArea: 0
+2019/05/24 06:33:43 OSPF: 	       Prune: 0
+2019/05/24 06:33:43 OSPF: 	RouteInstall: 44
+2019/05/24 06:33:43 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:33:48 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:33:48 OSPF: SPF Processing Time(usecs): 194
+2019/05/24 06:33:48 OSPF: 	    SPF Time: 138
+2019/05/24 06:33:48 OSPF: 	   InterArea: 1
+2019/05/24 06:33:48 OSPF: 	       Prune: 1
+2019/05/24 06:33:48 OSPF: 	RouteInstall: 36
+2019/05/24 06:33:48 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:33:48 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:33:48 OSPF: SPF Processing Time(usecs): 167
+2019/05/24 06:33:48 OSPF: 	    SPF Time: 137
+2019/05/24 06:33:48 OSPF: 	   InterArea: 0
+2019/05/24 06:33:48 OSPF: 	       Prune: 0
+2019/05/24 06:33:48 OSPF: 	RouteInstall: 20
+2019/05/24 06:33:48 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:33:53 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:33:53 OSPF: SPF Processing Time(usecs): 7667
+2019/05/24 06:33:53 OSPF: 	    SPF Time: 6463
+2019/05/24 06:33:53 OSPF: 	   InterArea: 1
+2019/05/24 06:33:53 OSPF: 	       Prune: 18
+2019/05/24 06:33:53 OSPF: 	RouteInstall: 1160
+2019/05/24 06:33:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:34:33 OSPF: Terminating on signal
+2019/05/24 06:34:33 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:34:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:34:33 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:34:33 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:34:33 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:34:33 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:34:33 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:34:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:35:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:35:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:35:44 OSPF: SPF Processing Time(usecs): 164
+2019/05/24 06:35:44 OSPF: 	    SPF Time: 117
+2019/05/24 06:35:44 OSPF: 	   InterArea: 1
+2019/05/24 06:35:44 OSPF: 	       Prune: 1
+2019/05/24 06:35:44 OSPF: 	RouteInstall: 33
+2019/05/24 06:35:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:35:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:35:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:35:53 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:35:53 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:35:53 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:35:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:35:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:35:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:35:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:35:53 OSPF: SPF Processing Time(usecs): 138
+2019/05/24 06:35:53 OSPF: 	    SPF Time: 119
+2019/05/24 06:35:53 OSPF: 	   InterArea: 1
+2019/05/24 06:35:53 OSPF: 	       Prune: 1
+2019/05/24 06:35:53 OSPF: 	RouteInstall: 7
+2019/05/24 06:35:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:35:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:35:53 OSPF: SPF Processing Time(usecs): 190
+2019/05/24 06:35:53 OSPF: 	    SPF Time: 126
+2019/05/24 06:35:53 OSPF: 	   InterArea: 1
+2019/05/24 06:35:53 OSPF: 	       Prune: 0
+2019/05/24 06:35:53 OSPF: 	RouteInstall: 46
+2019/05/24 06:35:53 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:35:56 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:35:56 OSPF: SPF Processing Time(usecs): 265
+2019/05/24 06:35:56 OSPF: 	    SPF Time: 164
+2019/05/24 06:35:56 OSPF: 	   InterArea: 2
+2019/05/24 06:35:56 OSPF: 	       Prune: 1
+2019/05/24 06:35:56 OSPF: 	RouteInstall: 79
+2019/05/24 06:35:56 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 06:35:56 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:35:56 OSPF: SPF Processing Time(usecs): 231
+2019/05/24 06:35:56 OSPF: 	    SPF Time: 171
+2019/05/24 06:35:56 OSPF: 	   InterArea: 1
+2019/05/24 06:35:56 OSPF: 	       Prune: 1
+2019/05/24 06:35:56 OSPF: 	RouteInstall: 48
+2019/05/24 06:35:56 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:36:03 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:36:03 OSPF: SPF Processing Time(usecs): 8124
+2019/05/24 06:36:03 OSPF: 	    SPF Time: 7000
+2019/05/24 06:36:03 OSPF: 	   InterArea: 1
+2019/05/24 06:36:03 OSPF: 	       Prune: 20
+2019/05/24 06:36:03 OSPF: 	RouteInstall: 1076
+2019/05/24 06:36:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:36:43 OSPF: Terminating on signal
+2019/05/24 06:36:43 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:36:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:36:43 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:36:43 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:36:43 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:36:43 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:36:43 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:36:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:36:43 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:36:43 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:37:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:37:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:37:54 OSPF: SPF Processing Time(usecs): 188
+2019/05/24 06:37:54 OSPF: 	    SPF Time: 136
+2019/05/24 06:37:54 OSPF: 	   InterArea: 1
+2019/05/24 06:37:54 OSPF: 	       Prune: 1
+2019/05/24 06:37:54 OSPF: 	RouteInstall: 32
+2019/05/24 06:37:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:38:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:38:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:38:03 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:38:03 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:38:03 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:38:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:38:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:38:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:38:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:38:03 OSPF: SPF Processing Time(usecs): 218
+2019/05/24 06:38:03 OSPF: 	    SPF Time: 200
+2019/05/24 06:38:03 OSPF: 	   InterArea: 1
+2019/05/24 06:38:03 OSPF: 	       Prune: 1
+2019/05/24 06:38:03 OSPF: 	RouteInstall: 5
+2019/05/24 06:38:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:38:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:38:03 OSPF: SPF Processing Time(usecs): 205
+2019/05/24 06:38:03 OSPF: 	    SPF Time: 137
+2019/05/24 06:38:03 OSPF: 	   InterArea: 2
+2019/05/24 06:38:03 OSPF: 	       Prune: 1
+2019/05/24 06:38:03 OSPF: 	RouteInstall: 53
+2019/05/24 06:38:03 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:38:08 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:38:08 OSPF: SPF Processing Time(usecs): 203
+2019/05/24 06:38:08 OSPF: 	    SPF Time: 146
+2019/05/24 06:38:08 OSPF: 	   InterArea: 1
+2019/05/24 06:38:08 OSPF: 	       Prune: 1
+2019/05/24 06:38:08 OSPF: 	RouteInstall: 36
+2019/05/24 06:38:08 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:38:08 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:38:08 OSPF: SPF Processing Time(usecs): 182
+2019/05/24 06:38:08 OSPF: 	    SPF Time: 152
+2019/05/24 06:38:08 OSPF: 	   InterArea: 1
+2019/05/24 06:38:08 OSPF: 	       Prune: 1
+2019/05/24 06:38:08 OSPF: 	RouteInstall: 19
+2019/05/24 06:38:08 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:38:13 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:38:13 OSPF: SPF Processing Time(usecs): 8610
+2019/05/24 06:38:13 OSPF: 	    SPF Time: 7349
+2019/05/24 06:38:13 OSPF: 	   InterArea: 1
+2019/05/24 06:38:13 OSPF: 	       Prune: 21
+2019/05/24 06:38:13 OSPF: 	RouteInstall: 1211
+2019/05/24 06:38:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:38:53 OSPF: Terminating on signal
+2019/05/24 06:38:53 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:38:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:38:53 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:38:53 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:38:53 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:38:53 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:38:53 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:38:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:38:53 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:38:53 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:40:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:40:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:40:04 OSPF: SPF Processing Time(usecs): 188
+2019/05/24 06:40:04 OSPF: 	    SPF Time: 140
+2019/05/24 06:40:04 OSPF: 	   InterArea: 1
+2019/05/24 06:40:04 OSPF: 	       Prune: 1
+2019/05/24 06:40:04 OSPF: 	RouteInstall: 33
+2019/05/24 06:40:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:40:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:40:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:40:13 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:40:13 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:40:13 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:40:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:40:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:40:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:40:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:40:13 OSPF: SPF Processing Time(usecs): 131
+2019/05/24 06:40:13 OSPF: 	    SPF Time: 116
+2019/05/24 06:40:13 OSPF: 	   InterArea: 1
+2019/05/24 06:40:13 OSPF: 	       Prune: 1
+2019/05/24 06:40:13 OSPF: 	RouteInstall: 4
+2019/05/24 06:40:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:40:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:40:13 OSPF: SPF Processing Time(usecs): 127
+2019/05/24 06:40:13 OSPF: 	    SPF Time: 75
+2019/05/24 06:40:13 OSPF: 	   InterArea: 1
+2019/05/24 06:40:13 OSPF: 	       Prune: 1
+2019/05/24 06:40:13 OSPF: 	RouteInstall: 41
+2019/05/24 06:40:13 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:40:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:40:14 OSPF: SPF Processing Time(usecs): 258
+2019/05/24 06:40:14 OSPF: 	    SPF Time: 185
+2019/05/24 06:40:14 OSPF: 	   InterArea: 1
+2019/05/24 06:40:14 OSPF: 	       Prune: 1
+2019/05/24 06:40:14 OSPF: 	RouteInstall: 59
+2019/05/24 06:40:14 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 06:40:14 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:40:14 OSPF: SPF Processing Time(usecs): 210
+2019/05/24 06:40:14 OSPF: 	    SPF Time: 155
+2019/05/24 06:40:14 OSPF: 	   InterArea: 1
+2019/05/24 06:40:14 OSPF: 	       Prune: 1
+2019/05/24 06:40:14 OSPF: 	RouteInstall: 44
+2019/05/24 06:40:14 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:40:23 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:40:23 OSPF: SPF Processing Time(usecs): 8387
+2019/05/24 06:40:23 OSPF: 	    SPF Time: 7208
+2019/05/24 06:40:23 OSPF: 	   InterArea: 1
+2019/05/24 06:40:23 OSPF: 	       Prune: 20
+2019/05/24 06:40:23 OSPF: 	RouteInstall: 1130
+2019/05/24 06:40:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:41:03 OSPF: Terminating on signal
+2019/05/24 06:41:03 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:41:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:41:03 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:41:03 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:41:03 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:41:03 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:41:03 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:41:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:42:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:42:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:42:14 OSPF: SPF Processing Time(usecs): 191
+2019/05/24 06:42:14 OSPF: 	    SPF Time: 135
+2019/05/24 06:42:14 OSPF: 	   InterArea: 1
+2019/05/24 06:42:14 OSPF: 	       Prune: 1
+2019/05/24 06:42:14 OSPF: 	RouteInstall: 30
+2019/05/24 06:42:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:42:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:42:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:42:23 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:42:23 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:42:23 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:42:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:42:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:42:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:42:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:42:23 OSPF: SPF Processing Time(usecs): 114
+2019/05/24 06:42:23 OSPF: 	    SPF Time: 100
+2019/05/24 06:42:23 OSPF: 	   InterArea: 1
+2019/05/24 06:42:23 OSPF: 	       Prune: 1
+2019/05/24 06:42:23 OSPF: 	RouteInstall: 4
+2019/05/24 06:42:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:42:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:42:23 OSPF: SPF Processing Time(usecs): 138
+2019/05/24 06:42:23 OSPF: 	    SPF Time: 89
+2019/05/24 06:42:23 OSPF: 	   InterArea: 1
+2019/05/24 06:42:23 OSPF: 	       Prune: 0
+2019/05/24 06:42:23 OSPF: 	RouteInstall: 38
+2019/05/24 06:42:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:42:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:42:23 OSPF: SPF Processing Time(usecs): 153
+2019/05/24 06:42:23 OSPF: 	    SPF Time: 104
+2019/05/24 06:42:23 OSPF: 	   InterArea: 1
+2019/05/24 06:42:23 OSPF: 	       Prune: 1
+2019/05/24 06:42:23 OSPF: 	RouteInstall: 38
+2019/05/24 06:42:23 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 06:42:26 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:42:26 OSPF: SPF Processing Time(usecs): 223
+2019/05/24 06:42:26 OSPF: 	    SPF Time: 140
+2019/05/24 06:42:26 OSPF: 	   InterArea: 1
+2019/05/24 06:42:26 OSPF: 	       Prune: 1
+2019/05/24 06:42:26 OSPF: 	RouteInstall: 61
+2019/05/24 06:42:26 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:42:26 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:42:26 OSPF: SPF Processing Time(usecs): 223
+2019/05/24 06:42:26 OSPF: 	    SPF Time: 173
+2019/05/24 06:42:26 OSPF: 	   InterArea: 1
+2019/05/24 06:42:26 OSPF: 	       Prune: 0
+2019/05/24 06:42:26 OSPF: 	RouteInstall: 38
+2019/05/24 06:42:26 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:42:33 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:42:33 OSPF: SPF Processing Time(usecs): 7985
+2019/05/24 06:42:33 OSPF: 	    SPF Time: 6811
+2019/05/24 06:42:33 OSPF: 	   InterArea: 1
+2019/05/24 06:42:33 OSPF: 	       Prune: 19
+2019/05/24 06:42:33 OSPF: 	RouteInstall: 1129
+2019/05/24 06:42:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:43:13 OSPF: Terminating on signal
+2019/05/24 06:43:13 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:43:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:43:13 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:43:13 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:43:13 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:43:13 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:43:13 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:43:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:43:13 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:43:13 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:44:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:44:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:44:24 OSPF: SPF Processing Time(usecs): 178
+2019/05/24 06:44:24 OSPF: 	    SPF Time: 129
+2019/05/24 06:44:24 OSPF: 	   InterArea: 1
+2019/05/24 06:44:24 OSPF: 	       Prune: 1
+2019/05/24 06:44:24 OSPF: 	RouteInstall: 35
+2019/05/24 06:44:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:44:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:44:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:44:33 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:44:33 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:44:33 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:44:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:44:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:44:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:44:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:44:33 OSPF: SPF Processing Time(usecs): 117
+2019/05/24 06:44:33 OSPF: 	    SPF Time: 100
+2019/05/24 06:44:33 OSPF: 	   InterArea: 1
+2019/05/24 06:44:33 OSPF: 	       Prune: 1
+2019/05/24 06:44:33 OSPF: 	RouteInstall: 5
+2019/05/24 06:44:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:44:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:44:33 OSPF: SPF Processing Time(usecs): 185
+2019/05/24 06:44:33 OSPF: 	    SPF Time: 122
+2019/05/24 06:44:33 OSPF: 	   InterArea: 1
+2019/05/24 06:44:33 OSPF: 	       Prune: 1
+2019/05/24 06:44:33 OSPF: 	RouteInstall: 49
+2019/05/24 06:44:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:44:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:44:33 OSPF: SPF Processing Time(usecs): 214
+2019/05/24 06:44:33 OSPF: 	    SPF Time: 147
+2019/05/24 06:44:33 OSPF: 	   InterArea: 1
+2019/05/24 06:44:33 OSPF: 	       Prune: 1
+2019/05/24 06:44:33 OSPF: 	RouteInstall: 53
+2019/05/24 06:44:33 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 06:44:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:44:34 OSPF: SPF Processing Time(usecs): 233
+2019/05/24 06:44:34 OSPF: 	    SPF Time: 168
+2019/05/24 06:44:34 OSPF: 	   InterArea: 1
+2019/05/24 06:44:34 OSPF: 	       Prune: 1
+2019/05/24 06:44:34 OSPF: 	RouteInstall: 51
+2019/05/24 06:44:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:44:34 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:44:34 OSPF: SPF Processing Time(usecs): 185
+2019/05/24 06:44:34 OSPF: 	    SPF Time: 151
+2019/05/24 06:44:34 OSPF: 	   InterArea: 1
+2019/05/24 06:44:34 OSPF: 	       Prune: 1
+2019/05/24 06:44:34 OSPF: 	RouteInstall: 22
+2019/05/24 06:44:34 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:44:43 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:44:43 OSPF: SPF Processing Time(usecs): 8627
+2019/05/24 06:44:43 OSPF: 	    SPF Time: 7427
+2019/05/24 06:44:43 OSPF: 	   InterArea: 2
+2019/05/24 06:44:43 OSPF: 	       Prune: 21
+2019/05/24 06:44:43 OSPF: 	RouteInstall: 1150
+2019/05/24 06:44:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:45:23 OSPF: Terminating on signal
+2019/05/24 06:45:23 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:45:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:45:23 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:45:23 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:45:23 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:45:23 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:45:23 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:45:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:45:23 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:45:23 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:46:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:46:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:46:34 OSPF: SPF Processing Time(usecs): 178
+2019/05/24 06:46:34 OSPF: 	    SPF Time: 131
+2019/05/24 06:46:34 OSPF: 	   InterArea: 1
+2019/05/24 06:46:34 OSPF: 	       Prune: 1
+2019/05/24 06:46:34 OSPF: 	RouteInstall: 33
+2019/05/24 06:46:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:46:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:46:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:46:43 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:46:43 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:46:43 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:46:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:46:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:46:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:46:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:46:43 OSPF: SPF Processing Time(usecs): 99
+2019/05/24 06:46:43 OSPF: 	    SPF Time: 86
+2019/05/24 06:46:43 OSPF: 	   InterArea: 1
+2019/05/24 06:46:43 OSPF: 	       Prune: 1
+2019/05/24 06:46:43 OSPF: 	RouteInstall: 3
+2019/05/24 06:46:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:46:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:46:43 OSPF: SPF Processing Time(usecs): 141
+2019/05/24 06:46:43 OSPF: 	    SPF Time: 88
+2019/05/24 06:46:43 OSPF: 	   InterArea: 1
+2019/05/24 06:46:43 OSPF: 	       Prune: 1
+2019/05/24 06:46:43 OSPF: 	RouteInstall: 41
+2019/05/24 06:46:43 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:46:48 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:46:48 OSPF: SPF Processing Time(usecs): 213
+2019/05/24 06:46:48 OSPF: 	    SPF Time: 158
+2019/05/24 06:46:48 OSPF: 	   InterArea: 1
+2019/05/24 06:46:48 OSPF: 	       Prune: 1
+2019/05/24 06:46:48 OSPF: 	RouteInstall: 33
+2019/05/24 06:46:48 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:46:48 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:46:48 OSPF: SPF Processing Time(usecs): 163
+2019/05/24 06:46:48 OSPF: 	    SPF Time: 134
+2019/05/24 06:46:48 OSPF: 	   InterArea: 1
+2019/05/24 06:46:48 OSPF: 	       Prune: 1
+2019/05/24 06:46:48 OSPF: 	RouteInstall: 20
+2019/05/24 06:46:48 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:46:53 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:46:53 OSPF: SPF Processing Time(usecs): 9690
+2019/05/24 06:46:53 OSPF: 	    SPF Time: 8190
+2019/05/24 06:46:53 OSPF: 	   InterArea: 1
+2019/05/24 06:46:53 OSPF: 	       Prune: 25
+2019/05/24 06:46:53 OSPF: 	RouteInstall: 1441
+2019/05/24 06:46:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:47:33 OSPF: Terminating on signal
+2019/05/24 06:47:33 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:47:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:47:33 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:47:33 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:47:33 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:47:33 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:47:33 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:47:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:47:33 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:47:33 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:48:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:48:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:48:44 OSPF: SPF Processing Time(usecs): 159
+2019/05/24 06:48:44 OSPF: 	    SPF Time: 115
+2019/05/24 06:48:44 OSPF: 	   InterArea: 1
+2019/05/24 06:48:44 OSPF: 	       Prune: 1
+2019/05/24 06:48:44 OSPF: 	RouteInstall: 31
+2019/05/24 06:48:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:48:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:48:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:48:53 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:48:53 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:48:53 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:48:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:48:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:48:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:48:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:48:53 OSPF: SPF Processing Time(usecs): 150
+2019/05/24 06:48:53 OSPF: 	    SPF Time: 132
+2019/05/24 06:48:53 OSPF: 	   InterArea: 1
+2019/05/24 06:48:53 OSPF: 	       Prune: 1
+2019/05/24 06:48:53 OSPF: 	RouteInstall: 6
+2019/05/24 06:48:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:48:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:48:53 OSPF: SPF Processing Time(usecs): 235
+2019/05/24 06:48:53 OSPF: 	    SPF Time: 162
+2019/05/24 06:48:53 OSPF: 	   InterArea: 1
+2019/05/24 06:48:53 OSPF: 	       Prune: 1
+2019/05/24 06:48:53 OSPF: 	RouteInstall: 57
+2019/05/24 06:48:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:48:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:48:53 OSPF: SPF Processing Time(usecs): 208
+2019/05/24 06:48:53 OSPF: 	    SPF Time: 133
+2019/05/24 06:48:53 OSPF: 	   InterArea: 1
+2019/05/24 06:48:53 OSPF: 	       Prune: 1
+2019/05/24 06:48:53 OSPF: 	RouteInstall: 62
+2019/05/24 06:48:53 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 06:48:58 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:48:58 OSPF: SPF Processing Time(usecs): 249
+2019/05/24 06:48:58 OSPF: 	    SPF Time: 173
+2019/05/24 06:48:58 OSPF: 	   InterArea: 1
+2019/05/24 06:48:58 OSPF: 	       Prune: 1
+2019/05/24 06:48:58 OSPF: 	RouteInstall: 52
+2019/05/24 06:48:58 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:48:58 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:48:58 OSPF: SPF Processing Time(usecs): 196
+2019/05/24 06:48:58 OSPF: 	    SPF Time: 150
+2019/05/24 06:48:58 OSPF: 	   InterArea: 1
+2019/05/24 06:48:58 OSPF: 	       Prune: 1
+2019/05/24 06:48:58 OSPF: 	RouteInstall: 32
+2019/05/24 06:48:58 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:49:03 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:49:03 OSPF: SPF Processing Time(usecs): 8876
+2019/05/24 06:49:03 OSPF: 	    SPF Time: 7635
+2019/05/24 06:49:03 OSPF: 	   InterArea: 2
+2019/05/24 06:49:03 OSPF: 	       Prune: 21
+2019/05/24 06:49:03 OSPF: 	RouteInstall: 1191
+2019/05/24 06:49:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:49:43 OSPF: Terminating on signal
+2019/05/24 06:49:43 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:49:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:49:43 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:49:43 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:49:43 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:49:43 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:49:43 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:49:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:49:43 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:49:43 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:50:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:50:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:50:54 OSPF: SPF Processing Time(usecs): 165
+2019/05/24 06:50:54 OSPF: 	    SPF Time: 123
+2019/05/24 06:50:54 OSPF: 	   InterArea: 1
+2019/05/24 06:50:54 OSPF: 	       Prune: 1
+2019/05/24 06:50:54 OSPF: 	RouteInstall: 28
+2019/05/24 06:50:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:51:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:51:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:51:03 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:51:03 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:51:03 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:51:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:51:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:51:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:51:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:51:03 OSPF: SPF Processing Time(usecs): 149
+2019/05/24 06:51:03 OSPF: 	    SPF Time: 119
+2019/05/24 06:51:03 OSPF: 	   InterArea: 1
+2019/05/24 06:51:03 OSPF: 	       Prune: 1
+2019/05/24 06:51:03 OSPF: 	RouteInstall: 5
+2019/05/24 06:51:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:51:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:51:03 OSPF: SPF Processing Time(usecs): 144
+2019/05/24 06:51:03 OSPF: 	    SPF Time: 79
+2019/05/24 06:51:03 OSPF: 	   InterArea: 0
+2019/05/24 06:51:03 OSPF: 	       Prune: 1
+2019/05/24 06:51:03 OSPF: 	RouteInstall: 52
+2019/05/24 06:51:03 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:51:08 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:51:08 OSPF: SPF Processing Time(usecs): 210
+2019/05/24 06:51:08 OSPF: 	    SPF Time: 152
+2019/05/24 06:51:08 OSPF: 	   InterArea: 1
+2019/05/24 06:51:08 OSPF: 	       Prune: 1
+2019/05/24 06:51:08 OSPF: 	RouteInstall: 37
+2019/05/24 06:51:08 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:51:08 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:51:08 OSPF: SPF Processing Time(usecs): 163
+2019/05/24 06:51:08 OSPF: 	    SPF Time: 134
+2019/05/24 06:51:08 OSPF: 	   InterArea: 1
+2019/05/24 06:51:08 OSPF: 	       Prune: 1
+2019/05/24 06:51:08 OSPF: 	RouteInstall: 20
+2019/05/24 06:51:08 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:51:13 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:51:13 OSPF: SPF Processing Time(usecs): 7667
+2019/05/24 06:51:13 OSPF: 	    SPF Time: 6576
+2019/05/24 06:51:13 OSPF: 	   InterArea: 1
+2019/05/24 06:51:13 OSPF: 	       Prune: 19
+2019/05/24 06:51:13 OSPF: 	RouteInstall: 1046
+2019/05/24 06:51:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:51:53 OSPF: Terminating on signal
+2019/05/24 06:51:53 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:51:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:51:53 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:51:53 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:51:53 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:51:53 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:51:53 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:51:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:51:53 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:51:53 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:53:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:53:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:53:04 OSPF: SPF Processing Time(usecs): 152
+2019/05/24 06:53:04 OSPF: 	    SPF Time: 108
+2019/05/24 06:53:04 OSPF: 	   InterArea: 1
+2019/05/24 06:53:04 OSPF: 	       Prune: 1
+2019/05/24 06:53:04 OSPF: 	RouteInstall: 27
+2019/05/24 06:53:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:53:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:53:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:53:13 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:53:13 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:53:13 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:53:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:53:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:53:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:53:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:53:13 OSPF: SPF Processing Time(usecs): 166
+2019/05/24 06:53:13 OSPF: 	    SPF Time: 150
+2019/05/24 06:53:13 OSPF: 	   InterArea: 1
+2019/05/24 06:53:13 OSPF: 	       Prune: 1
+2019/05/24 06:53:13 OSPF: 	RouteInstall: 4
+2019/05/24 06:53:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:53:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:53:13 OSPF: SPF Processing Time(usecs): 181
+2019/05/24 06:53:13 OSPF: 	    SPF Time: 98
+2019/05/24 06:53:13 OSPF: 	   InterArea: 2
+2019/05/24 06:53:13 OSPF: 	       Prune: 1
+2019/05/24 06:53:13 OSPF: 	RouteInstall: 68
+2019/05/24 06:53:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:53:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:53:13 OSPF: SPF Processing Time(usecs): 208
+2019/05/24 06:53:13 OSPF: 	    SPF Time: 142
+2019/05/24 06:53:13 OSPF: 	   InterArea: 1
+2019/05/24 06:53:13 OSPF: 	       Prune: 1
+2019/05/24 06:53:13 OSPF: 	RouteInstall: 53
+2019/05/24 06:53:13 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 06:53:16 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:53:16 OSPF: SPF Processing Time(usecs): 258
+2019/05/24 06:53:16 OSPF: 	    SPF Time: 162
+2019/05/24 06:53:16 OSPF: 	   InterArea: 2
+2019/05/24 06:53:16 OSPF: 	       Prune: 1
+2019/05/24 06:53:16 OSPF: 	RouteInstall: 72
+2019/05/24 06:53:16 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 06:53:16 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:53:16 OSPF: SPF Processing Time(usecs): 174
+2019/05/24 06:53:16 OSPF: 	    SPF Time: 139
+2019/05/24 06:53:16 OSPF: 	   InterArea: 1
+2019/05/24 06:53:16 OSPF: 	       Prune: 0
+2019/05/24 06:53:16 OSPF: 	RouteInstall: 24
+2019/05/24 06:53:16 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:53:23 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:53:23 OSPF: SPF Processing Time(usecs): 8408
+2019/05/24 06:53:23 OSPF: 	    SPF Time: 7230
+2019/05/24 06:53:23 OSPF: 	   InterArea: 1
+2019/05/24 06:53:23 OSPF: 	       Prune: 20
+2019/05/24 06:53:23 OSPF: 	RouteInstall: 1129
+2019/05/24 06:53:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:54:03 OSPF: Terminating on signal
+2019/05/24 06:54:03 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:54:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:54:03 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:54:03 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:54:03 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:54:03 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:54:03 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:54:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:54:03 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:54:03 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:55:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:55:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:55:14 OSPF: SPF Processing Time(usecs): 172
+2019/05/24 06:55:14 OSPF: 	    SPF Time: 125
+2019/05/24 06:55:14 OSPF: 	   InterArea: 1
+2019/05/24 06:55:14 OSPF: 	       Prune: 1
+2019/05/24 06:55:14 OSPF: 	RouteInstall: 33
+2019/05/24 06:55:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:55:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:55:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:55:23 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:55:23 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:55:23 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:55:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:55:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:55:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:55:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:55:23 OSPF: SPF Processing Time(usecs): 118
+2019/05/24 06:55:23 OSPF: 	    SPF Time: 103
+2019/05/24 06:55:23 OSPF: 	   InterArea: 1
+2019/05/24 06:55:23 OSPF: 	       Prune: 1
+2019/05/24 06:55:23 OSPF: 	RouteInstall: 4
+2019/05/24 06:55:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:55:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:55:23 OSPF: SPF Processing Time(usecs): 129
+2019/05/24 06:55:23 OSPF: 	    SPF Time: 79
+2019/05/24 06:55:23 OSPF: 	   InterArea: 1
+2019/05/24 06:55:23 OSPF: 	       Prune: 1
+2019/05/24 06:55:23 OSPF: 	RouteInstall: 39
+2019/05/24 06:55:23 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:55:28 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:55:28 OSPF: SPF Processing Time(usecs): 178
+2019/05/24 06:55:28 OSPF: 	    SPF Time: 131
+2019/05/24 06:55:28 OSPF: 	   InterArea: 0
+2019/05/24 06:55:28 OSPF: 	       Prune: 0
+2019/05/24 06:55:28 OSPF: 	RouteInstall: 30
+2019/05/24 06:55:28 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:55:28 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:55:28 OSPF: SPF Processing Time(usecs): 102
+2019/05/24 06:55:28 OSPF: 	    SPF Time: 84
+2019/05/24 06:55:28 OSPF: 	   InterArea: 1
+2019/05/24 06:55:28 OSPF: 	       Prune: 0
+2019/05/24 06:55:28 OSPF: 	RouteInstall: 12
+2019/05/24 06:55:28 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:55:33 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:55:33 OSPF: SPF Processing Time(usecs): 7992
+2019/05/24 06:55:33 OSPF: 	    SPF Time: 6868
+2019/05/24 06:55:33 OSPF: 	   InterArea: 1
+2019/05/24 06:55:33 OSPF: 	       Prune: 19
+2019/05/24 06:55:33 OSPF: 	RouteInstall: 1077
+2019/05/24 06:55:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:56:13 OSPF: Terminating on signal
+2019/05/24 06:56:13 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:56:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:56:13 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:56:13 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:56:13 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:56:13 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:56:13 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:56:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:56:13 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:56:13 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:57:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:57:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:57:24 OSPF: SPF Processing Time(usecs): 193
+2019/05/24 06:57:24 OSPF: 	    SPF Time: 141
+2019/05/24 06:57:24 OSPF: 	   InterArea: 1
+2019/05/24 06:57:24 OSPF: 	       Prune: 1
+2019/05/24 06:57:24 OSPF: 	RouteInstall: 36
+2019/05/24 06:57:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:57:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:57:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:57:33 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:57:33 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:57:33 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:57:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:57:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:57:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:57:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:57:33 OSPF: SPF Processing Time(usecs): 137
+2019/05/24 06:57:33 OSPF: 	    SPF Time: 121
+2019/05/24 06:57:33 OSPF: 	   InterArea: 1
+2019/05/24 06:57:33 OSPF: 	       Prune: 1
+2019/05/24 06:57:33 OSPF: 	RouteInstall: 5
+2019/05/24 06:57:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:57:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:57:33 OSPF: SPF Processing Time(usecs): 214
+2019/05/24 06:57:33 OSPF: 	    SPF Time: 158
+2019/05/24 06:57:33 OSPF: 	   InterArea: 1
+2019/05/24 06:57:33 OSPF: 	       Prune: 0
+2019/05/24 06:57:33 OSPF: 	RouteInstall: 44
+2019/05/24 06:57:33 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:57:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:57:34 OSPF: SPF Processing Time(usecs): 271
+2019/05/24 06:57:34 OSPF: 	    SPF Time: 182
+2019/05/24 06:57:34 OSPF: 	   InterArea: 1
+2019/05/24 06:57:34 OSPF: 	       Prune: 1
+2019/05/24 06:57:34 OSPF: 	RouteInstall: 77
+2019/05/24 06:57:34 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 06:57:34 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:57:34 OSPF: SPF Processing Time(usecs): 188
+2019/05/24 06:57:34 OSPF: 	    SPF Time: 155
+2019/05/24 06:57:34 OSPF: 	   InterArea: 1
+2019/05/24 06:57:34 OSPF: 	       Prune: 0
+2019/05/24 06:57:34 OSPF: 	RouteInstall: 21
+2019/05/24 06:57:34 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:57:43 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:57:43 OSPF: SPF Processing Time(usecs): 8191
+2019/05/24 06:57:43 OSPF: 	    SPF Time: 7070
+2019/05/24 06:57:43 OSPF: 	   InterArea: 1
+2019/05/24 06:57:43 OSPF: 	       Prune: 21
+2019/05/24 06:57:43 OSPF: 	RouteInstall: 1074
+2019/05/24 06:57:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:58:23 OSPF: Terminating on signal
+2019/05/24 06:58:23 OSPF: ASBR[Status:255]: Update
+2019/05/24 06:58:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:58:23 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 06:58:23 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 06:58:23 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 06:58:23 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 06:58:23 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 06:58:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:58:23 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 06:58:23 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 06:59:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:59:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:59:34 OSPF: SPF Processing Time(usecs): 176
+2019/05/24 06:59:34 OSPF: 	    SPF Time: 127
+2019/05/24 06:59:34 OSPF: 	   InterArea: 2
+2019/05/24 06:59:34 OSPF: 	       Prune: 1
+2019/05/24 06:59:34 OSPF: 	RouteInstall: 36
+2019/05/24 06:59:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:59:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:59:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:59:43 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 06:59:43 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 06:59:43 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 06:59:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 06:59:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 06:59:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 06:59:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:59:43 OSPF: SPF Processing Time(usecs): 120
+2019/05/24 06:59:43 OSPF: 	    SPF Time: 104
+2019/05/24 06:59:43 OSPF: 	   InterArea: 1
+2019/05/24 06:59:43 OSPF: 	       Prune: 1
+2019/05/24 06:59:43 OSPF: 	RouteInstall: 5
+2019/05/24 06:59:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:59:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:59:43 OSPF: SPF Processing Time(usecs): 231
+2019/05/24 06:59:43 OSPF: 	    SPF Time: 160
+2019/05/24 06:59:43 OSPF: 	   InterArea: 1
+2019/05/24 06:59:43 OSPF: 	       Prune: 1
+2019/05/24 06:59:43 OSPF: 	RouteInstall: 56
+2019/05/24 06:59:43 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:59:48 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 06:59:48 OSPF: SPF Processing Time(usecs): 201
+2019/05/24 06:59:48 OSPF: 	    SPF Time: 148
+2019/05/24 06:59:48 OSPF: 	   InterArea: 1
+2019/05/24 06:59:48 OSPF: 	       Prune: 0
+2019/05/24 06:59:48 OSPF: 	RouteInstall: 34
+2019/05/24 06:59:48 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 06:59:48 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 06:59:48 OSPF: SPF Processing Time(usecs): 154
+2019/05/24 06:59:48 OSPF: 	    SPF Time: 126
+2019/05/24 06:59:48 OSPF: 	   InterArea: 1
+2019/05/24 06:59:48 OSPF: 	       Prune: 1
+2019/05/24 06:59:48 OSPF: 	RouteInstall: 19
+2019/05/24 06:59:48 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 06:59:53 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 06:59:53 OSPF: SPF Processing Time(usecs): 8916
+2019/05/24 06:59:53 OSPF: 	    SPF Time: 7700
+2019/05/24 06:59:53 OSPF: 	   InterArea: 1
+2019/05/24 06:59:53 OSPF: 	       Prune: 24
+2019/05/24 06:59:53 OSPF: 	RouteInstall: 1161
+2019/05/24 06:59:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:00:33 OSPF: Terminating on signal
+2019/05/24 07:00:33 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:00:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:00:33 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:00:33 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:00:33 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:00:33 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:00:33 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:00:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:00:33 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:00:33 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:01:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:01:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:01:44 OSPF: SPF Processing Time(usecs): 172
+2019/05/24 07:01:44 OSPF: 	    SPF Time: 125
+2019/05/24 07:01:44 OSPF: 	   InterArea: 1
+2019/05/24 07:01:44 OSPF: 	       Prune: 1
+2019/05/24 07:01:44 OSPF: 	RouteInstall: 33
+2019/05/24 07:01:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:01:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:01:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:01:53 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:01:53 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:01:53 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:01:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:01:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:01:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:01:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:01:53 OSPF: SPF Processing Time(usecs): 105
+2019/05/24 07:01:53 OSPF: 	    SPF Time: 90
+2019/05/24 07:01:53 OSPF: 	   InterArea: 1
+2019/05/24 07:01:53 OSPF: 	       Prune: 1
+2019/05/24 07:01:53 OSPF: 	RouteInstall: 4
+2019/05/24 07:01:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:01:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:01:53 OSPF: SPF Processing Time(usecs): 153
+2019/05/24 07:01:53 OSPF: 	    SPF Time: 99
+2019/05/24 07:01:53 OSPF: 	   InterArea: 1
+2019/05/24 07:01:53 OSPF: 	       Prune: 1
+2019/05/24 07:01:53 OSPF: 	RouteInstall: 41
+2019/05/24 07:01:53 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:01:56 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:01:56 OSPF: SPF Processing Time(usecs): 268
+2019/05/24 07:01:56 OSPF: 	    SPF Time: 191
+2019/05/24 07:01:56 OSPF: 	   InterArea: 2
+2019/05/24 07:01:56 OSPF: 	       Prune: 1
+2019/05/24 07:01:56 OSPF: 	RouteInstall: 53
+2019/05/24 07:01:56 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:01:56 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:01:56 OSPF: SPF Processing Time(usecs): 269
+2019/05/24 07:01:56 OSPF: 	    SPF Time: 212
+2019/05/24 07:01:56 OSPF: 	   InterArea: 1
+2019/05/24 07:01:56 OSPF: 	       Prune: 1
+2019/05/24 07:01:56 OSPF: 	RouteInstall: 44
+2019/05/24 07:01:56 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:02:03 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:02:03 OSPF: SPF Processing Time(usecs): 8483
+2019/05/24 07:02:03 OSPF: 	    SPF Time: 7325
+2019/05/24 07:02:03 OSPF: 	   InterArea: 1
+2019/05/24 07:02:03 OSPF: 	       Prune: 20
+2019/05/24 07:02:03 OSPF: 	RouteInstall: 1107
+2019/05/24 07:02:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:02:43 OSPF: Terminating on signal
+2019/05/24 07:02:43 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:02:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:02:43 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:02:43 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:02:43 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:02:43 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:02:43 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:02:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:02:43 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:02:43 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:03:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:03:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:03:54 OSPF: SPF Processing Time(usecs): 159
+2019/05/24 07:03:54 OSPF: 	    SPF Time: 114
+2019/05/24 07:03:54 OSPF: 	   InterArea: 1
+2019/05/24 07:03:54 OSPF: 	       Prune: 1
+2019/05/24 07:03:54 OSPF: 	RouteInstall: 32
+2019/05/24 07:03:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:04:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:04:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:04:03 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:04:03 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:04:03 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:04:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:04:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:04:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:04:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:04:03 OSPF: SPF Processing Time(usecs): 135
+2019/05/24 07:04:03 OSPF: 	    SPF Time: 118
+2019/05/24 07:04:03 OSPF: 	   InterArea: 1
+2019/05/24 07:04:03 OSPF: 	       Prune: 1
+2019/05/24 07:04:03 OSPF: 	RouteInstall: 5
+2019/05/24 07:04:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:04:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:04:03 OSPF: SPF Processing Time(usecs): 208
+2019/05/24 07:04:03 OSPF: 	    SPF Time: 138
+2019/05/24 07:04:03 OSPF: 	   InterArea: 1
+2019/05/24 07:04:03 OSPF: 	       Prune: 1
+2019/05/24 07:04:03 OSPF: 	RouteInstall: 55
+2019/05/24 07:04:03 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:04:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:04:04 OSPF: SPF Processing Time(usecs): 229
+2019/05/24 07:04:04 OSPF: 	    SPF Time: 165
+2019/05/24 07:04:04 OSPF: 	   InterArea: 1
+2019/05/24 07:04:04 OSPF: 	       Prune: 1
+2019/05/24 07:04:04 OSPF: 	RouteInstall: 51
+2019/05/24 07:04:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:04:04 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:04:04 OSPF: SPF Processing Time(usecs): 305
+2019/05/24 07:04:04 OSPF: 	    SPF Time: 225
+2019/05/24 07:04:04 OSPF: 	   InterArea: 1
+2019/05/24 07:04:04 OSPF: 	       Prune: 1
+2019/05/24 07:04:04 OSPF: 	RouteInstall: 67
+2019/05/24 07:04:04 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:04:13 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:04:13 OSPF: SPF Processing Time(usecs): 8795
+2019/05/24 07:04:13 OSPF: 	    SPF Time: 7504
+2019/05/24 07:04:13 OSPF: 	   InterArea: 9
+2019/05/24 07:04:13 OSPF: 	       Prune: 22
+2019/05/24 07:04:13 OSPF: 	RouteInstall: 1230
+2019/05/24 07:04:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:04:53 OSPF: Terminating on signal
+2019/05/24 07:04:53 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:04:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:04:53 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:04:53 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:04:53 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:04:53 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:04:53 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:04:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:04:53 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:04:53 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:06:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:06:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:06:04 OSPF: SPF Processing Time(usecs): 201
+2019/05/24 07:06:04 OSPF: 	    SPF Time: 156
+2019/05/24 07:06:04 OSPF: 	   InterArea: 1
+2019/05/24 07:06:04 OSPF: 	       Prune: 1
+2019/05/24 07:06:04 OSPF: 	RouteInstall: 32
+2019/05/24 07:06:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:06:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:06:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:06:13 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:06:13 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:06:13 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:06:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:06:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:06:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:06:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:06:13 OSPF: SPF Processing Time(usecs): 221
+2019/05/24 07:06:13 OSPF: 	    SPF Time: 205
+2019/05/24 07:06:13 OSPF: 	   InterArea: 1
+2019/05/24 07:06:13 OSPF: 	       Prune: 1
+2019/05/24 07:06:13 OSPF: 	RouteInstall: 4
+2019/05/24 07:06:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:06:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:06:13 OSPF: SPF Processing Time(usecs): 125
+2019/05/24 07:06:13 OSPF: 	    SPF Time: 73
+2019/05/24 07:06:13 OSPF: 	   InterArea: 1
+2019/05/24 07:06:13 OSPF: 	       Prune: 0
+2019/05/24 07:06:13 OSPF: 	RouteInstall: 39
+2019/05/24 07:06:13 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:06:16 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:06:16 OSPF: SPF Processing Time(usecs): 244
+2019/05/24 07:06:16 OSPF: 	    SPF Time: 167
+2019/05/24 07:06:16 OSPF: 	   InterArea: 1
+2019/05/24 07:06:16 OSPF: 	       Prune: 1
+2019/05/24 07:06:16 OSPF: 	RouteInstall: 53
+2019/05/24 07:06:16 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:06:16 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:06:16 OSPF: SPF Processing Time(usecs): 265
+2019/05/24 07:06:16 OSPF: 	    SPF Time: 206
+2019/05/24 07:06:16 OSPF: 	   InterArea: 1
+2019/05/24 07:06:16 OSPF: 	       Prune: 1
+2019/05/24 07:06:16 OSPF: 	RouteInstall: 46
+2019/05/24 07:06:16 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:06:23 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:06:23 OSPF: SPF Processing Time(usecs): 8787
+2019/05/24 07:06:23 OSPF: 	    SPF Time: 7500
+2019/05/24 07:06:23 OSPF: 	   InterArea: 1
+2019/05/24 07:06:23 OSPF: 	       Prune: 22
+2019/05/24 07:06:23 OSPF: 	RouteInstall: 1234
+2019/05/24 07:06:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:07:03 OSPF: Terminating on signal
+2019/05/24 07:07:03 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:07:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:07:03 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:07:03 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:07:03 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:07:03 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:07:03 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:07:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:07:03 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:07:03 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:08:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:08:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:08:14 OSPF: SPF Processing Time(usecs): 175
+2019/05/24 07:08:14 OSPF: 	    SPF Time: 125
+2019/05/24 07:08:14 OSPF: 	   InterArea: 1
+2019/05/24 07:08:14 OSPF: 	       Prune: 0
+2019/05/24 07:08:14 OSPF: 	RouteInstall: 35
+2019/05/24 07:08:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:08:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:08:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:08:23 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:08:23 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:08:23 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:08:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:08:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:08:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:08:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:08:23 OSPF: SPF Processing Time(usecs): 122
+2019/05/24 07:08:23 OSPF: 	    SPF Time: 106
+2019/05/24 07:08:23 OSPF: 	   InterArea: 1
+2019/05/24 07:08:23 OSPF: 	       Prune: 1
+2019/05/24 07:08:23 OSPF: 	RouteInstall: 4
+2019/05/24 07:08:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:08:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:08:23 OSPF: SPF Processing Time(usecs): 213
+2019/05/24 07:08:23 OSPF: 	    SPF Time: 145
+2019/05/24 07:08:23 OSPF: 	   InterArea: 1
+2019/05/24 07:08:23 OSPF: 	       Prune: 1
+2019/05/24 07:08:23 OSPF: 	RouteInstall: 53
+2019/05/24 07:08:23 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:08:28 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:08:28 OSPF: SPF Processing Time(usecs): 296
+2019/05/24 07:08:28 OSPF: 	    SPF Time: 203
+2019/05/24 07:08:28 OSPF: 	   InterArea: 1
+2019/05/24 07:08:28 OSPF: 	       Prune: 0
+2019/05/24 07:08:28 OSPF: 	RouteInstall: 69
+2019/05/24 07:08:28 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:08:28 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:08:28 OSPF: SPF Processing Time(usecs): 154
+2019/05/24 07:08:28 OSPF: 	    SPF Time: 126
+2019/05/24 07:08:28 OSPF: 	   InterArea: 1
+2019/05/24 07:08:28 OSPF: 	       Prune: 1
+2019/05/24 07:08:28 OSPF: 	RouteInstall: 19
+2019/05/24 07:08:28 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:08:33 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:08:33 OSPF: SPF Processing Time(usecs): 8496
+2019/05/24 07:08:33 OSPF: 	    SPF Time: 7328
+2019/05/24 07:08:33 OSPF: 	   InterArea: 8
+2019/05/24 07:08:33 OSPF: 	       Prune: 21
+2019/05/24 07:08:33 OSPF: 	RouteInstall: 1111
+2019/05/24 07:08:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:09:13 OSPF: Terminating on signal
+2019/05/24 07:09:13 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:09:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:09:13 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:09:13 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:09:13 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:09:13 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:09:13 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:09:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:09:13 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:09:13 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:10:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:10:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:10:24 OSPF: SPF Processing Time(usecs): 212
+2019/05/24 07:10:24 OSPF: 	    SPF Time: 166
+2019/05/24 07:10:24 OSPF: 	   InterArea: 1
+2019/05/24 07:10:24 OSPF: 	       Prune: 1
+2019/05/24 07:10:24 OSPF: 	RouteInstall: 31
+2019/05/24 07:10:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:10:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:10:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:10:33 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:10:33 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:10:33 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:10:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:10:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:10:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:10:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:10:33 OSPF: SPF Processing Time(usecs): 127
+2019/05/24 07:10:33 OSPF: 	    SPF Time: 110
+2019/05/24 07:10:33 OSPF: 	   InterArea: 1
+2019/05/24 07:10:33 OSPF: 	       Prune: 1
+2019/05/24 07:10:33 OSPF: 	RouteInstall: 5
+2019/05/24 07:10:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:10:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:10:33 OSPF: SPF Processing Time(usecs): 194
+2019/05/24 07:10:33 OSPF: 	    SPF Time: 127
+2019/05/24 07:10:33 OSPF: 	   InterArea: 1
+2019/05/24 07:10:33 OSPF: 	       Prune: 1
+2019/05/24 07:10:33 OSPF: 	RouteInstall: 53
+2019/05/24 07:10:33 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:10:36 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:10:36 OSPF: SPF Processing Time(usecs): 232
+2019/05/24 07:10:36 OSPF: 	    SPF Time: 159
+2019/05/24 07:10:36 OSPF: 	   InterArea: 1
+2019/05/24 07:10:36 OSPF: 	       Prune: 1
+2019/05/24 07:10:36 OSPF: 	RouteInstall: 51
+2019/05/24 07:10:36 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:10:36 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:10:36 OSPF: SPF Processing Time(usecs): 326
+2019/05/24 07:10:36 OSPF: 	    SPF Time: 268
+2019/05/24 07:10:36 OSPF: 	   InterArea: 1
+2019/05/24 07:10:36 OSPF: 	       Prune: 1
+2019/05/24 07:10:36 OSPF: 	RouteInstall: 46
+2019/05/24 07:10:36 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:10:43 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:10:43 OSPF: SPF Processing Time(usecs): 8218
+2019/05/24 07:10:43 OSPF: 	    SPF Time: 7072
+2019/05/24 07:10:43 OSPF: 	   InterArea: 1
+2019/05/24 07:10:43 OSPF: 	       Prune: 21
+2019/05/24 07:10:43 OSPF: 	RouteInstall: 1096
+2019/05/24 07:10:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:11:23 OSPF: Terminating on signal
+2019/05/24 07:11:23 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:11:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:11:23 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:11:23 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:11:23 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:11:23 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:11:23 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:11:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:11:23 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:11:23 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:12:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:12:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:12:34 OSPF: SPF Processing Time(usecs): 205
+2019/05/24 07:12:34 OSPF: 	    SPF Time: 150
+2019/05/24 07:12:34 OSPF: 	   InterArea: 2
+2019/05/24 07:12:34 OSPF: 	       Prune: 1
+2019/05/24 07:12:34 OSPF: 	RouteInstall: 39
+2019/05/24 07:12:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:12:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:12:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:12:43 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:12:43 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:12:43 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:12:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:12:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:12:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:12:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:12:43 OSPF: SPF Processing Time(usecs): 109
+2019/05/24 07:12:43 OSPF: 	    SPF Time: 93
+2019/05/24 07:12:43 OSPF: 	   InterArea: 1
+2019/05/24 07:12:43 OSPF: 	       Prune: 1
+2019/05/24 07:12:43 OSPF: 	RouteInstall: 5
+2019/05/24 07:12:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:12:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:12:43 OSPF: SPF Processing Time(usecs): 210
+2019/05/24 07:12:43 OSPF: 	    SPF Time: 138
+2019/05/24 07:12:43 OSPF: 	   InterArea: 2
+2019/05/24 07:12:43 OSPF: 	       Prune: 0
+2019/05/24 07:12:43 OSPF: 	RouteInstall: 56
+2019/05/24 07:12:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:12:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:12:43 OSPF: SPF Processing Time(usecs): 191
+2019/05/24 07:12:43 OSPF: 	    SPF Time: 121
+2019/05/24 07:12:43 OSPF: 	   InterArea: 2
+2019/05/24 07:12:43 OSPF: 	       Prune: 1
+2019/05/24 07:12:43 OSPF: 	RouteInstall: 58
+2019/05/24 07:12:43 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:12:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:12:44 OSPF: SPF Processing Time(usecs): 210
+2019/05/24 07:12:44 OSPF: 	    SPF Time: 148
+2019/05/24 07:12:44 OSPF: 	   InterArea: 1
+2019/05/24 07:12:44 OSPF: 	       Prune: 1
+2019/05/24 07:12:44 OSPF: 	RouteInstall: 43
+2019/05/24 07:12:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:12:44 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:12:44 OSPF: SPF Processing Time(usecs): 173
+2019/05/24 07:12:44 OSPF: 	    SPF Time: 140
+2019/05/24 07:12:44 OSPF: 	   InterArea: 1
+2019/05/24 07:12:44 OSPF: 	       Prune: 1
+2019/05/24 07:12:44 OSPF: 	RouteInstall: 21
+2019/05/24 07:12:44 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:12:53 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:12:53 OSPF: SPF Processing Time(usecs): 8700
+2019/05/24 07:12:53 OSPF: 	    SPF Time: 7426
+2019/05/24 07:12:53 OSPF: 	   InterArea: 1
+2019/05/24 07:12:53 OSPF: 	       Prune: 22
+2019/05/24 07:12:53 OSPF: 	RouteInstall: 1223
+2019/05/24 07:12:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:13:33 OSPF: Terminating on signal
+2019/05/24 07:13:33 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:13:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:13:33 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:13:33 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:13:33 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:13:33 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:13:33 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:13:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:13:33 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:13:33 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:14:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:14:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:14:44 OSPF: SPF Processing Time(usecs): 182
+2019/05/24 07:14:44 OSPF: 	    SPF Time: 137
+2019/05/24 07:14:44 OSPF: 	   InterArea: 1
+2019/05/24 07:14:44 OSPF: 	       Prune: 1
+2019/05/24 07:14:44 OSPF: 	RouteInstall: 33
+2019/05/24 07:14:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:14:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:14:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:14:53 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:14:53 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:14:53 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:14:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:14:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:14:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:14:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:14:53 OSPF: SPF Processing Time(usecs): 144
+2019/05/24 07:14:53 OSPF: 	    SPF Time: 127
+2019/05/24 07:14:53 OSPF: 	   InterArea: 1
+2019/05/24 07:14:53 OSPF: 	       Prune: 1
+2019/05/24 07:14:53 OSPF: 	RouteInstall: 5
+2019/05/24 07:14:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:14:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:14:53 OSPF: SPF Processing Time(usecs): 207
+2019/05/24 07:14:53 OSPF: 	    SPF Time: 127
+2019/05/24 07:14:53 OSPF: 	   InterArea: 12
+2019/05/24 07:14:53 OSPF: 	       Prune: 1
+2019/05/24 07:14:53 OSPF: 	RouteInstall: 54
+2019/05/24 07:14:53 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:14:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:14:54 OSPF: SPF Processing Time(usecs): 257
+2019/05/24 07:14:54 OSPF: 	    SPF Time: 196
+2019/05/24 07:14:54 OSPF: 	   InterArea: 1
+2019/05/24 07:14:54 OSPF: 	       Prune: 1
+2019/05/24 07:14:54 OSPF: 	RouteInstall: 48
+2019/05/24 07:14:54 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:14:54 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:14:54 OSPF: SPF Processing Time(usecs): 176
+2019/05/24 07:14:54 OSPF: 	    SPF Time: 144
+2019/05/24 07:14:54 OSPF: 	   InterArea: 0
+2019/05/24 07:14:54 OSPF: 	       Prune: 0
+2019/05/24 07:14:54 OSPF: 	RouteInstall: 21
+2019/05/24 07:14:54 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:15:03 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:15:03 OSPF: SPF Processing Time(usecs): 8742
+2019/05/24 07:15:03 OSPF: 	    SPF Time: 7485
+2019/05/24 07:15:03 OSPF: 	   InterArea: 1
+2019/05/24 07:15:03 OSPF: 	       Prune: 22
+2019/05/24 07:15:03 OSPF: 	RouteInstall: 1205
+2019/05/24 07:15:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:15:43 OSPF: Terminating on signal
+2019/05/24 07:15:43 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:15:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:15:43 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:15:43 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:15:43 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:15:43 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:15:43 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:15:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:15:43 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:15:43 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:16:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:16:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:16:54 OSPF: SPF Processing Time(usecs): 221
+2019/05/24 07:16:54 OSPF: 	    SPF Time: 170
+2019/05/24 07:16:54 OSPF: 	   InterArea: 2
+2019/05/24 07:16:54 OSPF: 	       Prune: 1
+2019/05/24 07:16:54 OSPF: 	RouteInstall: 36
+2019/05/24 07:16:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:17:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:17:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:17:03 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:17:03 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:17:03 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:17:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:17:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:17:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:17:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:17:03 OSPF: SPF Processing Time(usecs): 109
+2019/05/24 07:17:03 OSPF: 	    SPF Time: 95
+2019/05/24 07:17:03 OSPF: 	   InterArea: 1
+2019/05/24 07:17:03 OSPF: 	       Prune: 0
+2019/05/24 07:17:03 OSPF: 	RouteInstall: 4
+2019/05/24 07:17:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:17:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:17:03 OSPF: SPF Processing Time(usecs): 139
+2019/05/24 07:17:03 OSPF: 	    SPF Time: 86
+2019/05/24 07:17:03 OSPF: 	   InterArea: 1
+2019/05/24 07:17:03 OSPF: 	       Prune: 1
+2019/05/24 07:17:03 OSPF: 	RouteInstall: 42
+2019/05/24 07:17:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:17:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:17:03 OSPF: SPF Processing Time(usecs): 179
+2019/05/24 07:17:03 OSPF: 	    SPF Time: 126
+2019/05/24 07:17:03 OSPF: 	   InterArea: 1
+2019/05/24 07:17:03 OSPF: 	       Prune: 1
+2019/05/24 07:17:03 OSPF: 	RouteInstall: 41
+2019/05/24 07:17:03 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:17:08 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:17:08 OSPF: SPF Processing Time(usecs): 190
+2019/05/24 07:17:08 OSPF: 	    SPF Time: 133
+2019/05/24 07:17:08 OSPF: 	   InterArea: 1
+2019/05/24 07:17:08 OSPF: 	       Prune: 1
+2019/05/24 07:17:08 OSPF: 	RouteInstall: 36
+2019/05/24 07:17:08 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:17:08 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:17:08 OSPF: SPF Processing Time(usecs): 212
+2019/05/24 07:17:08 OSPF: 	    SPF Time: 163
+2019/05/24 07:17:08 OSPF: 	   InterArea: 6
+2019/05/24 07:17:08 OSPF: 	       Prune: 1
+2019/05/24 07:17:08 OSPF: 	RouteInstall: 29
+2019/05/24 07:17:08 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:17:13 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:17:13 OSPF: SPF Processing Time(usecs): 8746
+2019/05/24 07:17:13 OSPF: 	    SPF Time: 7461
+2019/05/24 07:17:13 OSPF: 	   InterArea: 2
+2019/05/24 07:17:13 OSPF: 	       Prune: 39
+2019/05/24 07:17:13 OSPF: 	RouteInstall: 1218
+2019/05/24 07:17:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:17:53 OSPF: Terminating on signal
+2019/05/24 07:17:53 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:17:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:17:53 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:17:53 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:17:53 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:17:53 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:17:53 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:17:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:17:53 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:17:53 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:19:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:19:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:19:04 OSPF: SPF Processing Time(usecs): 165
+2019/05/24 07:19:04 OSPF: 	    SPF Time: 124
+2019/05/24 07:19:04 OSPF: 	   InterArea: 1
+2019/05/24 07:19:04 OSPF: 	       Prune: 1
+2019/05/24 07:19:04 OSPF: 	RouteInstall: 29
+2019/05/24 07:19:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:19:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:19:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:19:13 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:19:13 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:19:13 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:19:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:19:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:19:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:19:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:19:13 OSPF: SPF Processing Time(usecs): 124
+2019/05/24 07:19:13 OSPF: 	    SPF Time: 109
+2019/05/24 07:19:13 OSPF: 	   InterArea: 1
+2019/05/24 07:19:13 OSPF: 	       Prune: 1
+2019/05/24 07:19:13 OSPF: 	RouteInstall: 5
+2019/05/24 07:19:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:19:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:19:13 OSPF: SPF Processing Time(usecs): 230
+2019/05/24 07:19:13 OSPF: 	    SPF Time: 134
+2019/05/24 07:19:13 OSPF: 	   InterArea: 1
+2019/05/24 07:19:13 OSPF: 	       Prune: 1
+2019/05/24 07:19:13 OSPF: 	RouteInstall: 82
+2019/05/24 07:19:13 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:19:18 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:19:18 OSPF: SPF Processing Time(usecs): 230
+2019/05/24 07:19:18 OSPF: 	    SPF Time: 165
+2019/05/24 07:19:18 OSPF: 	   InterArea: 1
+2019/05/24 07:19:18 OSPF: 	       Prune: 1
+2019/05/24 07:19:18 OSPF: 	RouteInstall: 43
+2019/05/24 07:19:18 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:19:18 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:19:18 OSPF: SPF Processing Time(usecs): 181
+2019/05/24 07:19:18 OSPF: 	    SPF Time: 144
+2019/05/24 07:19:18 OSPF: 	   InterArea: 1
+2019/05/24 07:19:18 OSPF: 	       Prune: 1
+2019/05/24 07:19:18 OSPF: 	RouteInstall: 27
+2019/05/24 07:19:18 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:19:23 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:19:23 OSPF: SPF Processing Time(usecs): 8804
+2019/05/24 07:19:23 OSPF: 	    SPF Time: 7550
+2019/05/24 07:19:23 OSPF: 	   InterArea: 2
+2019/05/24 07:19:23 OSPF: 	       Prune: 32
+2019/05/24 07:19:23 OSPF: 	RouteInstall: 1193
+2019/05/24 07:19:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:20:03 OSPF: Terminating on signal
+2019/05/24 07:20:03 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:20:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:20:03 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:20:03 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:20:03 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:20:03 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:20:03 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:20:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:20:03 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:20:03 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:21:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:21:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:21:14 OSPF: SPF Processing Time(usecs): 206
+2019/05/24 07:21:14 OSPF: 	    SPF Time: 156
+2019/05/24 07:21:14 OSPF: 	   InterArea: 1
+2019/05/24 07:21:14 OSPF: 	       Prune: 0
+2019/05/24 07:21:14 OSPF: 	RouteInstall: 36
+2019/05/24 07:21:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:21:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:21:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:21:23 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:21:23 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:21:23 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:21:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:21:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:21:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:21:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:21:23 OSPF: SPF Processing Time(usecs): 143
+2019/05/24 07:21:23 OSPF: 	    SPF Time: 124
+2019/05/24 07:21:23 OSPF: 	   InterArea: 1
+2019/05/24 07:21:23 OSPF: 	       Prune: 1
+2019/05/24 07:21:23 OSPF: 	RouteInstall: 5
+2019/05/24 07:21:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:21:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:21:23 OSPF: SPF Processing Time(usecs): 173
+2019/05/24 07:21:23 OSPF: 	    SPF Time: 104
+2019/05/24 07:21:23 OSPF: 	   InterArea: 1
+2019/05/24 07:21:23 OSPF: 	       Prune: 1
+2019/05/24 07:21:23 OSPF: 	RouteInstall: 53
+2019/05/24 07:21:23 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:21:28 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:21:28 OSPF: SPF Processing Time(usecs): 270
+2019/05/24 07:21:28 OSPF: 	    SPF Time: 203
+2019/05/24 07:21:28 OSPF: 	   InterArea: 1
+2019/05/24 07:21:28 OSPF: 	       Prune: 1
+2019/05/24 07:21:28 OSPF: 	RouteInstall: 43
+2019/05/24 07:21:28 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:21:28 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:21:28 OSPF: SPF Processing Time(usecs): 242
+2019/05/24 07:21:28 OSPF: 	    SPF Time: 189
+2019/05/24 07:21:28 OSPF: 	   InterArea: 2
+2019/05/24 07:21:28 OSPF: 	       Prune: 1
+2019/05/24 07:21:28 OSPF: 	RouteInstall: 41
+2019/05/24 07:21:28 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:21:33 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:21:33 OSPF: SPF Processing Time(usecs): 8334
+2019/05/24 07:21:33 OSPF: 	    SPF Time: 7077
+2019/05/24 07:21:33 OSPF: 	   InterArea: 1
+2019/05/24 07:21:33 OSPF: 	       Prune: 20
+2019/05/24 07:21:33 OSPF: 	RouteInstall: 1205
+2019/05/24 07:21:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:22:13 OSPF: Terminating on signal
+2019/05/24 07:22:13 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:22:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:22:13 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:22:13 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:22:13 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:22:13 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:22:13 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:22:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:22:13 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:22:13 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:23:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:23:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:23:24 OSPF: SPF Processing Time(usecs): 119
+2019/05/24 07:23:24 OSPF: 	    SPF Time: 77
+2019/05/24 07:23:24 OSPF: 	   InterArea: 1
+2019/05/24 07:23:24 OSPF: 	       Prune: 0
+2019/05/24 07:23:24 OSPF: 	RouteInstall: 35
+2019/05/24 07:23:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:23:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:23:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:23:33 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:23:33 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:23:33 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:23:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:23:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:23:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:23:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:23:33 OSPF: SPF Processing Time(usecs): 121
+2019/05/24 07:23:33 OSPF: 	    SPF Time: 106
+2019/05/24 07:23:33 OSPF: 	   InterArea: 1
+2019/05/24 07:23:33 OSPF: 	       Prune: 0
+2019/05/24 07:23:33 OSPF: 	RouteInstall: 5
+2019/05/24 07:23:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:23:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:23:33 OSPF: SPF Processing Time(usecs): 171
+2019/05/24 07:23:33 OSPF: 	    SPF Time: 88
+2019/05/24 07:23:33 OSPF: 	   InterArea: 1
+2019/05/24 07:23:33 OSPF: 	       Prune: 1
+2019/05/24 07:23:33 OSPF: 	RouteInstall: 70
+2019/05/24 07:23:33 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:23:38 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:23:38 OSPF: SPF Processing Time(usecs): 257
+2019/05/24 07:23:38 OSPF: 	    SPF Time: 185
+2019/05/24 07:23:38 OSPF: 	   InterArea: 2
+2019/05/24 07:23:38 OSPF: 	       Prune: 1
+2019/05/24 07:23:38 OSPF: 	RouteInstall: 50
+2019/05/24 07:23:38 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:23:38 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:23:38 OSPF: SPF Processing Time(usecs): 231
+2019/05/24 07:23:38 OSPF: 	    SPF Time: 182
+2019/05/24 07:23:38 OSPF: 	   InterArea: 1
+2019/05/24 07:23:38 OSPF: 	       Prune: 1
+2019/05/24 07:23:38 OSPF: 	RouteInstall: 37
+2019/05/24 07:23:38 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:23:43 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:23:43 OSPF: SPF Processing Time(usecs): 9058
+2019/05/24 07:23:43 OSPF: 	    SPF Time: 7508
+2019/05/24 07:23:43 OSPF: 	   InterArea: 1
+2019/05/24 07:23:43 OSPF: 	       Prune: 23
+2019/05/24 07:23:43 OSPF: 	RouteInstall: 1464
+2019/05/24 07:23:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:24:23 OSPF: Terminating on signal
+2019/05/24 07:24:23 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:24:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:24:23 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:24:23 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:24:23 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:24:23 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:24:23 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:24:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:24:23 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:24:23 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:25:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:25:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:25:34 OSPF: SPF Processing Time(usecs): 176
+2019/05/24 07:25:34 OSPF: 	    SPF Time: 128
+2019/05/24 07:25:34 OSPF: 	   InterArea: 1
+2019/05/24 07:25:34 OSPF: 	       Prune: 1
+2019/05/24 07:25:34 OSPF: 	RouteInstall: 34
+2019/05/24 07:25:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:25:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:25:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:25:43 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:25:43 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:25:43 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:25:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:25:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:25:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:25:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:25:43 OSPF: SPF Processing Time(usecs): 108
+2019/05/24 07:25:43 OSPF: 	    SPF Time: 94
+2019/05/24 07:25:43 OSPF: 	   InterArea: 0
+2019/05/24 07:25:43 OSPF: 	       Prune: 0
+2019/05/24 07:25:43 OSPF: 	RouteInstall: 4
+2019/05/24 07:25:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:25:43 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:25:43 OSPF: SPF Processing Time(usecs): 149
+2019/05/24 07:25:43 OSPF: 	    SPF Time: 92
+2019/05/24 07:25:43 OSPF: 	   InterArea: 1
+2019/05/24 07:25:43 OSPF: 	       Prune: 1
+2019/05/24 07:25:43 OSPF: 	RouteInstall: 43
+2019/05/24 07:25:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:25:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:25:44 OSPF: SPF Processing Time(usecs): 187
+2019/05/24 07:25:44 OSPF: 	    SPF Time: 132
+2019/05/24 07:25:44 OSPF: 	   InterArea: 1
+2019/05/24 07:25:44 OSPF: 	       Prune: 1
+2019/05/24 07:25:44 OSPF: 	RouteInstall: 34
+2019/05/24 07:25:44 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:25:48 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:25:48 OSPF: SPF Processing Time(usecs): 218
+2019/05/24 07:25:48 OSPF: 	    SPF Time: 164
+2019/05/24 07:25:48 OSPF: 	   InterArea: 1
+2019/05/24 07:25:48 OSPF: 	       Prune: 1
+2019/05/24 07:25:48 OSPF: 	RouteInstall: 34
+2019/05/24 07:25:48 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:25:48 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:25:48 OSPF: SPF Processing Time(usecs): 170
+2019/05/24 07:25:48 OSPF: 	    SPF Time: 137
+2019/05/24 07:25:48 OSPF: 	   InterArea: 1
+2019/05/24 07:25:48 OSPF: 	       Prune: 1
+2019/05/24 07:25:48 OSPF: 	RouteInstall: 23
+2019/05/24 07:25:48 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:25:53 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:25:53 OSPF: SPF Processing Time(usecs): 9307
+2019/05/24 07:25:53 OSPF: 	    SPF Time: 7992
+2019/05/24 07:25:53 OSPF: 	   InterArea: 2
+2019/05/24 07:25:53 OSPF: 	       Prune: 24
+2019/05/24 07:25:53 OSPF: 	RouteInstall: 1258
+2019/05/24 07:25:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:26:33 OSPF: Terminating on signal
+2019/05/24 07:26:33 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:26:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:26:33 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:26:33 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:26:33 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:26:33 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:26:33 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:26:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:26:33 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:26:33 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:27:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:27:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:27:44 OSPF: SPF Processing Time(usecs): 210
+2019/05/24 07:27:44 OSPF: 	    SPF Time: 139
+2019/05/24 07:27:44 OSPF: 	   InterArea: 8
+2019/05/24 07:27:44 OSPF: 	       Prune: 1
+2019/05/24 07:27:44 OSPF: 	RouteInstall: 46
+2019/05/24 07:27:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:27:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:27:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:27:53 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:27:53 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:27:53 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:27:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:27:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:27:53 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:27:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:27:53 OSPF: SPF Processing Time(usecs): 117
+2019/05/24 07:27:53 OSPF: 	    SPF Time: 100
+2019/05/24 07:27:53 OSPF: 	   InterArea: 1
+2019/05/24 07:27:53 OSPF: 	       Prune: 1
+2019/05/24 07:27:53 OSPF: 	RouteInstall: 5
+2019/05/24 07:27:53 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:27:53 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:27:53 OSPF: SPF Processing Time(usecs): 206
+2019/05/24 07:27:53 OSPF: 	    SPF Time: 137
+2019/05/24 07:27:53 OSPF: 	   InterArea: 1
+2019/05/24 07:27:53 OSPF: 	       Prune: 1
+2019/05/24 07:27:53 OSPF: 	RouteInstall: 54
+2019/05/24 07:27:53 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:27:58 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:27:58 OSPF: SPF Processing Time(usecs): 203
+2019/05/24 07:27:58 OSPF: 	    SPF Time: 152
+2019/05/24 07:27:58 OSPF: 	   InterArea: 1
+2019/05/24 07:27:58 OSPF: 	       Prune: 0
+2019/05/24 07:27:58 OSPF: 	RouteInstall: 33
+2019/05/24 07:27:58 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:27:58 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:27:58 OSPF: SPF Processing Time(usecs): 242
+2019/05/24 07:27:58 OSPF: 	    SPF Time: 193
+2019/05/24 07:27:58 OSPF: 	   InterArea: 1
+2019/05/24 07:27:58 OSPF: 	       Prune: 1
+2019/05/24 07:27:58 OSPF: 	RouteInstall: 37
+2019/05/24 07:27:58 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:28:03 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:28:03 OSPF: SPF Processing Time(usecs): 8620
+2019/05/24 07:28:03 OSPF: 	    SPF Time: 7443
+2019/05/24 07:28:03 OSPF: 	   InterArea: 1
+2019/05/24 07:28:03 OSPF: 	       Prune: 20
+2019/05/24 07:28:03 OSPF: 	RouteInstall: 1131
+2019/05/24 07:28:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:28:43 OSPF: Terminating on signal
+2019/05/24 07:28:43 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:28:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:28:43 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:28:43 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:28:43 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:28:43 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:28:43 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:28:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:28:43 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:28:43 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:29:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:29:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:29:54 OSPF: SPF Processing Time(usecs): 166
+2019/05/24 07:29:54 OSPF: 	    SPF Time: 122
+2019/05/24 07:29:54 OSPF: 	   InterArea: 1
+2019/05/24 07:29:54 OSPF: 	       Prune: 1
+2019/05/24 07:29:54 OSPF: 	RouteInstall: 31
+2019/05/24 07:29:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:30:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:30:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:30:03 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:30:03 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:30:03 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:30:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:30:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:30:03 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:30:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:30:03 OSPF: SPF Processing Time(usecs): 146
+2019/05/24 07:30:03 OSPF: 	    SPF Time: 108
+2019/05/24 07:30:03 OSPF: 	   InterArea: 2
+2019/05/24 07:30:03 OSPF: 	       Prune: 1
+2019/05/24 07:30:03 OSPF: 	RouteInstall: 5
+2019/05/24 07:30:03 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:30:03 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:30:03 OSPF: SPF Processing Time(usecs): 180
+2019/05/24 07:30:03 OSPF: 	    SPF Time: 113
+2019/05/24 07:30:03 OSPF: 	   InterArea: 1
+2019/05/24 07:30:03 OSPF: 	       Prune: 0
+2019/05/24 07:30:03 OSPF: 	RouteInstall: 53
+2019/05/24 07:30:03 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:30:08 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:30:08 OSPF: SPF Processing Time(usecs): 328
+2019/05/24 07:30:08 OSPF: 	    SPF Time: 249
+2019/05/24 07:30:08 OSPF: 	   InterArea: 1
+2019/05/24 07:30:08 OSPF: 	       Prune: 1
+2019/05/24 07:30:08 OSPF: 	RouteInstall: 55
+2019/05/24 07:30:08 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:30:08 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:30:09 OSPF: SPF Processing Time(usecs): 250
+2019/05/24 07:30:09 OSPF: 	    SPF Time: 187
+2019/05/24 07:30:09 OSPF: 	   InterArea: 1
+2019/05/24 07:30:09 OSPF: 	       Prune: 1
+2019/05/24 07:30:09 OSPF: 	RouteInstall: 50
+2019/05/24 07:30:09 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:30:13 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:30:13 OSPF: SPF Processing Time(usecs): 8794
+2019/05/24 07:30:13 OSPF: 	    SPF Time: 7560
+2019/05/24 07:30:13 OSPF: 	   InterArea: 1
+2019/05/24 07:30:13 OSPF: 	       Prune: 22
+2019/05/24 07:30:13 OSPF: 	RouteInstall: 1183
+2019/05/24 07:30:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:30:53 OSPF: Terminating on signal
+2019/05/24 07:30:53 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:30:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:30:53 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:30:53 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:30:53 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:30:53 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:30:53 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:30:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:30:53 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:30:53 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:32:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:32:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:32:04 OSPF: SPF Processing Time(usecs): 220
+2019/05/24 07:32:04 OSPF: 	    SPF Time: 158
+2019/05/24 07:32:04 OSPF: 	   InterArea: 1
+2019/05/24 07:32:04 OSPF: 	       Prune: 1
+2019/05/24 07:32:04 OSPF: 	RouteInstall: 46
+2019/05/24 07:32:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:32:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:32:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:32:13 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:32:13 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:32:13 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:32:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:32:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:32:13 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:32:13 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:32:13 OSPF: SPF Processing Time(usecs): 131
+2019/05/24 07:32:13 OSPF: 	    SPF Time: 115
+2019/05/24 07:32:13 OSPF: 	   InterArea: 1
+2019/05/24 07:32:13 OSPF: 	       Prune: 1
+2019/05/24 07:32:13 OSPF: 	RouteInstall: 4
+2019/05/24 07:32:13 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:32:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:32:14 OSPF: SPF Processing Time(usecs): 263
+2019/05/24 07:32:14 OSPF: 	    SPF Time: 174
+2019/05/24 07:32:14 OSPF: 	   InterArea: 1
+2019/05/24 07:32:14 OSPF: 	       Prune: 1
+2019/05/24 07:32:14 OSPF: 	RouteInstall: 74
+2019/05/24 07:32:14 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:32:16 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:32:16 OSPF: SPF Processing Time(usecs): 235
+2019/05/24 07:32:16 OSPF: 	    SPF Time: 143
+2019/05/24 07:32:16 OSPF: 	   InterArea: 1
+2019/05/24 07:32:16 OSPF: 	       Prune: 1
+2019/05/24 07:32:16 OSPF: 	RouteInstall: 51
+2019/05/24 07:32:16 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:32:16 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:32:16 OSPF: SPF Processing Time(usecs): 182
+2019/05/24 07:32:16 OSPF: 	    SPF Time: 149
+2019/05/24 07:32:16 OSPF: 	   InterArea: 1
+2019/05/24 07:32:16 OSPF: 	       Prune: 1
+2019/05/24 07:32:16 OSPF: 	RouteInstall: 21
+2019/05/24 07:32:16 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:32:23 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:32:23 OSPF: SPF Processing Time(usecs): 8731
+2019/05/24 07:32:23 OSPF: 	    SPF Time: 7478
+2019/05/24 07:32:23 OSPF: 	   InterArea: 1
+2019/05/24 07:32:23 OSPF: 	       Prune: 22
+2019/05/24 07:32:23 OSPF: 	RouteInstall: 1202
+2019/05/24 07:32:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:33:03 OSPF: Terminating on signal
+2019/05/24 07:33:03 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:33:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:33:03 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:33:03 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:33:03 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:33:03 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:33:03 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:33:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:33:03 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:33:03 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:34:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:34:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:34:14 OSPF: SPF Processing Time(usecs): 203
+2019/05/24 07:34:14 OSPF: 	    SPF Time: 143
+2019/05/24 07:34:14 OSPF: 	   InterArea: 7
+2019/05/24 07:34:14 OSPF: 	       Prune: 0
+2019/05/24 07:34:14 OSPF: 	RouteInstall: 35
+2019/05/24 07:34:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:34:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:34:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:34:23 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:34:23 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:34:23 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:34:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:34:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:34:23 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:34:23 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:34:23 OSPF: SPF Processing Time(usecs): 98
+2019/05/24 07:34:23 OSPF: 	    SPF Time: 85
+2019/05/24 07:34:23 OSPF: 	   InterArea: 1
+2019/05/24 07:34:23 OSPF: 	       Prune: 1
+2019/05/24 07:34:23 OSPF: 	RouteInstall: 4
+2019/05/24 07:34:23 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:34:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:34:24 OSPF: SPF Processing Time(usecs): 176
+2019/05/24 07:34:24 OSPF: 	    SPF Time: 105
+2019/05/24 07:34:24 OSPF: 	   InterArea: 1
+2019/05/24 07:34:24 OSPF: 	       Prune: 1
+2019/05/24 07:34:24 OSPF: 	RouteInstall: 56
+2019/05/24 07:34:24 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:34:28 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:34:28 OSPF: SPF Processing Time(usecs): 190
+2019/05/24 07:34:28 OSPF: 	    SPF Time: 138
+2019/05/24 07:34:28 OSPF: 	   InterArea: 1
+2019/05/24 07:34:28 OSPF: 	       Prune: 1
+2019/05/24 07:34:28 OSPF: 	RouteInstall: 32
+2019/05/24 07:34:28 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:34:29 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:34:29 OSPF: SPF Processing Time(usecs): 220
+2019/05/24 07:34:29 OSPF: 	    SPF Time: 181
+2019/05/24 07:34:29 OSPF: 	   InterArea: 1
+2019/05/24 07:34:29 OSPF: 	       Prune: 1
+2019/05/24 07:34:29 OSPF: 	RouteInstall: 29
+2019/05/24 07:34:29 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:34:33 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:34:33 OSPF: SPF Processing Time(usecs): 8021
+2019/05/24 07:34:33 OSPF: 	    SPF Time: 6868
+2019/05/24 07:34:33 OSPF: 	   InterArea: 1
+2019/05/24 07:34:33 OSPF: 	       Prune: 20
+2019/05/24 07:34:33 OSPF: 	RouteInstall: 1098
+2019/05/24 07:34:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:35:13 OSPF: Terminating on signal
+2019/05/24 07:35:13 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:35:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:35:13 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:35:13 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:35:13 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:35:13 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:35:13 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:35:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:36:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:36:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:36:24 OSPF: SPF Processing Time(usecs): 200
+2019/05/24 07:36:24 OSPF: 	    SPF Time: 151
+2019/05/24 07:36:24 OSPF: 	   InterArea: 1
+2019/05/24 07:36:24 OSPF: 	       Prune: 1
+2019/05/24 07:36:24 OSPF: 	RouteInstall: 34
+2019/05/24 07:36:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:36:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:36:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:36:33 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:36:33 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:36:33 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:36:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:36:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:36:33 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:36:33 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:36:33 OSPF: SPF Processing Time(usecs): 126
+2019/05/24 07:36:33 OSPF: 	    SPF Time: 109
+2019/05/24 07:36:33 OSPF: 	   InterArea: 1
+2019/05/24 07:36:33 OSPF: 	       Prune: 1
+2019/05/24 07:36:33 OSPF: 	RouteInstall: 5
+2019/05/24 07:36:33 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:36:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:36:34 OSPF: SPF Processing Time(usecs): 246
+2019/05/24 07:36:34 OSPF: 	    SPF Time: 177
+2019/05/24 07:36:34 OSPF: 	   InterArea: 1
+2019/05/24 07:36:34 OSPF: 	       Prune: 1
+2019/05/24 07:36:34 OSPF: 	RouteInstall: 53
+2019/05/24 07:36:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:36:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:36:34 OSPF: SPF Processing Time(usecs): 225
+2019/05/24 07:36:34 OSPF: 	    SPF Time: 162
+2019/05/24 07:36:34 OSPF: 	   InterArea: 2
+2019/05/24 07:36:34 OSPF: 	       Prune: 1
+2019/05/24 07:36:34 OSPF: 	RouteInstall: 51
+2019/05/24 07:36:34 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:36:36 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:36:36 OSPF: SPF Processing Time(usecs): 312
+2019/05/24 07:36:36 OSPF: 	    SPF Time: 232
+2019/05/24 07:36:36 OSPF: 	   InterArea: 2
+2019/05/24 07:36:36 OSPF: 	       Prune: 1
+2019/05/24 07:36:36 OSPF: 	RouteInstall: 55
+2019/05/24 07:36:36 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:36:36 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:36:36 OSPF: SPF Processing Time(usecs): 282
+2019/05/24 07:36:36 OSPF: 	    SPF Time: 221
+2019/05/24 07:36:36 OSPF: 	   InterArea: 2
+2019/05/24 07:36:36 OSPF: 	       Prune: 1
+2019/05/24 07:36:36 OSPF: 	RouteInstall: 48
+2019/05/24 07:36:36 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:36:43 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:36:43 OSPF: SPF Processing Time(usecs): 8429
+2019/05/24 07:36:43 OSPF: 	    SPF Time: 7281
+2019/05/24 07:36:43 OSPF: 	   InterArea: 1
+2019/05/24 07:36:43 OSPF: 	       Prune: 19
+2019/05/24 07:36:43 OSPF: 	RouteInstall: 1101
+2019/05/24 07:36:43 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:37:23 OSPF: Terminating on signal
+2019/05/24 07:37:23 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:37:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:37:23 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:37:23 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:37:23 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:37:23 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:37:23 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:37:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:38:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:38:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:38:34 OSPF: SPF Processing Time(usecs): 175
+2019/05/24 07:38:34 OSPF: 	    SPF Time: 127
+2019/05/24 07:38:34 OSPF: 	   InterArea: 0
+2019/05/24 07:38:34 OSPF: 	       Prune: 1
+2019/05/24 07:38:34 OSPF: 	RouteInstall: 34
+2019/05/24 07:38:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:38:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:38:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:38:43 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:38:43 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:38:43 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:38:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:38:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:38:43 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:38:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:38:44 OSPF: SPF Processing Time(usecs): 120
+2019/05/24 07:38:44 OSPF: 	    SPF Time: 106
+2019/05/24 07:38:44 OSPF: 	   InterArea: 1
+2019/05/24 07:38:44 OSPF: 	       Prune: 1
+2019/05/24 07:38:44 OSPF: 	RouteInstall: 4
+2019/05/24 07:38:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:38:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:38:44 OSPF: SPF Processing Time(usecs): 164
+2019/05/24 07:38:44 OSPF: 	    SPF Time: 89
+2019/05/24 07:38:44 OSPF: 	   InterArea: 1
+2019/05/24 07:38:44 OSPF: 	       Prune: 1
+2019/05/24 07:38:44 OSPF: 	RouteInstall: 42
+2019/05/24 07:38:44 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:38:49 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:38:49 OSPF: SPF Processing Time(usecs): 200
+2019/05/24 07:38:49 OSPF: 	    SPF Time: 140
+2019/05/24 07:38:49 OSPF: 	   InterArea: 1
+2019/05/24 07:38:49 OSPF: 	       Prune: 1
+2019/05/24 07:38:49 OSPF: 	RouteInstall: 39
+2019/05/24 07:38:49 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:38:49 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:38:49 OSPF: SPF Processing Time(usecs): 180
+2019/05/24 07:38:49 OSPF: 	    SPF Time: 149
+2019/05/24 07:38:49 OSPF: 	   InterArea: 1
+2019/05/24 07:38:49 OSPF: 	       Prune: 0
+2019/05/24 07:38:49 OSPF: 	RouteInstall: 21
+2019/05/24 07:38:49 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:38:54 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:38:54 OSPF: SPF Processing Time(usecs): 8647
+2019/05/24 07:38:54 OSPF: 	    SPF Time: 7365
+2019/05/24 07:38:54 OSPF: 	   InterArea: 1
+2019/05/24 07:38:54 OSPF: 	       Prune: 21
+2019/05/24 07:38:54 OSPF: 	RouteInstall: 1227
+2019/05/24 07:38:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:39:33 OSPF: Terminating on signal
+2019/05/24 07:39:33 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:39:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:39:33 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:39:33 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:39:33 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:39:33 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:39:33 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:39:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:39:33 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:39:33 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:40:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:40:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:40:44 OSPF: SPF Processing Time(usecs): 165
+2019/05/24 07:40:44 OSPF: 	    SPF Time: 119
+2019/05/24 07:40:44 OSPF: 	   InterArea: 1
+2019/05/24 07:40:44 OSPF: 	       Prune: 1
+2019/05/24 07:40:44 OSPF: 	RouteInstall: 33
+2019/05/24 07:40:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:40:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:40:54 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:40:54 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:40:54 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:40:54 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:40:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:40:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:40:54 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:40:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:40:54 OSPF: SPF Processing Time(usecs): 124
+2019/05/24 07:40:54 OSPF: 	    SPF Time: 109
+2019/05/24 07:40:54 OSPF: 	   InterArea: 1
+2019/05/24 07:40:54 OSPF: 	       Prune: 1
+2019/05/24 07:40:54 OSPF: 	RouteInstall: 5
+2019/05/24 07:40:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:40:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:40:54 OSPF: SPF Processing Time(usecs): 188
+2019/05/24 07:40:54 OSPF: 	    SPF Time: 129
+2019/05/24 07:40:54 OSPF: 	   InterArea: 1
+2019/05/24 07:40:54 OSPF: 	       Prune: 1
+2019/05/24 07:40:54 OSPF: 	RouteInstall: 45
+2019/05/24 07:40:54 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:40:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:40:54 OSPF: SPF Processing Time(usecs): 186
+2019/05/24 07:40:54 OSPF: 	    SPF Time: 126
+2019/05/24 07:40:54 OSPF: 	   InterArea: 2
+2019/05/24 07:40:54 OSPF: 	       Prune: 1
+2019/05/24 07:40:54 OSPF: 	RouteInstall: 47
+2019/05/24 07:40:54 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:40:54 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:40:54 OSPF: SPF Processing Time(usecs): 183
+2019/05/24 07:40:54 OSPF: 	    SPF Time: 150
+2019/05/24 07:40:54 OSPF: 	   InterArea: 1
+2019/05/24 07:40:54 OSPF: 	       Prune: 1
+2019/05/24 07:40:54 OSPF: 	RouteInstall: 21
+2019/05/24 07:40:54 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:41:04 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:41:04 OSPF: SPF Processing Time(usecs): 8364
+2019/05/24 07:41:04 OSPF: 	    SPF Time: 7214
+2019/05/24 07:41:04 OSPF: 	   InterArea: 1
+2019/05/24 07:41:04 OSPF: 	       Prune: 20
+2019/05/24 07:41:04 OSPF: 	RouteInstall: 1103
+2019/05/24 07:41:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:41:43 OSPF: Terminating on signal
+2019/05/24 07:41:43 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:41:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:41:43 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:41:43 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:41:43 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:41:43 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:41:43 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:41:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:41:43 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:41:43 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:42:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:42:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:42:54 OSPF: SPF Processing Time(usecs): 1070
+2019/05/24 07:42:54 OSPF: 	    SPF Time: 92
+2019/05/24 07:42:54 OSPF: 	   InterArea: 4
+2019/05/24 07:42:54 OSPF: 	       Prune: 1
+2019/05/24 07:42:54 OSPF: 	RouteInstall: 966
+2019/05/24 07:42:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:43:04 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:43:04 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:43:04 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:43:04 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:43:04 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:43:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:43:04 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:43:04 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:43:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:43:04 OSPF: SPF Processing Time(usecs): 159
+2019/05/24 07:43:04 OSPF: 	    SPF Time: 141
+2019/05/24 07:43:04 OSPF: 	   InterArea: 1
+2019/05/24 07:43:04 OSPF: 	       Prune: 1
+2019/05/24 07:43:04 OSPF: 	RouteInstall: 4
+2019/05/24 07:43:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:43:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:43:04 OSPF: SPF Processing Time(usecs): 149
+2019/05/24 07:43:04 OSPF: 	    SPF Time: 96
+2019/05/24 07:43:04 OSPF: 	   InterArea: 1
+2019/05/24 07:43:04 OSPF: 	       Prune: 1
+2019/05/24 07:43:04 OSPF: 	RouteInstall: 39
+2019/05/24 07:43:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:43:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:43:04 OSPF: SPF Processing Time(usecs): 150
+2019/05/24 07:43:04 OSPF: 	    SPF Time: 99
+2019/05/24 07:43:04 OSPF: 	   InterArea: 1
+2019/05/24 07:43:04 OSPF: 	       Prune: 1
+2019/05/24 07:43:04 OSPF: 	RouteInstall: 40
+2019/05/24 07:43:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:43:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:43:04 OSPF: SPF Processing Time(usecs): 185
+2019/05/24 07:43:04 OSPF: 	    SPF Time: 128
+2019/05/24 07:43:04 OSPF: 	   InterArea: 1
+2019/05/24 07:43:04 OSPF: 	       Prune: 1
+2019/05/24 07:43:04 OSPF: 	RouteInstall: 43
+2019/05/24 07:43:04 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:43:04 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:43:04 OSPF: SPF Processing Time(usecs): 221
+2019/05/24 07:43:04 OSPF: 	    SPF Time: 163
+2019/05/24 07:43:04 OSPF: 	   InterArea: 2
+2019/05/24 07:43:04 OSPF: 	       Prune: 0
+2019/05/24 07:43:04 OSPF: 	RouteInstall: 46
+2019/05/24 07:43:04 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:43:14 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:43:14 OSPF: SPF Processing Time(usecs): 8246
+2019/05/24 07:43:14 OSPF: 	    SPF Time: 7103
+2019/05/24 07:43:14 OSPF: 	   InterArea: 1
+2019/05/24 07:43:14 OSPF: 	       Prune: 20
+2019/05/24 07:43:14 OSPF: 	RouteInstall: 1097
+2019/05/24 07:43:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:43:53 OSPF: Terminating on signal
+2019/05/24 07:43:53 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:43:53 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:43:53 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:43:53 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:43:53 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:43:53 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:43:53 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:43:53 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:43:53 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:43:53 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:45:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:45:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:45:04 OSPF: SPF Processing Time(usecs): 163
+2019/05/24 07:45:04 OSPF: 	    SPF Time: 119
+2019/05/24 07:45:04 OSPF: 	   InterArea: 1
+2019/05/24 07:45:04 OSPF: 	       Prune: 1
+2019/05/24 07:45:04 OSPF: 	RouteInstall: 32
+2019/05/24 07:45:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:45:14 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:45:14 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:45:14 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:45:14 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:45:14 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:45:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:45:14 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:45:14 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:45:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:45:14 OSPF: SPF Processing Time(usecs): 120
+2019/05/24 07:45:14 OSPF: 	    SPF Time: 105
+2019/05/24 07:45:14 OSPF: 	   InterArea: 1
+2019/05/24 07:45:14 OSPF: 	       Prune: 1
+2019/05/24 07:45:14 OSPF: 	RouteInstall: 4
+2019/05/24 07:45:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:45:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:45:14 OSPF: SPF Processing Time(usecs): 126
+2019/05/24 07:45:14 OSPF: 	    SPF Time: 80
+2019/05/24 07:45:14 OSPF: 	   InterArea: 1
+2019/05/24 07:45:14 OSPF: 	       Prune: 0
+2019/05/24 07:45:14 OSPF: 	RouteInstall: 35
+2019/05/24 07:45:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:45:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:45:14 OSPF: SPF Processing Time(usecs): 190
+2019/05/24 07:45:14 OSPF: 	    SPF Time: 128
+2019/05/24 07:45:14 OSPF: 	   InterArea: 1
+2019/05/24 07:45:14 OSPF: 	       Prune: 1
+2019/05/24 07:45:14 OSPF: 	RouteInstall: 49
+2019/05/24 07:45:14 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:45:16 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:45:16 OSPF: SPF Processing Time(usecs): 236
+2019/05/24 07:45:16 OSPF: 	    SPF Time: 163
+2019/05/24 07:45:16 OSPF: 	   InterArea: 2
+2019/05/24 07:45:16 OSPF: 	       Prune: 1
+2019/05/24 07:45:16 OSPF: 	RouteInstall: 50
+2019/05/24 07:45:16 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:45:16 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:45:16 OSPF: SPF Processing Time(usecs): 173
+2019/05/24 07:45:16 OSPF: 	    SPF Time: 134
+2019/05/24 07:45:16 OSPF: 	   InterArea: 0
+2019/05/24 07:45:16 OSPF: 	       Prune: 1
+2019/05/24 07:45:16 OSPF: 	RouteInstall: 27
+2019/05/24 07:45:16 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:45:24 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:45:24 OSPF: SPF Processing Time(usecs): 4239
+2019/05/24 07:45:24 OSPF: 	    SPF Time: 3591
+2019/05/24 07:45:24 OSPF: 	   InterArea: 1
+2019/05/24 07:45:24 OSPF: 	       Prune: 9
+2019/05/24 07:45:24 OSPF: 	RouteInstall: 624
+2019/05/24 07:45:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:46:03 OSPF: Terminating on signal
+2019/05/24 07:46:03 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:46:03 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:46:03 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:46:03 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:46:03 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:46:03 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:46:03 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:46:03 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:47:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:47:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:47:14 OSPF: SPF Processing Time(usecs): 200
+2019/05/24 07:47:14 OSPF: 	    SPF Time: 140
+2019/05/24 07:47:14 OSPF: 	   InterArea: 7
+2019/05/24 07:47:14 OSPF: 	       Prune: 0
+2019/05/24 07:47:14 OSPF: 	RouteInstall: 34
+2019/05/24 07:47:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:47:24 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:47:24 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:47:24 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:47:24 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:47:24 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:47:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:47:24 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:47:24 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:47:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:47:24 OSPF: SPF Processing Time(usecs): 59
+2019/05/24 07:47:24 OSPF: 	    SPF Time: 45
+2019/05/24 07:47:24 OSPF: 	   InterArea: 0
+2019/05/24 07:47:24 OSPF: 	       Prune: 1
+2019/05/24 07:47:24 OSPF: 	RouteInstall: 9
+2019/05/24 07:47:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:47:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:47:24 OSPF: SPF Processing Time(usecs): 693
+2019/05/24 07:47:24 OSPF: 	    SPF Time: 63
+2019/05/24 07:47:24 OSPF: 	   InterArea: 1
+2019/05/24 07:47:24 OSPF: 	       Prune: 0
+2019/05/24 07:47:24 OSPF: 	RouteInstall: 620
+2019/05/24 07:47:24 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:47:29 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:47:29 OSPF: SPF Processing Time(usecs): 278
+2019/05/24 07:47:29 OSPF: 	    SPF Time: 192
+2019/05/24 07:47:29 OSPF: 	   InterArea: 1
+2019/05/24 07:47:29 OSPF: 	       Prune: 1
+2019/05/24 07:47:29 OSPF: 	RouteInstall: 59
+2019/05/24 07:47:29 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:47:29 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:47:29 OSPF: SPF Processing Time(usecs): 172
+2019/05/24 07:47:29 OSPF: 	    SPF Time: 143
+2019/05/24 07:47:29 OSPF: 	   InterArea: 0
+2019/05/24 07:47:29 OSPF: 	       Prune: 0
+2019/05/24 07:47:29 OSPF: 	RouteInstall: 19
+2019/05/24 07:47:29 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:47:34 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:47:34 OSPF: SPF Processing Time(usecs): 8004
+2019/05/24 07:47:34 OSPF: 	    SPF Time: 7012
+2019/05/24 07:47:34 OSPF: 	   InterArea: 1
+2019/05/24 07:47:34 OSPF: 	       Prune: 17
+2019/05/24 07:47:34 OSPF: 	RouteInstall: 948
+2019/05/24 07:47:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:48:13 OSPF: Terminating on signal
+2019/05/24 07:48:13 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:48:13 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:48:13 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:48:13 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:48:13 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:48:13 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:48:13 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:48:13 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:48:13 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:48:13 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:49:25 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:49:25 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:49:25 OSPF: SPF Processing Time(usecs): 199
+2019/05/24 07:49:25 OSPF: 	    SPF Time: 141
+2019/05/24 07:49:25 OSPF: 	   InterArea: 7
+2019/05/24 07:49:25 OSPF: 	       Prune: 1
+2019/05/24 07:49:25 OSPF: 	RouteInstall: 32
+2019/05/24 07:49:25 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:49:34 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:49:34 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:49:34 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:49:34 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:49:34 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:49:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:49:34 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:49:34 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:49:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:49:34 OSPF: SPF Processing Time(usecs): 112
+2019/05/24 07:49:34 OSPF: 	    SPF Time: 97
+2019/05/24 07:49:34 OSPF: 	   InterArea: 0
+2019/05/24 07:49:34 OSPF: 	       Prune: 0
+2019/05/24 07:49:34 OSPF: 	RouteInstall: 4
+2019/05/24 07:49:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:49:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:49:34 OSPF: SPF Processing Time(usecs): 140
+2019/05/24 07:49:34 OSPF: 	    SPF Time: 83
+2019/05/24 07:49:34 OSPF: 	   InterArea: 1
+2019/05/24 07:49:34 OSPF: 	       Prune: 1
+2019/05/24 07:49:34 OSPF: 	RouteInstall: 43
+2019/05/24 07:49:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:49:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:49:34 OSPF: SPF Processing Time(usecs): 105
+2019/05/24 07:49:34 OSPF: 	    SPF Time: 72
+2019/05/24 07:49:34 OSPF: 	   InterArea: 1
+2019/05/24 07:49:34 OSPF: 	       Prune: 1
+2019/05/24 07:49:34 OSPF: 	RouteInstall: 23
+2019/05/24 07:49:34 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:49:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:49:34 OSPF: SPF Processing Time(usecs): 227
+2019/05/24 07:49:34 OSPF: 	    SPF Time: 171
+2019/05/24 07:49:34 OSPF: 	   InterArea: 1
+2019/05/24 07:49:34 OSPF: 	       Prune: 1
+2019/05/24 07:49:34 OSPF: 	RouteInstall: 44
+2019/05/24 07:49:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:49:34 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:49:34 OSPF: SPF Processing Time(usecs): 249
+2019/05/24 07:49:34 OSPF: 	    SPF Time: 191
+2019/05/24 07:49:34 OSPF: 	   InterArea: 1
+2019/05/24 07:49:34 OSPF: 	       Prune: 1
+2019/05/24 07:49:34 OSPF: 	RouteInstall: 47
+2019/05/24 07:49:34 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:49:44 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:49:44 OSPF: SPF Processing Time(usecs): 8485
+2019/05/24 07:49:44 OSPF: 	    SPF Time: 7301
+2019/05/24 07:49:44 OSPF: 	   InterArea: 1
+2019/05/24 07:49:44 OSPF: 	       Prune: 20
+2019/05/24 07:49:44 OSPF: 	RouteInstall: 1133
+2019/05/24 07:49:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:50:23 OSPF: Terminating on signal
+2019/05/24 07:50:23 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:50:23 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:50:23 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:50:23 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:50:23 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:50:23 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:50:23 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:50:23 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:50:23 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:50:23 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:51:35 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:51:35 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:51:35 OSPF: SPF Processing Time(usecs): 223
+2019/05/24 07:51:35 OSPF: 	    SPF Time: 178
+2019/05/24 07:51:35 OSPF: 	   InterArea: 1
+2019/05/24 07:51:35 OSPF: 	       Prune: 1
+2019/05/24 07:51:35 OSPF: 	RouteInstall: 30
+2019/05/24 07:51:35 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:51:44 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:51:44 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:51:44 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:51:44 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:51:44 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:51:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:51:44 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:51:44 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:51:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:51:44 OSPF: SPF Processing Time(usecs): 131
+2019/05/24 07:51:44 OSPF: 	    SPF Time: 116
+2019/05/24 07:51:44 OSPF: 	   InterArea: 1
+2019/05/24 07:51:44 OSPF: 	       Prune: 1
+2019/05/24 07:51:44 OSPF: 	RouteInstall: 4
+2019/05/24 07:51:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:51:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:51:44 OSPF: SPF Processing Time(usecs): 202
+2019/05/24 07:51:44 OSPF: 	    SPF Time: 141
+2019/05/24 07:51:44 OSPF: 	   InterArea: 1
+2019/05/24 07:51:44 OSPF: 	       Prune: 0
+2019/05/24 07:51:44 OSPF: 	RouteInstall: 48
+2019/05/24 07:51:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:51:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:51:44 OSPF: SPF Processing Time(usecs): 159
+2019/05/24 07:51:44 OSPF: 	    SPF Time: 114
+2019/05/24 07:51:44 OSPF: 	   InterArea: 1
+2019/05/24 07:51:44 OSPF: 	       Prune: 1
+2019/05/24 07:51:44 OSPF: 	RouteInstall: 35
+2019/05/24 07:51:44 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:51:49 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:51:49 OSPF: SPF Processing Time(usecs): 215
+2019/05/24 07:51:49 OSPF: 	    SPF Time: 135
+2019/05/24 07:51:49 OSPF: 	   InterArea: 1
+2019/05/24 07:51:49 OSPF: 	       Prune: 1
+2019/05/24 07:51:49 OSPF: 	RouteInstall: 55
+2019/05/24 07:51:49 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:51:49 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:51:49 OSPF: SPF Processing Time(usecs): 200
+2019/05/24 07:51:49 OSPF: 	    SPF Time: 155
+2019/05/24 07:51:49 OSPF: 	   InterArea: 0
+2019/05/24 07:51:49 OSPF: 	       Prune: 1
+2019/05/24 07:51:49 OSPF: 	RouteInstall: 34
+2019/05/24 07:51:49 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:51:54 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:51:54 OSPF: SPF Processing Time(usecs): 8399
+2019/05/24 07:51:54 OSPF: 	    SPF Time: 7095
+2019/05/24 07:51:54 OSPF: 	   InterArea: 1
+2019/05/24 07:51:54 OSPF: 	       Prune: 20
+2019/05/24 07:51:54 OSPF: 	RouteInstall: 1253
+2019/05/24 07:51:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:52:33 OSPF: Terminating on signal
+2019/05/24 07:52:33 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:52:33 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:52:33 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:52:33 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:52:33 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:52:33 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:52:33 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:52:33 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:52:33 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:52:33 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:53:45 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:53:45 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:53:45 OSPF: SPF Processing Time(usecs): 821
+2019/05/24 07:53:45 OSPF: 	    SPF Time: 153
+2019/05/24 07:53:45 OSPF: 	   InterArea: 1
+2019/05/24 07:53:45 OSPF: 	       Prune: 1
+2019/05/24 07:53:45 OSPF: 	RouteInstall: 654
+2019/05/24 07:53:45 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:53:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:53:54 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:53:54 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:53:54 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:53:54 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:53:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:53:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:53:54 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:53:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:53:54 OSPF: SPF Processing Time(usecs): 102
+2019/05/24 07:53:54 OSPF: 	    SPF Time: 87
+2019/05/24 07:53:54 OSPF: 	   InterArea: 1
+2019/05/24 07:53:54 OSPF: 	       Prune: 0
+2019/05/24 07:53:54 OSPF: 	RouteInstall: 5
+2019/05/24 07:53:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:53:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:53:54 OSPF: SPF Processing Time(usecs): 134
+2019/05/24 07:53:54 OSPF: 	    SPF Time: 73
+2019/05/24 07:53:54 OSPF: 	   InterArea: 1
+2019/05/24 07:53:54 OSPF: 	       Prune: 1
+2019/05/24 07:53:54 OSPF: 	RouteInstall: 49
+2019/05/24 07:53:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:53:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:53:54 OSPF: SPF Processing Time(usecs): 172
+2019/05/24 07:53:54 OSPF: 	    SPF Time: 123
+2019/05/24 07:53:54 OSPF: 	   InterArea: 1
+2019/05/24 07:53:54 OSPF: 	       Prune: 1
+2019/05/24 07:53:54 OSPF: 	RouteInstall: 38
+2019/05/24 07:53:54 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:53:59 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:53:59 OSPF: SPF Processing Time(usecs): 240
+2019/05/24 07:53:59 OSPF: 	    SPF Time: 169
+2019/05/24 07:53:59 OSPF: 	   InterArea: 1
+2019/05/24 07:53:59 OSPF: 	       Prune: 1
+2019/05/24 07:53:59 OSPF: 	RouteInstall: 49
+2019/05/24 07:53:59 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:53:59 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:53:59 OSPF: SPF Processing Time(usecs): 195
+2019/05/24 07:53:59 OSPF: 	    SPF Time: 154
+2019/05/24 07:53:59 OSPF: 	   InterArea: 1
+2019/05/24 07:53:59 OSPF: 	       Prune: 2
+2019/05/24 07:53:59 OSPF: 	RouteInstall: 29
+2019/05/24 07:53:59 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:54:04 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:54:04 OSPF: SPF Processing Time(usecs): 8183
+2019/05/24 07:54:04 OSPF: 	    SPF Time: 7008
+2019/05/24 07:54:04 OSPF: 	   InterArea: 1
+2019/05/24 07:54:04 OSPF: 	       Prune: 21
+2019/05/24 07:54:04 OSPF: 	RouteInstall: 1126
+2019/05/24 07:54:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:54:43 OSPF: Terminating on signal
+2019/05/24 07:54:43 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:54:43 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:54:43 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:54:43 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:54:43 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:54:43 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:54:43 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:54:43 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:54:43 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:54:43 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:55:55 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:55:55 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:55:55 OSPF: SPF Processing Time(usecs): 137
+2019/05/24 07:55:55 OSPF: 	    SPF Time: 99
+2019/05/24 07:55:55 OSPF: 	   InterArea: 1
+2019/05/24 07:55:55 OSPF: 	       Prune: 1
+2019/05/24 07:55:55 OSPF: 	RouteInstall: 28
+2019/05/24 07:55:55 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:56:04 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:56:04 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:56:04 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:56:04 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:56:04 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:56:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:56:04 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:56:04 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:56:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:56:04 OSPF: SPF Processing Time(usecs): 141
+2019/05/24 07:56:04 OSPF: 	    SPF Time: 125
+2019/05/24 07:56:04 OSPF: 	   InterArea: 1
+2019/05/24 07:56:04 OSPF: 	       Prune: 1
+2019/05/24 07:56:04 OSPF: 	RouteInstall: 5
+2019/05/24 07:56:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:56:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:56:04 OSPF: SPF Processing Time(usecs): 162
+2019/05/24 07:56:04 OSPF: 	    SPF Time: 104
+2019/05/24 07:56:04 OSPF: 	   InterArea: 1
+2019/05/24 07:56:04 OSPF: 	       Prune: 1
+2019/05/24 07:56:04 OSPF: 	RouteInstall: 46
+2019/05/24 07:56:04 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:56:09 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:56:09 OSPF: SPF Processing Time(usecs): 238
+2019/05/24 07:56:09 OSPF: 	    SPF Time: 168
+2019/05/24 07:56:09 OSPF: 	   InterArea: 1
+2019/05/24 07:56:09 OSPF: 	       Prune: 1
+2019/05/24 07:56:09 OSPF: 	RouteInstall: 49
+2019/05/24 07:56:09 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:56:09 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:56:09 OSPF: SPF Processing Time(usecs): 224
+2019/05/24 07:56:09 OSPF: 	    SPF Time: 177
+2019/05/24 07:56:09 OSPF: 	   InterArea: 1
+2019/05/24 07:56:09 OSPF: 	       Prune: 1
+2019/05/24 07:56:09 OSPF: 	RouteInstall: 34
+2019/05/24 07:56:09 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:56:14 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:56:14 OSPF: SPF Processing Time(usecs): 8030
+2019/05/24 07:56:14 OSPF: 	    SPF Time: 6902
+2019/05/24 07:56:14 OSPF: 	   InterArea: 1
+2019/05/24 07:56:14 OSPF: 	       Prune: 19
+2019/05/24 07:56:14 OSPF: 	RouteInstall: 1080
+2019/05/24 07:56:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:56:54 OSPF: Terminating on signal
+2019/05/24 07:56:54 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:56:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:56:54 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:56:54 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:56:54 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:56:54 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:56:54 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:56:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:56:54 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:56:54 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 07:58:05 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:58:05 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:58:05 OSPF: SPF Processing Time(usecs): 184
+2019/05/24 07:58:05 OSPF: 	    SPF Time: 132
+2019/05/24 07:58:05 OSPF: 	   InterArea: 7
+2019/05/24 07:58:05 OSPF: 	       Prune: 1
+2019/05/24 07:58:05 OSPF: 	RouteInstall: 32
+2019/05/24 07:58:05 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:58:14 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:58:14 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:58:14 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 07:58:14 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 07:58:14 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 07:58:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:58:14 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:58:14 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 07:58:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:58:14 OSPF: SPF Processing Time(usecs): 128
+2019/05/24 07:58:14 OSPF: 	    SPF Time: 93
+2019/05/24 07:58:14 OSPF: 	   InterArea: 1
+2019/05/24 07:58:14 OSPF: 	       Prune: 1
+2019/05/24 07:58:14 OSPF: 	RouteInstall: 24
+2019/05/24 07:58:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:58:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:58:14 OSPF: SPF Processing Time(usecs): 173
+2019/05/24 07:58:14 OSPF: 	    SPF Time: 115
+2019/05/24 07:58:14 OSPF: 	   InterArea: 0
+2019/05/24 07:58:14 OSPF: 	       Prune: 0
+2019/05/24 07:58:14 OSPF: 	RouteInstall: 45
+2019/05/24 07:58:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:58:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:58:14 OSPF: SPF Processing Time(usecs): 142
+2019/05/24 07:58:14 OSPF: 	    SPF Time: 96
+2019/05/24 07:58:14 OSPF: 	   InterArea: 0
+2019/05/24 07:58:14 OSPF: 	       Prune: 0
+2019/05/24 07:58:14 OSPF: 	RouteInstall: 37
+2019/05/24 07:58:14 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 07:58:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 07:58:14 OSPF: SPF Processing Time(usecs): 150
+2019/05/24 07:58:14 OSPF: 	    SPF Time: 97
+2019/05/24 07:58:14 OSPF: 	   InterArea: 1
+2019/05/24 07:58:14 OSPF: 	       Prune: 1
+2019/05/24 07:58:14 OSPF: 	RouteInstall: 41
+2019/05/24 07:58:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:58:14 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 07:58:14 OSPF: SPF Processing Time(usecs): 256
+2019/05/24 07:58:14 OSPF: 	    SPF Time: 203
+2019/05/24 07:58:14 OSPF: 	   InterArea: 1
+2019/05/24 07:58:14 OSPF: 	       Prune: 1
+2019/05/24 07:58:14 OSPF: 	RouteInstall: 41
+2019/05/24 07:58:14 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 07:58:24 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 07:58:24 OSPF: SPF Processing Time(usecs): 7435
+2019/05/24 07:58:24 OSPF: 	    SPF Time: 6350
+2019/05/24 07:58:24 OSPF: 	   InterArea: 1
+2019/05/24 07:58:24 OSPF: 	       Prune: 19
+2019/05/24 07:58:24 OSPF: 	RouteInstall: 1041
+2019/05/24 07:58:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 07:59:04 OSPF: Terminating on signal
+2019/05/24 07:59:04 OSPF: ASBR[Status:255]: Update
+2019/05/24 07:59:04 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 07:59:04 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 07:59:04 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 07:59:04 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 07:59:04 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 07:59:04 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 07:59:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 07:59:04 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 07:59:04 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 08:00:15 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:00:15 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:00:15 OSPF: SPF Processing Time(usecs): 178
+2019/05/24 08:00:15 OSPF: 	    SPF Time: 132
+2019/05/24 08:00:15 OSPF: 	   InterArea: 1
+2019/05/24 08:00:15 OSPF: 	       Prune: 0
+2019/05/24 08:00:15 OSPF: 	RouteInstall: 32
+2019/05/24 08:00:15 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:00:24 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:00:24 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:00:24 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:00:24 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:00:24 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:00:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:00:24 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:00:24 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:00:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:00:24 OSPF: SPF Processing Time(usecs): 119
+2019/05/24 08:00:24 OSPF: 	    SPF Time: 101
+2019/05/24 08:00:24 OSPF: 	   InterArea: 1
+2019/05/24 08:00:24 OSPF: 	       Prune: 1
+2019/05/24 08:00:24 OSPF: 	RouteInstall: 6
+2019/05/24 08:00:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:00:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:00:24 OSPF: SPF Processing Time(usecs): 239
+2019/05/24 08:00:24 OSPF: 	    SPF Time: 145
+2019/05/24 08:00:24 OSPF: 	   InterArea: 1
+2019/05/24 08:00:24 OSPF: 	       Prune: 1
+2019/05/24 08:00:24 OSPF: 	RouteInstall: 80
+2019/05/24 08:00:24 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:00:26 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:00:26 OSPF: SPF Processing Time(usecs): 241
+2019/05/24 08:00:26 OSPF: 	    SPF Time: 166
+2019/05/24 08:00:26 OSPF: 	   InterArea: 1
+2019/05/24 08:00:26 OSPF: 	       Prune: 1
+2019/05/24 08:00:26 OSPF: 	RouteInstall: 51
+2019/05/24 08:00:26 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 08:00:26 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:00:26 OSPF: SPF Processing Time(usecs): 298
+2019/05/24 08:00:26 OSPF: 	    SPF Time: 240
+2019/05/24 08:00:26 OSPF: 	   InterArea: 1
+2019/05/24 08:00:26 OSPF: 	       Prune: 1
+2019/05/24 08:00:26 OSPF: 	RouteInstall: 47
+2019/05/24 08:00:26 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:00:34 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:00:34 OSPF: SPF Processing Time(usecs): 8181
+2019/05/24 08:00:34 OSPF: 	    SPF Time: 6999
+2019/05/24 08:00:34 OSPF: 	   InterArea: 1
+2019/05/24 08:00:34 OSPF: 	       Prune: 20
+2019/05/24 08:00:34 OSPF: 	RouteInstall: 1133
+2019/05/24 08:00:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:01:14 OSPF: Terminating on signal
+2019/05/24 08:01:14 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:01:14 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:01:14 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:01:14 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:01:14 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:01:14 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:01:14 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:01:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:01:14 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 08:01:14 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 08:02:25 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:02:25 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:02:25 OSPF: SPF Processing Time(usecs): 161
+2019/05/24 08:02:25 OSPF: 	    SPF Time: 116
+2019/05/24 08:02:25 OSPF: 	   InterArea: 1
+2019/05/24 08:02:25 OSPF: 	       Prune: 0
+2019/05/24 08:02:25 OSPF: 	RouteInstall: 31
+2019/05/24 08:02:25 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:02:34 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:02:34 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:02:34 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:02:34 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:02:34 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:02:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:02:34 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:02:34 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:02:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:02:34 OSPF: SPF Processing Time(usecs): 107
+2019/05/24 08:02:34 OSPF: 	    SPF Time: 92
+2019/05/24 08:02:34 OSPF: 	   InterArea: 1
+2019/05/24 08:02:34 OSPF: 	       Prune: 1
+2019/05/24 08:02:34 OSPF: 	RouteInstall: 4
+2019/05/24 08:02:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:02:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:02:34 OSPF: SPF Processing Time(usecs): 163
+2019/05/24 08:02:34 OSPF: 	    SPF Time: 96
+2019/05/24 08:02:34 OSPF: 	   InterArea: 1
+2019/05/24 08:02:34 OSPF: 	       Prune: 0
+2019/05/24 08:02:34 OSPF: 	RouteInstall: 52
+2019/05/24 08:02:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:02:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:02:34 OSPF: SPF Processing Time(usecs): 226
+2019/05/24 08:02:34 OSPF: 	    SPF Time: 151
+2019/05/24 08:02:34 OSPF: 	   InterArea: 1
+2019/05/24 08:02:34 OSPF: 	       Prune: 1
+2019/05/24 08:02:34 OSPF: 	RouteInstall: 62
+2019/05/24 08:02:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:02:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:02:34 OSPF: SPF Processing Time(usecs): 215
+2019/05/24 08:02:34 OSPF: 	    SPF Time: 150
+2019/05/24 08:02:34 OSPF: 	   InterArea: 2
+2019/05/24 08:02:34 OSPF: 	       Prune: 1
+2019/05/24 08:02:34 OSPF: 	RouteInstall: 51
+2019/05/24 08:02:34 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 08:02:39 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:02:39 OSPF: SPF Processing Time(usecs): 234
+2019/05/24 08:02:39 OSPF: 	    SPF Time: 157
+2019/05/24 08:02:39 OSPF: 	   InterArea: 1
+2019/05/24 08:02:39 OSPF: 	       Prune: 1
+2019/05/24 08:02:39 OSPF: 	RouteInstall: 51
+2019/05/24 08:02:39 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:02:39 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:02:39 OSPF: SPF Processing Time(usecs): 249
+2019/05/24 08:02:39 OSPF: 	    SPF Time: 195
+2019/05/24 08:02:39 OSPF: 	   InterArea: 1
+2019/05/24 08:02:39 OSPF: 	       Prune: 1
+2019/05/24 08:02:39 OSPF: 	RouteInstall: 42
+2019/05/24 08:02:39 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:02:44 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:02:44 OSPF: SPF Processing Time(usecs): 9416
+2019/05/24 08:02:44 OSPF: 	    SPF Time: 8101
+2019/05/24 08:02:44 OSPF: 	   InterArea: 1
+2019/05/24 08:02:44 OSPF: 	       Prune: 23
+2019/05/24 08:02:44 OSPF: 	RouteInstall: 1262
+2019/05/24 08:02:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:03:24 OSPF: Terminating on signal
+2019/05/24 08:03:24 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:03:24 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:03:24 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:03:24 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:03:24 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:03:24 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:03:24 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:03:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:03:24 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 08:03:24 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 08:04:35 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:04:35 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:04:35 OSPF: SPF Processing Time(usecs): 226
+2019/05/24 08:04:35 OSPF: 	    SPF Time: 151
+2019/05/24 08:04:35 OSPF: 	   InterArea: 7
+2019/05/24 08:04:35 OSPF: 	       Prune: 1
+2019/05/24 08:04:35 OSPF: 	RouteInstall: 44
+2019/05/24 08:04:35 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:04:44 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:04:44 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:04:44 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:04:44 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:04:44 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:04:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:04:44 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:04:44 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:04:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:04:44 OSPF: SPF Processing Time(usecs): 147
+2019/05/24 08:04:44 OSPF: 	    SPF Time: 131
+2019/05/24 08:04:44 OSPF: 	   InterArea: 1
+2019/05/24 08:04:44 OSPF: 	       Prune: 0
+2019/05/24 08:04:44 OSPF: 	RouteInstall: 5
+2019/05/24 08:04:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:04:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:04:44 OSPF: SPF Processing Time(usecs): 171
+2019/05/24 08:04:44 OSPF: 	    SPF Time: 79
+2019/05/24 08:04:44 OSPF: 	   InterArea: 1
+2019/05/24 08:04:44 OSPF: 	       Prune: 0
+2019/05/24 08:04:44 OSPF: 	RouteInstall: 78
+2019/05/24 08:04:44 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:04:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:04:44 OSPF: SPF Processing Time(usecs): 149
+2019/05/24 08:04:44 OSPF: 	    SPF Time: 97
+2019/05/24 08:04:44 OSPF: 	   InterArea: 1
+2019/05/24 08:04:44 OSPF: 	       Prune: 0
+2019/05/24 08:04:44 OSPF: 	RouteInstall: 40
+2019/05/24 08:04:44 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 08:04:44 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:04:44 OSPF: SPF Processing Time(usecs): 157
+2019/05/24 08:04:44 OSPF: 	    SPF Time: 128
+2019/05/24 08:04:44 OSPF: 	   InterArea: 0
+2019/05/24 08:04:44 OSPF: 	       Prune: 0
+2019/05/24 08:04:44 OSPF: 	RouteInstall: 19
+2019/05/24 08:04:44 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:04:54 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:04:54 OSPF: SPF Processing Time(usecs): 9298
+2019/05/24 08:04:54 OSPF: 	    SPF Time: 7984
+2019/05/24 08:04:54 OSPF: 	   InterArea: 2
+2019/05/24 08:04:54 OSPF: 	       Prune: 20
+2019/05/24 08:04:54 OSPF: 	RouteInstall: 1252
+2019/05/24 08:04:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:05:34 OSPF: Terminating on signal
+2019/05/24 08:05:34 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:05:34 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:05:34 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:05:34 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:05:34 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:05:34 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:05:34 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:05:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:05:34 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 08:05:34 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 08:06:45 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:06:45 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:06:45 OSPF: SPF Processing Time(usecs): 164
+2019/05/24 08:06:45 OSPF: 	    SPF Time: 116
+2019/05/24 08:06:45 OSPF: 	   InterArea: 0
+2019/05/24 08:06:45 OSPF: 	       Prune: 0
+2019/05/24 08:06:45 OSPF: 	RouteInstall: 34
+2019/05/24 08:06:45 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:06:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:06:54 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:06:54 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:06:54 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:06:54 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:06:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:06:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:06:54 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:06:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:06:54 OSPF: SPF Processing Time(usecs): 99
+2019/05/24 08:06:54 OSPF: 	    SPF Time: 86
+2019/05/24 08:06:54 OSPF: 	   InterArea: 1
+2019/05/24 08:06:54 OSPF: 	       Prune: 1
+2019/05/24 08:06:54 OSPF: 	RouteInstall: 4
+2019/05/24 08:06:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:06:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:06:54 OSPF: SPF Processing Time(usecs): 118
+2019/05/24 08:06:54 OSPF: 	    SPF Time: 70
+2019/05/24 08:06:54 OSPF: 	   InterArea: 0
+2019/05/24 08:06:54 OSPF: 	       Prune: 0
+2019/05/24 08:06:54 OSPF: 	RouteInstall: 38
+2019/05/24 08:06:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:06:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:06:54 OSPF: SPF Processing Time(usecs): 143
+2019/05/24 08:06:54 OSPF: 	    SPF Time: 102
+2019/05/24 08:06:54 OSPF: 	   InterArea: 1
+2019/05/24 08:06:54 OSPF: 	       Prune: 0
+2019/05/24 08:06:54 OSPF: 	RouteInstall: 32
+2019/05/24 08:06:54 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 08:06:59 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:06:59 OSPF: SPF Processing Time(usecs): 232
+2019/05/24 08:06:59 OSPF: 	    SPF Time: 163
+2019/05/24 08:06:59 OSPF: 	   InterArea: 2
+2019/05/24 08:06:59 OSPF: 	       Prune: 1
+2019/05/24 08:06:59 OSPF: 	RouteInstall: 48
+2019/05/24 08:06:59 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:06:59 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:06:59 OSPF: SPF Processing Time(usecs): 168
+2019/05/24 08:06:59 OSPF: 	    SPF Time: 135
+2019/05/24 08:06:59 OSPF: 	   InterArea: 1
+2019/05/24 08:06:59 OSPF: 	       Prune: 0
+2019/05/24 08:06:59 OSPF: 	RouteInstall: 22
+2019/05/24 08:06:59 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:07:04 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:07:04 OSPF: SPF Processing Time(usecs): 8810
+2019/05/24 08:07:04 OSPF: 	    SPF Time: 7568
+2019/05/24 08:07:04 OSPF: 	   InterArea: 1
+2019/05/24 08:07:04 OSPF: 	       Prune: 22
+2019/05/24 08:07:04 OSPF: 	RouteInstall: 1191
+2019/05/24 08:07:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:07:44 OSPF: Terminating on signal
+2019/05/24 08:07:44 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:07:44 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:07:44 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:07:44 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:07:44 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:07:44 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:07:44 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:07:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:07:44 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 08:07:44 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 08:08:55 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:08:55 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:08:55 OSPF: SPF Processing Time(usecs): 180
+2019/05/24 08:08:55 OSPF: 	    SPF Time: 130
+2019/05/24 08:08:55 OSPF: 	   InterArea: 1
+2019/05/24 08:08:55 OSPF: 	       Prune: 1
+2019/05/24 08:08:55 OSPF: 	RouteInstall: 35
+2019/05/24 08:08:55 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:09:04 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:09:04 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:09:04 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:09:04 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:09:04 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:09:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:09:04 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:09:04 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:09:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:09:04 OSPF: SPF Processing Time(usecs): 140
+2019/05/24 08:09:04 OSPF: 	    SPF Time: 124
+2019/05/24 08:09:04 OSPF: 	   InterArea: 1
+2019/05/24 08:09:04 OSPF: 	       Prune: 1
+2019/05/24 08:09:04 OSPF: 	RouteInstall: 5
+2019/05/24 08:09:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:09:04 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:09:04 OSPF: SPF Processing Time(usecs): 191
+2019/05/24 08:09:04 OSPF: 	    SPF Time: 125
+2019/05/24 08:09:04 OSPF: 	   InterArea: 1
+2019/05/24 08:09:04 OSPF: 	       Prune: 1
+2019/05/24 08:09:04 OSPF: 	RouteInstall: 50
+2019/05/24 08:09:04 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:09:09 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:09:09 OSPF: SPF Processing Time(usecs): 250
+2019/05/24 08:09:09 OSPF: 	    SPF Time: 187
+2019/05/24 08:09:09 OSPF: 	   InterArea: 1
+2019/05/24 08:09:09 OSPF: 	       Prune: 1
+2019/05/24 08:09:09 OSPF: 	RouteInstall: 40
+2019/05/24 08:09:09 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:09:09 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:09:09 OSPF: SPF Processing Time(usecs): 159
+2019/05/24 08:09:09 OSPF: 	    SPF Time: 130
+2019/05/24 08:09:09 OSPF: 	   InterArea: 0
+2019/05/24 08:09:09 OSPF: 	       Prune: 1
+2019/05/24 08:09:09 OSPF: 	RouteInstall: 18
+2019/05/24 08:09:09 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:09:14 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:09:14 OSPF: SPF Processing Time(usecs): 8386
+2019/05/24 08:09:14 OSPF: 	    SPF Time: 7238
+2019/05/24 08:09:14 OSPF: 	   InterArea: 2
+2019/05/24 08:09:14 OSPF: 	       Prune: 20
+2019/05/24 08:09:14 OSPF: 	RouteInstall: 1099
+2019/05/24 08:09:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:09:54 OSPF: Terminating on signal
+2019/05/24 08:09:54 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:09:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:09:54 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:09:54 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:09:54 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:09:54 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:09:54 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:09:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:09:54 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 08:09:54 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 08:11:05 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:11:05 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:11:05 OSPF: SPF Processing Time(usecs): 228
+2019/05/24 08:11:05 OSPF: 	    SPF Time: 160
+2019/05/24 08:11:05 OSPF: 	   InterArea: 1
+2019/05/24 08:11:05 OSPF: 	       Prune: 1
+2019/05/24 08:11:05 OSPF: 	RouteInstall: 44
+2019/05/24 08:11:05 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:11:14 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:11:14 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:11:14 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:11:14 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:11:14 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:11:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:11:14 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:11:14 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:11:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:11:14 OSPF: SPF Processing Time(usecs): 123
+2019/05/24 08:11:14 OSPF: 	    SPF Time: 107
+2019/05/24 08:11:14 OSPF: 	   InterArea: 1
+2019/05/24 08:11:14 OSPF: 	       Prune: 0
+2019/05/24 08:11:14 OSPF: 	RouteInstall: 4
+2019/05/24 08:11:14 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:11:14 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:11:14 OSPF: SPF Processing Time(usecs): 155
+2019/05/24 08:11:14 OSPF: 	    SPF Time: 80
+2019/05/24 08:11:14 OSPF: 	   InterArea: 1
+2019/05/24 08:11:14 OSPF: 	       Prune: 0
+2019/05/24 08:11:14 OSPF: 	RouteInstall: 60
+2019/05/24 08:11:14 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:11:16 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:11:16 OSPF: SPF Processing Time(usecs): 207
+2019/05/24 08:11:16 OSPF: 	    SPF Time: 150
+2019/05/24 08:11:16 OSPF: 	   InterArea: 2
+2019/05/24 08:11:16 OSPF: 	       Prune: 1
+2019/05/24 08:11:16 OSPF: 	RouteInstall: 36
+2019/05/24 08:11:16 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:11:16 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:11:16 OSPF: SPF Processing Time(usecs): 191
+2019/05/24 08:11:16 OSPF: 	    SPF Time: 153
+2019/05/24 08:11:16 OSPF: 	   InterArea: 1
+2019/05/24 08:11:16 OSPF: 	       Prune: 0
+2019/05/24 08:11:16 OSPF: 	RouteInstall: 27
+2019/05/24 08:11:16 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:11:24 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:11:24 OSPF: SPF Processing Time(usecs): 9354
+2019/05/24 08:11:24 OSPF: 	    SPF Time: 8053
+2019/05/24 08:11:24 OSPF: 	   InterArea: 1
+2019/05/24 08:11:24 OSPF: 	       Prune: 21
+2019/05/24 08:11:24 OSPF: 	RouteInstall: 1248
+2019/05/24 08:11:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:12:04 OSPF: Terminating on signal
+2019/05/24 08:12:04 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:12:04 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:12:04 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:12:04 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:12:04 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:12:04 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:12:04 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:12:04 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:12:04 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 08:12:04 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 08:13:15 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:13:15 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:13:15 OSPF: SPF Processing Time(usecs): 211
+2019/05/24 08:13:15 OSPF: 	    SPF Time: 153
+2019/05/24 08:13:15 OSPF: 	   InterArea: 6
+2019/05/24 08:13:15 OSPF: 	       Prune: 1
+2019/05/24 08:13:15 OSPF: 	RouteInstall: 33
+2019/05/24 08:13:15 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:13:24 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:13:24 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:13:24 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:13:24 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:13:24 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:13:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:13:24 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:13:24 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:13:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:13:24 OSPF: SPF Processing Time(usecs): 134
+2019/05/24 08:13:24 OSPF: 	    SPF Time: 120
+2019/05/24 08:13:24 OSPF: 	   InterArea: 1
+2019/05/24 08:13:24 OSPF: 	       Prune: 1
+2019/05/24 08:13:24 OSPF: 	RouteInstall: 4
+2019/05/24 08:13:24 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:13:24 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:13:24 OSPF: SPF Processing Time(usecs): 179
+2019/05/24 08:13:24 OSPF: 	    SPF Time: 122
+2019/05/24 08:13:24 OSPF: 	   InterArea: 1
+2019/05/24 08:13:24 OSPF: 	       Prune: 1
+2019/05/24 08:13:24 OSPF: 	RouteInstall: 45
+2019/05/24 08:13:24 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:13:28 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:13:28 OSPF: SPF Processing Time(usecs): 295
+2019/05/24 08:13:28 OSPF: 	    SPF Time: 195
+2019/05/24 08:13:28 OSPF: 	   InterArea: 1
+2019/05/24 08:13:28 OSPF: 	       Prune: 1
+2019/05/24 08:13:28 OSPF: 	RouteInstall: 49
+2019/05/24 08:13:28 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 08:13:28 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:13:28 OSPF: SPF Processing Time(usecs): 280
+2019/05/24 08:13:28 OSPF: 	    SPF Time: 218
+2019/05/24 08:13:28 OSPF: 	   InterArea: 1
+2019/05/24 08:13:28 OSPF: 	       Prune: 1
+2019/05/24 08:13:28 OSPF: 	RouteInstall: 48
+2019/05/24 08:13:28 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:13:34 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:13:34 OSPF: SPF Processing Time(usecs): 8683
+2019/05/24 08:13:34 OSPF: 	    SPF Time: 7459
+2019/05/24 08:13:34 OSPF: 	   InterArea: 1
+2019/05/24 08:13:34 OSPF: 	       Prune: 21
+2019/05/24 08:13:34 OSPF: 	RouteInstall: 1175
+2019/05/24 08:13:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:14:14 OSPF: Terminating on signal
+2019/05/24 08:14:14 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:14:14 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:14:14 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:14:14 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:14:14 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:14:14 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:14:14 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:14:14 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:14:14 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 08:14:14 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 08:15:25 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:15:25 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:15:25 OSPF: SPF Processing Time(usecs): 166
+2019/05/24 08:15:25 OSPF: 	    SPF Time: 119
+2019/05/24 08:15:25 OSPF: 	   InterArea: 1
+2019/05/24 08:15:25 OSPF: 	       Prune: 1
+2019/05/24 08:15:25 OSPF: 	RouteInstall: 33
+2019/05/24 08:15:25 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:15:34 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:15:34 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:15:34 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:15:34 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:15:34 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:15:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:15:34 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:15:34 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:15:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:15:34 OSPF: SPF Processing Time(usecs): 110
+2019/05/24 08:15:34 OSPF: 	    SPF Time: 94
+2019/05/24 08:15:34 OSPF: 	   InterArea: 1
+2019/05/24 08:15:34 OSPF: 	       Prune: 1
+2019/05/24 08:15:34 OSPF: 	RouteInstall: 4
+2019/05/24 08:15:34 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:15:34 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:15:34 OSPF: SPF Processing Time(usecs): 159
+2019/05/24 08:15:34 OSPF: 	    SPF Time: 103
+2019/05/24 08:15:34 OSPF: 	   InterArea: 2
+2019/05/24 08:15:34 OSPF: 	       Prune: 1
+2019/05/24 08:15:34 OSPF: 	RouteInstall: 44
+2019/05/24 08:15:34 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:15:39 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:15:39 OSPF: SPF Processing Time(usecs): 234
+2019/05/24 08:15:39 OSPF: 	    SPF Time: 157
+2019/05/24 08:15:39 OSPF: 	   InterArea: 15
+2019/05/24 08:15:39 OSPF: 	       Prune: 1
+2019/05/24 08:15:39 OSPF: 	RouteInstall: 40
+2019/05/24 08:15:39 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:15:39 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:15:39 OSPF: SPF Processing Time(usecs): 182
+2019/05/24 08:15:39 OSPF: 	    SPF Time: 150
+2019/05/24 08:15:39 OSPF: 	   InterArea: 1
+2019/05/24 08:15:39 OSPF: 	       Prune: 1
+2019/05/24 08:15:39 OSPF: 	RouteInstall: 21
+2019/05/24 08:15:39 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:15:44 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:15:44 OSPF: SPF Processing Time(usecs): 8865
+2019/05/24 08:15:44 OSPF: 	    SPF Time: 7608
+2019/05/24 08:15:44 OSPF: 	   InterArea: 1
+2019/05/24 08:15:44 OSPF: 	       Prune: 22
+2019/05/24 08:15:44 OSPF: 	RouteInstall: 1205
+2019/05/24 08:15:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:16:24 OSPF: Terminating on signal
+2019/05/24 08:16:24 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:16:24 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:16:24 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:16:24 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:16:24 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:16:24 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:16:24 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:16:24 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:17:35 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:17:35 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:17:35 OSPF: SPF Processing Time(usecs): 192
+2019/05/24 08:17:35 OSPF: 	    SPF Time: 127
+2019/05/24 08:17:35 OSPF: 	   InterArea: 1
+2019/05/24 08:17:35 OSPF: 	       Prune: 1
+2019/05/24 08:17:35 OSPF: 	RouteInstall: 33
+2019/05/24 08:17:35 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:17:44 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:17:44 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:17:44 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:17:44 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:17:44 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:17:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:17:44 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:17:44 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:17:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:17:44 OSPF: SPF Processing Time(usecs): 144
+2019/05/24 08:17:44 OSPF: 	    SPF Time: 126
+2019/05/24 08:17:44 OSPF: 	   InterArea: 1
+2019/05/24 08:17:44 OSPF: 	       Prune: 1
+2019/05/24 08:17:44 OSPF: 	RouteInstall: 5
+2019/05/24 08:17:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:17:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:17:44 OSPF: SPF Processing Time(usecs): 173
+2019/05/24 08:17:44 OSPF: 	    SPF Time: 110
+2019/05/24 08:17:44 OSPF: 	   InterArea: 1
+2019/05/24 08:17:44 OSPF: 	       Prune: 1
+2019/05/24 08:17:44 OSPF: 	RouteInstall: 50
+2019/05/24 08:17:44 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:17:44 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:17:44 OSPF: SPF Processing Time(usecs): 159
+2019/05/24 08:17:44 OSPF: 	    SPF Time: 106
+2019/05/24 08:17:44 OSPF: 	   InterArea: 1
+2019/05/24 08:17:44 OSPF: 	       Prune: 1
+2019/05/24 08:17:44 OSPF: 	RouteInstall: 42
+2019/05/24 08:17:44 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 08:17:49 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:17:49 OSPF: SPF Processing Time(usecs): 277
+2019/05/24 08:17:49 OSPF: 	    SPF Time: 206
+2019/05/24 08:17:49 OSPF: 	   InterArea: 1
+2019/05/24 08:17:49 OSPF: 	       Prune: 1
+2019/05/24 08:17:49 OSPF: 	RouteInstall: 49
+2019/05/24 08:17:49 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:17:49 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:17:49 OSPF: SPF Processing Time(usecs): 164
+2019/05/24 08:17:49 OSPF: 	    SPF Time: 134
+2019/05/24 08:17:49 OSPF: 	   InterArea: 0
+2019/05/24 08:17:49 OSPF: 	       Prune: 0
+2019/05/24 08:17:49 OSPF: 	RouteInstall: 20
+2019/05/24 08:17:49 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:17:54 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:17:54 OSPF: SPF Processing Time(usecs): 9327
+2019/05/24 08:17:54 OSPF: 	    SPF Time: 8085
+2019/05/24 08:17:54 OSPF: 	   InterArea: 1
+2019/05/24 08:17:54 OSPF: 	       Prune: 22
+2019/05/24 08:17:54 OSPF: 	RouteInstall: 1189
+2019/05/24 08:17:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:18:34 OSPF: Terminating on signal
+2019/05/24 08:18:34 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:18:34 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:18:34 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:18:34 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:18:34 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:18:34 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:18:34 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:18:34 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:18:34 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 08:18:34 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
+2019/05/24 08:19:45 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:19:45 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:19:45 OSPF: SPF Processing Time(usecs): 219
+2019/05/24 08:19:45 OSPF: 	    SPF Time: 161
+2019/05/24 08:19:45 OSPF: 	   InterArea: 2
+2019/05/24 08:19:45 OSPF: 	       Prune: 1
+2019/05/24 08:19:45 OSPF: 	RouteInstall: 34
+2019/05/24 08:19:45 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:19:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:19:54 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:19:54 OSPF: DR-Election[2nd]: Backup 130.104.229.24
+2019/05/24 08:19:54 OSPF: DR-Election[2nd]: DR     130.104.229.25
+2019/05/24 08:19:54 OSPF: interface 130.104.229.24 [2] join AllDRouters Multicast group.
+2019/05/24 08:19:54 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:19:54 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:19:54 OSPF: DR-Election[1st]: DR     130.104.229.25
+2019/05/24 08:19:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:19:54 OSPF: SPF Processing Time(usecs): 121
+2019/05/24 08:19:54 OSPF: 	    SPF Time: 106
+2019/05/24 08:19:54 OSPF: 	   InterArea: 1
+2019/05/24 08:19:54 OSPF: 	       Prune: 1
+2019/05/24 08:19:54 OSPF: 	RouteInstall: 4
+2019/05/24 08:19:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:19:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:19:54 OSPF: SPF Processing Time(usecs): 151
+2019/05/24 08:19:54 OSPF: 	    SPF Time: 91
+2019/05/24 08:19:54 OSPF: 	   InterArea: 1
+2019/05/24 08:19:54 OSPF: 	       Prune: 1
+2019/05/24 08:19:54 OSPF: 	RouteInstall: 46
+2019/05/24 08:19:54 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:19:54 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:19:54 OSPF: SPF Processing Time(usecs): 193
+2019/05/24 08:19:54 OSPF: 	    SPF Time: 124
+2019/05/24 08:19:54 OSPF: 	   InterArea: 1
+2019/05/24 08:19:54 OSPF: 	       Prune: 1
+2019/05/24 08:19:54 OSPF: 	RouteInstall: 57
+2019/05/24 08:19:54 OSPF: Reason(s) for SPF: AS, ABR, ASBR, M
+2019/05/24 08:19:59 OSPF: ospf_spf_calculate: Stop. 1 vertices
+2019/05/24 08:19:59 OSPF: SPF Processing Time(usecs): 230
+2019/05/24 08:19:59 OSPF: 	    SPF Time: 163
+2019/05/24 08:19:59 OSPF: 	   InterArea: 1
+2019/05/24 08:19:59 OSPF: 	       Prune: 0
+2019/05/24 08:19:59 OSPF: 	RouteInstall: 46
+2019/05/24 08:19:59 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:19:59 OSPF: ospf_spf_calculate: Stop. 2 vertices
+2019/05/24 08:19:59 OSPF: SPF Processing Time(usecs): 187
+2019/05/24 08:19:59 OSPF: 	    SPF Time: 142
+2019/05/24 08:19:59 OSPF: 	   InterArea: 1
+2019/05/24 08:19:59 OSPF: 	       Prune: 1
+2019/05/24 08:19:59 OSPF: 	RouteInstall: 35
+2019/05/24 08:19:59 OSPF: Reason(s) for SPF: N, S, AS, ABR, ASBR, M
+2019/05/24 08:20:04 OSPF: ospf_spf_calculate: Stop. 312 vertices
+2019/05/24 08:20:04 OSPF: SPF Processing Time(usecs): 8374
+2019/05/24 08:20:04 OSPF: 	    SPF Time: 7199
+2019/05/24 08:20:04 OSPF: 	   InterArea: 1
+2019/05/24 08:20:04 OSPF: 	       Prune: 21
+2019/05/24 08:20:04 OSPF: 	RouteInstall: 1125
+2019/05/24 08:20:04 OSPF: Reason(s) for SPF: N, S, ABR, ASBR
+2019/05/24 08:20:44 OSPF: Terminating on signal
+2019/05/24 08:20:44 OSPF: ASBR[Status:255]: Update
+2019/05/24 08:20:44 OSPF: DR-Election[1st]: Backup 130.104.229.24
+2019/05/24 08:20:44 OSPF: DR-Election[1st]: DR     130.104.229.24
+2019/05/24 08:20:44 OSPF: DR-Election[2nd]: Backup 0.0.0.0
+2019/05/24 08:20:44 OSPF: DR-Election[2nd]: DR     130.104.229.24
+2019/05/24 08:20:44 OSPF: EXT (ospf_ext_link_ism_change): Set LAN Adj. SID to interface ens3 
+2019/05/24 08:20:44 OSPF: interface 130.104.229.24 [2] leave AllDRouters Multicast group.
+2019/05/24 08:20:44 OSPF: EXT (ospf_ext_link_ism_change): Set Adj. SID to interface ens3 
+2019/05/24 08:20:44 OSPF: [EC 100663299] buffer_write: write error on fd 12: Broken pipe
+2019/05/24 08:20:44 OSPF: [EC 100663302] zclient_send_message: buffer_write failed to zclient fd 12, closing
