@@ -217,10 +217,11 @@ plt.boxplot([times_spf_1, times_spf_2, times_spf_3, times_spf_4, times_spf_5], p
 plt.title("SPF time")
 plt.ylabel("time (ms)")
 plt.xticks([1, 2, 3, 4, 5], ['vanilla', 'pluginized\nno plugins', 'pluginized\nmonitor SPF\ninterpreted', 'pluginized\nmodify SPF\ninterpreted', 'pluginized\nmodify SPF\njitted'])
-
+plt.ylim(bottom=0)
+plt.axhline(linewidth=0.4, color='k', linestyle='-.', y = median(times_spf_1))
 # plt.show()
 plt.tight_layout()
-plt.savefig("spf_boxplot.pdf")
+plt.savefig("spf_boxplot.png")
 
 f, pltarr = plt.subplots(3)
 

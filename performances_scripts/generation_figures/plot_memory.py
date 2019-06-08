@@ -48,6 +48,9 @@ times3[:] = [((x - times3[0])) for x in times3]
 times3[:] = [(x/10**9) for x in times3]
 memory_usage3[:] = [(x/1000000) for x in memory_usage3]
 
+print(times1[0:10])
+print(times2[0:10])
+
 f, pltarr = plt.subplots(3, sharey=True)
 
 pltarr[0].plot(times1, memory_usage1)
@@ -76,5 +79,17 @@ pltarr[2].axhline(linewidth=0.4, color='k', linestyle='-.', y = 4)
 pltarr[2].axhline(linewidth=0.4, color='k', linestyle='-.', y = 6)
 
 f.tight_layout()
+
+plt.show()
+
+size = min([len(times1), len(times2), len(times3)])
+times1 = times1[0:size]
+memory_usage1 = memory_usage1[0:size]
+memory_usage2 = memory_usage2[0:size]
+memory_usage3 = memory_usage3[0:size]
+
+plt.plot(times1, memory_usage1)
+plt.plot(times1, memory_usage2)
+plt.plot(times1, memory_usage3)
 
 plt.show()
