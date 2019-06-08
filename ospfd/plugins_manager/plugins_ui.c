@@ -37,13 +37,11 @@ int main(int argc, char **argv) {
     path[strlen(path) - 1] = '\0'; // Otherwise it is a \n and the path doesn't work ...
     printf("Path: %s \n", path);
     FILE *fp;
-    printf("before fopen \n");
     fp = fopen(path, "r");
     if(fp == NULL) {
-        printf("fopen error \n");
+        printf("fopen error : Cannot open the file (does not exist ?)\n");
         return 0;
     }
-    printf("after fopen \n");
     char line[100];
     while(fgets (line, 100, fp) != NULL) {
         int i = 0;

@@ -1,10 +1,11 @@
 Flexible OSPF implementation
 ============================
 
-This repository contains a flexible implementation of OSPF. The starting point of this work was the FRRouting suite (https://github.com/FRRouting/frr) commit e6ee7eb9e34449fa2064b8541007b64b21c7bb81.
-This commit correponds to version 6.0.2 of FRR. 
+This repository contains a flexible implementation of OSPF. The starting point of this work was the FRRouting suite (https://github.com/FRRouting/frr) commit e6ee7eb9e34449fa2064b8541007b64b21c7bb81. This commit correponds to version 6.0.2 of FRR. 
 
 The following of this README contains instruction to compile and run the flexible OSPF implementation. /!\ I advise to do all this in a virtual machine.
+
+If you encounter troubles to run the implementation feel free to send me an e-mail: cyril.denos@student.uclouvain.be
 
 In folder 'performances\_scripts' you can find the scripts and logs file to reproduce the graphs in the manuscript. There are also script tu run some IPMininet topologies to reproduce the emulated networks. See associated README for more information.
 
@@ -98,13 +99,13 @@ sudo install -m 644 tools/frr.service /etc/systemd/system/frr.service
 cd ospfd/plugins
 sudo make
 ```
-If you want to use the provided manifesto example to inject plugins, you must copy the plugins/ directory at /
+If you want to use the provided manifest example to inject plugins, you must copy the plugins/ directory at /
 ```
 sudo cp -r ospfd/plugins /
 ``` 
 
 # Router configuration
-To run OSPF, ZEBRA (IP routing manager) must also be running. Both daemons must be configured using configurations files. The following are sample configuration files for both daemons:
+To run OSPF, ZEBRA (IP routing manager) must also be running. Both daemons must be configured using configurations files. The following are sample configuration files for both daemons. Of course you must replace the addresses with addresses of the machine.
 
 /etc/frr/ospfd.conf
 ```
@@ -142,8 +143,20 @@ sudo cp /usr/lib/frr/ospfd /usr/bin/ospfd
 ### Run zebra and ospf daemons
 ```
 sudo /usr/bin/zebra -d -f /etc/frr/zebra.conf -i /tmp/zebra.pid -z /tmp/zebra.api -u root -k
-sleep 1
 sudo /usr/bin/ospfd -d -f /etc/frr/ospfd.conf -i /tmp/ospfd.pid -z /tmp/zebra.api -u root
+```
+If you encounter problems with group membership add your user to frrvty group
+```
+sudo usermod -a -G frrvty username
+```
+
+You can use 'sudo vtysh' to enter the CLI of the router.
+Some basic commands:
+```
+show ip ospf database // see the LSDB of the router
+show ip ospf route // see the routes
+show ip ospf interface // see the OSPF enabled interfaces
+...
 ```
 
 ### Injecting plugins in OSPF
@@ -152,6 +165,8 @@ To inject plugin in OSPF, you must run the user CLI
 ./ospfd/plugins_manager/plugins_ui
 ```
 Then you can input the path to your manifesto file. A sample file is available in ospfd/plugins/manifesto\_example.txt
+
+If the monitoring server is launched, you should see some message that arrive when the bytecodes from the manifest file are injected. 
 
 ### Run the monitoring server
 To run the monitoring server (monitoring are sending some datas to it) use the following command
