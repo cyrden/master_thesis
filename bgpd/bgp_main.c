@@ -71,7 +71,7 @@ static const struct option longopts[] = {
 	{"bgp_port", required_argument, NULL, 'p'},
 	{"listenon", required_argument, NULL, 'l'},
 #if CONFDATE > 20190521
-	CPP_NOTICE("-r / --retain has reached deprecation EOL, remove")
+	//CPP_NOTICE("-r / --retain has reached deprecation EOL, remove")
 #endif
 	{"retain", no_argument, NULL, 'r'},
 	{"no_kernel", no_argument, NULL, 'n'},

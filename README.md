@@ -4,12 +4,16 @@ Flexible OSPF implementation
 This repository contains a flexible implementation of OSPF. The starting point of this work was the FRRouting suite (https://github.com/FRRouting/frr) commit e6ee7eb9e34449fa2064b8541007b64b21c7bb81.
 This commit correponds to version 6.0.2 of FRR. 
 
+The following of this README contains instruction to compile and run the flexible OSPF implementation. /!\ I advise to do all this in a virtual machine.
+
+In folder 'performances\_scripts' you can find the scripts and logs file to reproduce the graphs in the manuscript. There are also script tu run some IPMininet topologies to reproduce the emulated networks. See associated README for more information.
+
 # Compiling the implementation
 
 ### Installing needed packages
 
 ```
-sudo apt update
+sudo apt-get update
 sudo apt-get install    git autoconf automake libtool make libreadline-dev texinfo    pkg-config libpam0g-dev libjson-c-dev bison flex python-pytest    libc-ares-dev python3-dev libsystemd-dev python-ipaddress python3-sphinx    install-info build-essential libsystemd-dev libsnmp-dev perl
 sudo apt-get install devscripts
 sudo apt-get install cmake
@@ -18,6 +22,7 @@ sudo apt-get install debhelper
 sudo apt-get install libpcre3
 sudo apt-get install libpcre3-dev
 sudo apt-get install clang-6.0
+sudo apt-get install cmake
 ```
 
 ### Install libyang
@@ -31,7 +36,7 @@ sudo make
 sudo make install
 ```
 
-### Create FRR config files
+### Add FRR and user group
 
 ```
 sudo groupadd -r -g 92 frr
@@ -39,15 +44,6 @@ sudo groupadd -r -g 85 frrvty
 sudo adduser --system --ingroup frr --home /var/run/frr/ \
    --gecos "FRR suite" --shell /sbin/nologin frr
 sudo usermod -a -G frrvty frr
-
-sudo install -m 775 -o frr -g frr -d /var/log/frr
-sudo install -m 775 -o frr -g frrvty -d /etc/frr
-sudo install -m 640 -o frr -g frrvty tools/etc/frr/vtysh.conf /etc/frr/vtysh.conf
-sudo install -m 640 -o frr -g frr tools/etc/frr/frr.conf /etc/frr/frr.conf
-sudo install -m 640 -o frr -g frr tools/etc/frr/daemons.conf /etc/frr/daemons.conf
-sudo install -m 640 -o frr -g frr tools/etc/frr/daemons /etc/frr/daemons
-
-sudo install -m 644 tools/frr.service /etc/systemd/system/frr.service
 ```
 
 ### Clone repo and compile implementation
@@ -80,6 +76,22 @@ sudo ./configure \
 sudo make
 sudo make install
 ```
+
+### Create FRR config files
+
+```
+sudo install -m 775 -o frr -g frr -d /var/log/frr
+sudo install -m 775 -o frr -g frrvty -d /etc/frr
+sudo install -m 640 -o frr -g frrvty tools/etc/frr/vtysh.conf /etc/frr/vtysh.conf
+sudo install -m 640 -o frr -g frr tools/etc/frr/frr.conf /etc/frr/frr.conf
+sudo install -m 640 -o frr -g frr tools/etc/frr/ospfd.conf /etc/frr/ospfd.conf
+sudo install -m 640 -o frr -g frr tools/etc/frr/zebra.conf /etc/frr/zebra.conf
+sudo install -m 640 -o frr -g frr tools/etc/frr/daemons.conf /etc/frr/daemons.conf
+sudo install -m 640 -o frr -g frr tools/etc/frr/daemons /etc/frr/daemons
+
+sudo install -m 644 tools/frr.service /etc/systemd/system/frr.service
+```
+
 
 ### Compile plugins
 ```
